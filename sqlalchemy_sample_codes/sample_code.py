@@ -3,23 +3,22 @@ from sqlalchemy.orm import Session
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import registry, relationship
 
-# engine provides some interfaces for us to connect to the database, like
-# connections, and also has a pool to manage all of our stablished
-# connections.
+# Any SQLAlchemy application is started by creating an Engine object.
+# It is the main source to get connections from.
 engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
 
 # working with transactions and the DBAPI
-# using connect method, we can get a connection, which provides a method
-# called execute, which executes executable objects
-# a connection is a core level front-end.
+# By calling connect method on and Engine object, a Connection object is
+# created which can be used as a context manager.
+# A Connection provides an execution method called execute.
+# Execution methods are capable of executing Executable objects.
+# A Connection is a core level connection.
 with engine.connect() as conn:
-    # the text method takes a query string and returns an statement which is
-    # an executable object.
     result = conn.execute(text('SELECT \'hellow, world!\''))
     print(result.all())
 
-# when executing DDL, we have to commit the changes using commit method on
-# connection object.
+# When executing DDL, changes need to be commited by calling commit method on
+# the Connection object.
 with engine.connect() as conn:
     conn.execute(text('CREATE TABLE some_table (x int, y int)'))
     conn.execute(
@@ -29,16 +28,15 @@ with engine.connect() as conn:
     result = conn.execute(text('SELECT * FROM some_table'))
     print(result.all())
 
-# to avoid using commit method when executing DDL, we can use begin method on
-# engine object instead of connect.
-# this way, after the last line of the context manager, our changes will be
-# commited automatically.
+# To avoid having to commit changes when executing DDL, a context manager
+# can be provided by calling begin method on the Engine object which commits
+# changes automatically after it ends.
 with engine.begin() as conn:
     conn.execute(
             text('INSERT INTO some_table (x, y) VALUES (:x, :y)'),
             [{'x': 6, 'y': 8}, {'x': 9, 'y': 10}])
 
-# the returned object by running statements are in the form of Result objects,
+# The return value from execution methods are in the form of Result objects,
 # whose use cases is shown below.
 with engine.connect() as conn:
     result = conn.execute(text('SELECT x, y FROM some_table'))
@@ -57,9 +55,10 @@ with engine.connect() as conn:
     for dict_row in result.mappings():
         print(f'x: {dict_row["x"]}, y: {dict_row["y"]}')
 
-# to pass multiple parameters to a statement, we can pass a list of dictonaries
-# made of keys and the values of parameters to the excution function.
-# or if we want to pass a single parameter, we can pass it just one dictonary.
+# A list of dictionaries made of single key value pairs can be passed to an execution
+# method in order to pass multiple sets of parameters to an Executable object.
+# A single dictonary can be passed to an execution method in order to pass the
+# Executable object a single set of parameters.
 with engine.connect() as conn:
     result = conn.execute(
         text('SELECT x, y FROM some_table WHERE y > :y'),
@@ -67,8 +66,8 @@ with engine.connect() as conn:
     for row in result:
         print(f'x: {row.x}, y: {row.y}')
 
-# also we can call bindparams method on an executable object to pass it a
-# single parameter.
+# bindparams method can be called on Executable objects to pass them a set of
+# parameters.
 with engine.connect() as conn:
     result = conn.execute(
         text('SELECT x, y FROM some_table WHERE'
@@ -76,8 +75,9 @@ with engine.connect() as conn:
     for row in result:
         print(f'x: {row.x}, y: {row.y}')
 
-# the interactive object to use in ORM level is session, it is used similar to
-# connection.
+# The interactive object in ORM level is the Session object.
+# Session object is used similar to Connection object and provides an
+# execution method.
 with Session(engine) as sess:
     result = sess.execute(
             text('SELECT x, y FROM some_table WHERE'
@@ -91,16 +91,16 @@ with Session(engine) as sess:
     sess.commit()
 
 # working with database metadata
-# the metadata is the data about the actual data that we are storing, like
-# table name and columns.
+# Metadata is the data about the actual data that we are storing, like tables
+# and columns.
 metadata = MetaData()
 
-# a table can be decleared or reflected from an existing table in the
+# A table can be declared or reflected from an existing table in a
 # database.
-# to create a table in core level, we assign a table object to a variable
-# which will be how we refer to the table.
-# a table takes a name, a metadata to store itself in it and a set of column
-# objects which represent columns.
+# In order to create a table in core level, a Table object is assigned to a
+# variable which will be how the table is refered.
+# A table takes a name, a MetaData object to store itself in it and a set of
+# Column objects which represent columns.
 user_table = Table('user_account', metadata,
                    Column('id', Integer, primary_key=True),
                    Column('name', String(30)),
@@ -113,26 +113,26 @@ address_table = Table('address', metadata,
                              nullable=False),
                       Column('email_address', String, nullable=False))
 
-# in a core level table, columns will be stored in an attribute called c.
-# after declearing tables, we can emmit them buy calling create_all method on
-# it's metadata and passing it the engine.
+# In a core level table, columns will be stored in an attribute called c.
+# Core level tables can be emmited by calling create_all method on their
+# metadata and passing it the Engine object.
 metadata.create_all(engine)
 
-# to get a metdata in ORM level, we should create a registry object which
-# contains a metadata in itself.
+# In ORM level, tables are created as mapped classes which should inherite
+# from a base class. 
+# A mapped class is any python class that will have attributes which link to
+# the columns in a table.
+# In oreder to create a MetaData object for mapped classes, a registry should
+# be created which contains a MetaData object in itself.
 mapper_registry = registry()
 
-# a mapped class represents a table in ORM level, so to create a table, we
-# need a base class to inherit from, to get this base calss, we call
-# generate_base method on our registry object.
-# we can also use sqlalchemy.orm.declarative_base function to get a base
-# class.
+# The base class which is needed by mapped classes can be generated by calling
+# generate_base on a registry object.
+# It can also be achived by calling sqlalchemy.orm.declarative_base function
 Base = mapper_registry.generate_base()
 
-# a mapped class is any python class we would like to create, which will then
-# have attributes linked to table columns.
-# a table object will be stored inside a mapped class in a class variable
-# callde __table__.
+# After declaring a mapped class, a core level table will be generated and
+# stored in an attribute called __table__.
 
 
 class User(Base):
@@ -160,8 +160,8 @@ class Address(Base):
 
 mapper_registry.metadata.create_all(engine)
 
-# another method to create mapped classes is to put a table object directly in
-# it.
+# Another method to create mapped classes is to assign a Table object to an
+# attribute of the class called __table__.
 
 
 class UserHybrid(Base):
@@ -190,54 +190,46 @@ with engine.connect() as conn:
             [{'x': 1, 'y': 1}, {'x': 2, 'y': 2}])
     conn.commit()
 
-# to reflect a table from an existing database, we create a table with the
-# same name and pass it the engine connected to the database as autoaload_with
-# parameter.
+# To reflect a table from an existing database, a Table object is created with
+# the same name and the engine is passed to it as a named argument called
+# autoaload_with.
 some_table = Table('some_table', metadata, autoload_with=engine)
 
 # working with data
-# to insert data in core level, we should create an insert statement using
-# insert function.
-# all statements are executable objects.
-# to specify one set of values for the insert statement, we can call values
-# method on the returned object and pass our values to it.
+# To execute anything, we need an Executable object.
+# An Executable object can be achived by calling functions like insert, select
+# or text.
+# Eeach Executable object can represent an SQL statement.
+# To specify a set of values for Executable and ValueBased objects,
+# we can call values method on them.
 statement = insert(user_table).values(name='spongebob',
                                       fullname='Spongebob Squarepants')
 
-# all statements can be compiled to turn in to raw SQL.
+# All Executable objects can be compiled to turn into raw SQL.
 compiled = statement.compile()
 
 with engine.connect() as conn:
     result = conn.execute(statement)
     conn.commit()
-    # information about the last transaction can be accessed turough
-    # attributes.
+    # Information about the last transaction can be accessed turough
+    # inserted_primary_key and lastrowid attributes.
     print(result.inserted_primary_key)
     print(result.lastrowid)
 
-# if we have more than one set of values to insert, we can pass them to
-# execute function instead of values method.
 with engine.connect() as conn:
     result = conn.execute(insert(user_table),
                           [{'name': 'sandy', 'fullname': 'Sandy Cheeks'},
                            {'name': 'patrick', 'fullname': 'Patrick Star'}])
     conn.commit()
 
-# select is another type of statements.
-# we can specify the where caluse by passing a conditional python statement to
-# it.
-# to use the result of a select statement which can return multiple rows, we
-# can call scalar_subquery on it.
-# to put dynamic parameters inside an statement we can use bindparam
-# function.
+# bindparam function can be used in order to put dynamic parameters inside an
+# Executable object
 scalar_subquery = select(user_table.c.id).where(
         user_table.c.name == bindparam('name')).scalar_subquery()
 
-# in above select statement, we get the id of a user with the given name, in
-# blow statement, we use this id to match it with the inserted email.
-# the select statement takes a name parameter, and the insert statement takes
-# an email parameter, both statements are combined together so as their
-# parameters.
+# In some cases, two or more Executable objects can be combined together.
+# When to Executable objects are combined together, their parameters will be
+# combined.
 with engine.connect() as conn:
     result = conn.execute(
             insert(address_table).values(user_id=scalar_subquery),
@@ -247,9 +239,6 @@ with engine.connect() as conn:
               'email_address': 'sandy@sqlalchemy.org'}])
     conn.commit()
 
-# another way to combine a select statement with an insert is to use
-# from_select method on the insert statement, specifying the
-# parameter swhich will be returned by the select statement.
 select_statement = select(user_table.c.id,
                           user_table.c.name + '@sqlalchemy.org').where(
                 user_table.c.name == 'patrick')
@@ -263,20 +252,22 @@ with engine.connect() as conn:
     result = conn.execute(insert_statement)
     conn.commit()
 
-# we can make use of select statement in ORM level, this way the statement
-# should be executed using an ORM leve execution method like Session.execute.
+# Executable objects can be used in both ORM and core level.
+# ORM level Executable objects should be executed by an ORM level execution
+# method.
+# core level Executable objects should be executed by a core level execution
+# method.
 statement = select(User).where(
         User.name == 'spongebob')
 
-# we get a set of row objects when executing a select statement in core level.
+# A core level execution method returns Row objects.
 with engine.connect() as conn:
     result = conn.execute(
         select(user_table).where(user_table.c.name == 'spongebob')
     )
     print(result.all()[0])
 
-# we get a set of mapped class objects when executing a select statement in
-# ORM level.
+# An ORM level execution method returns mapped class objects.
 with Session(engine) as sess:
     result = sess.execute(
         select(User).where(User.name == 'spongebob')
