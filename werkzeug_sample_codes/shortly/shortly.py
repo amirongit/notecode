@@ -9,7 +9,7 @@ from werkzeug.middleware.shared_data import SharedDataMiddleware
 from werkzeug.utils import redirect
 from jinja2 import Environment, FileSystemLoader
 
-# instances of this class will be callables which can be used as WSGI
+# Instances of this class will be callables which can be used as WSGI
 # application.
 
 
@@ -19,7 +19,8 @@ class Shortly:
         template_path = os.path.join(os.path.dirname(__file__), 'templates')
         self.jinja_env = Environment(loader=FileSystemLoader(template_path),
                                      autoescape=True)
-        # url rules can be stored in map objects.
+        # Map object is used to store url rules.
+        # Rule object is used to represent a url rule.
         self.url_map = Map([Rule('/', endpoint='new_url'),
                             Rule('/<short_id>',
                                  endpoint='follow_short_link'),
@@ -28,21 +29,18 @@ class Shortly:
 
     def render_template(self, template_name, **context):
         t = self.jinja_env.get_template(template_name)
-        # a response object can be created by instantiating response class.
+        # A Response object can be created by instantiating Response class.
         return Response(t.render(context), mimetype='text/html')
 
     def dispath_request(self, request):
-        # a map adapter is created by binding a map object with an environ
+        # A MapAdapter is created by binding a Map object with an environ
         # dictionary.
         adapter = self.url_map.bind_to_environ(request.environ)
         try:
-            # then the adapter is used to match the url in order to get it's
-            # endpoint.
-            # url arguments are passed along with the endpoint.
+            # MapAdapter object is used to match the binded url in order to
+            # get find an endpoint for it.
+            # Url arguments are passed along with the endpoint.
             endpoint, values = adapter.match()
-            # since the endpoints are named similarley in the rule objects and
-            # in this class, accessing the actual endpoint view happens by
-            # getattr.
             return getattr(self, f'on_{endpoint}')(request, **values)
         except HTTPException as e:
             return e
@@ -50,21 +48,21 @@ class Shortly:
     def wsgi_app(self, environ, start_response):
         request = Request(environ)
         response = self.dispath_request(request)
-        # a response object can be called to be processed as a WSGI
+        # A Response object can be called to be processed as a WSGI
         # application.
         return response(environ, start_response)
 
     def __call__(self, environ, start_response):
         # start_response is a callable which is explained here.
         # https://stackoverflow.com/questions/16774952/
-        # it is a deprecated function which led us write our applications as
+        # It is a deprecated function which led us write our applications as
         # generators and is kept for backward compatibality.
-        # it is used to begin the HTTP response.
-        # the recommended way is to pass it status code and headers of the
+        # It is used to begin a HTTP response.
+        # The recommended way is to pass it status code and headers of the
         # response before returning it's body from the application.
-        # headers should be passed in the form of a list of tuples which are
+        # Headers should be passed in the form of a list of tuples which are
         # made of a single key value pair.
-        # new frameworks should avoid using start_response.
+        # New frameworks should avoid using start_response.
         return self.wsgi_app(environ, start_response)
 
     def on_new_url(self, request):
