@@ -55,6 +55,16 @@ class Shortly:
         return response(environ, start_response)
 
     def __call__(self, environ, start_response):
+        # start_response is a callable which is explained here.
+        # https://stackoverflow.com/questions/16774952/
+        # it is a deprecated function which led us write our applications as
+        # generators and is kept for backward compatibality.
+        # it is used to begin the HTTP response.
+        # the recommended way is to pass it status code and headers of the
+        # response before returning it's body from the application.
+        # headers should be passed in the form of a list of tuples which are
+        # made of a single key value pair.
+        # new frameworks should avoid using start_response.
         return self.wsgi_app(environ, start_response)
 
     def on_new_url(self, request):
