@@ -9,7 +9,7 @@ from werkzeug.middleware.shared_data import SharedDataMiddleware
 from werkzeug.utils import redirect
 from jinja2 import Environment, FileSystemLoader
 
-# Instances of this class will be callables which can be used as WSGI
+# An Instance of this class will be a callables which can be used as a WSGI
 # application.
 
 

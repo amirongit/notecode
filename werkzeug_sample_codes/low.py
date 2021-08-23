@@ -15,6 +15,8 @@ def hello_world(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
     return [''.join(result).encode('utf-8')]
 
+# TODO: find out what is wsgi.input
+
 
 if __name__ == '__main__':
     run_simple('127.0.0.1', 5000, hello_world,
