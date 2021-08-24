@@ -1,7 +1,7 @@
 from io import StringIO
 
 from werkzeug.test import create_environ
-from werkzeug.wrappers import Request
+from werkzeug.wrappers import Request, Response
 
 # The environ dictionary contains all the information which is transmited by
 # the request.
@@ -58,3 +58,23 @@ print(f'{typical_request.accept_mimetypes}\n'
       f'{typical_request.accept_languages}\n'
       f'{typical_request.accept_encodings}\n'
       f'{typical_request.accept_charsets}')
+
+# Response objects are used to send data back to the client.
+# Response objects should be called as a WSGI application inside a WSGI
+# application and the returned value of that call should be returned.
+
+
+def sample_application(environ, start_response):
+    '''
+    So Response objects are a kind of lower level WSGI app, the original one.
+    It returns what a WSGI app should return, and then, it's return value
+    should be returned by the high level WSGI app.
+    '''
+    response = Response('sample content')
+    return response(environ, start_response)
+
+
+# Response object are designed to be modified, so their accessors are not
+# read only.
+sample_response = Response('sample content')
+sample_response.headers['content-length'] = len(sample_response.data)
