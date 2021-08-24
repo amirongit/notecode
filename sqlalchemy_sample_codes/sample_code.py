@@ -55,8 +55,9 @@ with engine.connect() as conn:
     for dict_row in result.mappings():
         print(f'x: {dict_row["x"]}, y: {dict_row["y"]}')
 
-# A list of dictionaries made of single key value pairs can be passed to an execution
-# method in order to pass multiple sets of parameters to an Executable object.
+# A list of dictionaries made of single key value pairs can be passed to an
+# execution method in order to pass multiple sets of parameters to an
+# Executable object.
 # A single dictonary can be passed to an execution method in order to pass the
 # Executable object a single set of parameters.
 with engine.connect() as conn:
@@ -119,10 +120,10 @@ address_table = Table('address', metadata,
 metadata.create_all(engine)
 
 # In ORM level, tables are created as mapped classes which should inherite
-# from a base class. 
+# from a base class.
 # A mapped class is any python class that will have attributes which link to
 # the columns in a table.
-# In oreder to create a MetaData object for mapped classes, a registry should
+# In order to create a MetaData object for mapped classes, a registry should
 # be created which contains a MetaData object in itself.
 mapper_registry = registry()
 
@@ -200,19 +201,20 @@ some_table = Table('some_table', metadata, autoload_with=engine)
 # An Executable object can be achived by calling functions like insert, select
 # or text.
 # Eeach Executable object can represent an SQL statement.
-# To specify a set of values for Executable and ValueBased objects,
-# we can call values method on them.
+# To specify a set of values for Executable and ValueBased objects, like an
+# insert Executable object, we can call values method on them.
 statement = insert(user_table).values(name='spongebob',
                                       fullname='Spongebob Squarepants')
 
-# All Executable objects can be compiled to turn into raw SQL.
+# All Executable objects can be compiled to turn into raw SQL query string.
 compiled = statement.compile()
 
 with engine.connect() as conn:
     result = conn.execute(statement)
     conn.commit()
-    # Information about the last transaction can be accessed turough
-    # inserted_primary_key and lastrowid attributes.
+    # Information about the last excuted insert Executable object
+    #can be accessed turough inserted_primary_key and lastrowid attributes of
+    # the returned Result object.
     print(result.inserted_primary_key)
     print(result.lastrowid)
 
@@ -223,13 +225,16 @@ with engine.connect() as conn:
     conn.commit()
 
 # bindparam function can be used in order to put dynamic parameters inside an
-# Executable object
+# Executable object.
+# scalar_subquery method can be called on a select Executable object which is
+# going to return multiple rows in order to make it able to be combined with
+# another Executable object.
 scalar_subquery = select(user_table.c.id).where(
         user_table.c.name == bindparam('name')).scalar_subquery()
 
 # In some cases, two or more Executable objects can be combined together.
-# When to Executable objects are combined together, their parameters will be
-# combined.
+# When multiple Executable objects are combined together, their parameters
+# will be combined too.
 with engine.connect() as conn:
     result = conn.execute(
             insert(address_table).values(user_id=scalar_subquery),
@@ -239,6 +244,8 @@ with engine.connect() as conn:
               'email_address': 'sandy@sqlalchemy.org'}])
     conn.commit()
 
+# If a select Executable object is going to return a single row, it can be
+# combined with other Executable objects without calling any methods on it.
 select_statement = select(user_table.c.id,
                           user_table.c.name + '@sqlalchemy.org').where(
                 user_table.c.name == 'patrick')
@@ -253,23 +260,67 @@ with engine.connect() as conn:
     conn.commit()
 
 # Executable objects can be used in both ORM and core level.
+
+# Core level Executable objects should be executed by a core level execution
+# method.
+# A core level execution method returns Result objects filled with Row objects
+# which are filled with elements.
+# ( Supposing that the Executable object queries something and gets some rows
+# back)
+core_level_statement = select(user_table).where(
+        user_table.c.name == 'spongebob')
+with engine.connect() as conn:
+    result = conn.execute(core_level_statement)
+    print(result.all()[0])
+
 # ORM level Executable objects should be executed by an ORM level execution
 # method.
-# core level Executable objects should be executed by a core level execution
-# method.
-statement = select(User).where(
+# An ORM level execution method returns Result objects filled with Row objects
+# which are filled with mapped class objects.
+# ( Supposing that the Executable object queries something and gets some rows
+# back)
+orm_level_statement = select(User).where(
         User.name == 'spongebob')
-
-# A core level execution method returns Row objects.
-with engine.connect() as conn:
-    result = conn.execute(
-        select(user_table).where(user_table.c.name == 'spongebob')
-    )
+with Session(engine) as sess:
+    result = sess.execute(orm_level_statement)
     print(result.all()[0])
 
-# An ORM level execution method returns mapped class objects.
+# The from clause for a select Executable object will be generated based on
+# the Table objects passed to select function in core level.
+print(select(user_table))
+
+# Indivisual columns to query are specified by passing Column objects into
+# select function in core level.
+print(select(user_table.c.name, user_table.c.fullname))
+
+# The from clause for a select Executable object will be generated based on
+# the mapped classes passed to select function in ORM level.
+print(select(User))
+
+# When an ORM level select Executable object is executed against a full
+# entity, entity itself is returned within each Row object.
+with Session(engine) as sess:
+    result = sess.execute(select(User)).first()
+    print(result)
+
+# Indivisual columns to query are specified by passing mapped class attributes
+# to select function in orm level.
+print(select(User.name, User.fullname))
+
+# When an ORM level select Executable object is executed against
+# indivisual columns of an entity, Row objects are returned filled with
+# elements.
+with Session(engine) as sess:
+    result = sess.execute(select(User.name, User.fullname)).first()
+    print(result)
+
+
+# Row objects can be returned filled with a mix of elements and mapped class
+# objects.
 with Session(engine) as sess:
     result = sess.execute(
-        select(User).where(User.name == 'spongebob')
-    )
-    print(result.all()[0])
+            select(User.name, Address).where(
+                User.id == Address.user_id).order_by(
+                    Address.id)
+            )
+    print(result.all())
