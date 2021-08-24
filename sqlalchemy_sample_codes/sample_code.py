@@ -12,7 +12,7 @@ engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
 # created which can be used as a context manager.
 # A Connection provides an execution method called execute.
 # Execution methods are capable of executing Executable objects.
-# A Connection is a core level connection.
+# Engine.connect returns a core level connection.
 with engine.connect() as conn:
     result = conn.execute(text('SELECT \'hellow, world!\''))
     print(result.all())
@@ -37,7 +37,8 @@ with engine.begin() as conn:
             [{'x': 6, 'y': 8}, {'x': 9, 'y': 10}])
 
 # The return value from execution methods are in the form of Result objects,
-# whose use cases is shown below.
+# which are filled with Row objects which are filled with either mapped class
+# objects, elements or both.
 with engine.connect() as conn:
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for row in result:
@@ -77,7 +78,7 @@ with engine.connect() as conn:
         print(f'x: {row.x}, y: {row.y}')
 
 # The interactive object in ORM level is the Session object.
-# Session object is used similar to Connection object and provides an
+# A Session object is an ORM level connection and provides an ORM level
 # execution method.
 with Session(engine) as sess:
     result = sess.execute(
@@ -86,6 +87,8 @@ with Session(engine) as sess:
     for row in result:
         print(f'x: {row.x}, y: {row.y}')
 
+# Like a core level connection, after executing DDL, commit method should be
+# called on the Session object.
 with Session(engine) as sess:
     result = sess.execute(text('UPDATE some_table SET y=:y WHERE x=:x'),
                           [{'x': 9, 'y': 11}, {'x': 13, 'y': 15}])
@@ -213,7 +216,7 @@ with engine.connect() as conn:
     result = conn.execute(statement)
     conn.commit()
     # Information about the last excuted insert Executable object
-    #can be accessed turough inserted_primary_key and lastrowid attributes of
+    # can be accessed turough inserted_primary_key and lastrowid attributes of
     # the returned Result object.
     print(result.inserted_primary_key)
     print(result.lastrowid)
@@ -321,6 +324,5 @@ with Session(engine) as sess:
     result = sess.execute(
             select(User.name, Address).where(
                 User.id == Address.user_id).order_by(
-                    Address.id)
-            )
+                    Address.id))
     print(result.all())
