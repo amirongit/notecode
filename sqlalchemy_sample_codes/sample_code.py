@@ -206,14 +206,15 @@ some_table = Table('some_table', metadata, autoload_with=engine)
 # Eeach Executable object can represent an SQL statement.
 # To specify a set of values for Executable and ValueBased objects, like an
 # insert Executable object, we can call values method on them.
-statement = insert(user_table).values(name='spongebob',
-                                      fullname='Spongebob Squarepants')
+insert_statement_with_values = insert(
+        user_table).values(name='spongebob',
+                           fullname='Spongebob Squarepants')
 
 # All Executable objects can be compiled to turn into raw SQL query string.
-compiled = statement.compile()
+compiled = insert_statement_with_values.compile()
 
 with engine.connect() as conn:
-    result = conn.execute(statement)
+    result = conn.execute(insert_statement_with_values)
     conn.commit()
     # Information about the last excuted insert Executable object
     # can be accessed turough inserted_primary_key and lastrowid attributes of
@@ -326,3 +327,16 @@ with Session(engine) as sess:
                 User.id == Address.user_id).order_by(
                     Address.id))
     print(result.all())
+
+# In order to as clause in a select Executable object, label method can be
+# called on the Column objects passed to it.
+# Labels will be presented as attributes in the returned Row objects by
+# executing Executable objects with labeled Column objects.
+labeled_select_statement = select(
+        user_table.c.name.label('username'),
+        user_table.c.id.label('userid'))
+print(labeled_select_statement)
+with engine.connect() as conn:
+    result = conn.execute(labeled_select_statement)
+    for row in result:
+        print(row.userid, row.username)
