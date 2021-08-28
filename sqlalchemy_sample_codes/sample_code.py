@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine, text, insert, select, bindparam
+from sqlalchemy import (create_engine, text, insert, select, bindparam,
+                        literal_column, and_, or_, func)
 from sqlalchemy.orm import Session
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import registry, relationship
@@ -28,9 +29,9 @@ with engine.connect() as conn:
     result = conn.execute(text('SELECT * FROM some_table'))
     print(result.all())
 
-# To avoid having to commit changes when executing DDL, a context manager
-# can be provided by calling begin method on the Engine object which commits
-# changes automatically after it ends.
+# In order to avoid having to commit changes when executing DDL, a context
+# manager can be provided by calling begin method on the Engine object which
+# commits changes automatically after it ends.
 with engine.begin() as conn:
     conn.execute(
             text('INSERT INTO some_table (x, y) VALUES (:x, :y)'),
@@ -194,18 +195,18 @@ with engine.connect() as conn:
             [{'x': 1, 'y': 1}, {'x': 2, 'y': 2}])
     conn.commit()
 
-# To reflect a table from an existing database, a Table object is created with
-# the same name and the engine is passed to it as a named argument called
-# autoaload_with.
+# In order to reflect a table from an existing database, a Table object is
+# created with the same name and the engine is passed to it as a named
+# argument called autoaload_with.
 some_table = Table('some_table', metadata, autoload_with=engine)
 
 # working with data
-# To execute anything, we need an Executable object.
+# In order to execute anything, we need an Executable object.
 # An Executable object can be achived by calling functions like insert, select
 # or text.
 # Eeach Executable object can represent an SQL statement.
-# To specify a set of values for Executable and ValueBased objects, like an
-# insert Executable object, we can call values method on them.
+# In order to specify a set of values for Executable and ValueBased objects,
+# like an insert Executable object, we can call values method on them.
 insert_statement_with_values = insert(
         user_table).values(name='spongebob',
                            fullname='Spongebob Squarepants')
@@ -328,8 +329,9 @@ with Session(engine) as sess:
                     Address.id))
     print(result.all())
 
-# In order to as clause in a select Executable object, label method can be
-# called on the Column objects passed to it.
+# In order to specify as clause in a select Executable object, label method
+# can be called on the Column objects passed to it.
+# label method also exists on mapped class attributes referring to the columns.
 # Labels will be presented as attributes in the returned Row objects by
 # executing Executable objects with labeled Column objects.
 labeled_select_statement = select(
@@ -340,3 +342,73 @@ with engine.connect() as conn:
     result = conn.execute(labeled_select_statement)
     for row in result:
         print(row.userid, row.username)
+
+# A text construct can be embeded with a select Executable object in order to
+# inject raw and hard coded SQL to it.
+injected_select_stetement = select(text('"sample SQL"'), user_table.c.name)
+print(injected_select_stetement)
+
+# literal_column function is a constructor like text function but it
+# explicitly represents a single Column which can be labeled.
+select_statement_with_literal_column = select(
+        literal_column('"sample SQL"').label('literal column'),
+        user_table.c.name
+        )
+
+# Using python operators in conjunction with a Column object generates an SQL
+# expression instead of a boolean.
+print(user_table.c.name == 'squidward')
+
+# In order to specify where clause in a supported Executable object, a python
+# expression can be passed to a method of it, called where.
+print(select(user_table).where(user_table.c.name == 'squidward'))
+
+# In order to produce multiple SQL expressions joined by and, where method can
+# be called any number of times.
+print(select(
+    address_table.c.email_address).where(
+        user_table.c.name == 'squidward').where(
+            address_table.c.user_id == user_table.c.id)
+        )
+
+# A single call of where method with multiple expression passed returns the
+# same result.
+print(select(address_table.c.email_address).where(
+        user_table.c.name == 'squidward',
+        address_table.c.user_id == user_table.c.id))
+
+# and and or conjunctions can be used directly using and_ and or_ functions.
+print(select(Address.email_address).where(
+        and_(
+            or_(User.name == 'squidward', User.name == 'sandy'),
+            Address.user_id == User.id)))
+
+# In order to specify where clause when querying against a single entity,
+# filter_by method can be called on supported Executable objects.
+# filter_by method acceptes keyword argument that match to column keys or
+# mapped class attributes.
+print(select(
+    User).filter_by(
+        name='spongebob', fullname='Spongebob Squarepants'))
+
+# In order to join two tables together, either join or join_from method can be
+# called on supported Executable objects.
+# Using join_from method, left and right side of the join can be specified
+# while by using join method, the left side in inferred.
+print(select(
+    user_table.c.name, address_table.c.email_address).join_from(
+        user_table,
+        address_table))
+print(select(
+    user_table.c.name, address_table.c.email_address).join(
+        address_table))
+
+# Although from clause usally is inferred, select_from can be used on select
+# Executable objects to explicitly specify from clause.
+print(select(
+    address_table.c.email_address).select_from(
+        user_table).join(address_table)
+    )
+print(
+        select(func.count('*')).select_from(user_table)
+    )
