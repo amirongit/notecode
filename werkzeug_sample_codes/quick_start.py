@@ -113,7 +113,5 @@ print(sample_response.headers.getlist('Content-language'))
 
 # A Response object can be made conditional against a request by calling
 # make_conditional method on it after setting an etag and date.
-sample_response.data = str(datetime(
-                        2009, 2, 20, 17, 42, 51, tzinfo=timezone.utc),
-                        encoding='utf-8')
+sample_response.data = datetime(2009, 2, 20, 17, 42, 51, tzinfo=timezone.utc)
 sample_response.make_conditional(sample_request)
