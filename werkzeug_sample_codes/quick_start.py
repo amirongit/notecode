@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from io import StringIO
 
 from werkzeug.test import create_environ
@@ -78,3 +79,41 @@ def sample_application(environ, start_response):
 # read only.
 sample_response = Response('sample content')
 sample_response.headers['content-length'] = len(sample_response.data)
+
+# If status attribute of a Response object gets modified, it' status_code
+# attribute will change too, and it's the same in reverse.
+sample_response.status_code = 200
+print(sample_response.status)
+sample_response.status = '404 Not Found'
+print(sample_response.status_code)
+
+# Common headers are exposed as attributes in Response objects and there are
+# methods to assign a value to some of them.
+sample_response.set_etag('sample etag', weak=True)
+
+# Most of the content headers are sets values and are mutables.
+sample_response.content_language.add('en-US')
+
+# Content headers can be set bydirectional through attributes and the
+# dictionary stored in header attribute.
+print(sample_response.headers['Content-language'])
+sample_response.headers['Content-language'] = 'fa-IR'
+print(sample_response.content_language)
+
+
+# In order to set cookies on a Response object, set_cookie method can be
+# called on it.
+sample_response.set_cookie('sample_key', 'sample_value')
+
+# In order to get all of the values for an specific header, getlist method
+# can be called on header attribute of a Response object.
+sample_response.content_language.add('en-UK')
+print(sample_response.headers.getlist('Content-language'))
+
+
+# A Response object can be made conditional against a request by calling
+# make_conditional method on it after setting an etag and date.
+sample_response.data = str(datetime(
+                        2009, 2, 20, 17, 42, 51, tzinfo=timezone.utc),
+                        encoding='utf-8')
+sample_response.make_conditional(sample_request)
