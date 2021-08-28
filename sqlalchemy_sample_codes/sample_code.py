@@ -407,8 +407,6 @@ print(select(
 # Executable objects to explicitly specify from clause.
 print(select(
     address_table.c.email_address).select_from(
-        user_table).join(address_table)
-    )
+        user_table).join(address_table))
 print(
-        select(func.count('*')).select_from(user_table)
-    )
+        select(func.count('*')).select_from(user_table))
