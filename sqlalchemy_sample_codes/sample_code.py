@@ -408,4 +408,20 @@ print(select(
 print(select(
     address_table.c.email_address).select_from(
         user_table).join(address_table))
+# When the column clause of a select Executable object doesn't have enough
+# information to provide from clause, select_from method can be called on it
+# to specify from clause.
 print(select(func.count('*')).select_from(user_table))
+
+# The select construct can produce on clause to join two Table objects if
+# there is a ForeignKeyConstraint definition in them.
+# If there is no ForeignKeyConstraint or there are multiple definitions of
+# them, it is required to specify the on clause directly.
+# To do so, join and join_from methods can be called on select Executable
+# objects.
+print(
+        select(
+            address_table.c.email_address).select_from(
+                user_table).join(
+                        address_table,
+                        user_table.c.id == address_table.c.user_id))
