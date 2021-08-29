@@ -1,2 +1,3 @@
 .vscode
 tags
+__pycache__/
