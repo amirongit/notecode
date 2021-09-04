@@ -1,5 +1,5 @@
 from sqlalchemy import (create_engine, text, insert, select, bindparam,
-                        literal_column, and_, or_, func, union_all)
+                        literal_column, and_, or_, func, union_all, update)
 from sqlalchemy.orm import Session, registry, relationship, aliased
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
@@ -513,3 +513,12 @@ print(select(user_table.c.name, user_table.c.fullname,
 print('- - - - - - - - - -')
 print(union_all(select(user_table).where(user_table.c.name == 'sandy'),
                 select(user_table).where(user_table.c.name == 'patrick')))
+
+# In order to create an update Executable object, update function can be used.
+# In order to specify where clause in an update Executable object, where
+# method can be called on it.
+# In order to specify values clause in an update Executable object, values
+# method can be called on it.
+print('- - - - - - - - - -')
+print(update(user_table).where(user_table.c.name == 'patrick').values(
+    fullname='Patrick The Star'))
