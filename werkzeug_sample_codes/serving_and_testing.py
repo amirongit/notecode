@@ -33,3 +33,6 @@ response = sample_client.post(
 # it will be passed to json.dumps and the also the content type will be set
 # to "application/json" automatically.
 response = sample_client.post('/api', json={'a': 'value', 'b': 1})
+
+# The easiest way to serve a WSGI application for development purposes is to
+# use werkzeug.serving.run_simple function.
