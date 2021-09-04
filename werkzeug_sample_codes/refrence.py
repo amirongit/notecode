@@ -60,3 +60,6 @@ def simple_application(environment, start_response):
 
 
 # A custom convertor can be created by subclassing BaseConvertor class.
+
+# A WSGI middleware is a WSGI application which wraps another application in
+# order to observe or change it's behavior.
