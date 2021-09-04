@@ -1,8 +1,41 @@
 from datetime import datetime, timezone
+from html import escape
 from io import StringIO
 
 from werkzeug.test import create_environ
 from werkzeug.wrappers import Request, Response
+from werkzeug.formparser import parse_form_data
+
+
+# Request and Response object are high-level APIs to use werkzeug.
+# Request.application decorator is used to mark a function as a responder which
+# accepts a Request object as it's last argument.
+
+
+@Request.application
+def high_level_app(request):
+    result = ['<title>Greeter</title>\n']
+    if request.method == 'POST':
+        result.append(f'<h1>hello {escape(request.form["name"])}!</h1>\n')
+    result.append('<form action="" method="post">\n'
+                  '    <p>Name: <input type="text" name="name" size="20">\n'
+                  '    <input type="submit" value="Greet me">\n'
+                  '</form>')
+    return Response(''.join(result), mimetype='text/html')
+
+
+def low_level_app(environ, start_response):
+    result = ['<title>Greeter</title>\n']
+    if environ['REQUEST_METHOD'] == 'POST':
+        form = parse_form_data(environ)[1]
+        result.append(f'<h1>Hello {escape(form["name"])}!</h1>\n')
+    result.append('<form action="" method="post">\n'
+                  '    <p>Name: <input type="text" name="name" size="20">'
+                  '    <input type="submit" value="Greet me">'
+                  '</form>')
+    start_response('200 OK', [('Content-Type', 'text/html; charset=utf-8')])
+    return [''.join(result).encode('utf-8')]
+
 
 # The environ dictionary contains all the information which is transmited by
 # the request.
