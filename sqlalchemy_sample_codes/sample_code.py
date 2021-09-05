@@ -140,10 +140,9 @@ mapper_registry = registry()
 # It can also be achived by calling sqlalchemy.orm.declarative_base function
 Base = mapper_registry.generate_base()
 
+
 # After declaring a mapped class, a core level table will be generated and
 # stored in an attribute called __table__.
-
-
 class User(Base):
     __tablename__ = 'user_account'
     id = Column(Integer, primary_key=True)
@@ -169,10 +168,9 @@ class Address(Base):
 
 mapper_registry.metadata.create_all(engine)
 
+
 # Another method to create mapped classes is to assign a Table object to an
 # attribute of the class called __table__.
-
-
 class UserHybrid(Base):
     __table__ = user_table
     addresses = relationship('AddressHybrid', back_populates='user')
