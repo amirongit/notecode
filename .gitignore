@@ -1,3 +1,4 @@
 .vscode
 tags
 __pycache__/
+.env
