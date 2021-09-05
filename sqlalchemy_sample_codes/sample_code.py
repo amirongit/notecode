@@ -6,7 +6,7 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
 # Any SQLAlchemy application is started by creating an Engine object.
 # It is the main source to get connections from.
-engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
+engine = create_engine('sqlite+pysqlite:///:memory:', echo=True, future=True)
 
 # working with transactions and the DBAPI
 # By calling connect method on and Engine object, a Connection object is
@@ -14,20 +14,20 @@ engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
 # A Connection provides an execution method called execute.
 # Execution methods are capable of executing Executable objects.
 # Engine.connect returns a core level connection.
+print('- - - - - - - - - -')
 with engine.connect() as conn:
     result = conn.execute(text('SELECT \'hellow, world!\''))
-    print('- - - - - - - - - -')
     print(result.all())
 
 # When executing DDL, changes need to be commited by calling commit method on
 # the Connection object.
+print('- - - - - - - - - -')
 with engine.connect() as conn:
     conn.execute(text('CREATE TABLE some_table (x int, y int)'))
     conn.execute(text('INSERT INTO some_table (x, y) VALUES (:x, :y)'),
                  [{'x': 1, 'y': 1}, {'x': 2, 'y': 2}])
     conn.commit()
     result = conn.execute(text('SELECT * FROM some_table'))
-    print('- - - - - - - - - -')
     print(result.all())
 
 # In order to avoid having to commit changes when executing DDL, a context
@@ -40,26 +40,22 @@ with engine.begin() as conn:
 # The return value from execution methods are in the form of Result objects,
 # which are filled with Row objects which are filled with either mapped class
 # objects, elements or both.
+print('- - - - - - - - - -')
 with engine.connect() as conn:
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for row in result:
-        print('- - - - - - - - - -')
         print(row)
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for row in result:
-        print('- - - - - - - - - -')
         print(f'x: {row.x}, y: {row.y}')
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for row in result:
-        print('- - - - - - - - - -')
         print(f'x: {row[0]}, y: {row[1]}')
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for x, y in result:
-        print('- - - - - - - - - -')
         print(f'x: {x}, y: {y}')
     result = conn.execute(text('SELECT x, y FROM some_table'))
     for dict_row in result.mappings():
-        print('- - - - - - - - - -')
         print(f'x: {dict_row["x"]}, y: {dict_row["y"]}')
 
 # A list of dictionaries made of single key value pairs can be passed to an
@@ -70,30 +66,30 @@ with engine.connect() as conn:
 # executemany.
 # A single dictonary can be passed to an execution method in order to pass the
 # Executable object a single set of parameters.
+print('- - - - - - - - - -')
 with engine.connect() as conn:
     result = conn.execute(text('SELECT x, y FROM some_table WHERE y > :y'),
                           {'y': 2})
     for row in result:
-        print('- - - - - - - - - -')
         print(f'x: {row.x}, y: {row.y}')
 
 # bindparams method can be called on Executable objects to pass them a set of
 # parameters.
+print('- - - - - - - - - -')
 with engine.connect() as conn:
     result = conn.execute(text('SELECT x, y FROM some_table WHERE y > :y ORDER'
                                ' BY x, y').bindparams(y=6))
     for row in result:
-        print('- - - - - - - - - -')
         print(f'x: {row.x}, y: {row.y}')
 
 # The interactive object in ORM level is the Session object.
 # A Session object is an ORM level connection and provides an ORM level
 # execution method.
+print('- - - - - - - - - -')
 with Session(engine) as sess:
     result = sess.execute(text('SELECT x, y FROM some_table WHERE y > :y ORDER'
                                ' BY x, y').bindparams(y=6))
     for row in result:
-        print('- - - - - - - - - -')
         print(f'x: {row.x}, y: {row.y}')
 
 # Like a core level connection, after executing DDL, commit method should be
@@ -218,17 +214,15 @@ insert_statement_with_values = insert(user_table).values(
         name='spongebob', fullname='Spongebob Squarepants')
 
 # All Executable objects can be compiled to turn into raw SQL query string.
+print('- - - - - - - - - -')
 compiled = insert_statement_with_values.compile()
-
 with engine.connect() as conn:
     result = conn.execute(insert_statement_with_values)
     conn.commit()
     # Information about the last excuted insert Executable object
     # can be accessed thruogh inserted_primary_key and lastrowid attributes of
     # the returned Result object.
-    print('- - - - - - - - - -')
     print(result.inserted_primary_key)
-    print('- - - - - - - - - -')
     print(result.lastrowid)
 
 with engine.connect() as conn:
@@ -279,11 +273,11 @@ with engine.connect() as conn:
 # which are filled with elements.
 # ( Supposing that the Executable object queries something and gets some rows
 # back)
+print('- - - - - - - - - -')
 core_level_statement = select(user_table).where(
         user_table.c.name == 'spongebob')
 with engine.connect() as conn:
     result = conn.execute(core_level_statement)
-    print('- - - - - - - - - -')
     print(result.all()[0])
 
 # ORM level Executable objects should be executed by an ORM level execution
@@ -292,10 +286,10 @@ with engine.connect() as conn:
 # which are filled with mapped class objects.
 # ( Supposing that the Executable object queries something and gets some rows
 # back)
+print('- - - - - - - - - -')
 orm_level_statement = select(User).where(User.name == 'spongebob')
 with Session(engine) as sess:
     result = sess.execute(orm_level_statement)
-    print('- - - - - - - - - -')
     print(result.all()[0])
 
 # The from clause for a select Executable object will be generated based on
@@ -315,9 +309,9 @@ print(select(User))
 
 # When an ORM level select Executable object is executed against a full
 # entity, entity itself is returned within each Row object.
+print('- - - - - - - - - -')
 with Session(engine) as sess:
     result = sess.execute(select(User)).first()
-    print('- - - - - - - - - -')
     print(result)
 
 # Indivisual columns to query are specified by passing mapped class attributes
@@ -328,18 +322,18 @@ print(select(User.name, User.fullname))
 # When an ORM level select Executable object is executed against
 # indivisual columns of an entity, Row objects are returned filled with
 # elements.
+print('- - - - - - - - - -')
 with Session(engine) as sess:
     result = sess.execute(select(User.name, User.fullname)).first()
-    print('- - - - - - - - - -')
     print(result)
 
 
 # Row objects can be returned filled with a mix of elements and mapped class
 # objects.
+print('- - - - - - - - - -')
 with Session(engine) as sess:
     result = sess.execute(select(User.name, Address).where(
         User.id == Address.user_id).order_by(Address.id))
-    print('- - - - - - - - - -')
     print(result.all())
 
 # In order to specify as clause in a select Executable object, label method
@@ -347,20 +341,19 @@ with Session(engine) as sess:
 # label method also exists on mapped class attributes referring to the columns.
 # Labels will be presented as attributes in the returned Row objects by
 # executing Executable objects with labeled Column objects.
+print('- - - - - - - - - -')
 labeled_select_statement = select(user_table.c.name.label('username'),
                                   user_table.c.id.label('userid'))
-print('- - - - - - - - - -')
 print(labeled_select_statement)
 with engine.connect() as conn:
     result = conn.execute(labeled_select_statement)
     for row in result:
-        print('- - - - - - - - - -')
         print(row.userid, row.username)
 
 # A text construct can be embeded with a select Executable object in order to
 # inject raw and hard coded SQL to it.
-injected_select_stetement = select(text('"sample SQL"'), user_table.c.name)
 print('- - - - - - - - - -')
+injected_select_stetement = select(text('"sample SQL"'), user_table.c.name)
 print(injected_select_stetement)
 
 # literal_column function is a constructor like text function but it
@@ -413,7 +406,6 @@ print(select(User).filter_by(name='spongebob',
 print('- - - - - - - - - -')
 print(select(user_table.c.name, address_table.c.email_address).join_from(
         user_table, address_table))
-print('- - - - - - - - - -')
 print(select(user_table.c.name, address_table.c.email_address).join(
     address_table))
 
@@ -444,7 +436,6 @@ print(select(address_table.c.email_address).select_from(user_table).join(
 # In order to do a full outer join, full argument can be used in join method.
 print('- - - - - - - - - -')
 print(select(user_table).join(address_table, isouter=True))
-print('- - - - - - - - - -')
 print(select(user_table).join(address_table, full=True))
 # outerjoin can be called on select Executable objects to achive the same
 # result.
@@ -458,7 +449,6 @@ print(select(user_table).order_by(user_table.c.name))
 # method in order to user ascending and descending in ordering.
 print('- - - - - - - - - -')
 print(select(user_table).order_by(user_table.c.name.desc()))
-print('- - - - - - - - - -')
 print(select(User).order_by(User.fullname.asc()))
 
 # In order to use SQL functions, a namespace exists in sqlalchemy called func,
@@ -475,17 +465,17 @@ print(select(User.name, func.count(Address.id).label('count')).join(
 # alias method can be called on Table objects in order to get Table objects
 # similar to themselves but can be used as an alias when querying in core
 # level.
+print('- - - - - - - - - -')
 user_alias_1 = user_table.alias()
 user_alias_2 = user_table.alias()
-print('- - - - - - - - - -')
 print(select(user_alias_1.c.name, user_alias_2.c.name).join_from(
     user_alias_1, user_alias_2, user_alias_1.c.id > user_alias_2.c.id))
 
 # In order to use aliases in ORM level, aliased function can be used to get an
 # Alias object.
+print('- - - - - - - - - -')
 address_alias_1 = aliased(Address)
 address_alias_2 = aliased(Address)
-print('- - - - - - - - - -')
 print(select(User).join_from(User, address_alias_1).where(
     address_alias_1.email_address == 'patrick@sqlalchemy.org').join_from(
         User, address_alias_2).where(
@@ -493,10 +483,10 @@ print(select(User).join_from(User, address_alias_1).where(
 
 # In order to use a select Executable object as a subquery, subquery method
 # can be called on it to achive a Subqery object.
+print('- - - - - - - - - -')
 sample_subquery = select(func.count(address_table.c.id).label('count'),
                          address_table.c.user_id).group_by(
                                  address_table.c.user_id).subquery()
-print('- - - - - - - - - -')
 print(sample_subquery)
 
 # Subqery objects behave like Table objects including a c attribute for the
@@ -573,19 +563,15 @@ print(delete(user_table).where(user_table.c.name == 'patrick'))
 # statement to get the object.
 # The identity map feature maintains a unique instance of a particular python
 # object per database within the scope of a particular Session object.
+print('- - - - - - - - - -')
 with Session(engine) as sess:
     squidward = User(name='squidward', fullname='Squidward Tentacles')
-    print('- - - - - - - - - -')
     print(squidward)
     sess.add(squidward)
-    print('- - - - - - - - - -')
     print(sess.new)
     sess.flush()
-    print('- - - - - - - - - -')
     print(squidward)
     queried_squidward = sess.get(User, 4)
-    print('- - - - - - - - - -')
     print(queried_squidward)
-    print('- - - - - - - - - -')
     print(queried_squidward is squidward)
     sess.commit()
