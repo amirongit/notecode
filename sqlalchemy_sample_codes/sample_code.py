@@ -1,5 +1,6 @@
 from sqlalchemy import (create_engine, text, insert, select, bindparam,
-                        literal_column, and_, or_, func, union_all, update)
+                        literal_column, and_, or_, func, union_all, update,
+                        delete)
 from sqlalchemy.orm import Session, registry, relationship, aliased
 from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
@@ -64,6 +65,9 @@ with engine.connect() as conn:
 # A list of dictionaries made of single key value pairs can be passed to an
 # execution method in order to pass multiple sets of parameters to an
 # Executable object.
+# When a list of dictionaries is passed to an execution method, it will
+# execute the Executable object once for each of them; this feature is called
+# executemany.
 # A single dictonary can be passed to an execution method in order to pass the
 # Executable object a single set of parameters.
 with engine.connect() as conn:
@@ -100,8 +104,8 @@ with Session(engine) as sess:
     sess.commit()
 
 # working with database metadata
-# Metadata is the data about the actual data that we are storing, like tables
-# and columns.
+# Metadata is the data about the actual data that is getting stored, like
+# tables and columns.
 metadata = MetaData()
 
 # A table can be declared or reflected from an existing table in a
@@ -204,12 +208,12 @@ with engine.connect() as conn:
 some_table = Table('some_table', metadata, autoload_with=engine)
 
 # working with data
-# In order to execute anything, we need an Executable object.
+# In order to execute anything, an Executable object is needed.
 # An Executable object can be achived by calling functions like insert, select
 # or text.
 # Eeach Executable object can represent an SQL statement.
 # In order to specify a set of values for Executable and ValueBased objects,
-# like an insert Executable object, we can call values method on them.
+# like an insert Executable object, values method can be called on them.
 insert_statement_with_values = insert(user_table).values(
         name='spongebob', fullname='Spongebob Squarepants')
 
@@ -220,7 +224,7 @@ with engine.connect() as conn:
     result = conn.execute(insert_statement_with_values)
     conn.commit()
     # Information about the last excuted insert Executable object
-    # can be accessed turough inserted_primary_key and lastrowid attributes of
+    # can be accessed thruogh inserted_primary_key and lastrowid attributes of
     # the returned Result object.
     print('- - - - - - - - - -')
     print(result.inserted_primary_key)
@@ -522,3 +526,66 @@ print(union_all(select(user_table).where(user_table.c.name == 'sandy'),
 print('- - - - - - - - - -')
 print(update(user_table).where(user_table.c.name == 'patrick').values(
     fullname='Patrick The Star'))
+
+# In order to create a delete Executable object, delete function can be used.
+# In order to specify where clause in a delete Executable object, where method
+# can be called on it.
+print('- - - - - - - - - -')
+print(delete(user_table).where(user_table.c.name == 'patrick'))
+
+# When a delete or update Executable object is executed, the number of
+# affected rows can be accessed through rowcount attribute of the returned
+# Result object by the execution method.
+# The rowcount value shows the number of rows matched with the where clauses
+# and it doesn't matter if the rows are actually modified or not.
+
+# data manipulation with the ORM
+# In ORM level, Session object is responsible for inserting rows to a
+# database.
+# First, objects of mapped classes should be created to represent the rows
+# which should be inserted, after that, it is passed to add method of a
+# Session object to be inserted to the database.
+# In order to use the auto increment feature of the database for id column,
+# simply no values should be provided for this column when instantiating
+# the mapped object.
+# mapped class objects don't raise attribute error when they are missing,
+# instead None is assigned to them by SQLAlchemy itself to indicate that it
+# doesn't have a value yet.
+# By passing mapped objects to add method of a Session object, they get into a
+# state called pending which means they are not inserted yet.
+# Pending objects of a Session object can be accessed through new attribute of
+# the Session object.
+# SQLAlchemy accumulates the changes but doesn't execute them untill needed in
+# order to improve decision making about the way the DML is executed.
+# DML changes can be manually flushed using flush method on the Session
+# object.
+# Flush means to empty a buffer.
+# After calling flush method, a transaction is opened to emmit DML, in this
+# stage, all the attributes of our mapped objects are filled with correct
+# values ( like id ) and the transaction itself remains open untill one of
+# commit, rollback or close methods are called on the Session object.
+# It is not needed to call flush method before commiting changes, because a
+# Session object autoflushes changes before commiting them.
+# The identity map is a feature which links all of the loaded objects to their
+# primary keys; a mapped object can be retrieved using get method of a Session
+# object which uses this feature; this method returns the queried mapped
+# object if it's locally present in identity map, otherwise emmits a select
+# statement to get the object.
+# The identity map feature maintains a unique instance of a particular python
+# object per database within the scope of a particular Session object.
+with Session(engine) as sess:
+    squidward = User(name='squidward', fullname='Squidward Tentacles')
+    print('- - - - - - - - - -')
+    print(squidward)
+    sess.add(squidward)
+    print('- - - - - - - - - -')
+    print(sess.new)
+    sess.flush()
+    print('- - - - - - - - - -')
+    print(squidward)
+    queried_squidward = sess.get(User, 4)
+    print('- - - - - - - - - -')
+    print(queried_squidward)
+    print('- - - - - - - - - -')
+    print(queried_squidward is squidward)
+    sess.commit()
