@@ -51,7 +51,7 @@ with minimal_application.test_request_context():
 
 # By default, a view function only responses to GET requests.
 # In order to specify allowed HTTP methods for requests to be handled, their
-# name can be passed as a list to methods argument of the route method.
+# names can be passed as a list to methods argument of the route method.
 @minimal_application.route('/postget/', methods=['POST', 'GET'])
 def postget():
     if request.method == 'POST':
