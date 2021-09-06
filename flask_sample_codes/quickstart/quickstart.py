@@ -1,6 +1,6 @@
 from markupsafe import escape
 
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template
 
 # An instance of Flask class will play the role of a WSGI application.
 # The first parameter of the constructor method of Flask class is the name of
@@ -54,7 +54,33 @@ with minimal_application.test_request_context():
 # names can be passed as a list to methods argument of the route method.
 @minimal_application.route('/postget/', methods=['POST', 'GET'])
 def postget():
-    if request.method == 'POST':
-        ...
-    if request.method == 'GET':
-        ...
+    return f'<h1>{request.method}</h1>'
+
+
+# Flask can serve static files using url_for function.
+# In order to get static files, the name 'static' should be passed as the
+# argument to url_for function along with a keyword argument called filename
+# which takes the name or relative path of the static file needed from the
+# static directory which should exist next to the module passed to flask as
+# import name.
+with minimal_application.test_request_context():
+    print(url_for('static', filename='styles/main.css'))
+
+
+# To render a template, render_template function can be used.
+# render_template function takes the name of the template and the values
+# which should be passed to the template as keyword arguments.
+# The template whose name is passed to render_template function should exist
+# in the templates directory next to the module passed to flask as import
+# name.
+# When using flask, config, request, session and g objects can be accessed
+# Inside jinja templates, as well as url_for and get_flashed_messages
+# functions.
+# Templates can inherit from each other.
+# In order to use a filter inside a jinja template, the name of the filter
+# should come after a pipe symbol which should come after a variable name.
+# Jinja2 engine automatically escapes all variables for possible html, for
+# trusted sources, safe filter can be used to skip escaping for it.
+@minimal_application.route('/gettemplate/<string:title>')
+def template(title):
+    return render_template('index.html', title=title)
