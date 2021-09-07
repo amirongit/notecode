@@ -7,7 +7,7 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
 # Any SQLAlchemy application is started by creating an Engine object.
 # It is the main source to get connections from.
-engine = create_engine('sqlite+pysqlite:///:memory:', echo=True, future=True)
+engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
 
 
 # working with transactions and the DBAPI
@@ -625,11 +625,11 @@ with Session(engine) as sess:
     sess.commit()
 
 
-# There are two ways to retrieve a mapped object which is a proxy to an
+# There are many ways to retrieve a mapped object which is a proxy to an
 # specific row from a database.
-# In order to retreiving a mapped object which is a proxy to an specific row
-# from a database, a select Executable object could be executed or get method
-# of Session object can be called.
+# In order to retreiving a mapped object, a select Executable object could be
+# executed, get method of Session object can be called or query method of
+# Session object could be called.
 # In order to retrieve a mapped object from a Result object which is achived
 # by querying against ORM entities by an ORM level execution method, scalar_one
 # method should be called on it to retrieve the first item of the first Row
@@ -647,11 +647,11 @@ with Session(engine) as sess:
 
 # There are two ways to update rows in ORM level.
 # A row can be updated in database in the context of ORM level through a
-# retrieved mapped object, which changes are applied on.
+# retrieved mapped object which changes are applied on.
 # After applying changes, the changed object will appear in a collection
 # stored at dirty attribute of the Session object, the next time the Session
-# object processes a flush, an update statement will be emmited for the objects
-# in dirty attribute and the dirty collection will be emptied.
+# object processes a flush, an update statement will be emmited for the dirty
+# objects in dirty attribute and the dirty collection will be emptied.
 print('-')
 with Session(engine) as sess:
     sandy = sess.execute(select(User).where(
@@ -664,8 +664,8 @@ with Session(engine) as sess:
     print(sess.dirty)
 
 
-# An update statement can be emmited in ORM level by using update Executable
-# objects, too.
+# An update statement can be emmited in ORM level using update Executable
+# objects.
 # When using an update Executable object to update ORM entities, no mapped
 # object will appear in dirty attribute of the session since no mapped object
 # is retrieved.
@@ -681,9 +681,32 @@ with Session(engine) as sess:
 
 # There are two ways to delete rows in ORM level.
 # A row can be deleted from the database in ORM level by passing a retrieved
-# mapped object to delete method of the Session object and flushing changes.
+# mapped object which represents the row to delete method of the Session
+# object.
 with Session(engine) as sess:
     patrick = sess.get(User, 3)
-    print(patrick)
     sess.delete(patrick)
-    sess.flush() # Integrity error?!
+
+
+# A delete statement can be emmited in ORM level using delete Executable
+# objects.
+with Session(engine) as sess:
+    sess.execute(delete(User).where(User.id == 4))
+
+
+# In order to emmit a rollback and discard the DML executed in an open
+# transaction, rollback method of the Session object can be called.
+# When rollback method is called, existing mapped objects will be refreshed to
+# their original state when accessed.
+print('-')
+with Session(engine) as sess:
+    squidward = sess.query(User).filter(User.id == 4).first()
+    print(squidward)
+    squidward.fullname = 'Squidward Octopus'
+    print(squidward)
+    sess.rollback()
+    print(squidward)
+
+
+# When working with a Session object outside of a context manager, it is better
+# to call the close method on it after it is used.
