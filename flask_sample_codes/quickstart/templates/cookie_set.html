@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+    <h1>COOKIE: {{ request.cookies.get('cookie') }}</h1>
+</div>
+<br>
+<div>
+    <form action="{{ url_for('cookie_set') }}" method="POST">
+        <label>input a value to set as cookie:</label>
+        <input name="cookie" type="text">
+        <input type="submit" value="set">
+    </form>
+</div>
+<br>
+<div>
+    <form action="{{ url_for('cookie_unset') }}" method="GET">
+        <input type="submit" value="unset">
+    </form>
+</div>
+{% endblock content %}
