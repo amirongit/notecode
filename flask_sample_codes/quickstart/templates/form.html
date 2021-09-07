@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<br>
+<div>
+    {% if get_input %}
+        <h1>GET: {{ get_input }}</h1>
+    {% endif %}
+    {% if post_input %}
+        <h1>POST: {{ post_input }}</h1>
+    {% endif %}
+    {% if post_upload %}
+        <h1>FILE: {{ post_upload }}
+    {% endif %}
+</div>
+<br>
+<div>
+    <form action="{{ url_for('formdata') }}" method="GET">
+        <label>input a text:</label>
+        <input name="get_input" type="text">
+        <input type="submit" value="get">
+    </form>
+</div>
+<br>
+<div>
+    <form action="{{ url_for('formdata') }}" method="POST" enctype="multipart/form-data">
+        <label>input a text:</label>
+        <input name="post_input" type="password">
+        <label>input a file:</label>
+        <input name="post_upload" type="file">
+        <input type="submit" value="post">
+    </form>
+</div>
+{% endblock content %}
