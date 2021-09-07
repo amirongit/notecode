@@ -1,6 +1,8 @@
 from markupsafe import escape
 
-from flask import Flask, url_for, request, render_template
+from flask import (Flask, url_for, request, render_template, redirect,
+                   make_response)
+from werkzeug.utils import secure_filename
 
 # An instance of Flask class will play the role of a WSGI application.
 # The first parameter of the constructor method of Flask class is the name of
@@ -49,14 +51,6 @@ with minimal_application.test_request_context():
                   sample_unknown_key='sample value'))
 
 
-# By default, a view function only responses to GET requests.
-# In order to specify allowed HTTP methods for requests to be handled, their
-# names can be passed as a list to methods argument of the route method.
-@minimal_application.route('/postget/', methods=['POST', 'GET'])
-def postget():
-    return f'<h1>{request.method}</h1>'
-
-
 # Flask can serve static files using url_for function.
 # In order to get static files, the name 'static' should be passed as the
 # argument to url_for function along with a keyword argument called filename
@@ -81,6 +75,83 @@ with minimal_application.test_request_context():
 # should come after a pipe symbol which should come after a variable name.
 # Jinja2 engine automatically escapes all variables for possible html, for
 # trusted sources, safe filter can be used to skip escaping for it.
-@minimal_application.route('/gettemplate/<string:title>')
-def template(title):
-    return render_template('index.html', title=title)
+@minimal_application.route('/template/')
+def template():
+    return render_template('index.html', title='Quickstart')
+
+
+# some objects in flask are global objects which can be used inside a view
+# function and still be unique for each thread handling a request; this happens
+# using contexts; in fact, these objects are proxies to local variables of some
+# special contexts and won't work as excepted outside of these contexts.
+# request ans session objects need to be used inside a request context to work
+# properly.
+# g and current_app objects need to be used inside an application context to
+# work properly.
+
+
+# By default, a view function only responses to GET requests.
+# In order to specify allowed HTTP methods for requests to be handled, their
+# names can be passed as a list to methods argument of the route method.
+# Form data which is sent by a POST or PUT request can be accessed through form
+# attribute of the request object.
+# Parameters which are submitted in the url, can be accessed through args
+# attribute of the request object.
+# Uploaded files can be accessed through file attribute of the request object.
+# Retrieved file object from file attribute of the request object acts like a
+# normal python file object, but it also has a save method.
+# Name of the files should never be trusted, if it is needed to use the
+# original name of the uploaded file, it should be secured.
+# werkzeug.utils.secure_filename function can be used in order to secure the
+# name of a file.
+# In order to redirect a client to another view function, redirect function
+# can be used.
+@minimal_application.route('/form/')
+def form():
+    post_input = request.args.get('post_input')
+    get_input = request.args.get('get_input')
+    post_upload = request.args.get('post_upload')
+    return render_template('form.html', title='Make Get/Post Request',
+                           get_input=get_input, post_input=post_input,
+                           post_upload=post_upload)
+
+
+@minimal_application.route('/formdata/', methods=['GET', 'POST'])
+def formdata():
+    if request.method == 'GET':
+        return redirect(
+                url_for('form', get_input=request.args.get('get_input')))
+    if request.method == 'POST':
+        if request.files.get('post_upload'):
+            return redirect(url_for('form',
+                                    post_input=request.form.get('post_input'),
+                                    post_upload=secure_filename(
+                                        request.files.get(
+                                            'post_upload').filename)))
+        return redirect(url_for('form',
+                                post_input=request.form.get(
+                                    'post_input')))
+
+
+# Cookies which is transmited by the client can be accessed through cookie
+# attribute of the request object.
+# In order to set a cookie, a Response object should be created using
+# make_response function which returns a Response object which should be
+# returned by the view function, and then set_cookie method can be called on
+# the returning response object.
+# In ordert to remove a cookie, set_cookie method can be called on the
+# returning response object, with 0 passed to "expires" keyword argument.
+@minimal_application.route('/cookie_set/', methods=['GET', 'POST'])
+def cookie_set():
+    if request.method == 'POST':
+        resp = make_response(redirect(url_for('cookie_set')))
+        resp.set_cookie('cookie', request.form.get('cookie'))
+        return resp
+    return render_template('cookie_set.html')
+
+
+@minimal_application.route('/cookie_unset/')
+def cookie_unset():
+    resp = make_response(redirect(url_for('cookie_set')))
+    resp.set_cookie('cookie', '', max_age=0)
+    return resp
