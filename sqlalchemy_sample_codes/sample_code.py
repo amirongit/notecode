@@ -494,7 +494,7 @@ print(select(user_table).order_by(user_table.c.name.desc()))
 print(select(User).order_by(User.fullname.asc()))
 
 
-# In order to use SQL functions, a namespace exists in sqlalchemy called func,
+# In order to use SQL functions, a namespace exists in SQLAlchemy called func,
 # which contains SQL functions and arguments can be passed to those functions.
 print('-')
 print(func.count(user_table.c.id))
@@ -605,7 +605,7 @@ print(delete(user_table).where(user_table.c.name == 'patrick'))
 # represent the row, after that, it is passed to add method of a Session object
 # to be inserted to the database.
 # In order to use the auto increment feature of the database for id column,
-# simply no values should be provided for this column when instantiating
+# simply no values should be provided for this column when instanciating
 # the mapped object.
 # mapped objects don't raise attribute error when they are missing, instead
 # None is assigned to them by SQLAlchemy itself to indicate that it doesn't
@@ -710,3 +710,35 @@ with Session(engine) as sess:
 
 # When working with a Session object outside of a context manager, it is better
 # to call the close method on it after it is used.
+
+
+# working with related objects
+# A linkage can be defined between two different mapped classes, or from a
+# mapped class to itself using relationship function. (shown in the definition
+# of mapped classes above)
+# A one to many ( or wise versa ) relationship can be recognized by SQLAlchemy
+# when one of two linked mapped classes has a ForeignKeyConstraint to the other
+# one.
+# The attribute in a mapped class which represents the many sides of a
+# relationship will be an SQLAlchemy version of python list which can keep
+# trakc of changes made to it.
+# In order to add a child entity, append method can be used on the attribute
+# which represents the manyside of the relationship.
+# As a child entity is linked to a parent entity, both can be accessed through
+# each other if back_populates parameter is configured for both mapped objects
+# when constructing the relationship in them.
+# In order to specify the parent entity for a child entity, it can be passed
+# to the constructor as a keyword argument.
+# As a parent entity is linked to a child entity, both can be accessed through
+# each other if back_populates parameter is configured for both mapped objects
+# when constructing the relationship in them.
+print('-')
+with Session(engine) as sess:
+    pearl = User(name='pkrabs', fullname='Pearl Krabs')
+    print(pearl.addresses)
+    pearl_email = Address(email_address='pearl@sqlalchemy.org')
+    pearl.addresses.append(pearl_email)
+    print(pearl.addresses)
+    print(pearl_email.user)
+    pearl_second_email = Address(email_address='pearl@gmail.com', user=pearl)
+    print(pearl.addresses)
