@@ -7,7 +7,7 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey
 
 # Any SQLAlchemy application is started by creating an Engine object.
 # It is the main source to get connections from.
-engine = create_engine('sqlite+pysqlite:///:memory:', echo=False, future=True)
+engine = create_engine('sqlite+pysqlite:///:memory:', echo=True, future=True)
 
 
 # working with transactions and the DBAPI
@@ -732,6 +732,9 @@ with Session(engine) as sess:
 # As a parent entity is linked to a child entity, both can be accessed through
 # each other if back_populates parameter is configured for both mapped objects
 # when constructing the relationship in them.
+# When an object is passed to a session execution method, it's related objects
+# will be added to the session automatically.
+# SQLAlchemy automatically inserts parent entities first.
 print('-')
 with Session(engine) as sess:
     pearl = User(name='pkrabs', fullname='Pearl Krabs')
@@ -742,3 +745,12 @@ with Session(engine) as sess:
     print(pearl_email.user)
     pearl_second_email = Address(email_address='pearl@gmail.com', user=pearl)
     print(pearl.addresses)
+    sess.add(pearl_email)
+    print(pearl in sess)
+    print(pearl_second_email in sess)
+    sess.commit()
+
+
+# A loadeing strategy can be specified to inform SQLAlchemy how to load
+# objects.
+# The suggested loading strategies are cascade and selectin.
