@@ -753,4 +753,4 @@ with Session(engine) as sess:
 
 # A loadeing strategy can be specified to inform SQLAlchemy how to load
 # objects.
-# The suggested loading strategies are cascade and selectin.
+# The suggested loading strategy is called selectin.
