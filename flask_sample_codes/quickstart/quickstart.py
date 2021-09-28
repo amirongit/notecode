@@ -1,7 +1,7 @@
 from markupsafe import escape
 
 from flask import (Flask, url_for, request, render_template, redirect,
-                   make_response)
+                   make_response, abort, session)
 from werkzeug.utils import secure_filename
 
 # An instance of Flask class will play the role of a WSGI application.
@@ -84,7 +84,7 @@ def template():
 # function and still be unique for each thread handling a request; this happens
 # using contexts; in fact, these objects are proxies to local variables of some
 # special contexts and won't work as excepted outside of these contexts.
-# request ans session objects need to be used inside a request context to work
+# request and session objects need to be used inside a request context to work
 # properly.
 # g and current_app objects need to be used inside an application context to
 # work properly.
@@ -140,7 +140,7 @@ def formdata():
 # returned by the view function, and then set_cookie method can be called on
 # the returning response object.
 # In ordert to remove a cookie, set_cookie method can be called on the
-# returning response object, with 0 passed to "expires" keyword argument.
+# returning response object, with 0 passed to "max_age" keyword argument.
 @minimal_application.route('/cookie_set/', methods=['GET', 'POST'])
 def cookie_set():
     if request.method == 'POST':
@@ -155,3 +155,52 @@ def cookie_unset():
     resp = make_response(redirect(url_for('cookie_set')))
     resp.set_cookie('cookie', '', max_age=0)
     return resp
+
+
+# In order to abort a request early with an error code, abort function can be
+# used.
+# If abort function gets executed inside a view function, the rest of the code
+# of the view function won't be executed.
+@minimal_application.route('/get_not_found/')
+def get_not_found():
+    abort(404)
+
+
+# In order to customize a default error page, error_handler decorator can be
+# used.
+@minimal_application.errorhandler(404)
+def page_not_found(error):
+    return render_template('not_found.html'), 404
+
+
+# Flask automatically converts the return value of a view function to a
+# response object.
+# Flask's logic in converting return values to response objects are as follow:
+# Response object -> returned directly from the view
+# str -> Response object with a body containing str data
+# dict -> Response object produced using jsonify
+# tuple -> valid formats : (response, status), (response, headers)
+# (response, status, headers)
+# none of the above -> assuming it's a valid WSGI application, it is returned
+# directly
+
+
+# The session object is used to store information specific to a user from one
+# request to the next; it is implemented on top of cookies, and signed using
+# the secret key.
+# FLASK SESSION IS NOT SECURE.
+minimal_application.secret_key = 'TH1515453CR3TK3Y'
+
+
+@minimal_application.route('/session_set/', methods=['GET', 'POST'])
+def session_set():
+    if request.method == 'POST':
+        session['session'] = request.form.get('session')
+        return redirect(url_for('session_set'))
+    return render_template('session_set.html')
+
+
+@minimal_application.route('/session_unset/')
+def session_unset():
+    session.pop('session')
+    return redirect(url_for('session_set'))
