@@ -7,3 +7,6 @@ django-admin startproject <name>
 python manage.py runserver <ip/127.0.0.1:port/8000>
     starts a light webserver which is suitable for development on the given
     ip and port.
+
+python manage.py startapp
+    creates an app.

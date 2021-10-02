@@ -1,0 +1,16 @@
+project
+    an environment in which django files are kept.
+    a project is a collection of configurations and apps for a particular
+    website.
+
+application
+    a python package which follows a certain convention.
+    an app is a web application that does something and can be used in multiple
+    projects.
+
+view
+    must take request metadata object is it's first argument and return a valid
+    http response.
+
+URLconf
+    is like a table of contents, which matches a url to a view.
