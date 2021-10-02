@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# To refrence other URLconfs, include function can be used.
-# when django is encountered with a include, the matched part of the URL is
-# chopped off and the rest of it is passed to the included URLconf.
+# To refrence other URLconfs, include function can be used. When django is
+# encountered with a include, the matched part of the URL is chopped off and
+# the rest of it is passed to the included URLconf. The ability of plug and
+# play urls is provided by include function. it is typically used for external
+# URLconfs (except admin.site.urls).
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
