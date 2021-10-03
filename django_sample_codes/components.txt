@@ -9,8 +9,8 @@ application
     projects.
 
 view
-    must take request metadata object is it's first argument and return a valid
-    http response.
+    a callable which takes request metadata object as it's first argument and
+    returns a valid http response.
 
 URLconf
     is like a table of contents, which matches a url to a view.

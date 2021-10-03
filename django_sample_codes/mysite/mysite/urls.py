@@ -21,6 +21,16 @@ from django.urls import path, include
 # the rest of it is passed to the included URLconf. The ability of plug and
 # play urls is provided by include function. it is typically used for external
 # URLconfs (except admin.site.urls).
+# The path function can be given four arguments, described as below:
+# route (required): a str which contains a url pattern
+# when django is searching for url patterns, it doesn't care about GET or post
+# parameters.
+# view (required): the view which is called when it's associated url pattern is
+# matched. it is called with an HttpRequest object as the first argument and
+# any captured values from the pattern as kwargs.
+# kwargs (optional)
+# name (optional): given so the url can be refrenced from elsewhere. useful to
+# avoid redundency.
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
