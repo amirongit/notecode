@@ -5,8 +5,13 @@ django-admin startproject <name>
     generates some code which stablishes a django project.
 
 python manage.py runserver <ip/127.0.0.1:port/8000>
-    starts a light webserver which is suitable for development on the given
-    ip and port.
+    starts a light webserver which is suitable for development on the given ip
+    and port.
 
 python manage.py startapp
     creates an app.
+
+python manage.py migrate
+    looks at the INSTALLED_APPS settings and creates any needed databases
+    tables according to the database settings in project/settings.py module and
+    the migrations shipped with the app.
