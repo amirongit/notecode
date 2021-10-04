@@ -3,3 +3,10 @@ tags
 __pycache__/
 .env
 db.sqlite3
+instance/
+.coverage/
+htmlcov/
+.pytest_cache/
+dist/
+build/
+*.egg-info/
