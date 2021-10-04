@@ -17,3 +17,9 @@ URLconf
 
 model
     a single definition containing essential fields and behaviors of the data.
+
+migration
+    a way for django to store changes to models, existing as files on disk.
+    provides the ability of changing models overtime without the need of
+    deleting or creating new tables.
+

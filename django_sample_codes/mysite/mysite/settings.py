@@ -32,9 +32,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 # The INSTALLED_APPS list holds all of the applications which are activated in
-# this django project.
+# a django project.
+# Django apps are pluggable and are not tied with a single django instance.
 # Some of the applications need a databases table to work.
+# In order to include an app in a django project, it's configuration class
+# should be refrenced in the INSTALLED_APPS list.
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

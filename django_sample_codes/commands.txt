@@ -15,3 +15,16 @@ python manage.py migrate
     looks at the INSTALLED_APPS settings and creates any needed databases
     tables according to the database settings in project/settings.py module and
     the migrations shipped with the app.
+    takes all unapplied migrations and runs them against the database.
+    synchronizes the changes made to the model with the database schema.
+
+python manage.py makemigrations
+    informs django that changes have been made to some models and it should be
+    stored as a migration.
+
+python manage.py sqlmigrate
+    takes a migration as an input and returns it as SQL expressions.
+
+python manage.py check
+    check for problems in the project without making migrations or changes to
+    the database.
