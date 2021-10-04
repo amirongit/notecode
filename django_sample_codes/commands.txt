@@ -28,3 +28,7 @@ python manage.py sqlmigrate
 python manage.py check
     check for problems in the project without making migrations or changes to
     the database.
+
+python manage.py shell
+    provides an interactive shell with DJANGO_SETTINGS_MODULE env var set,
+    which gives django the python import path of settings module.
