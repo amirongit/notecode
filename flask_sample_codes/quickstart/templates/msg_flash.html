@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+    <h1>MESSAGE: {{ get_flashed_messages() }}</h1>
+</div>
+<br>
+<div>
+    <form action="{{ url_for('msg_flash') }}" method="POST">
+        <label>input a message to flash:</label>
+        <input name="msg" type="text">
+        <input type="submit" value="set">
+    </form>
+</div>
+<br>
+{% endblock content %}

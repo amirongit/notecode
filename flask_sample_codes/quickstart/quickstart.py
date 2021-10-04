@@ -1,7 +1,7 @@
 from markupsafe import escape
 
 from flask import (Flask, url_for, request, render_template, redirect,
-                   make_response, abort, session)
+                   make_response, abort, session, flash)
 from werkzeug.utils import secure_filename
 
 # An instance of Flask class will play the role of a WSGI application.
@@ -204,3 +204,15 @@ def session_set():
 def session_unset():
     session.pop('session')
     return redirect(url_for('session_set'))
+
+
+# In order to flash a message and access it in the (only) next request, flash
+# function can be used.
+# In order to access the flashed messages, get_flashed_messages function can be
+# used both in templates and code.
+@minimal_application.route('/msg_flash/', methods=['GET', 'POST'])
+def msg_flash():
+    if request.method == 'POST':
+        flash(request.form.get('msg'))
+        return redirect(url_for('msg_flash'))
+    return render_template('msg_flash.html')
