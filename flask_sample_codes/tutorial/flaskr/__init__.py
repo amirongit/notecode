@@ -2,6 +2,8 @@ from os import path, makedirs
 
 from flask import Flask
 
+from .db import init_app
+
 # Files which should not be commited to version control can be located in the
 # instance folder.
 # In order to inform flask that the configuration files are relative to the
@@ -24,6 +26,8 @@ def create_app(test_config=None):
         makedirs(app.instance_path)
     except OSError:
         pass
+
+    init_app(app)
 
     @app.route('/hello/')
     def hello():
