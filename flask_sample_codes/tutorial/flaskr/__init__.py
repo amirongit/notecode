@@ -3,14 +3,14 @@ from os import path, makedirs
 from flask import Flask
 
 from .db import init_app
+from .auth import auth_bp
+
 
 # Files which should not be commited to version control can be located in the
 # instance folder.
 # In order to inform flask that the configuration files are relative to the
 # instance folder, instance_relative_config argument can be used when
 # initiating the flask app.
-
-
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(SECRET_KEY='TH1515453CR3TK3Y',
@@ -28,6 +28,9 @@ def create_app(test_config=None):
         pass
 
     init_app(app)
+    # In order to plug a blueprint into a flask app, register_blueprint method
+    # can be used.
+    app.register_blueprint(auth_bp)
 
     @app.route('/hello/')
     def hello():
