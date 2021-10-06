@@ -4,6 +4,7 @@ from flask import Flask
 
 from .db import init_app
 from .auth import auth_bp
+from .blog import blog_bp
 
 
 # Files which should not be commited to version control can be located in the
@@ -31,6 +32,7 @@ def create_app(test_config=None):
     # In order to plug a blueprint into a flask app, register_blueprint method
     # can be used.
     app.register_blueprint(auth_bp)
+    app.register_blueprint(blog_bp)
 
     @app.route('/hello/')
     def hello():
