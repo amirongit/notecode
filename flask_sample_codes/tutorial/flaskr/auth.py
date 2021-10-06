@@ -51,8 +51,7 @@ def login():
                           (username,)).fetchone()
         if user is None:
             error = 'Incorrect username.'
-
-        if not check_password_hash(user['password'], password):
+        elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
 
         if error is None:
@@ -68,7 +67,7 @@ def login():
 # before_app_request method can be used.
 @auth_bp.before_app_request
 def load_logged_in_user():
-    user_id = session['user_id']
+    user_id = session.get('user_id')
 
     if user_id is None:
         g.user = None
