@@ -33,6 +33,9 @@ def create_app(test_config=None):
     # can be used.
     app.register_blueprint(auth_bp)
     app.register_blueprint(blog_bp)
+    # In order to ensure that an endpoint generates an specifi url,
+    # add_url_rule method can be used.
+    app.add_url_rule('/', endpoint='index')
 
     @app.route('/hello/')
     def hello():
