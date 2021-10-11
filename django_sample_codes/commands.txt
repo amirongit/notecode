@@ -32,3 +32,6 @@ python manage.py check
 python manage.py shell
     provides an interactive shell with DJANGO_SETTINGS_MODULE env var set,
     which gives django the python import path of settings module.
+
+python manage.py createsuperuser
+    creates a superuser who can login to the admin site.
