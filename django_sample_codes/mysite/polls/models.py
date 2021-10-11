@@ -4,6 +4,7 @@ from datetime import timedelta
 
 # Create your models here.
 
+
 # A django model inherits from Model class held in django.db.models module.
 # Each class variable in a model represents a database field.
 # Each field is represnted by an instance of a Field class which tells django
@@ -13,8 +14,6 @@ from datetime import timedelta
 # readable name.
 # Some fields have required arguments as well as optional arguments.
 # A primary key is added to django models automatically. (can be overrided)
-
-
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
