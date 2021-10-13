@@ -25,3 +25,7 @@ migration
     provides the ability of changing models overtime without the need of
     deleting or creating new tables.
 
+template namespacing
+    django looks between all the templates within a project to find a template,
+    so templates must be inside differently named directories, otherwise, two
+    templates with the same name can't be distinguished by django.
