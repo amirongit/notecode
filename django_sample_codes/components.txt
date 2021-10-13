@@ -9,11 +9,13 @@ application
     projects.
 
 view
-    a callable which takes request metadata object as it's first argument and
-    returns a valid http response.
+    a type of webpage in a django application which generally serves an
+    specific function usually with an specific template. webpages and other
+    contents in django are delivered by views which is represented by a python
+    callable.
 
 URLconf
-    is like a table of contents, which matches a url to a view.
+    is used to get from a url to it's view. it maps url patterns to views.
 
 model
     a single definition containing essential fields and behaviors of the data.
