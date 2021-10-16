@@ -1,8 +1,16 @@
 {% if latest_question_list %}
     <ul>
         {% for question in latest_question_list %}
-            <li><a
-                href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+            <li>
+                <!-- In order to get the url of a view, url function can
+                     be used.
+                     url function takes the name of the view, which should be
+                     specified in the URLconf of it's app.
+                     arguments in django template are seperated with space.
+                     the url namespace can be specified before the name of the
+                     view and is seperated with a colon. -->
+                <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+            </li>
         {% endfor %}
     </ul>
 {% endif %}
