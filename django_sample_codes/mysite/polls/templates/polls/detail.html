@@ -1,7 +1,20 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-    {% for choice in question.choice_set.all %}
-    <!-- Parantheses are not needed to call a callable in django template. -->
-    <li>{{ choice.choice_text }}</li>
-    {% endfor %}
-</ul>
+<form action="{% url 'polls:vote' question.id %}" method="POST">
+    <!-- All POST forms which target internal urls, should use csrf_token
+         tag. -->
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        <!-- Parantheses are not needed to call a callable in django template. -->
+        {% for choice in question.choice_set.all %}
+            <!-- To get the number of how many the forloop has gone through it's
+                 loop, forloop.counter can be used. -->
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+                value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+</form>

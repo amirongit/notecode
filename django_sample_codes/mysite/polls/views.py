@@ -1,8 +1,9 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
+from django.urls import reverse
 
-from .models import Question
+from .models import Question, Choice
 
 # Create your views here.
 
@@ -45,9 +46,29 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
-    response = f'You\'r looking at the results of question {question_id}'
-    return HttpResponse(response)
+    quesion = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': quesion})
 
 
+# A dictionary like object can be accessed through request.POST to access
+# submitted data by a POST request.
+# request.GET does the same for GET requests.
+# In order to get the url for a view by it's name, reverse function can be
+# used; the namespace of the view can be specified in the given name and
+# seperated with a colon.
+# In order to prevent data being sent twice by hitting the back button, after
+# each successful deal with post data, an HttpResponseRedirect should be
+# returned.
 def vote(request, question_id):
-    return HttpResponse(f'You\'re voting on question {question_id}')
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request, 'polls/detail.html',
+                      {'question': question,
+                       'error_message': 'You didn\'t select a choice.'})
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse('polls:results',
+                                            args=(question.id,)))
