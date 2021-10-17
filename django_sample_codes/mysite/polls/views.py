@@ -2,6 +2,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
+from django.views import generic
 
 from .models import Question, Choice
 
@@ -21,7 +22,7 @@ def unused_index(request):
 
 # render function is a shortcut which takes the request object, template name
 # and context dict and returns an HttpResponse object of them.
-def index(request):
+def non_generic_index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'polls/index.html', context)
@@ -40,12 +41,12 @@ def unused_detail(request, question_id):
 # model and raises Http404 if the requested object doesn't  exist.
 # get_list_or_404 function does the same but instead of get method, it uses
 # filter method.
-def detail(request, question_id):
+def non_generic_detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
 
 
-def results(request, question_id):
+def non_generic_results(request, question_id):
     quesion = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question': quesion})
 
@@ -72,3 +73,29 @@ def vote(request, question_id):
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results',
                                             args=(question.id,)))
+
+
+# Generic views need to know what model it will be acting upon.
+# Each generic view uses a generated template name which can be overrided by
+# assigning a template name to template_name attribute.
+# Django knows that templates should be filled with context variables and is
+# able to generate context variable names; to overrid the django generated
+# context variable name, context_object_name attribute can be assigned a name.
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+# A generic detail view needs the primary key to query it's model, the primary
+# key is given to it by capturing it as pk in it's associated url.
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
