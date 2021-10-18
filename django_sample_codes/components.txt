@@ -40,3 +40,6 @@ url names namespacing
     the url tag looks for names in the root URLconf, so views with the same
     name can't be distinguished. in order to prevent this conflict, a url
     namespace can be set in each apps urls.py module.
+
+generic views
+    abstract common tasks to classes to avoid redundancy.
