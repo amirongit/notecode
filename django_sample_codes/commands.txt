@@ -35,3 +35,8 @@ python manage.py shell
 
 python manage.py createsuperuser
     creates a superuser who can login to the admin site.
+
+python manage.py test <appname>
+    looks for tests in the given app, finds subclasses of TestCase, creates
+    a special testing database, looks for test methods, runs them and then
+    reports fialures/successes.
