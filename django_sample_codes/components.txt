@@ -43,3 +43,8 @@ url names namespacing
 
 generic views
     abstract common tasks to classes to avoid redundancy.
+
+static files namespacing
+    django looks between all static files within a project to find a file, so
+    static files should be inside differently named directories, otherwise, two
+    files with the same name can't be distinguished by django.
