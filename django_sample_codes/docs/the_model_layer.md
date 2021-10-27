@@ -7,32 +7,24 @@
 
 ## Models
 
-- what is a model
-- the base model
-- how do fields work
-- primary key and id field
-- changing primary key's value
-- table names
-- how models are introduced to django
-- field class
-- information given to django by fields classes
+- model
+- base model
+- introduced models to django
+- field
+- id field
 - field specific arguments
 - golabl field arguments
-- the difference between null and blank
-- choices for a field
-- verbose field names
+- choices
 - relationships
-- relational fields naming convention
-- where should many to many fields be located
+- location of relational fields
 - intermediay models
 - model meta options
-- table wide vs row level functionality
+- row level functionality
 - get_absolute_url method
 - model inheritance
 - abstract inheritance
-- inheritance of the meta of an abstract model
+- abstract meta inheritance
 - multi table inheritance
 - parent link
-- related names in multi table inheritance subclasses
 - proxy models
-- organizing models in a package
+- model organization within a package
