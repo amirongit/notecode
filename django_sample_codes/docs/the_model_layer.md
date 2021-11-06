@@ -3,7 +3,6 @@
 # The Model Layer
 
 ---
-<!-- bg=white fg=black -->
 
 ## Models
 
@@ -41,4 +40,6 @@
 - single object retrieve
 - limited queryset
 - relationship lookups
-- field refrence of the same model
+- field refrence of the same model in queries
+- queryset cache
+- complex lookups
