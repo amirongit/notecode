@@ -6,12 +6,7 @@
 
 ## Standard context
 
-- config
-- request
-- session
-- g
-- url_for
-- get_flashed_messages
+- the default context
 
 ## Autoescaping control
 
