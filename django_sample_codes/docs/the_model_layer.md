@@ -43,3 +43,8 @@
 - field refrence of the same model in queries
 - queryset cache
 - complex lookups
+- object comparison
+- object deletion
+- foregin objects access
+- additional managers by relationships
+- reverse and forward access
