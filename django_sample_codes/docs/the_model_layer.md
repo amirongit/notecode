@@ -48,3 +48,10 @@
 - foregin objects access
 - additional managers by relationships
 - reverse and forward access
+
+---
+
+## Model instances
+
+- model instanciation
+- custom instanciation
