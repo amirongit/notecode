@@ -54,4 +54,5 @@
 ## Model instances
 
 - model instanciation
-- custom instanciation
+- model loading and refreshing
+- model validation
