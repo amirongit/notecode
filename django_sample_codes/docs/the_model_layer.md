@@ -40,7 +40,7 @@
 - single object retrieve
 - limited queryset
 - relationship lookups
-- field refrence of the same model in queries
+- model relative reference
 - queryset cache
 - complex lookups
 - object comparison
@@ -56,3 +56,6 @@
 - model instanciation
 - model loading and refreshing
 - model validation
+- saving process
+- decision making between update and insert
+- related managers
