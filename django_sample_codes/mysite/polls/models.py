@@ -14,7 +14,7 @@ from django.contrib.admin import display
 # readable name. If the name field isn't provided, django will use a machine
 # readable name.
 # Some fields have required arguments as well as optional arguments.
-# A primary key is added to django models automatically. (can be overrided)
+# A primary key is added to django models automatically. (can be overriden)
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
