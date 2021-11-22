@@ -70,3 +70,14 @@
 - deprecation of custom fields
 - data migration
 - squashing
+
+---
+
+## Advanced
+
+- default manager
+- custom manager
+- table level functionality
+- base and default manager
+- custom queryset methods
+- querysets as managers
