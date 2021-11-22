@@ -6,9 +6,8 @@
 
 ## Models
 
-- model
 - introduced models to django
-- field
+- fields
 - id field
 - field specific arguments
 - golabl field arguments
@@ -16,14 +15,13 @@
 - relationships
 - location of relational fields
 - intermediay models
-- model meta options
+- meta options
 - row level functionality
 - get_absolute_url method
 - abstract model inheritance
 - multi table inheritance
-- parent link
 - proxy models
-- model organization within a package
+- organization within a package
 
 ---
 
@@ -32,20 +30,17 @@
 - table presentation in python
 - record presentation in python
 - create, save, update and retrieve
-- querysets
-- managers
-- queryset refinement
+- refinement
 - field lookups
-- queryset layziness
+- layziness
 - single object retrieve
 - limited queryset
 - relationship lookups
 - model relative reference
-- queryset cache
+- caching
 - complex lookups
 - object comparison
 - object deletion
-- foregin objects access
 - additional managers by relationships
 - reverse and forward access
 
@@ -53,9 +48,25 @@
 
 ## Model instances
 
-- model instanciation
-- model loading and refreshing
-- model validation
+- instanciation
+- loading and refreshing
+- validation
 - saving process
-- decision making between update and insert
+- update or insert
 - related managers
+
+---
+
+## Migrations
+
+- commands
+- dependencies
+- layout
+- operations
+- initials
+- fakes
+- reversing
+- historical model
+- deprecation of custom fields
+- data migration
+- squashing
