@@ -6,11 +6,11 @@ import scrapy
 class QuotesSpider(scrapy.Spider):
     # identifies the spider and must be unique within a project
     name = 'quotes'
-
     # start_requests method should return an iterable of Request objects which
     # the spider will begin to crawl from
     # scrapy will schedule these Request objects and for each of their
     # Response objects the callback method will be called given the object
+
     def start_requests_(self):
         urls = [
             'http://quotes.toscrape.com/page/1/',
