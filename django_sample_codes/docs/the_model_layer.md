@@ -78,9 +78,9 @@
 - default manager
 - custom manager
 - table level functionality
-- base and default manager
-- custom queryset methods
-- querysets as managers
+- thisbase and default manager
+- thiscustom queryset methods
+- thisquerysets as managers
 - raw SQL
 - escaping input to raw SQL
 - defered fields in raw SQL
@@ -88,3 +88,6 @@
 - atomic transactions
 - atomic requests
 - transaction management
+- aggregation
+- annotation
+- conditional expressions
