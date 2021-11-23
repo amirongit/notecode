@@ -81,3 +81,10 @@
 - base and default manager
 - custom queryset methods
 - querysets as managers
+- raw SQL
+- escaping input to raw SQL
+- defered fields in raw SQL
+- database connection
+- atomic transactions
+- atomic requests
+- transaction management
