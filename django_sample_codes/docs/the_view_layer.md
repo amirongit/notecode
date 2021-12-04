@@ -19,4 +19,9 @@
 - bidirectional URL mappers
 - named URL patterns
 - namespaces
-- what does current app do? what does it have to do with app namespace?
+- reversing process
+- view function
+- http exceptions
+- custom error views
+- shortcuts module
+- view decorators
