@@ -2,8 +2,6 @@
 
 # The Request Context
 
----
-
 ## Request context
 
 - purpose of the request context

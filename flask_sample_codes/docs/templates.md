@@ -2,8 +2,6 @@
 
 # Templates
 
----
-
 ## Standard context
 
 - the default context

@@ -2,8 +2,6 @@
 
 # The View Layer
 
----
-
 ## The basics
 
 - URLconf
@@ -24,4 +22,4 @@
 - http exceptions
 - custom error views
 - shortcuts module
-- view decorators
+- http features

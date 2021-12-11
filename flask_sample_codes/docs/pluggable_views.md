@@ -2,8 +2,6 @@
 
 # Pluggable Views
 
----
-
 ## Generic views
 
 - flask.views.View

@@ -2,8 +2,6 @@
 
 # Modular Applications With Blueprints
 
----
-
 ## Blueprints
 
 - the purpose of blueprints

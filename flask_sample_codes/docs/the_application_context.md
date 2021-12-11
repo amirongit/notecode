@@ -2,8 +2,6 @@
 
 # The Application Context
 
----
-
 ## Application context
 
 - purpose of application context

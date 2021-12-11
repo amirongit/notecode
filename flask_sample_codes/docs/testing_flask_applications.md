@@ -2,8 +2,6 @@
 
 # Testing Flask Applications
 
----
-
 ## Testing utilities
 
 - TESTING flag

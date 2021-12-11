@@ -2,8 +2,6 @@
 
 # The Model Layer
 
----
-
 ## Models
 
 - introduced models to django
@@ -22,8 +20,6 @@
 - multi table inheritance
 - proxy models
 - organization within a package
-
----
 
 ## Querysets
 
@@ -44,8 +40,6 @@
 - additional managers by relationships
 - reverse and forward access
 
----
-
 ## Model instances
 
 - instanciation
@@ -54,8 +48,6 @@
 - saving process
 - update or insert
 - related managers
-
----
 
 ## Migrations
 
@@ -70,8 +62,6 @@
 - deprecation of custom fields
 - data migration
 - squashing
-
----
 
 ## Advanced
 

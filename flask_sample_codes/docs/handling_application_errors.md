@@ -2,8 +2,6 @@
 
 # Handling Application Errors
 
----
-
 ## Production environment exception
 
 - default behavior
