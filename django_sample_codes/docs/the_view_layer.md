@@ -36,3 +36,11 @@
 - cookies on HttpResponse objects
 - signed cookies on HttpResponse objects
 - HttpResponse subclasses
+
+## File uploads
+
+- FILE attribute of the request
+- File wrapper class
+- File wrapper subclasses
+- Storage class
+- retreive storage object
