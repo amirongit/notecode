@@ -23,3 +23,16 @@
 - custom error views
 - shortcuts module
 - http features
+
+## Request and response objects
+
+- usage of HttpResponse and HttpRequest objects
+- encoding of the request body
+- request method
+- request parameters
+- uploaded files
+- QuerDict objects
+- content of HttpResponse objects
+- cookies on HttpResponse objects
+- signed cookies on HttpResponse objects
+- HttpResponse subclasses
