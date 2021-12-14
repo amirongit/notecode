@@ -19,7 +19,7 @@
 - abstract model inheritance
 - multi table inheritance
 - proxy models
-- organization within a package
+- organizing multiple modules in a pkg
 
 ## Querysets
 
@@ -36,7 +36,7 @@
 - caching
 - complex lookups
 - object comparison
-- object deletion
+- deleting objects
 - additional managers by relationships
 - reverse and forward access
 

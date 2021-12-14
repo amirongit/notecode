@@ -6,7 +6,7 @@
 
 - URLconf
 - django request process
-- url value capture
+- capturing values from url
 - convertors
 - regex path
 - view argument default value
@@ -19,10 +19,10 @@
 - namespaces
 - reversing process
 - view function
-- http exceptions
+- HTTP exceptions
 - custom error views
 - shortcuts module
-- http features
+- HTTP features
 
 ## Request and response objects
 
@@ -44,3 +44,19 @@
 - File wrapper subclasses
 - Storage class
 - retreive storage object
+
+## Class-based views
+
+- generic views usage in URLconf
+- creation of generic views on the fly
+- generic views usage with inheritance
+- supporting HTTP methods
+- the point of generic views
+- extending generic views
+- templates generic views
+- context for generic views
+- models and querysets for generic views
+- using url captured values in generic views
+- self accesibility in generic views
+- form handling with generic views
+- lazy functions
