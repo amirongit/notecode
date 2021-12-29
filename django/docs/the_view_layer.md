@@ -60,3 +60,11 @@
 - self accesibility in generic views
 - form handling with generic views
 - lazy functions
+
+## Middleware
+
+- usage of middlewares
+- middleware factory
+- the get_response callable
+- activating a middleware
+- order of active middlewares
