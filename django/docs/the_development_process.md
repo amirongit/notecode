@@ -22,3 +22,17 @@
 - initialization tasks for applications
 - initialization process when django starts
 - initialization process of application registry
+
+## Testing
+
+- the standard library which is used to test django
+- test cases
+- discovering tests
+- running tests
+- test client
+- test response
+- working with exceptions whith a test client
+- test client's state
+- tagging tests
+- request factory
+- testing class based views
