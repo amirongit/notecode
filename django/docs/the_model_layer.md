@@ -11,11 +11,9 @@
 - golabl field arguments
 - choices
 - relationships
-- location of relational fields
 - intermediay models
 - meta options
 - row level functionality
-- get_absolute_url method
 - abstract model inheritance
 - multi table inheritance
 - proxy models
@@ -29,9 +27,8 @@
 - refinement
 - field lookups
 - layziness
-- single object retrieve
 - limited queryset
-- relationship lookups
+- lookups
 - model relative reference
 - caching
 - complex lookups
@@ -68,9 +65,8 @@
 - default manager
 - custom manager
 - table level functionality
-- thisbase and default manager
-- thiscustom queryset methods
-- thisquerysets as managers
+- custom queryset methods
+- querysets as managers
 - raw SQL
 - escaping input to raw SQL
 - defered fields in raw SQL
