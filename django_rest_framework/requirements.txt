@@ -1,0 +1,12 @@
+asgiref==3.5.0
+autopep8==1.6.0
+Django==4.0.3
+djangorestframework==3.13.1
+flake8==4.0.1
+isort==5.10.1
+mccabe==0.6.1
+pycodestyle==2.8.0
+pyflakes==2.4.0
+pytz==2022.1
+sqlparse==0.4.2
+toml==0.10.2
