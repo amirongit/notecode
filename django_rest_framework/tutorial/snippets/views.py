@@ -1,15 +1,18 @@
+from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework import generics
 from rest_framework import mixins
+from rest_framework import permissions
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from snippets.permissions import IsOwnerOrReadOnly
+from snippets.serializers import SnippetSerializer, UserSerializer
 
 
 @csrf_exempt  # Allow post requests from clients who don't have a csrf token.
@@ -165,7 +168,8 @@ class NonGenericClassBasedSnippetDetail(APIView):
 
 
 # Mixins of DRF are available to compose behaviours bit by bit, usually used
-# with GenericAPIView which provides the core functionality.
+# with GenericAPIView which provides the core functionality to work with
+# models.
 
 
 class ManualSnippetList(mixins.ListModelMixin,
@@ -204,8 +208,24 @@ class ManualSnippetDetail(mixins.RetrieveModelMixin,
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serilizer):
+        serilizer.save(owner=self.request.user)
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

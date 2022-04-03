@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
@@ -39,9 +40,24 @@ class ExplicitSnippetSerializer(serializers.Serializer):
 
 
 # ModelSerializer classes are a shortcut for creating serializers for models.
+# reverse attributes aren't included by default in model serializers, and need
+# to be defined explicitly.
 
 
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
-        fields = ['id', 'title', 'code', 'linenos', 'language', 'style']
+        fields = ['id', 'owner', 'title', 'code', 'linenos', 'language',
+                  'style']
+
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'snippets']
+
+    snippets = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Snippet.objects.all()
+    )
