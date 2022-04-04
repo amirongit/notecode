@@ -44,7 +44,7 @@ class ExplicitSnippetSerializer(serializers.Serializer):
 # to be defined explicitly.
 
 
-class SnippetSerializer(serializers.ModelSerializer):
+class NonHyperSnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
         fields = ['id', 'owner', 'title', 'code', 'linenos', 'language',
@@ -53,7 +53,7 @@ class SnippetSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
 
 
-class UserSerializer(serializers.ModelSerializer):
+class NonHyperUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'snippets']
@@ -61,3 +61,32 @@ class UserSerializer(serializers.ModelSerializer):
     snippets = serializers.PrimaryKeyRelatedField(
         many=True, queryset=Snippet.objects.all()
     )
+
+
+# HyperlinkedModelSerializer doesn't include the id field by default. it
+# includes a url field using HyperlinkedIdentityField, and represents
+# relationships using HyperlinkedRelatedField instead of primary keys.
+# The url field of HyperlinkedModelSerializer point to a view called
+# {mode_name}-detail by default.
+
+
+class SnippetSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Snippet
+        fields = ['url', 'id', 'highlight', 'owner', 'title', 'code',
+                  'linenos', 'language', 'style']
+
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(
+        view_name='snippet-highlight', format='html'
+    )
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'id', 'username', 'snippets']
+
+    snippets = serializers.HyperlinkedRelatedField(many=True,
+                                                   view_name='snippet-detail',
+                                                   read_only=True)
