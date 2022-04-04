@@ -6,7 +6,8 @@ from rest_framework import generics
 from rest_framework import mixins
 from rest_framework import permissions
 from rest_framework import renderers
-from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework.decorators import action, api_view
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -15,6 +16,10 @@ from rest_framework.views import APIView
 from snippets.models import Snippet
 from snippets.permissions import IsOwnerOrReadOnly
 from snippets.serializers import SnippetSerializer, UserSerializer
+
+
+# GET, POST, PUT, PATCH, DELETE are called methods.
+# CREATE, RETRIEVE, UPDATE, DELETE are called opertaions.
 
 
 @csrf_exempt  # Allow post requests from clients who don't have a csrf token.
@@ -255,3 +260,39 @@ class SnippetHightlight(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlighted)
+
+
+# DRF viewsets exist to allow the developer not care about url construction
+# and handle it by common behaviours and conventions.
+# Viewsets are almost identical to django views, except they provide
+# operations, not methods, and they're bound to a set of method handlers when
+# they're instantiated to a set of views, usually by a router.
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    '''
+    This viewset automatically provides `list` and `retrieve` actions.
+    '''
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class SnippetViewSet(viewsets.ModelViewSet):
+    '''
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally, we also provide a `highlight` action.
+    '''
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
