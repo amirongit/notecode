@@ -4,5 +4,4 @@
 
 ## Setting the parsers
 
-- setting global parsers
-- setting view parsers
+- setting global and view specific parsers
