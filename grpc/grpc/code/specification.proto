@@ -1,0 +1,13 @@
+syntx = "proto3"
+
+service HelloService {
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+    singular string greeting = 1;
+}
+
+message HelloResponse {
+    singular string response = 1;
+}
