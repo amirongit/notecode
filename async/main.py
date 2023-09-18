@@ -22,3 +22,5 @@
 # already exited.
 # Priming a generator means to pass it to the next function once in order to reach the first suspension point and get
 # the yielded value. Then it is possible to send a value to the generator.
+# "yield from" allows using nested generators and extends the communication channel from the caller to the inner most
+# generator being yielded from. So the caller can call throw, send & close on the inner generator from outside.
