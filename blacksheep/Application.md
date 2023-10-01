@@ -1,7 +1,7 @@
 # Application
 
 - the Application class
-- exception_handlers attributes
+- exception_handlers attribute
 - exception_handler decorator
 - manage services which depend on application life cycle
 - on_start, after_start & on_stop attributes
