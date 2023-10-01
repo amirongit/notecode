@@ -1,6 +1,6 @@
 # Dependency injection
 
-- services attribute
+- Application.services attribute
 - register services
 - exact vs general dependencies
 - difference between singleton, scoped & transient services
