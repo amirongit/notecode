@@ -1,6 +1,6 @@
 # Dependency injection
 
-- on_start, on_stop & services attribute
+- services attribute
 - register services
 - exact vs general dependencies
 - difference between singleton, scoped & transient services
