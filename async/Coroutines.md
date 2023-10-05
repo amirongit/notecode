@@ -8,11 +8,11 @@ generators.
 
 ### syntax
 
-Native coroutines are declared using "async def" syntax. The "await" keyword,
+Native coroutines are declared using `async def` syntax. The `await` keyword,
 suspends the execution of the coroutine untill the awitable completes. This
 happens in a generator based coroutine by yield.\
 The argument passed to await should be a native coroutine, a generator based
-coroutine decorated with types.coroutine or an object with "__await__" method
+coroutine decorated with types.coroutine or an object with `__await__` method
 implemented on it (which is also called a future object).\n
 Asynchronous context managers can suspend execution in their enter & exit
 methods. They must be used inside coroutines only & implement aenter & aexit
