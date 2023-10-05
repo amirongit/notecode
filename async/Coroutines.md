@@ -4,7 +4,7 @@
 
 It is possible to implement coroutines using generators (althogh coroutines have
 their own syntax). PEP 492 introduced native coroutines & separated them from
-generators.\
+generators.
 
 ### syntax
 
