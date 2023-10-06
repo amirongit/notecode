@@ -71,7 +71,7 @@ switch tasks after handling the request or the event.
 ```
 task y    --->REQ                       --->REQ...
                  \                     /
-REQ / ENV         OS--->         OS--->
+REQ / EVN         OS--->         OS--->
                         \       /
 task z                   --->EVN
 ```
