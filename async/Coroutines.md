@@ -51,7 +51,7 @@ essential features of tasks would be:
 
 all of which are provided by coroutines.
 
-### A crash course on operating systems
+### Task scheduling
 
 For a CPU, a program is just a series of instructions & there is not really a
 notion of doing more than one thing at a time or any kind of task switching.\
