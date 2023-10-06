@@ -8,7 +8,7 @@ generators.
 
 ### syntax
 
-Native coroutines are declared using `async def` syntax. The `await` keyword,
+Native coroutines are declared using `async def` syntax. The `await` keyword
 suspends the execution of the coroutine untill the awitable completes. This
 happens in a generator based coroutine by yield.\
 The argument passed to await should be a native coroutine, a generator based
