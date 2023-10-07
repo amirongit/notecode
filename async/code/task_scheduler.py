@@ -37,15 +37,11 @@ class KillTask(SysCall):
 
 
 class WaitRead(SysCall):
-    def handle(self, task: Task, scheduler: Scheduler):
-        fd = self.args[0].fileno()
-        scheduler.mark_as_pending_to_read(task, fd)
+    def handle(self, task: Task, scheduler: Scheduler): scheduler.mark_as_pending_to_read(task, self.args[0].fileno())
 
 
 class WaitWrite(SysCall):
-    def handle(self, task: Task, scheduler: Scheduler):
-        fd = self.args[0].fileno()
-        scheduler.mark_as_pending_to_write(task, fd)
+    def handle(self, task: Task, scheduler: Scheduler): scheduler.mark_as_pending_to_write(task, self.args[0].fileno())
 
 
 class PendTask(SysCall):
@@ -92,9 +88,9 @@ class Scheduler:
             return True
         return False
 
-    def mark_as_pending_to_read(self, task: Task, fd): self.pending_to_read[fd] = task
+    def mark_as_pending_to_read(self, task: Task, fd: int): self.pending_to_read[fd] = task
 
-    def mark_as_pending_to_write(self, task: Task, fd): self.pending_to_write[fd] = task
+    def mark_as_pending_to_write(self, task: Task, fd: int): self.pending_to_write[fd] = task
 
     def io_poll(self, timeout: int | None = None):
         if (len(self.pending_to_read) != 0) or (len(self.pending_to_write) != 0):
