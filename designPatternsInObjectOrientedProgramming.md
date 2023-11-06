@@ -8,8 +8,8 @@
 - inheritance can't be used
   - may cause duplication on classes that share the same algorithm which is
 not the parents
-  - inheritance shares behaviours vertically in a hirearchy; therefore it isn't
-a solution to share behaviours horizontally
+  - shares parent's behaviour vertically in a hirearchy; therefore it isn't a
+solution to share behaviours horizontally
 - putting all the algorithms in the same class could cause it to become big and
 hard to maintain; also, the clients which just want the behaviours, will have to
 know about the implementation details.
