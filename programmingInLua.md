@@ -15,5 +15,4 @@
 - nil
 - removal of a variable
 - boolean
-- only two falsy values
 - logical operators
