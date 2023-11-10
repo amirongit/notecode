@@ -2,7 +2,7 @@
 
 ## Strategy pattern
 
-### the problem
+### problem
 
 - there are more than one way to do something
 - inheritance can't be used
@@ -11,7 +11,7 @@
 - putting all the algorithms in the same class could cause it to become big and
 hard to maintain; also, the clients which just want the behaviours, will have to know about the implementation details.
 
-### the solution
+### solution
 
 - algorithms should all implement a single interface which exposes the desired behaviour (implementations are called strategies)
 - the class should have an attribute dedicated to an instance of the mentioned interface
@@ -20,7 +20,7 @@ hard to maintain; also, the clients which just want the behaviours, will have to
 
 ## Observer pattern
 
-### the problem
+### problem
 
 - there are some objects interested in the internal state of an object and it's changes
 - interested objects can't ask the object
@@ -28,7 +28,7 @@ hard to maintain; also, the clients which just want the behaviours, will have to
   - it is possible to have undesired delays
   - it would make a lot of pointless function calls
 
-### the solution
+### solution
 
 - the object who's internal changes are being interested in by other objects should take the responsibality to notify them
 - by doing this, polling mechanisms which are heavy & in efficient would be replaced by a pushing mechanism which is exteremely more efficient
