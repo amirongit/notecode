@@ -1,6 +1,6 @@
 # Design Patterns In Object Oriented Programming
 
-## Strategy pattern
+## Strategy
 
 ### problem
 
@@ -8,8 +8,7 @@
 - inheritance can't be used
   - may cause duplication on classes that share the same algorithm which is not the parents
   - shares parent's behaviour vertically in a hirearchy; therefore it isn't a solution to share behaviours horizontally
-- putting all the algorithms in the same class could cause it to become big and
-hard to maintain; also, the clients which just want the behaviours, will have to know about the implementation details.
+- putting all the algorithms in the same class makes it big & hard to maintain & the clients will have to know the implementation details
 
 ### solution
 
@@ -18,11 +17,11 @@ hard to maintain; also, the clients which just want the behaviours, will have to
 - objects of the class are configured in constructors to have the desired strategy
 - clients requests for the behaviour will be delegated by the class to the associated strategy
 
-## Observer pattern
+## Observer
 
 ### problem
 
-- there are some objects interested in the internal state of an object and it's changes
+- there are some objects interested in the internal state of an object & it's changes
 - interested objects can't ask the object
   - it's complicated to decide when to ask
   - it is possible to have undesired delays
@@ -31,6 +30,20 @@ hard to maintain; also, the clients which just want the behaviours, will have to
 ### solution
 
 - the object who's internal changes are being interested in by other objects should take the responsibality to notify them
-- by doing this, polling mechanisms which are heavy & in efficient would be replaced by a pushing mechanism which is exteremely more efficient
+- by doing this heavy & inefficient polling mechanisms would be replaced by an efficient pushing mechanism
 - observers are registered on the observable (it's a one to many relationship)
-- the subject (or observable) keeps track of it's observers and notifys theme on changes
+- the subject (or observable) keeps track of it's observers & notifys theme on changes
+
+## Decorator
+
+### problem
+
+- there are many possible modifications to apply on behaviours
+  - making all possible combinations of behaviours & modifications leads to subclass explosion which makes code hard to maintain
+- it is required to modify some behaviours dynamically in runtime
+
+### solution
+
+- a wrapper is created with the same interface which the behaviour being modified implements
+- the wrapper delegates calls to the behaviour it wraps & modifies the result before or after calling
+- now the wrappers & the objects being wrapped are considered the same & can be passed to other wrappers in runtime
