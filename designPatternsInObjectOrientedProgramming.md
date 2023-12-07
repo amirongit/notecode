@@ -40,10 +40,23 @@
 
 - there are many possible modifications to apply on behaviours
   - making all possible combinations of behaviours & modifications leads to subclass explosion which makes code hard to maintain
-- it is required to modify some behaviours dynamically in runtime
+- it is required to modify or compose behaviours dynamically in runtime
 
 ### solution
 
 - a wrapper is created with the same interface which the behaviour being modified implements
 - the wrapper delegates calls to the behaviour it wraps & modifies the result before or after calling
 - now the wrappers & the objects being wrapped are considered the same & can be passed to other wrappers in runtime
+
+## Factory method
+
+### problem
+
+- instantiation of a dependency could be complex; for example, provided parameters could be changed in runtime
+- the specific implementation of an interface is meant to be determined in runtime
+- more than one approache exists or is required to wire up & instantiate dependencies
+
+### solution
+
+- the logic behind the instantiation & configuration of dependencies is encapsulated in different factory objects / classes which implement the same factory interface
+- implementations of the factory interface have the ability to choose between different subclasses of a particular dependency & implement their own way of constructing them
