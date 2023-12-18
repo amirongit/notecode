@@ -23,7 +23,7 @@
 
 - there are some objects interested in the internal state of an object & it's changes
 - interested objects can't ask the object
-  - it's complicated to decide when to ask
+  - it is complicated to decide when to ask
   - it is possible to have undesired delays
   - it would make a lot of pointless function calls
 
@@ -60,3 +60,14 @@
 
 - the logic behind the instantiation & configuration of dependencies is encapsulated in different factory objects / classes which implement the same factory interface
 - implementations of the factory interface have the ability to choose between different subclasses of a particular dependency & implement their own way of constructing them
+
+## Abstract factory
+
+### problem
+
+- a sensible set of related instances of dependencies are needed to be created without pointing to an specific implementation of them
+
+### solution
+
+- an interface is designed to instantiate each one of the dependencies with a factory method
+- each set of dependencies could be encapsulated in an implementation of this interface
