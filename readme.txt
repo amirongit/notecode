@@ -1,1 +1,1 @@
-if I can't explain it, I can't understand it.
+if i can't explain it, i can't understand it.
