@@ -37,7 +37,7 @@
 ### Compilation
 
 - assemblies
-- entrypoint & top level statements
+- entrypoints
 
 ### Syntax
 
@@ -50,6 +50,11 @@
 - types
 - variables & constants
 - predefined types
+- data & function members
 - constructors & instantiation
+- instance & static members
 - static classes
-- the main method
+- the main method & top level statements
+- conversion
+- implicit conversion & explicit casting
+- value & reference types, assignment operation behaviour for each & nullabality
