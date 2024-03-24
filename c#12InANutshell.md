@@ -2,7 +2,7 @@
 
 ## Introducing C# & .net
 
-### Object Orientation
+### Object orientation
 
 - unified type system
 - interfaces
@@ -22,6 +22,34 @@
 - managed code
 - intermediate language
 - common language runtimes
-- assemblies
 - reflection
 - base class libraries
+
+## C# language basics
+
+### A first C# program
+
+- type organization
+- nested namespaces
+- namespace usage & using keyword
+- statement blocks
+
+### Compilation
+
+- assemblies
+- entrypoint & top level statements
+
+### Syntax
+
+- identifiers & their conventions
+- keywords & their usage as identifiers
+- contextual keywords
+
+### Type basics
+
+- types
+- variables & constants
+- predefined types
+- constructors & instantiation
+- static classes
+- the main method
