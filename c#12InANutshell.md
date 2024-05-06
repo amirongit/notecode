@@ -58,3 +58,13 @@
 - conversion
 - implicit conversion & explicit casting
 - value & reference types, assignment operation behaviour for each & nullabality
+- primitive types
+
+### Numeric types
+
+- inference of numerical literal types
+- increment & decrement operators
+- checked & unchecked keywords
+- compile time overflow checking
+- arithmetics of 8- & 16-bit integral types
+- NaN values & checking for them
