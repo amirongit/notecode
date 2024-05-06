@@ -68,3 +68,24 @@
 - compile time overflow checking
 - arithmetics of 8- & 16-bit integral types
 - NaN values & checking for them
+
+### Boolean types & operators
+
+- default notion of equality for reference types
+- short-circuit evaluation of conditional operators
+- the ternary operator
+
+### String & characters
+
+- escape sequences
+- unicode characters as in literal form
+- string comparison
+- verbatin strings
+- raw string literals
+- interpolated strings
+
+### Arrays
+
+- definition of array data type
+- array initialization expression
+- collection expression
