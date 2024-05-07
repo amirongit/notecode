@@ -88,4 +88,7 @@
 
 - definition of array data type
 - array initialization expression
-- collection expression
+- preinitialization of elements
+- value vs reference elements
+- indices & the index type
+- ranges & the range type
