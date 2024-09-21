@@ -49,3 +49,19 @@
 1. simplify each side as much as possible
 2. isolate the variable
 3. calculate the value of the variable, plug & check the answer for the equation
+
+### Solving linear equations with fractions or decimals
+- multiply both sides of the equation by the LCD of all fractions to isolate the variable (which is the LCM of all denominators) (must be done after simplification) 
+#### Least common multiple 
+- the smallest number that two or more numbers can divide into evenly
+#### Least common denominator
+- the smallest number that can be a common denominator for a set of fractions
+
+### Linear equations with no solution or an infinite number of solutions
+#### Conditional equation
+- an equation that is true for some values as the variable and false for other values
+#### Identity equation
+- an equation which is always true, no matter what values are substituted as the variable
+- usually in this type of equations one side is a simplified version of the other side
+#### Contradiction equation
+- an equation which doesn't have a solution
