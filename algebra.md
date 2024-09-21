@@ -26,11 +26,11 @@
 - an statement claiming that two algebraic (?) expressions are equal
 - for an equation to be true, the left & the right side must evaluate to the same value
 
-### Addition property of equality
+### Addition property
 - the same constant can be added to both sides of an equation without changing the final solution
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
-#### Single variable first degree linear equations
+#### Single variable first degree linear equation
 - the overall form is `ax + b = c` such that `a != 0`
 - in this form 'b' & 'c' are known constants & 'a' is coefficient
 #### Additive inverse property
@@ -38,7 +38,7 @@
 #### Additive identity property
 - any number in addition to zero eqauls itself
 
-### Multiplication property of equality
+### Multiplication property
 - both sides of an equation can be multiplied by the same non-zero constant without changing the final solution
 #### Multiplicative inverse property
 - any number times it's reciprocal is equal to 1
@@ -65,3 +65,20 @@
 - usually in this type of equations one side is a simplified version of the other side
 #### Contradiction equation
 - an equation which doesn't have a solution
+
+### Proportions
+- claim that two ratios are equal
+#### Cross multiplication property
+- states that the product of the numerator of a fraction on one side of an equation and the denominator of the fraction on the other side should equal the product of the denominator of the same side and the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
+#### Solving proportion equations
+- since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable can be cross multiplication of fractions in both sides
+
+### Solving linear algebra inequalities 1
+- the procedure is the same as solving linear equations with key differences
+    - when using multiplication property, negative operand causes the inequality to get reversed
+#### Interval notation
+- a way of writing subsets of the real number line
+- interval notations can be used to annotate a range of numbers
+    - parentheses mean the end isn't included in the range
+    - brackets mean the end is included in the range
+    - infinity can never be included
