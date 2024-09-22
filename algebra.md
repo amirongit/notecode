@@ -75,7 +75,7 @@
 
 ### Solving linear algebra inequalities 1
 - the procedure is the same as solving linear equations with key differences
-    - when using multiplication property, negative operand causes the inequality to get reversed
+    - when using multiplication or division property, negative operand causes the inequality to get reversed
 #### Interval notation
 - a way of writing subsets of the real number line
 - interval notations can be used to annotate a range of numbers
@@ -89,6 +89,7 @@
 - this type of equation can have infinite combinations of 'x' & 'y' as it's solution
 #### Ordered pair
 - two terms inside parentheses with 'x' being the first & 'y' being the second
+- the two terms are also called components
 #### Solving linear equations in two variables
 1. pick a value for one of the variables
 2. solve for the other one
@@ -161,3 +162,36 @@
 #### Perpendicular
 - lines that intersect at a 90 degree angle
 - the product of slopes of two non-vertical perpendicular lines is -1
+
+### Graphing linear inequalities in two variables
+#### Steps
+1. solve the inequality for 'y'
+2. draw the boundary line
+    1. replace the inequality symbol with equality symbol
+    2. draw the resulted line
+3. shade
+    - above the line for '>' & '>='
+    - below the line for '<' & '<='
+#### special case scenarios
+- the shading conditions are different
+    - right side of the line for '>' & '>='
+    - left side of the line for '<' & '<='
+
+### Introduction to functions
+- represents a relation in which each unique first component corresponds to exactyly one non-unique second component
+- all functions are relation, but not vice versa
+#### Relation
+- any set of ordered pairs
+#### Domain
+- set of all the first components ('x' values) in a relation
+#### Range
+- set of all the second components ('y' values) in a relation
+#### Vertical line test
+- if any vertical line intersects a graph more than once, the graph isn't a function (although it may be an equation)
+
+## Cool facts
+- equations in a single variable represent a single point in the line number ('x' axis)
+    - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
+- equations in two variables represent a line in the coordinate plane ('x' & 'y' axes)
+    - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
+- the terms relation & record in the context of databases are derived from functions
