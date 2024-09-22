@@ -124,4 +124,34 @@
     - has a fixed value for 'y'
     - is parallel to 'x' axis
     - the equation in this scenario has 'a' as zero
-<!-- 06:09 -->
+
+### Slope of a line
+- can be measured by comparing vertical to horizontal changes along a line
+- the graph can be drawn given one point & the slope
+#### Calculation of slope using given points
+1. ordered pairs are labeled as (x1, y1), (x2, y2)
+2. the result is calculated by this formula: `m = (y2 - y1) / (x2 - x1)`
+- 'a' can't be zero in the equation & x2 can't be equal to x1 because of division by zero in the formula
+- 'm' can be thought of as 'rise' over 'run' & calculated visually (`points towards up / points towards right`)
+- a line with positive slope rises moving towards right ('y' increases when 'x' increases)
+- a line with negative slope falls moving towards right ('y' decreases when 'x' increases)
+- the slope of a horizontal line is 0
+- the slope of a vertical line is undefined
+
+### Equations of a line
+- other than the standard overall form
+#### Slope - intercept form
+- in this form, the slope & the y-intercept are visible
+- when solving the equation for 'y', the overall form will be `y = mx + b`
+- 'm' shows the slope & 'b' is the y-intercept which occures at (0, b)
+### Point - slope form
+- in this form, the slope & the coordinations of a single point is visible
+- the overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
+- can be derived from three combination of info:
+    - `m = (y - y1) / (x - x1)` form
+    - a given point & slope (which leads the above option)
+    - two given points (which leads the above option)
+### A stupid version of the standard form
+- which is the same standard form but with 'a' being equal or greater than zero
+
+<!-- 07:10 -->
