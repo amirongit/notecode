@@ -108,15 +108,15 @@
 - the intersection of graph & 'y' axis is called y-intercept
 - the intersection of graph & 'x' axis is called x-intercept
 #### Steps
-- two ordered pairs are needed, solving for intercepts is usually faster
-- the graph can then be drawn between & after two points (implied by the ordered pairs)
-- a third ordered pair is needed to check the graph & the equation
+1. two ordered pairs are acquired, solving for intercepts is usually the fastest way
+2. the graph is drawn between & after two points (implied by the ordered pairs)
+3. a third ordered pair is acquired to check the graph & the equation
 #### Origin crossing graph
 - if the value of 'c' is 0, solving for intercepts results in (0, 0)
     1. 'x' & 'y' must be isolated
     2. the resulted equation is solved to get an ordered pair
 - picking the coefficient of a variable for as the other is usually faster
-#### special case scenarios
+#### Special case scenarios
 - vertical line
     - has a fixed value for 'x'
     - is parallel to 'y' axis
@@ -172,7 +172,7 @@
 3. shade
     - above the line for '>' & '>='
     - below the line for '<' & '<='
-#### special case scenarios
+#### Special case scenarios
 - the shading conditions are different
     - right side of the line for '>' & '>='
     - left side of the line for '<' & '<='
@@ -188,6 +188,41 @@
 - set of all the second components ('y' values) in a relation
 #### Vertical line test
 - if any vertical line intersects a graph more than once, the graph isn't a function (although it may be an equation)
+
+### Solving systems of linear equations by graphing
+#### System of linear equations
+- consists of multiple linear equations with the same variables
+- a solution is an ordered pair that makes all the given equations true
+#### Consistent system
+- has one solution
+#### Independent equations
+- have one intersection
+#### Inconsistent system
+- have parallel equations therefore solutions aren't possible
+#### Dependent equations
+- are equivalent of each other therefore intersections are infinite
+#### Graphing steps
+1. each equation is graphed
+2. their intersection is the solution
+#### Special case scenarios
+- parallel equations won't intersect
+- equivalent equations result in infinite solutions
+    - is detectable by solving for 'y'
+
+### Solving systems of linear equations by substitution
+#### Steps
+1. one of the equations is solved for either variable
+2. the result is plugged in the other equation as the variable
+3. the resulted equation in a single variable is solved
+4. the result is plugged in an original equation as the unknown variable
+5. the resulted equation in a single variable is solved
+5. the ordered pair is written based on choices
+#### Inconsistent system proof
+- when the equality sign is wrong
+- given equations have the same slopes & different y-intercepts
+#### Dependent equations proof
+- when the variables drop out in simplification
+- the equations are manipulated versions of each other
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
