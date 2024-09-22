@@ -214,7 +214,7 @@
 1. one of the equations is solved for either variable
 2. the result is plugged in the other equation as the variable
 3. the resulted equation in a single variable is solved
-4. the result is plugged in an original equation as the unknown variable
+4. the result is plugged in an original equation as the known variable
 5. the resulted equation in a single variable is solved
 5. the ordered pair is written based on choices
 #### Inconsistent system proof
@@ -224,9 +224,24 @@
 - when the variables drop out in simplification
 - the equations are manipulated versions of each other
 
+### Solving systems of linear equations by elimination
+#### Steps
+1. equations are written in standard form
+2. equations are manipulated such that coefficients of either variables are opposites across them
+3. equations are merged (sides are added up)
+    - one of the variables is cancelled out
+4. the resulted equation in a single variable is solved
+5. the result is plugged in an original equation as the known variable
+6. the resulted equation in a single variable is solved
+7. the ordered pair is written based on choices
+#### Detection
+- either variables has opposite coefficients in the given equations
+
+<!-- 09:48 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
 - equations in two variables represent a line in the coordinate plane ('x' & 'y' axes)
     - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
-- the terms relation & record in the context of databases are derived from functions
+- the elimination method to solve systems of linear equations uses the addition property of equality
