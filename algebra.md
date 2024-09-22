@@ -104,8 +104,8 @@
 ### Graphing linear equations in two variables
 - each point in the graph represents one of the infinite solutions of the equation
 #### Intercepts
-- the intersection between the graph and 'y' axis is called y-intercept
-- the intersection between the graph and 'y' axis is called x-intercept
+- the intersection of graph & 'y' axis is called y-intercept
+- the intersection of graph & 'x' axis is called x-intercept
 #### Steps
 - two ordered pairs are needed, solving for intercepts is usually faster
 - the graph can then be drawn between & after two points (implied by the ordered pairs)
@@ -144,14 +144,20 @@
 - in this form, the slope & the y-intercept are visible
 - when solving the equation for 'y', the overall form will be `y = mx + b`
 - 'm' shows the slope & 'b' is the y-intercept which occures at (0, b)
-### Point - slope form
+#### Point - slope form
 - in this form, the slope & the coordinations of a single point is visible
 - the overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
 - can be derived from three combination of info:
     - `m = (y - y1) / (x - x1)` form
     - a given point & slope (which leads the above option)
     - two given points (which leads the above option)
-### A stupid version of the standard form
-- which is the same standard form but with 'a' being equal or greater than zero
+#### A stupid version of the standard form
+- the same, but with 'a' being equal or greater than zero
 
-<!-- 07:10 -->
+### Parallel & perpendicular lines
+#### Parallel lines
+- lines that will never intersect
+- non-vertical parallel lines have the same slopes
+#### Perpendicular
+- lines that intersect at a 90 degree angle
+- the product of slopes of two non-vertical perpendicular lines is -1
