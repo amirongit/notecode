@@ -243,20 +243,20 @@
 2. intersection of the graphs is the solution
 - is graphing the only way?
 
-### The product & power rules for exponents
-#### The product rule for exponents
+### Product & power rules for exponents
+#### Product rule for exponents
 - when operands of the same base are multiplied, the exponents are combined to get the result
-#### The power to power rule
+#### Power to power rule
 - when a base being raised to a power is being raised to another power, the two powers are multiplied to get the result
 #### Raising product to power
 - a term being raised to a power is written as it's divisors being raised to the power
-#### The fractional exponent rule
+#### Fractional exponent rule
 - a fraction being raised to a power is written as it's numerator into the power divided by it's denominator into the power
 
 ### Integer exponents & the quotient rule
-#### The zero exponent rule
+#### Zero exponent rule
 - any non-zero value to the power of zero results in 1
-#### The negative exponent rule
+#### Negative exponent rule
 - the factor is written as it's reciprocal with the denominator being raised to the opposed exponent
 - it's coefficient is written as the numerator of the fraction
 #### Algebraic version of the quotient rule
@@ -293,6 +293,17 @@
 #### Steps
 1. first, outer, inner & last terms of each binomial are multiplied together
 2. results are merged
+
+### Special products
+- common binomial products
+#### Square of a binomial
+- first form is `(a + b) ^ 2 = a ^ 2 + 2ab + b ^ 2`
+- second form is `(a - b) ^ 2 = a ^ 2 - 2ab + b ^ 2`
+#### Difference of squares
+- the overall form is `(a + b)(a - b) = a ^ 2 - b ^ 2`
+#### Cube of a binomial
+- first form is `(a + b) ^ 3 = a ^ 3 + 3ba ^ 2 + 3ab ^ 2 + b ^ 3`
+- second form is `(a - b) ^ 3 = a ^ 3 - 3ba ^ 2 + 3ab ^ 2 - b ^ 3`
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
