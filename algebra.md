@@ -27,7 +27,7 @@
 - for an equation to be true, the left & the right side must evaluate to the same value
 
 ### Addition property
-- the same constant can be added to both sides of an equation without changing the final solution
+- the same constant are added to both sides of an equation without changing the final solution
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
 #### Single variable first degree linear equation
@@ -39,7 +39,7 @@
 - any number in addition to zero eqauls itself
 
 ### Multiplication property
-- both sides of an equation can be multiplied by the same non-zero constant without changing the final solution
+- both sides of an equation are multiplied by the same non-zero constant without changing the final solution
 #### Multiplicative inverse property
 - any number times it's reciprocal is equal to 1
 #### Multiplicative identity property
@@ -55,7 +55,7 @@
 #### Least common multiple 
 - the smallest number that two or more numbers can divide into evenly
 #### Least common denominator
-- the smallest number that can be a common denominator for a set of fractions
+- the smallest number that is a common denominator for a set of fractions
 
 ### Linear equations with no solution or an infinite number of solutions
 #### Conditional equation
@@ -71,14 +71,14 @@
 #### Cross multiplication property
 - states that the product of the numerator of a fraction on one side of an equation & the denominator of the fraction on the other side should equal the product of the denominator of the same side & the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
 #### Solving proportion equations
-- since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable can be cross multiplication of fractions in both sides
+- since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable is cross multiplication of fractions in both sides
 
 ### Solving linear algebra inequalities 1
 - the procedure is the same as solving linear equations with key differences
     - when using multiplication or division property, negative operand causes the inequality to get reversed
 #### Interval notation
 - a way of writing subsets of the real number line
-- interval notations can be used to annotate a range of numbers
+- interval notations are used to annotate a range of numbers
     - parentheses mean the end isn't included in the range
     - brackets mean the end is included in the range
     - infinity can never be included
@@ -126,9 +126,9 @@
     - is parallel to 'x' axis
     - the equation in this scenario has 'a' as zero
 
-### Slope of a line
-- can be measured by comparing vertical to horizontal changes along a line
-- the graph can be drawn given one point & the slope
+### Slope of line
+- is measured by comparing vertical to horizontal changes along a line
+- the graph is possible to draw given one point & the slope
 #### Calculation of slope using given points
 1. ordered pairs are labeled as (x1, y1), (x2, y2)
 2. the result is calculated by this formula: `m = (y2 - y1) / (x2 - x1)`
@@ -139,7 +139,7 @@
 - the slope of a horizontal line is 0
 - the slope of a vertical line is undefined
 
-### Equations of a line
+### Equations of line
 - other than the standard overall form
 #### Slope - intercept form
 - in this form, the slope & the y-intercept are visible
@@ -148,11 +148,11 @@
 #### Point - slope form
 - in this form, the slope & the coordinations of a single point is visible
 - the overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
-- can be derived from three combination of info:
+- is possible to derive from three combination of info:
     - `m = (y - y1) / (x - x1)` form
     - a given point & slope (which leads the above option)
     - two given points (which leads the above option)
-#### A stupid version of the standard form
+#### Stupid version of the standard form
 - the same, but with 'a' being equal or greater than zero
 
 ### Parallel & perpendicular lines
@@ -173,7 +173,7 @@
     - above the line for '>' & '>='
     - below the line for '<' & '<='
 #### Special case scenarios
-- the shading conditions are different
+- the shading conditions are different for vertical boundary lines
     - right side of the line for '>' & '>='
     - left side of the line for '<' & '<='
 
@@ -237,7 +237,21 @@
 #### Detection
 - either variables has opposite coefficients in the given equations
 
-<!-- 09:48 -->
+### Solving systems of linear inequalities
+#### Graphing
+1. graph each equation separatedly
+2. intersection of the graphs is the solution
+- is graphing the only way?
+
+### The product & power rules for exponents
+#### The product rule for exponents
+- when operands of the same base are multiplied, the exponents are summed up to get the result
+#### The power to power rule
+- when a base being raised to a power is being raised to another power, the two powers are multiplied to get the result
+#### Raising product to power
+- a term being raised to a power is written as it's divisors being raised to the power
+#### The fractional exponent rule
+- a fraction being raised to a power is written as it's numerator into the power divided by it's denominator into the power
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -245,3 +259,5 @@
 - equations in two variables represent a line in the coordinate plane ('x' & 'y' axes)
     - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
 - the elimination method to solve systems of linear equations uses the addition property of equality
+- `-a ^ x = -(a ^ x)` but `(-a) ^ x = (-a) ^ x` therefore `(-ab) ^ x = (-a) ^ x . b ^ x`
+- if a term is being raised by a power, each component is raised separatedly
