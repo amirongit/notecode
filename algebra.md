@@ -285,6 +285,15 @@
 #### Subtracting polynomials
 - like terms are subtracted
 
+### Multiplying polynomials
+- if neither polynomial is monomial, each term of either polynomial is multiplied by every term in the other one
+
+### FOIL
+- is used for two binomials
+#### Steps
+1. first, outer, inner & last terms of each binomial are multiplied together
+2. results are merged
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
