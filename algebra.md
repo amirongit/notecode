@@ -245,7 +245,7 @@
 
 ### The product & power rules for exponents
 #### The product rule for exponents
-- when operands of the same base are multiplied, the exponents are summed up to get the result
+- when operands of the same base are multiplied, the exponents are combined to get the result
 #### The power to power rule
 - when a base being raised to a power is being raised to another power, the two powers are multiplied to get the result
 #### Raising product to power
@@ -257,12 +257,33 @@
 #### The zero exponent rule
 - any non-zero value to the power of zero results in 1
 #### The negative exponent rule
-- the component is written as it's reciprocal with the denominator being raised to the opposed exponent
+- the factor is written as it's reciprocal with the denominator being raised to the opposed exponent
 - it's coefficient is written as the numerator of the fraction
 #### Algebraic version of the quotient rule
 - when operands of the same base are divided, the exponents are subtracted to get the result
 
-<!-- 11:15 -->
+### Scientific notation
+- represents a number as a factor multiplied by a power of ten
+
+### Adding & subtracting polynomials
+#### Polynomial
+- a finite amount of terms being the product of a real coefficient & variables raised to a whole power
+#### Monomial
+- a polynomial consisting of one term
+#### Binomial
+- a polynomial consisting of two terms
+#### Trinomial
+- a polynomial consisting of three terms
+#### Degree of a term
+- sum of the exponents of all the variables of the given term
+#### Degree of a polynomial
+- largest degree of any non-zero term of the given polynomial
+#### Standard form
+- terms are ordered in polynomials by their degree starting from highest
+#### Adding polynomials
+- like terms are combined
+#### Subtracting polynomials
+- like terms are subtracted
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -271,6 +292,6 @@
     - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
 - the elimination method to solve systems of linear equations uses the addition property of equality
 - `-a ^ x = -(a ^ x)` but `(-a) ^ x = (-a) ^ x` therefore `(-ab) ^ x = (-a) ^ x . b ^ x`
-- if a term is being raised by a power, each component is raised separatedly
-- if a component of a term is being raised to a power, other components remain the same
+- if a term is being raised by a power, each factor is raised separatedly
+- if a factor of a term is being raised to a power, other components remain the same
 - by decreasing the power the value is being devided by the base
