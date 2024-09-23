@@ -305,6 +305,28 @@
 - first form is `(a + b) ^ 3 = a ^ 3 + 3ba ^ 2 + 3ab ^ 2 + b ^ 3`
 - second form is `(a - b) ^ 3 = a ^ 3 - 3ba ^ 2 + 3ab ^ 2 - b ^ 3`
 
+### Dividing polynomials by monomials
+- each term of the given polynomial is divided by the monomial
+
+### Dividing polynomials
+#### Long division
+1. each polynomial is made sure to be in the standard form
+2. the leading term of the dividend is divided by the leading term of the divisor
+3. the result of the division is added to the quotient as a term
+4. the quotient is made sure to be in the standard form
+5. the result of the division is multiplied by the divisor
+6. the result of the multiplication is subtracted from the dividend
+7. the rest of the dividend is appended to the result of the subtraction
+8. if dividend is less than divisior & the terms are over, the division is finished
+9. the final answer is an algebraic expression having the quotient as it's first term plus a fraction representing the remainder
+
+### Dividing polynomials with missing terms
+- meaning that one or more of the exponents of the given variable are missing
+#### Resolving by place holders
+- missing exponents of the variable is inserted in the polynomial with the coefficient of 0
+
+<!-- 14:41 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
