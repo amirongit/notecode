@@ -36,7 +36,7 @@
 #### Additive inverse property
 - any number plus it's opposite is equal zero
 #### Additive identity property
-- any number in addition to zero eqauls itself
+- any number in addition to zero is equal to itself
 
 ### Multiplication property
 - both sides of an equation are multiplied by the same non-zero constant without changing the final solution
@@ -253,6 +253,17 @@
 #### The fractional exponent rule
 - a fraction being raised to a power is written as it's numerator into the power divided by it's denominator into the power
 
+### Integer exponents & the quotient rule
+#### The zero exponent rule
+- any non-zero value to the power of zero results in 1
+#### The negative exponent rule
+- the component is written as it's reciprocal with the denominator being raised to the opposed exponent
+- it's coefficient is written as the numerator of the fraction
+#### Algebraic version of the quotient rule
+- when operands of the same base are divided, the exponents are subtracted to get the result
+
+<!-- 11:15 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
@@ -261,3 +272,5 @@
 - the elimination method to solve systems of linear equations uses the addition property of equality
 - `-a ^ x = -(a ^ x)` but `(-a) ^ x = (-a) ^ x` therefore `(-ab) ^ x = (-a) ^ x . b ^ x`
 - if a term is being raised by a power, each component is raised separatedly
+- if a component of a term is being raised to a power, other components remain the same
+- by decreasing the power the value is being devided by the base
