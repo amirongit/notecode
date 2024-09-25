@@ -296,7 +296,7 @@
 2. results are merged
 
 ### Special products
-- common binomial products
+- common polynomial products
 #### Square of a binomial
 - first form is `(a + b)^2 = a^2 + 2ab + b^2`
 - second form is `(a - b)^2 = a^2 - 2ab + b^2`
@@ -368,6 +368,18 @@
 2. per each term including the variable in the final result of factoring an equation which is equal to zero is solved
     - considering zero product property
 3. results of the generated equations are the solution set for the quadratic equation
+
+### Introduction to rational expressions
+- a fraction whose numerator & denominator are polynomials, with the denominator not equal to zero
+#### Restricted values
+- any values for the variables in the given expression which make it's denominator equal to zero
+- specification
+    1. the denominator of the given expression in it's original form is solved for zero
+#### Simplifying rational expressions
+1. numerator & denominator of the given expression is factored
+2. common factors are cancelled
+
+<!-- 18:22 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
