@@ -14,8 +14,8 @@
 #### Algebraic expression
 - one or more terms separated by + or - symbols
 #### Simplification of algebraic expressions
-- Distributive property
-    - makes it possible to distribute a factor (coefficient) to each term of it's expression
+- distributive property
+    - multiplication of a factor by an algebraic expression & addition of it's terms are order-independent; both produce the same result
 #### Like terms
 - terms with the exact same variables that have the exact same exponents
 - when combining like terms, addition & subtraction operations are only applied on the coefficients
@@ -30,7 +30,7 @@
 - the same constant are added to both sides of an equation without changing the final solution
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
-#### Single variable first degree linear equation
+#### First degree linear equation in single variable 
 - the overall form is `ax + b = c` such that `a != 0`
 - 'b' & 'c' are constants, 'a' is coefficient & non-zero
 #### Additive inverse property
@@ -51,11 +51,12 @@
 3. calculate the value of the variable, plug & check the answer for the equation
 
 ### Solving linear equations with fractions or decimals
-- multiply both sides of the equation by the LCD of all fractions to isolate the variable (which is the LCM of all denominators) (must be done after simplification) 
+- multiply both sides of the equation by the LCD of all fractions to isolate the variable (must be done after simplification) 
 #### Least common multiple 
-- the smallest number that two or more numbers can divide into evenly
+- the product of the common prime factors of the given terms with the most repetition
+- the smallest multiple of the given numbers
 #### Least common denominator
-- the smallest number that is a common denominator for a set of fractions
+- LCM of denominators of the given fractions
 
 ### Linear equations with no solution or an infinite number of solutions
 #### Conditional equation
@@ -297,13 +298,13 @@
 ### Special products
 - common binomial products
 #### Square of a binomial
-- first form is `(a + b) ^ 2 = a ^ 2 + 2ab + b ^ 2`
-- second form is `(a - b) ^ 2 = a ^ 2 - 2ab + b ^ 2`
+- first form is `(a + b)^2 = a^2 + 2ab + b^2`
+- second form is `(a - b)^2 = a^2 - 2ab + b^2`
 #### Difference of squares
-- the overall form is `(a + b)(a - b) = a ^ 2 - b ^ 2`
+- the overall form is `(a + b)(a - b) = a^2 - b^2`
 #### Cube of a binomial
-- first form is `(a + b) ^ 3 = a ^ 3 + 3ba ^ 2 + 3ab ^ 2 + b ^ 3`
-- second form is `(a - b) ^ 3 = a ^ 3 - 3ba ^ 2 + 3ab ^ 2 - b ^ 3`
+- first form is `(a + b)^3 = a^3 + 3ba^2 + 3ab^2 + b^3`
+- second form is `(a - b)^3 = a^3 - 3ba^2 + 3ab^2 - b^3`
 
 ### Dividing polynomials by monomials
 - each term of the given polynomial is divided by the monomial
@@ -325,7 +326,48 @@
 #### Resolving by place holders
 - missing exponents of the variable is inserted in the polynomial with the coefficient of 0
 
-<!-- 14:41 -->
+### Finding the GCF of polynomials
+- the product of the common prime factors of the given terms with the least repetition
+- when a variable is involved, it is treated like a prime factor of it's term
+#### Gratest common factor
+- the largest divisor without remainder of the given terms
+
+### Factoring out the GCF
+1. the GCF of all the terms inside the given polynomial is calculated
+2. the polynomial is divided by the GCF
+3. the answer is written as the product of GCF & the result of the division
+
+### Factoring by grouping
+- the GCF itself can be a polynomial
+#### Steps
+1. given polynomials are split into groups such that factoring out their GCF results in the same polynomial factor
+2. the GCF of each group is factored out
+3. the GCF of the entire polynomial, which is now the polynomial factor common to each group, is factored out
+
+### Factoring trinomials into binomials
+- the given polynomial is in the standard form of a quadratic equation
+1. any common factors is factored out
+2. two integers whose product is equal to the product of 'a' & 'c' & their sum is equal to 'b' are found
+3. the middle term is split into sum of two terms which have the found integers as their coefficient
+4. the resulted polynomial is factored using grouping
+#### Special case scenarios
+- if there aren't any pair of integers which satisfy the conditions in the first step, the given polynomial is prime
+
+### Special factoring rules
+- special products, but in reversed
+
+### Solving quadratic equations by factoring
+#### Zero product property
+- if the result of a multiplication is equal to zero, a zero is involved in it
+#### Quadratic equation
+- contains an squared variable & no other terms with a higher exponent
+- the overall form is `ax^2 + bx + c = 0`
+- 'a' can't be equal to zero
+#### Steps
+1. the given equation is factored
+2. per each term including the variable in the final result of factoring an equation which is equal to zero is solved
+    - considering zero product property
+3. results of the generated equations are the solution set for the quadratic equation
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -333,7 +375,8 @@
 - equations in two variables represent a line in the coordinate plane ('x' & 'y' axes)
     - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
 - the elimination method to solve systems of linear equations uses the addition property of equality
-- `-a ^ x = -(a ^ x)` but `(-a) ^ x = (-a) ^ x` therefore `(-ab) ^ x = (-a) ^ x . b ^ x`
+- `-a^x = -(a^x)` but `(-a)^x = (-a)^x` therefore `(-ab)^x = (-a)^x . b^x`
 - if a term is being raised by a power, each factor is raised separatedly
 - if a factor of a term is being raised to a power, other components remain the same
 - by decreasing the power the value is being devided by the base
+- when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when it's terms are mostly negative
