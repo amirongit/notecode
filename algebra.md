@@ -53,7 +53,7 @@
 ### Solving linear equations with fractions or decimals
 - multiply both sides of the equation by the LCD of all fractions to isolate the variable (must be done after simplification) 
 #### Least common multiple 
-- the product of the common prime factors of the given terms with the most repetition
+- the product of the prime factors of the given terms with the most repetition
 - the smallest multiple of the given numbers
 #### Least common denominator
 - LCM of denominators of the given fractions
@@ -379,7 +379,14 @@
 1. numerator & denominator of the given expression is factored
 2. common factors are cancelled
 
-<!-- 18:22 -->
+### Finding the LCD for a group of rational expressions
+- the procedure is the same as normal LCM with key differences
+    - variables are treated as prime factors
+
+### Complex fractions
+- a fraction whose numerator & denominator is itself a fraction
+
+<!-- 20:20 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
