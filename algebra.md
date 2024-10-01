@@ -381,12 +381,23 @@
 
 ### Finding the LCD for a group of rational expressions
 - the procedure is the same as normal LCM with key differences
-    - variables are treated as prime factors
+    - variables & expressions with variables inside parentheses are treated as prime factors
 
 ### Complex fractions
 - a fraction whose numerator & denominator is itself a fraction
 
-<!-- 20:20 -->
+### Solving equations with rational expressions
+1. each side of the equation is multiplied by the LCD to clear the denominators
+2. the equation is solved
+3. any solution that results in a 0 denominator is rejected as restricted value
+
+### Direct variation
+- a value which varies directly with a term which has a constant & a variable
+- an equation in slope - intercept form where 'b' is 0
+#### Constant of variation
+- the constant of the term producing the value in a direct variation
+
+<!-- 21:24 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
