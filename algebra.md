@@ -391,13 +391,29 @@
 2. the equation is solved
 3. any solution that results in a 0 denominator is rejected as restricted value
 
-### Direct variation
+### Variation
 - a value which varies directly with a term which has a constant & a variable
 - an equation in slope - intercept form where 'b' is 0
 #### Constant of variation
 - the constant of the term producing the value in a direct variation
+#### Direct variation
+- the constant is multiplied by the variable
+- if the constant is positive, the value & the constant increase & decrease directly; vice versa
+#### Inverse variation
+- the constant is divided by the variable
+- if the constant is positive, the value & the constant increase & decrease inversely; vice versa
 
-<!-- 21:24 -->
+### Introduction to roots
+#### The inverse property of exponents & roots
+- The exponent of the radicand can be divided by the index of the radical to get the final result
+#### Perfect square
+- any number whos square root is rational
+
+### The distance formula
+#### formula of pythagoras in a coordinate plane
+- distance between two points is calculated by a third point forming a right triangle
+- the overall form of the formula is: `radical((x2 - x1)^2 + (y2 - y1)^2)`
+
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
