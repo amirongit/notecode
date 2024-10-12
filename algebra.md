@@ -16,10 +16,10 @@
 #### Simplification of algebraic expressions
 - distributive property
     - multiplication of a factor by an algebraic expression & addition of it's terms are order-independent; both produce the same result
-#### Like terms
-- terms with the exact same variables that have the exact same exponents
-- when combining like terms, addition & subtraction operations are only applied on the coefficients
-- if there isn't any like terms, the given expression can't be simplified by combining terms
+- like terms
+    - terms with the same variables raised to the same exponents
+    - when combining, addition & subtraction operations are only applied on the coefficients
+    - if there isn't any like terms, the given expression can't be simplified by combining terms
 
 ### Equations
 #### Equation
@@ -422,7 +422,12 @@
 #### the quotient Property of radicals
 - states that radical of a rational expression is equal to radical of it's numerator divided by radical of it's denominator
 
-<!-- 23:16 -->
+### Adding & subtracting radicals
+#### Like radicals
+- radicals with the same index & radicand
+- when combining, addition & subtraction operations are only applied on the coefficients
+
+<!-- 23:35 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
