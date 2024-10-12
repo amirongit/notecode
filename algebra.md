@@ -358,7 +358,7 @@
 
 ### Solving quadratic equations by factoring
 #### Zero product property
-- if the result of a multiplication is equal to zero, a zero is involved in it
+- if the multiplication is equal to zero, a zero is involved in it
 #### Quadratic equation
 - contains an squared variable & no other terms with a higher exponent
 - the overall form is `ax^2 + bx + c = 0`
@@ -405,15 +405,24 @@
 
 ### Introduction to roots
 #### The inverse property of exponents & roots
-- The exponent of the radicand can be divided by the index of the radical to get the final result
-#### Perfect square
-- any number whos square root is rational
+- The exponent of the radicand is divided by the index of the radical to get the final result
+#### Perfect root
+- any number whos root is rational
 
 ### The distance formula
 #### formula of pythagoras in a coordinate plane
 - distance between two points is calculated by a third point forming a right triangle
 - the overall form of the formula is: `radical((x2 - x1)^2 + (y2 - y1)^2)`
 
+### Multiplying, dividing & symplifying radicals
+#### Simplified root
+- doesn't have a perfect root under radical
+#### The product property of radicals
+- states that radical of a non-negative real number is equal to the product of radicals of it's quotients (with the same index)
+#### the quotient Property of radicals
+- states that radical of a rational expression is equal to radical of it's numerator divided by radical of it's denominator
+
+<!-- 23:16 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
