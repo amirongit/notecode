@@ -416,7 +416,9 @@
 
 ### Multiplying, dividing & symplifying radicals
 #### Simplified root
-- doesn't have a perfect root under radical
+- doesn't have a perfect root as a factor of it's radicant
+- the radicant doesn't contain fractions
+- there isn't a radical as denominator
 #### The product property of radicals
 - states that radical of a non-negative real number is equal to the product of radicals of it's quotients (with the same index)
 #### the quotient Property of radicals
@@ -427,7 +429,16 @@
 - radicals with the same index & radicand
 - when combining, addition & subtraction operations are only applied on the coefficients
 
-<!-- 23:35 -->
+### Rationalizing the denominator
+- an irrational numbers can't be denominator in a logical expressions
+#### Steps
+1. the expression is simplified
+2. the fraction is made rational by multiplying it by
+    - the smallest irrational number which makes it rational
+    - the irrational factor in it's denominator until it becomes rational
+    - the conjugate of it's denominator
+
+<!-- 24:38 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
