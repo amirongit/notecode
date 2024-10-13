@@ -464,7 +464,15 @@
 3. coefficient of the first degree variable is divided by 2, squared & added to both sides of the equation
 4. the final equation is factored & solved
 
-<!-- 26:25 -->
+### Solving quadratic equations using the quadratic formula
+#### Steps
+1. the equation is transformed to the standard form
+2. then, components are plugged in the quadratic formula: `(-b (+ & -) radical(b^2 - 4ac)) / 2a`
+    - if the radicand is less than 0, there isn't a real solution
+    - if the radicand is equal to 0, there is one solution
+    - if the radicand is greater than 0, there are two solutions
+
+## Algebra 2 Full Course
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
