@@ -26,7 +26,7 @@
 - an statement claiming that two algebraic (?) expressions are equal
 - for an equation to be true, the left & the right side must evaluate to the same value
 
-### Addition property
+### Addition property of equality
 - the same constant are added to both sides of an equation without changing the final solution
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
@@ -405,7 +405,7 @@
 
 ### Introduction to roots
 #### The inverse property of exponents & roots
-- The exponent of the radicand is divided by the index of the radical to get the final result
+- The exponent of the radicand is divided by the index of the radical
 #### Perfect root
 - any number whos root is rational
 
@@ -438,7 +438,33 @@
     - the irrational factor in it's denominator until it becomes rational
     - the conjugate of it's denominator
 
-<!-- 24:38 -->
+### Solving equations with radicals
+#### Radical equation
+- an equation containing radicals with variable factors as radicand
+#### The squaring property of equality
+- both sides of an equation are raised to an specific power without making it incorrect
+- solutions to the original equation is among the solutions of the raised equation
+#### Steps
+1. the radical containing the variable is isolated
+2. both sides of the equation are raised to the index of the radical
+3. the equation is solved
+4. every solution is checked within the original equation (not optional)
+
+### Using rational numbers as exponents
+- radicals can be represented by fractional exponents (using the inverse property of exponents & roots)
+#### The negative exponent property
+- a factor with a negative exponent is reversed having it's denominator being raised to positive exponent
+
+### Solving quadratic equations by completing the square
+#### Perfect square trinomial
+- can be factored as the square of a binomial
+#### Steps
+1. constants are isolated
+2. coefficient of the squared variable is made 1
+3. coefficient of the first degree variable is divided by 2, squared & added to both sides of the equation
+4. the final equation is factored & solved
+
+<!-- 26:25 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
