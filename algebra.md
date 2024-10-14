@@ -10,12 +10,12 @@
 #### Coefficient
 - a number next to one or more variables
 #### Constant
-- a plain number which isn't next to a variable, therefor it's value never changes
+- a plain number which isn't next to a variable, therefor its value never changes
 #### Algebraic expression
 - one or more terms separated by + or - symbols
 #### Simplification of algebraic expressions
 - distributive property
-    - multiplication of a factor by an algebraic expression & addition of it's terms are order-independent; both produce the same result
+    - multiplication of a factor by an algebraic expression & addition of its terms are order-independent; both produce the same result
 - like terms
     - terms with the same variables raised to the same exponents
     - when combining, addition & subtraction operations are only applied on the coefficients
@@ -34,14 +34,14 @@
 - the overall form is `ax + b = c` such that `a != 0`
 - 'b' & 'c' are constants, 'a' is coefficient & non-zero
 #### Additive inverse property
-- any number plus it's opposite is equal zero
+- any number plus its opposite is equal zero
 #### Additive identity property
 - any number in addition to zero is equal to itself
 
 ### Multiplication property
 - both sides of an equation are multiplied by the same non-zero constant without changing the final solution
 #### Multiplicative inverse property
-- any number times it's reciprocal is equal to 1
+- any number times its reciprocal is equal to 1
 #### Multiplicative identity property
 - any number times 1 is unchanged
 
@@ -87,7 +87,7 @@
 ### Linear equations in two variables
 - the overall form is `ax + by = c`
 - 'c' is constant, 'a' & 'b' can't be zero at the same time
-- this type of equation can have infinite combinations of 'x' & 'y' as it's solution
+- this type of equation can have infinite combinations of 'x' & 'y' as its solution
 #### Ordered pair
 - two terms inside parentheses with 'x' being the first & 'y' being the second
 - the two terms are also called components
@@ -250,16 +250,16 @@
 #### Power to power rule
 - when a base being raised to a power is being raised to another power, the two powers are multiplied to get the result
 #### Raising product to power
-- a term being raised to a power is written as it's divisors being raised to the power
+- a term being raised to a power is written as its divisors being raised to the power
 #### Fractional exponent rule
-- a fraction being raised to a power is written as it's numerator into the power divided by it's denominator into the power
+- a fraction being raised to a power is written as its numerator into the power divided by its denominator into the power
 
 ### Integer exponents & the quotient rule
 #### Zero exponent rule
 - any non-zero value to the power of zero results in 1
 #### Negative exponent rule
-- the factor is written as it's reciprocal with the denominator being raised to the opposed exponent
-- it's coefficient is written as the numerator of the fraction
+- the factor is written as its reciprocal with the denominator being raised to the opposed exponent
+- its coefficient is written as the numerator of the fraction
 #### Algebraic version of the quotient rule
 - when operands of the same base are divided, the exponents are subtracted to get the result
 
@@ -319,7 +319,7 @@
 6. the result of the multiplication is subtracted from the dividend
 7. the rest of the dividend is appended to the result of the subtraction
 8. if dividend is less than divisior & the terms are over, the division is finished
-9. the final answer is an algebraic expression having the quotient as it's first term plus a fraction representing the remainder
+9. the final answer is an algebraic expression having the quotient as its first term plus a fraction representing the remainder
 
 ### Dividing polynomials with missing terms
 - meaning that one or more of the exponents of the given variable are missing
@@ -328,7 +328,7 @@
 
 ### Finding the GCF of polynomials
 - the product of the common prime factors of the given terms with the least repetition
-- when a variable is involved, it is treated like a prime factor of it's term
+- when a variable is involved, it is treated like a prime factor of its term
 #### Gratest common factor
 - the largest divisor without remainder of the given terms
 
@@ -372,9 +372,9 @@
 ### Introduction to rational expressions
 - a fraction whose numerator & denominator are polynomials, with the denominator not equal to zero
 #### Restricted values
-- any values for the variables in the given expression which make it's denominator equal to zero
+- any values for the variables in the given expression which make its denominator equal to zero
 - specification
-    1. the denominator of the given expression in it's original form is solved for zero
+    1. the denominator of the given expression in its original form is solved for zero
 #### Simplifying rational expressions
 1. numerator & denominator of the given expression is factored
 2. common factors are cancelled
@@ -416,13 +416,13 @@
 
 ### Multiplying, dividing & symplifying radicals
 #### Simplified root
-- doesn't have a perfect root as a factor of it's radicant
+- doesn't have a perfect root as a factor of its radicant
 - the radicant doesn't contain fractions
 - there isn't a radical as denominator
 #### The product property of radicals
-- states that radical of a non-negative real number is equal to the product of radicals of it's quotients (with the same index)
+- states that radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
 #### the quotient Property of radicals
-- states that radical of a rational expression is equal to radical of it's numerator divided by radical of it's denominator
+- states that radical of a rational expression is equal to radical of its numerator divided by radical of its denominator
 
 ### Adding & subtracting radicals
 #### Like radicals
@@ -435,8 +435,8 @@
 1. the expression is simplified
 2. the fraction is made rational by multiplying it by
     - the smallest irrational number which makes it rational
-    - the irrational factor in it's denominator until it becomes rational
-    - the conjugate of it's denominator
+    - the irrational factor in its denominator until it becomes rational
+    - the conjugate of its denominator
 
 ### Solving equations with radicals
 #### Radical equation
@@ -453,7 +453,7 @@
 ### Using rational numbers as exponents
 - radicals can be represented by fractional exponents (using the inverse property of exponents & roots)
 #### The negative exponent property
-- a factor with a negative exponent is reversed having it's denominator being raised to positive exponent
+- a factor with a negative exponent is reversed having its denominator being raised to positive exponent
 
 ### Solving quadratic equations by completing the square
 #### Perfect square trinomial
@@ -473,6 +473,32 @@
     - if the radicand is greater than 0, there are two solutions
 
 ## Algebra 2 Full Course
+### Sets
+- collections of unique elements or members, number of elements could be finite or infinite
+#### Null set
+- unique set with zero elements, also known as empty set
+- is a subset of all sets
+#### Singleton
+- set with just one element
+#### Set builder notation
+- used to describe a set by stating the conditions that its members must satisfy
+#### Subsets
+- all of its elements are also elements of another original set
+    - if the original set has more elements, the subset is proper
+    - if the original set has the same elements, the subset is improper
+- numbers of all the possible subsets for a given set
+    - `2^(number of elements)`
+#### Complement
+- set of elements present in universal set & not present in the given set
+#### Universal set
+- unique set of all elements under consideration in a given situation
+- its complement is null set
+#### Venn diagram
+- diagram style that shows the logical relation between sets
+#### Union
+- set of all the elements in given sets
+#### Intersection
+- set of common elements between given sets
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -484,4 +510,4 @@
 - if a term is being raised by a power, each factor is raised separatedly
 - if a factor of a term is being raised to a power, other components remain the same
 - by decreasing the power the value is being devided by the base
-- when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when it's terms are mostly negative
+- when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when its terms are mostly negative
