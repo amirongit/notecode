@@ -179,14 +179,16 @@
     - left side of the line for '<' & '<='
 
 ### Introduction to functions
-- represents a relation in which each unique first component corresponds to exactyly one non-unique second component
-- all functions are relation, but not vice versa
+- represents a relation in which each unique first component corresponds to one non-unique second component
+- all functions are relations, but not vice versa
 #### Relation
 - any set of ordered pairs
 #### Domain
 - set of all the first components ('x' values) in a relation
+- set of all the possible inputs of a function
 #### Range
 - set of all the second components ('y' values) in a relation
+- set of all the possible outputs of a function
 #### Vertical line test
 - if any vertical line intersects a graph more than once, the graph isn't a function (although it may be an equation)
 
@@ -532,12 +534,21 @@
 3. resulted equations are solved
 
 ### Solving absolute value inequations
-### Steps
+#### Steps
 1. absolute values are isolated
     - if one of the sides is negative, inequality doesn't have solution (its solution set is null set)
 2. a compound inequality is madde with 'or' without absolute values (bare values are used)
     - the additional inequality has the bare value opposed
 3. resulted inequalities are solved
+
+
+### More on functions
+#### Considerations on domain & range
+- functions can't have a division by zero
+- functions can't have a negative radicand with an even index
+- functions can't have a negative number as a result of raising a base to an even exponent
+
+<!-- 09:49 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
