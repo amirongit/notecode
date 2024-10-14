@@ -65,7 +65,7 @@
 - an equation which is always true, no matter what values are substituted as the variable
 - usually in this type of equations one side is a simplified version of the other side
 #### Contradiction equation
-- an equation which doesn't have a solution
+- an equation which doesn't have solution
 
 ### Proportions
 - claim that two ratios are equal
@@ -525,12 +525,19 @@
 - distance between the given number & zero
 #### Steps
 1. absolute values are isolated
-    - if the equating expression is equal to a negative number, equation doesn't have a solution (its solution set is null set)
-    - if the equating expression is equal to zero, equation has a single solution
-2. a compound equation is madde with 'or' without absolute values removed (bare values are used)
-    - the additional equation has one side opposed
+    - if one of the sides is negative, equation doesn't have solution (its solution set is null set)
+    - if one of the sides is equal to zero, equation has a single solution
+2. a compound equation is madde with 'or' without absolute values (bare values are used)
+    - the additional equation has the bare value opposed
+3. resulted equations are solved
 
-<!-- 05:30 -->
+### Solving absolute value inequations
+### Steps
+1. absolute values are isolated
+    - if one of the sides is negative, inequality doesn't have solution (its solution set is null set)
+2. a compound inequality is madde with 'or' without absolute values (bare values are used)
+    - the additional inequality has the bare value opposed
+3. resulted inequalities are solved
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
