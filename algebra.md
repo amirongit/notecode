@@ -27,11 +27,11 @@
 - for an equation to be true, the left & the right side must evaluate to the same value
 
 ### Addition property of equality
-- the same constant are added to both sides of an equation without changing the final solution
+- same constant are added to both sides of an equation without changing the final solution
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
 #### First degree linear equation in single variable 
-- the overall form is `ax + b = c` such that `a != 0`
+- overall form is `ax + b = c` such that `a != 0`
 - 'b' & 'c' are constants, 'a' is coefficient & non-zero
 #### Additive inverse property
 - any number plus its opposite is equal zero
@@ -53,8 +53,8 @@
 ### Solving linear equations with fractions or decimals
 - multiply both sides of the equation by the LCD of all fractions to isolate the variable (must be done after simplification) 
 #### Least common multiple 
-- the product of the prime factors of the given terms with the most repetition
-- the smallest multiple of the given numbers
+- product of the prime factors of the given terms with the most repetition
+- smallest multiple of the given numbers
 #### Least common denominator
 - LCM of denominators of the given fractions
 
@@ -85,7 +85,7 @@
     - infinity can never be included
 
 ### Linear equations in two variables
-- the overall form is `ax + by = c`
+- overall form is `ax + by = c`
 - 'c' is constant, 'a' & 'b' can't be zero at the same time
 - this type of equation can have infinite combinations of 'x' & 'y' as its solution
 #### Ordered pair
@@ -106,8 +106,8 @@
 ### Graphing linear equations in two variables
 - each point in the graph represents one of the infinite solutions of the equation
 #### Intercepts
-- the intersection of graph & 'y' axis is called y-intercept
-- the intersection of graph & 'x' axis is called x-intercept
+- intersection of graph & 'y' axis is called y-intercept
+- intersection of graph & 'x' axis is called x-intercept
 #### Steps
 1. two ordered pairs are acquired, solving for intercepts is usually the fastest way
 2. the graph is drawn between & after two points (implied by the ordered pairs)
@@ -137,8 +137,8 @@
 - 'm' can be thought of as 'rise' over 'run' & calculated visually (`points towards up / points towards right`)
 - a line with positive slope rises moving towards right ('y' increases when 'x' increases)
 - a line with negative slope falls moving towards right ('y' decreases when 'x' increases)
-- the slope of a horizontal line is 0
-- the slope of a vertical line is undefined
+- slope of a horizontal line is 0
+- slope of a vertical line is undefined
 
 ### Equations of line
 - other than the standard overall form
@@ -148,7 +148,7 @@
 - 'm' shows the slope & 'b' is the y-intercept which occures at (0, b)
 #### Point - slope form
 - in this form, the slope & the coordinations of a single point is visible
-- the overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
+- overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
 - is possible to derive from three combination of info:
     - `m = (y - y1) / (x - x1)` form
     - a given point & slope (which leads the above option)
@@ -162,7 +162,7 @@
 - non-vertical parallel lines have the same slopes
 #### Perpendicular
 - lines that intersect at a 90 degree angle
-- the product of slopes of two non-vertical perpendicular lines is -1
+- product of slopes of two non-vertical perpendicular lines is -1
 
 ### Graphing linear inequalities in two variables
 #### Steps
@@ -174,7 +174,7 @@
     - above the line for '>' & '>='
     - below the line for '<' & '<='
 #### Special case scenarios
-- the shading conditions are different for vertical boundary lines
+- shading conditions are different for vertical boundary lines
     - right side of the line for '>' & '>='
     - left side of the line for '<' & '<='
 
@@ -240,7 +240,7 @@
 
 ### Solving systems of linear inequalities
 #### Graphing
-1. graph each equation separatedly
+1. graph each equation separately
 2. intersection of the graphs is the solution
 - is graphing the only way?
 
@@ -301,7 +301,7 @@
 - first form is `(a + b)^2 = a^2 + 2ab + b^2`
 - second form is `(a - b)^2 = a^2 - 2ab + b^2`
 #### Difference of squares
-- the overall form is `(a + b)(a - b) = a^2 - b^2`
+- overall form is `(a + b)(a - b) = a^2 - b^2`
 #### Cube of a binomial
 - first form is `(a + b)^3 = a^3 + 3ba^2 + 3ab^2 + b^3`
 - second form is `(a - b)^3 = a^3 - 3ba^2 + 3ab^2 - b^3`
@@ -330,7 +330,7 @@
 - the product of the common prime factors of the given terms with the least repetition
 - when a variable is involved, it is treated like a prime factor of its term
 #### Gratest common factor
-- the largest divisor without remainder of the given terms
+- largest divisor without remainder of the given terms
 
 ### Factoring out the GCF
 1. the GCF of all the terms inside the given polynomial is calculated
@@ -338,14 +338,14 @@
 3. the answer is written as the product of GCF & the result of the division
 
 ### Factoring by grouping
-- the GCF itself can be a polynomial
+- GCF itself can be a polynomial
 #### Steps
 1. given polynomials are split into groups such that factoring out their GCF results in the same polynomial factor
 2. the GCF of each group is factored out
 3. the GCF of the entire polynomial, which is now the polynomial factor common to each group, is factored out
 
 ### Factoring trinomials into binomials
-- the given polynomial is in the standard form of a quadratic equation
+- given polynomial is in the standard form of a quadratic equation
 1. any common factors is factored out
 2. two integers whose product is equal to the product of 'a' & 'c' & their sum is equal to 'b' are found
 3. the middle term is split into sum of two terms which have the found integers as their coefficient
@@ -361,7 +361,7 @@
 - if the multiplication is equal to zero, a zero is involved in it
 #### Quadratic equation
 - contains an squared variable & no other terms with a higher exponent
-- the overall form is `ax^2 + bx + c = 0`
+- overall form is `ax^2 + bx + c = 0`
 - 'a' can't be equal to zero
 #### Steps
 1. the given equation is factored
@@ -395,29 +395,29 @@
 - a value which varies directly with a term which has a constant & a variable
 - an equation in slope - intercept form where 'b' is 0
 #### Constant of variation
-- the constant of the term producing the value in a direct variation
+- constant of the term producing the value in a direct variation
 #### Direct variation
-- the constant is multiplied by the variable
+- constant is multiplied by the variable
 - if the constant is positive, the value & the constant increase & decrease directly; vice versa
 #### Inverse variation
-- the constant is divided by the variable
+- constant is divided by the variable
 - if the constant is positive, the value & the constant increase & decrease inversely; vice versa
 
 ### Introduction to roots
 #### The inverse property of exponents & roots
-- The exponent of the radicand is divided by the index of the radical
+- exponent of the radicand is divided by the index of the radical
 #### Perfect root
 - any number whos root is rational
 
 ### The distance formula
 #### formula of pythagoras in a coordinate plane
 - distance between two points is calculated by a third point forming a right triangle
-- the overall form of the formula is: `radical((x2 - x1)^2 + (y2 - y1)^2)`
+- overall form of the formula is: `radical((x2 - x1)^2 + (y2 - y1)^2)`
 
 ### Multiplying, dividing & symplifying radicals
 #### Simplified root
 - doesn't have a perfect root as a factor of its radicant
-- the radicant doesn't contain fractions
+- radicant doesn't contain fractions
 - there isn't a radical as denominator
 #### The product property of radicals
 - states that radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
@@ -434,9 +434,9 @@
 #### Steps
 1. the expression is simplified
 2. the fraction is made rational by multiplying it by
-    - the smallest irrational number which makes it rational
-    - the irrational factor in its denominator until it becomes rational
-    - the conjugate of its denominator
+    - smallest irrational number which makes it rational
+    - irrational factor in its denominator until it becomes rational
+    - conjugate of its denominator
 
 ### Solving equations with radicals
 #### Radical equation
@@ -500,14 +500,46 @@
 #### Intersection
 - set of common elements between given sets
 
+### Converting a repeating decimal into a fraction
+#### Repeating decimal
+- repeats the same pattern of digits forever
+#### Steps
+1. the given number is written as an equation being assigned to a variable
+2. both sides of the equation are multiplied by `10^(number of repeating digits)`
+3. the original equation is subtracted from the result of the multiplication
+4. the equation is solved
+
+### Compound inequalities
+- consists of two inequalities linked by 'and' or 'or'
+#### Solving compound inequalities with 'and'
+- steps
+    1. each inequality is solved separately
+    2. the solution set contains all the elements that satisfy the given inequalities (intersection of their solution sets)
+#### Solving compound inequalities with 'or'
+- steps
+    1. each inequality is solved separately
+    2. the solution set contains all the elements that satisfy either the given inequalities (union of their solution sets)
+
+### Solving absolute value equations
+#### Absolute value
+- distance between the given number & zero
+#### Steps
+1. absolute values are isolated
+    - if the equating expression is equal to a negative number, equation doesn't have a solution (its solution set is null set)
+    - if the equating expression is equal to zero, equation has a single solution
+2. a compound equation is madde with 'or' without absolute values removed (bare values are used)
+    - the additional equation has one side opposed
+
+<!-- 05:30 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
-    - therefore graphing ineqalities in a single variable results in a line, cause infinite number of points are concatenated together
+    - therefore graphing inequalities in a single variable results in a line, cause infinite number of points are concatenated together
 - equations in two variables represent a line in the coordinate plane ('x' & 'y' axes)
     - therefore graphing inequalities in two variables results in a shaded area, cause infinite number of lines are concatenated together
 - the elimination method to solve systems of linear equations uses the addition property of equality
 - `-a^x = -(a^x)` but `(-a)^x = (-a)^x` therefore `(-ab)^x = (-a)^x . b^x`
-- if a term is being raised by a power, each factor is raised separatedly
+- if a term is being raised by a power, each factor is raised separately
 - if a factor of a term is being raised to a power, other components remain the same
 - by decreasing the power the value is being devided by the base
 - when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when its terms are mostly negative
