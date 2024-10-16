@@ -34,9 +34,9 @@
 - overall form is `ax + b = c` such that `a != 0`
 - 'b' & 'c' are constants, 'a' is coefficient & non-zero
 #### Additive inverse property
-- any number plus its opposite is equal zero
+- any number plus its opposite is equal to 0
 #### Additive identity property
-- any number in addition to zero is equal to itself
+- any number in addition to 0 is equal to itself
 
 ### Multiplication property
 - both sides of an equation are multiplied by the same non-zero constant without changing the final solution
@@ -86,7 +86,7 @@
 
 ### Linear equations in two variables
 - overall form is `ax + by = c`
-- 'c' is constant, 'a' & 'b' can't be zero at the same time
+- 'c' is constant, 'a' & 'b' can't be 0 at the same time
 - this type of equation can have infinite combinations of 'x' & 'y' as its solution
 #### Ordered pair
 - two terms inside parentheses with 'x' being the first & 'y' being the second
@@ -121,11 +121,11 @@
 - vertical line
     - has a fixed value for 'x'
     - is parallel to 'y' axis
-    - the equation in this scenario has 'b' as zero
+    - the equation in this scenario has 'b' as 0
 - horizontal line
     - has a fixed value for 'y'
     - is parallel to 'x' axis
-    - the equation in this scenario has 'a' as zero
+    - the equation in this scenario has 'a' as 0
 
 ### Slope of line
 - is measured by comparing vertical to horizontal changes along a line
@@ -133,7 +133,7 @@
 #### Calculation of slope using given points
 1. ordered pairs are labeled as (x1, y1), (x2, y2)
 2. the result is calculated by this formula: `m = (y2 - y1) / (x2 - x1)`
-- 'a' can't be zero in the equation & x2 can't be equal to x1 because of division by zero in the formula
+- 'a' can't be equal to 0 in the equation & x2 can't be equal to x1 because of division by 0 in the formula
 - 'm' can be thought of as 'rise' over 'run' & calculated visually (`points towards up / points towards right`)
 - a line with positive slope rises moving towards right ('y' increases when 'x' increases)
 - a line with negative slope falls moving towards right ('y' decreases when 'x' increases)
@@ -154,7 +154,7 @@
     - a given point & slope (which leads the above option)
     - two given points (which leads the above option)
 #### Stupid version of the standard form
-- the same, but with 'a' being equal or greater than zero
+- the same, but with 'a' being equal or greater than 0
 
 ### Parallel & perpendicular lines
 #### Parallel lines
@@ -204,7 +204,7 @@
 - have parallel equations therefore solutions aren't possible
 #### Dependent equations
 - are equivalent of each other therefore intersections are infinite
-#### Graphing steps
+#### steps
 1. each equation is graphed
 2. their intersection is the solution
 #### Special case scenarios
@@ -244,7 +244,6 @@
 #### Graphing
 1. graph each equation separately
 2. intersection of the graphs is the solution
-- is graphing the only way?
 
 ### Product & power rules for exponents
 #### Product rule for exponents
@@ -258,7 +257,7 @@
 
 ### Integer exponents & the quotient rule
 #### Zero exponent rule
-- any non-zero value to the power of zero results in 1
+- any non-zero value to the power of 0 results in 1
 #### Negative exponent rule
 - the factor is written as its reciprocal with the denominator being raised to the opposed exponent
 - its coefficient is written as the numerator of the fraction
@@ -360,23 +359,23 @@
 
 ### Solving quadratic equations by factoring
 #### Zero product property
-- if the multiplication is equal to zero, a zero is involved in it
+- if the multiplication is equal to 0, a 0 is involved in it
 #### Quadratic equation
 - contains an squared variable & no other terms with a higher exponent
 - overall form is `ax^2 + bx + c = 0`
-- 'a' can't be equal to zero
+- 'a' can't be equal to 0
 #### Steps
 1. the given equation is factored
-2. per each term including the variable in the final result of factoring an equation which is equal to zero is solved
+2. per each term including the variable in the final result of factoring an equation which is equal to 0 is solved
     - considering zero product property
 3. results of the generated equations are the solution set for the quadratic equation
 
 ### Introduction to rational expressions
-- a fraction whose numerator & denominator are polynomials, with the denominator not equal to zero
+- a fraction whose numerator & denominator are polynomials, with the denominator not equal to 0
 #### Restricted values
-- any values for the variables in the given expression which make its denominator equal to zero
+- any values for the variables in the given expression which make its denominator equal to 0
 - specification
-    1. the denominator of the given expression in its original form is solved for zero
+    1. the denominator of the given expression in its original form is solved for 0
 #### Simplifying rational expressions
 1. numerator & denominator of the given expression is factored
 2. common factors are cancelled
@@ -524,11 +523,11 @@
 
 ### Solving absolute value equations
 #### Absolute value
-- distance between the given number & zero
+- distance between the given number & 0
 #### Steps
 1. absolute values are isolated
     - if one of the sides is negative, equation doesn't have solution (its solution set is null set)
-    - if one of the sides is equal to zero, equation has a single solution
+    - if one of the sides is equal to 0, equation has a single solution
 2. a compound equation is madde with 'or' without absolute values (bare values are used)
     - the additional equation has the bare value opposed
 3. resulted equations are solved
@@ -543,12 +542,66 @@
 
 
 ### More on functions
-#### Considerations on domain & range
-- functions can't have a division by zero
-- functions can't have a negative radicand with an even index
-- functions can't have a negative number as a result of raising a base to an even exponent
+#### Restrictions
+- functions should be rational expressions, therefore they can't contain
+    1. division by 0
+    2. negative radicand with an even index
+    3. negative number as a result of raising a base to an even exponent
 
-<!-- 09:49 -->
+### Function notation
+#### Explicit form
+- `function-name(variable-name, variable-name) = rational-expression-having-the-variables`
+- function is solved for the dependent variable ('y')
+- result of 'function-name' ('y') dependes on the value of input variables ('x')
+#### Implicit form
+- function isn't solved for the dependent variable ('y')
+
+### Variation
+#### Joint variation
+- a direct variation which is based on the product of two or more variables
+
+### Solving systems of linear equations in three variables
+#### Ordered triple
+- three terms inside parentheses with 'x' being the first, 'y' being the second & 'z' being the third
+- the three terms are also called components
+#### Linear equation in three variables
+- overall form is `ax + by + cz = k` such that 'k' is constant
+- 'a', 'b' & 'c' can't be equal to 0 at the same time
+#### Steps
+1. equations are written in standard form
+2. either variable from either two equations is eliminated
+3. same variable is eliminated from the combination of the left out equation with either other two equations
+4. resulted system is solved
+5. either original equation is solved for the eliminated variable with the solutions of the generated system plugged in
+
+### Solving systems of linear equations in two variables by matrix methods
+#### Matrix
+- an ordered array of numbers
+- named according to the number of its rows & columns
+#### Square matrix
+- has the same number of rows as columns
+#### Elementry row operations
+- row switching
+    - rows swap places
+- row multiplication
+    - all elements of a row is multiplied by a non-zero number
+- row addition
+    - multiplication of a row is added to another row
+#### Augmented matrix
+- a matrix based on a system of equations without variables
+- represents each equation in its standard form as rows
+- a vertical line separates the two sides of equations (coefficients & constants)
+#### Row echelon form
+- has all non-zero rows above all zero rows
+- each leading non-zero entry in a row is strictly to the right from the leading non-zero entry of the row above it
+#### Reduced row echelon form
+- is in row echelon form
+- the leading non-zero entry in each row is 1
+- the leading non-zero entry in each row is the only non-zero entry in its column
+#### Steps
+1. an augmented matrix is drawn based on given equations
+2. drawn matrix is transformed to reduced row echelon form using elementry row operations
+3. for each variable, the value is next to the separator in the row where its coefficient is equal 1
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -561,3 +614,4 @@
 - if a factor of a term is being raised to a power, other components remain the same
 - by decreasing the power the value is being devided by the base
 - when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when its terms are mostly negative
+- systems of linear equations in three variables come with three equations
