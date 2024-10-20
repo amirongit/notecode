@@ -32,7 +32,8 @@
 - any value that makes the equation true when it replaces the associated variable
 #### First degree linear equation in single variable 
 - overall form is `ax + b = c` such that `a != 0`
-- 'b' & 'c' are constants, 'a' is coefficient & non-zero
+    - 'b' & 'c' are constants
+    - 'a' is coefficient & non-zero
 #### Additive inverse property
 - any number plus its opposite is equal to 0
 #### Additive identity property
@@ -86,7 +87,8 @@
 
 ### Linear equations in two variables
 - overall form is `ax + by = c`
-- 'c' is constant, 'a' & 'b' can't be 0 at the same time
+    - 'c' is constant
+    - 'a' & 'b' can't be 0 at the same time
 - this type of equation can have infinite combinations of 'x' & 'y' as its solution
 #### Ordered pair
 - two terms inside parentheses with 'x' being the first & 'y' being the second
@@ -145,7 +147,8 @@
 #### Slope - intercept form
 - in this form, the slope & the y-intercept are visible
 - when solving the equation for 'y', the overall form will be `y = mx + b`
-- 'm' shows the slope & 'b' is the y-intercept which occures at (0, b)
+    - 'm' shows the slope
+    - 'b' is the y-intercept which occures at (0, b)
 #### Point - slope form
 - in this form, the slope & the coordinations of a single point is visible
 - overall form is `m (x - x1) = y - y1` with the given point (x1, y1)
@@ -363,7 +366,7 @@
 #### Quadratic equation
 - contains an squared variable & no other terms with a higher exponent
 - overall form is `ax^2 + bx + c = 0`
-- 'a' can't be equal to 0
+    - 'a' can't be equal to 0
 #### Steps
 1. the given equation is factored
 2. per each term including the variable in the final result of factoring an equation which is equal to 0 is solved
@@ -431,7 +434,7 @@
 - when combining, addition & subtraction operations are only applied on the coefficients
 
 ### Rationalizing the denominator
-- an irrational numbers can't be denominator in a logical expressions
+- an irrational numbers can't be denominator in a rational expressions
 #### Steps
 1. the expression is simplified
 2. the fraction is made rational by multiplying it by
@@ -565,8 +568,9 @@
 - three terms inside parentheses with 'x' being the first, 'y' being the second & 'z' being the third
 - the three terms are also called components
 #### Linear equation in three variables
-- overall form is `ax + by + cz = k` such that 'k' is constant
-- 'a', 'b' & 'c' can't be equal to 0 at the same time
+- overall form is `ax + by + cz = k`
+    - that 'k' is constant
+    - 'a', 'b' & 'c' can't be equal to 0 at the same time
 #### Steps
 1. equations are written in standard form
 2. either variable from either two equations is eliminated
@@ -574,7 +578,7 @@
 4. resulted system is solved
 5. either original equation is solved for the eliminated variable with the solutions of the generated system plugged in
 
-### Solving systems of linear equations in two variables by matrix methods
+### Solving systems of linear equations by matrix methods
 #### Matrix
 - an ordered array of numbers
 - named according to the number of its rows & columns
@@ -603,6 +607,19 @@
 2. drawn matrix is transformed to reduced row echelon form using elementry row operations
 3. for each variable, the value is next to the separator in the row where its coefficient is equal 1
 
+### Operations of polynomial functions
+- functions are treated like rational expressions
+
+### Factoring trinomials into binomials using substitution
+- the given trinomial has a constant term & a degree which is half of the highest degree
+#### Steps
+- variable with its power of the middle term of the given trinomial is assigned to a new variable
+- given trinomial is re written with the new variable such that its highest degree is 2
+- final trinomial is in quadratic equation standard form
+- quadratic equation is factored & the new variable is substituted with the original variable
+
+<!-- 20:25 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing inequalities in a single variable results in a line, cause infinite number of points are concatenated together
@@ -615,3 +632,4 @@
 - by decreasing the power the value is being devided by the base
 - when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when its terms are mostly negative
 - systems of linear equations in three variables come with three equations
+- to transform a matrix into RRE form, manipulation is oriented on columns instead of rows
