@@ -31,7 +31,7 @@
 #### Solution to an equation
 - any value that makes the equation true when it replaces the associated variable
 #### First degree linear equation in single variable 
-- overall form is `ax + b = c` such that `a != 0`
+- overall form is `ax + b = c`
     - 'b' & 'c' are constants
     - 'a' is coefficient & non-zero
 #### Additive inverse property
