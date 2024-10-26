@@ -377,7 +377,7 @@
 - a fraction whose numerator & denominator are polynomials, with the denominator not equal to 0
 #### Restricted values
 - any values for the variables in the given expression which make its denominator equal to 0
-- specification
+- steps
     1. the denominator of the given expression in its original form is solved for 0
 #### Simplifying rational expressions
 1. numerator & denominator of the given expression is factored
@@ -425,7 +425,7 @@
 - there isn't a radical as denominator
 #### The product property of radicals
 - states that radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
-#### the quotient Property of radicals
+#### The quotient Property of radicals
 - states that radical of a rational expression is equal to radical of its numerator divided by radical of its denominator
 
 ### Adding & subtracting radicals
@@ -618,7 +618,32 @@
 - final trinomial is in quadratic equation standard form
 - quadratic equation is factored & the new variable is substituted with the original variable
 
-<!-- 20:25 -->
+### Complex numbers
+- an expressions consisting of products of the imaginary unit & other real terms
+- overall form is `a + bi`
+#### Imaginary unit
+- a variable usually named 'i' which is used to annotate `radical(-1)`
+- satisfies the equation `i^2 = -1`
+#### Operations with negative values under radicals having even indices
+1. a complex number is formed using the product property of radicals
+2. the operation is applied
+
+### Graphing parabolas
+#### Vertex
+- lowest or highest point in the given parabola
+- in standard form, vertex occures at (-b / 2a, f(-b / 2a))
+- vertex form of a quadratic equation is `a(x - h)^2 + k`
+    - 'a' is not equal to 0
+    - vertex occures at `(h, k)`
+    - parabola shifts horizontally according to the value of 'h'
+    - parabola shifts vertically according to the value of 'k'
+#### Transforming quadratic equation to vertex form
+1. equation is written in standard form
+2. 'h' is equal to `-b / 2a`
+3. 'k' is equal to `(4ac - b^2) / 4a`
+4. other terms are plugged in from the standard from
+
+<!-- 29:23 -->
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
