@@ -662,6 +662,26 @@
 - strictness of the endpoint which is extracted from making the denominator 0 is always false
 - strictness of the endpoint which is extracted from making the numerator 0 is taken from the original inequality
 
+### Inverse functions
+- relations which have the second component of their corresponding function associated to their first component
+- their domain & range are range & domain of their corresponding function respectively
+- only possible for one to one functions
+- annotated by '-1' in superscript
+- when two functions are inverse, this equation is true: `f^-1(f(x)) = f(f^-1(x)) = x`
+#### One to one functions
+- represent a relation in which each unique first component corresponds to one unique second component
+- horizontal line test
+    - if any horizontal line intersects a graph more than once, the graph isn't a one to one function (although it may be function)
+#### Finding inverse of a function
+1. 'f(x)' is replaced by 'y'
+2. resulted equation is solved for 'x'
+- the inverse function is ready; it takes 'y' as input & calculates 'x'
+- to make it formal (stupid ass!), 'x' & every 'y' is replaced by 'f^-1(x)' & 'x' respectively
+
+### Exponential functions
+
+<!-- 30:58 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing inequalities in a single variable results in a line, cause infinite number of points are concatenated together
