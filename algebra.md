@@ -679,6 +679,20 @@
 - to make it formal (stupid ass!), 'x' & every 'y' is replaced by 'f^-1(x)' & 'x' respectively
 
 ### Exponential functions
+- overall form is `f(x) = a^x`
+    - 'a' is greater than 0
+        - doesn't work with negative 'x'
+        - doesn't work with 'x' being equal to 0
+    - 'a' is not equal to 1
+        - doesn't work at all!
+- never touches 'x' axis
+    - 'a^x' never reaches 0
+- domains consist of all real numbers
+- ranges consists of all positive numbers greater than zero
+- if 'a' is greater than 1, the graph rises from left to right & vice versa
+#### Solving exponential equations
+1. both sides are manipulated to have the same bases using exponent properties
+2. new non exponential equation is derived by equating exponents of both sides
 
 <!-- 30:58 -->
 
@@ -696,3 +710,4 @@
 - systems of linear equations in three variables come with three equations
 - to transform a matrix into RRE form, manipulation is oriented on columns instead of rows
 - in the context of quadratic equations, `b^2 - 4ac` is called the discriminant
+- `0^0` is undefined
