@@ -75,7 +75,7 @@
 #### Solving proportion equations
 - since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable is cross multiplication of fractions in both sides
 
-### Solving linear algebra inequalities 1
+### Solving linear algebra inequalities
 - the procedure is the same as solving linear equations with key differences
     - when using multiplication or division property, negative operand causes the inequality to get reversed
 #### Interval notation
@@ -117,7 +117,7 @@
 #### Origin crossing graph
 - if the value of 'c' is 0, solving for intercepts results in (0, 0)
     1. 'x' & 'y' must be isolated
-    2. the resulted equation is solved to get an ordered pair
+    2. resulted equation is solved to get an ordered pair
 - picking the coefficient of a variable for as the other is usually faster
 #### Special case scenarios
 - vertical line
@@ -171,8 +171,8 @@
 #### Steps
 1. solve the inequality for 'y'
 2. draw the boundary line
-    1. replace the inequality symbol with equality symbol
-    2. draw the resulted line
+    1. inequality symbol is replaced with equality symbol
+    2. resulted line is drawn
 3. shade
     - above the line for '>' & '>='
     - below the line for '<' & '<='
@@ -182,7 +182,7 @@
     - left side of the line for '<' & '<='
 
 ### Introduction to functions
-- represents a relation in which each unique first component corresponds to one non-unique second component
+- represent a relation in which each unique first component corresponds to one non-unique second component
 - all functions are relations, but not vice versa
 #### Relation
 - any set of ordered pairs
@@ -219,9 +219,9 @@
 #### Steps
 1. one of the equations is solved for either variable
 2. the result is plugged in the other equation as the variable
-3. the resulted equation in a single variable is solved
+3. resulted equation in a single variable is solved
 4. the result is plugged in an original equation as the known variable
-5. the resulted equation in a single variable is solved
+5. resulted equation in a single variable is solved
 5. the ordered pair is written based on choices
 #### Inconsistent system proof
 - when the equality sign is wrong
@@ -236,9 +236,9 @@
 2. equations are manipulated such that coefficients of either variables are opposites across them
 3. equations are merged (sides are added up)
     - one of the variables is cancelled out
-4. the resulted equation in a single variable is solved
+4. resulted equation in a single variable is solved
 5. the result is plugged in an original equation as the known variable
-6. the resulted equation in a single variable is solved
+6. resulted equation in a single variable is solved
 7. the ordered pair is written based on choices
 #### Detection
 - either variables has opposite coefficients in the given equations
@@ -353,7 +353,7 @@
 1. any common factors is factored out
 2. two integers whose product is equal to the product of 'a' & 'c' & their sum is equal to 'b' are found
 3. the middle term is split into sum of two terms which have the found integers as their coefficient
-4. the resulted polynomial is factored using grouping
+4. resulted polynomial is factored using grouping
 #### Special case scenarios
 - if there aren't any pair of integers which satisfy the conditions in the first step, the given polynomial is prime
 
@@ -535,7 +535,7 @@
     - the additional equation has the bare value opposed
 3. resulted equations are solved
 
-### Solving absolute value inequations
+### Solving absolute value inequalities
 #### Steps
 1. absolute values are isolated
     - if one of the sides is negative, inequality doesn't have solution (its solution set is null set)
@@ -643,7 +643,24 @@
 3. 'k' is equal to `(4ac - b^2) / 4a`
 4. other terms are plugged in from the standard from
 
-<!-- 29:23 -->
+### Quadratic & rational inequalities
+#### Solving quadratic inequalities
+1. a quadratic equation in standard form is extracted from the given inequality
+2. resulted equation is solved to get two values for x
+    - discriminant is less than 0 (x doesn't have real values)
+        1. a random value (usually 0) is plugged in the original inequality
+        2. if the inequality is satisfied, all the real numbers are solutions, or else the inequality doesn't have solutions
+    - discriminant is equal or more than 0 (x has 2 real values)
+        1. one value is plugged in the original inequality from each three segments separated by the values for x
+        2. for each value that satisfies the inequality, its segment is considered one of the solution sets
+    - the strictness of the inequality is taken from the original inequality
+#### Solving rational inequalities
+1. given inequality is manipulated such that one side is equal to 0 & the other is a single fraction
+2. denominator & numerator of the fraction are solved for 0 to get two endpoints
+3. one value is plugged in the original inequality from each three segments separated by the endpoints
+4. for each value that satisfies the inequality, its segment is considered one of the solution sets
+- strictness of the endpoint which is extracted from making the denominator 0 is always false
+- strictness of the endpoint which is extracted from making the numerator 0 is taken from the original inequality
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -658,3 +675,4 @@
 - when calculating the GCF of a polynomail, it is a common practice to also factor a -1 when its terms are mostly negative
 - systems of linear equations in three variables come with three equations
 - to transform a matrix into RRE form, manipulation is oriented on columns instead of rows
+- in the context of quadratic equations, `b^2 - 4ac` is called the discriminant
