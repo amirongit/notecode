@@ -10,7 +10,7 @@
 #### Coefficient
 - a number next to one or more variables
 #### Constant
-- a plain number which isn't next to a variable, therefor its value never changes
+- a plain number which is not next to a variable, therefor its value never changes
 #### Algebraic expression
 - one or more terms separated by + or - symbols
 #### Simplification of algebraic expressions
@@ -19,7 +19,7 @@
 - like terms
     - terms with the same variables raised to the same exponents
     - when combining, addition & subtraction operations are only applied on the coefficients
-    - if there isn't any like terms, the given expression can't be simplified by combining terms
+    - if there is not any like terms, the given expression can't be simplified by combining terms
 
 ### Equations
 #### Equation
@@ -81,7 +81,7 @@
 #### Interval notation
 - a way of writing subsets of the real number line
 - interval notations are used to annotate a range of numbers
-    - parentheses mean the end isn't included in the range
+    - parentheses mean the end is not included in the range
     - brackets mean the end is included in the range
     - infinity can never be included
 
@@ -188,12 +188,12 @@
 - any set of ordered pairs
 #### Domain
 - set of all the first components ('x' values) in a relation
-- set of all the possible inputs of a function
+- set of all the possible arguments of a function
 #### Range
 - set of all the second components ('y' values) in a relation
 - set of all the possible outputs of a function
 #### Vertical line test
-- if any vertical line intersects a graph more than once, the graph isn't a function (although it may be an equation)
+- if any vertical line intersects a graph more than once, the graph is not a function (although it may be an equation)
 
 ### Solving systems of linear equations by graphing
 #### System of linear equations
@@ -422,7 +422,7 @@
 #### Simplified root
 - doesn't have a perfect root as a factor of its radicant
 - radicant doesn't contain fractions
-- there isn't a radical as denominator
+- there is not a radical as denominator
 #### The product property of radicals
 - states that radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
 #### The quotient Property of radicals
@@ -472,7 +472,7 @@
 #### Steps
 1. the equation is transformed to the standard form
 2. then, components are plugged in the quadratic formula: `(-b (+ & -) radical(b^2 - 4ac)) / 2a`
-    - if the radicand is less than 0, there isn't a real solution
+    - if the radicand is less than 0, there is not a real solution
     - if the radicand is equal to 0, there is one solution
     - if the radicand is greater than 0, there are two solutions
 
@@ -555,9 +555,9 @@
 #### Explicit form
 - `function-name(variable-name, variable-name) = rational-expression-having-the-variables`
 - function is solved for the dependent variable ('y')
-- result of 'function-name' ('y') dependes on the value of input variables ('x')
+- result of 'function-name' ('y') dependes on the value of arguments ('x')
 #### Implicit form
-- function isn't solved for the dependent variable ('y')
+- function is not solved for the dependent variable ('y')
 
 ### Variation
 #### Joint variation
@@ -671,20 +671,20 @@
 #### One to one functions
 - represent a relation in which each unique first component corresponds to one unique second component
 - horizontal line test
-    - if any horizontal line intersects a graph more than once, the graph isn't a one to one function (although it may be function)
+    - if any horizontal line intersects a graph more than once, the graph is not a one to one function (although it may be function)
 #### Finding inverse of a function
 1. 'f(x)' is replaced by 'y'
 2. resulted equation is solved for 'x'
-- the inverse function is ready; it takes 'y' as input & calculates 'x'
+- the inverse function is ready; it takes 'y' as argument & calculates 'x'
 - to make it formal (stupid ass!), 'x' & every 'y' is replaced by 'f^-1(x)' & 'x' respectively
 
 ### Exponential functions
 - overall form is `f(x) = a^x`
     - 'a' is greater than 0
-        - doesn't work with negative 'x'
-        - doesn't work with 'x' being equal to 0
+        - non integer 'x' results in non real
+        - 0 raised to x being equal to 0 is undefined
     - 'a' is not equal to 1
-        - doesn't work at all!
+        - always results in 1
 - never touches 'x' axis
     - 'a^x' never reaches 0
 - domains consist of all real numbers
@@ -694,7 +694,17 @@
 1. both sides are manipulated to have the same bases using exponent properties
 2. new non exponential equation is derived by equating exponents of both sides
 
-<!-- 30:58 -->
+### Logarithmic functions
+- inverse of exponentiation
+- takes a base & an argument
+    - base is greater than 0
+    - base is not eqaual to 1
+    - argument is not equal to 0
+- returns the power to which the base must be raised to achieve the given argument
+#### Logarithm of one property
+- states that
+    - if given base is equal to argument, the result is equal to 1
+    - if given argument is equal to 1, the result is equal to 0
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -711,3 +721,4 @@
 - to transform a matrix into RRE form, manipulation is oriented on columns instead of rows
 - in the context of quadratic equations, `b^2 - 4ac` is called the discriminant
 - `0^0` is undefined
+- expressions in exponential form can be converted to logarithmic form & vice versa
