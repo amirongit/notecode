@@ -71,7 +71,7 @@
 ### Proportions
 - claim that two ratios are equal
 #### Cross multiplication property
-- states that the product of the numerator of a fraction on one side of an equation & the denominator of the fraction on the other side should equal the product of the denominator of the same side & the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
+- product of the numerator of a fraction on one side of an equation & the denominator of the fraction on the other side should equal the product of the denominator of the same side & the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
 #### Solving proportion equations
 - since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable is cross multiplication of fractions in both sides
 
@@ -424,9 +424,9 @@
 - radicant doesn't contain fractions
 - there is not a radical as denominator
 #### The product property of radicals
-- states that radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
+- radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
 #### The quotient Property of radicals
-- states that radical of a rational expression is equal to radical of its numerator divided by radical of its denominator
+- radical of a rational expression is equal to radical of its numerator divided by radical of its denominator
 
 ### Adding & subtracting radicals
 #### Like radicals
@@ -699,12 +699,22 @@
 - takes a base & an argument
     - base is greater than 0
     - base is not eqaual to 1
-    - argument is not equal to 0
+    - argument is greater 0
 - returns the power to which the base must be raised to achieve the given argument
 #### Logarithm of one property
-- states that
-    - if given base is equal to argument, the result is equal to 1
-    - if given argument is equal to 1, the result is equal to 0
+- if given base is equal to argument, the result is equal to 1
+- if given argument is equal to 1, the result is equal to 0
+
+### Properties of logarithms
+#### Product property of logarithms
+- logarithm of a product is equal to the sum of logarithms of the factors
+#### Quotient property of logarithms
+- logarithm of a fraction or quotient is equal to the difference of the logarithms of the numerator and the denominator
+#### Power property of logarithms
+- logarithm of a number raised to a power is equatl to the product of the power & logarithm of the number
+#### Inverse property of logarithms
+- a number raised to logarithm with the base of the same number results the argument
+- if the argument is equal to the base being raised by a power, result is the power
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
@@ -722,3 +732,4 @@
 - in the context of quadratic equations, `b^2 - 4ac` is called the discriminant
 - `0^0` is undefined
 - expressions in exponential form can be converted to logarithmic form & vice versa
+- if a factor is separated out using the product property of logarithms, the coefficient is also multiplied by the new logarithm
