@@ -740,7 +740,14 @@
 2. the equation is written in exponential form
 3. equation is solved
 
-<!-- 32:30 -->
+### Solving non linear systems of equations
+#### Linear equation
+- forms an straight line when graphed
+#### Non linear system of equation
+- has one or more non linear equations
+#### Steps
+1. solved like any other systems of equations
+2. multiple order pairs could be in solution set, don't panic!
 
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
