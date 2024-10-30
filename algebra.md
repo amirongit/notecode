@@ -716,6 +716,32 @@
 - a number raised to logarithm with the base of the same number results the argument
 - if the argument is equal to the base being raised by a power, result is the power
 
+### Common & natural logarithms
+#### Common logarithms
+- default base for logarithms is 10 & may not be given
+#### Natural logarithms
+- logarithms with base of 'e'
+- also annotated by 'ln' instead of 'log' without a given base
+#### Euler's number
+- a constant approximately equal to 2.71
+- usually annotated by 'e'
+#### Change of base property
+- states that any logarithm is equal to logarithm of its argument divided by logarithm of its base, both with a common base
+- can be reversed
+
+### Solving exponential & logarithmic equations
+#### Exponential equations without common bases in sides
+1. both sides are put inside logarithm
+2. variable is separated using power property
+    - factoring can be done if variable is in multiple terms
+3. equation is solved
+#### logarithmic equations
+1. logarithmic terms are merged using properties
+2. the equation is written in exponential form
+3. equation is solved
+
+<!-- 32:30 -->
+
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing inequalities in a single variable results in a line, cause infinite number of points are concatenated together
@@ -733,3 +759,13 @@
 - `0^0` is undefined
 - expressions in exponential form can be converted to logarithmic form & vice versa
 - if a factor is separated out using the product property of logarithms, the coefficient is also multiplied by the new logarithm
+- proof of change of base property
+```
+    let x = log_a(b)
+    => a^x = b
+    => log_c(a^x) = log_c(b)
+    => x.log_c(a) = log_c(b)
+    => x = log_c(b) / log_c(a) = log_a(b)
+```
+- if `f(x) = f(y)` therfore `x = y`
+    - works with logarithms with common base
