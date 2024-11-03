@@ -1,5 +1,4 @@
 # Algebra
-
 ## Algebra 1 Full Course
 ### Variables & expressions
 #### Variable
@@ -20,12 +19,10 @@
     - terms with the same variables raised to the same exponents
     - when combining, addition & subtraction operations are only applied on the coefficients
     - if there is not any like terms, the given expression can't be simplified by combining terms
-
 ### Equations
 #### Equation
 - an statement claiming that two algebraic (?) expressions are equal
 - for an equation to be true, the left & the right side must evaluate to the same value
-
 ### Addition property of equality
 - same constant are added to both sides of an equation without changing the final solution
 #### Solution to an equation
@@ -38,19 +35,16 @@
 - any number plus its opposite is equal to 0
 #### Additive identity property
 - any number in addition to 0 is equal to itself
-
 ### Multiplication property
 - both sides of an equation are multiplied by the same non-zero constant without changing the final solution
 #### Multiplicative inverse property
 - any number times its reciprocal is equal to 1
 #### Multiplicative identity property
 - any number times 1 is unchanged
-
 ### Solving linear equations in one variable
 1. simplify each side as much as possible
 2. isolate the variable
 3. calculate the value of the variable, plug & check the answer for the equation
-
 ### Solving linear equations with fractions or decimals
 - multiply both sides of the equation by the LCD of all fractions to isolate the variable (must be done after simplification) 
 #### Least common multiple 
@@ -58,7 +52,6 @@
 - smallest multiple of the given numbers
 #### Least common denominator
 - LCM of denominators of the given fractions
-
 ### Linear equations with no solution or an infinite number of solutions
 #### Conditional equation
 - an equation that is true for some values as the variable & false for other values
@@ -67,14 +60,12 @@
 - usually in this type of equations one side is a simplified version of the other side
 #### Contradiction equation
 - an equation which doesn't have solution
-
 ### Proportions
 - claim that two ratios are equal
 #### Cross multiplication property
 - product of the numerator of a fraction on one side of an equation & the denominator of the fraction on the other side should equal the product of the denominator of the same side & the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
 #### Solving proportion equations
 - since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable is cross multiplication of fractions in both sides
-
 ### Solving linear algebra inequalities
 - the procedure is the same as solving linear equations with key differences
     - when using multiplication or division property, negative operand causes the inequality to get reversed
@@ -84,7 +75,6 @@
     - parentheses mean the end is not included in the range
     - brackets mean the end is included in the range
     - infinity can never be included
-
 ### Linear equations in two variables
 - overall form is `ax + by = c`
     - 'c' is constant
@@ -97,14 +87,12 @@
 1. pick a value for one of the variables
 2. solve for the other one
 3. put the solution in the form of an ordered pair
-
 ### Plotting ordered pairs
 #### Cartesian coordinate system
 - has a horizontal number line as 'x' axis & a vertical number line as 'y' axis
 - the intersection is called the origin where axes have the value of 0
 - it is divided into quadras by counting counter clockwise from the top right quadra
 - value signs of ordered pairs for each quadra are respectively like (+, +), (-, +), (-, -), (+, -)
-
 ### Graphing linear equations in two variables
 - each point in the graph represents one of the infinite solutions of the equation
 #### Intercepts
@@ -128,7 +116,6 @@
     - has a fixed value for 'y'
     - is parallel to 'x' axis
     - the equation in this scenario has 'a' as 0
-
 ### Slope of line
 - is measured by comparing vertical to horizontal changes along a line
 - the graph is possible to draw given one point & the slope
@@ -141,7 +128,6 @@
 - a line with negative slope falls moving towards right ('y' decreases when 'x' increases)
 - slope of a horizontal line is 0
 - slope of a vertical line is undefined
-
 ### Equations of line
 - other than the standard overall form
 #### Slope - intercept form
@@ -158,7 +144,6 @@
     - two given points (which leads the above option)
 #### Stupid version of the standard form
 - the same, but with 'a' being equal or greater than 0
-
 ### Parallel & perpendicular lines
 #### Parallel lines
 - lines that will never intersect
@@ -166,7 +151,6 @@
 #### Perpendicular
 - lines that intersect at a 90 degree angle
 - product of slopes of two non-vertical perpendicular lines is -1
-
 ### Graphing linear inequalities in two variables
 #### Steps
 1. solve the inequality for 'y'
@@ -180,7 +164,6 @@
 - shading conditions are different for vertical boundary lines
     - right side of the line for '>' & '>='
     - left side of the line for '<' & '<='
-
 ### Introduction to functions
 - represent a relation in which each unique first component corresponds to one non-unique second component
 - all functions are relations, but not vice versa
@@ -194,7 +177,6 @@
 - set of all the possible outputs of a function
 #### Vertical line test
 - if any vertical line intersects a graph more than once, the graph is not a function (although it may be an equation)
-
 ### Solving systems of linear equations by graphing
 #### System of linear equations
 - consists of multiple linear equations with the same variables
@@ -214,7 +196,6 @@
 - parallel equations won't intersect
 - equivalent equations result in infinite solutions
     - is detectable by solving for 'y'
-
 ### Solving systems of linear equations by substitution
 #### Steps
 1. one of the equations is solved for either variable
@@ -229,7 +210,6 @@
 #### Dependent equations proof
 - when the variables drop out in simplification
 - the equations are manipulated versions of each other
-
 ### Solving systems of linear equations by elimination
 #### Steps
 1. equations are written in standard form
@@ -242,12 +222,10 @@
 7. the ordered pair is written based on choices
 #### Detection
 - either variables has opposite coefficients in the given equations
-
 ### Solving systems of linear inequalities
 #### Graphing
 1. graph each equation separately
 2. intersection of the graphs is the solution
-
 ### Product & power rules for exponents
 #### Product rule for exponents
 - when operands of the same base are multiplied, the exponents are combined to get the result
@@ -257,7 +235,6 @@
 - a term being raised to a power is written as its divisors being raised to the power
 #### Fractional exponent rule
 - a fraction being raised to a power is written as its numerator into the power divided by its denominator into the power
-
 ### Integer exponents & the quotient rule
 #### Zero exponent rule
 - any non-zero value to the power of 0 results in 1
@@ -266,10 +243,8 @@
 - its coefficient is written as the numerator of the fraction
 #### Algebraic version of the quotient rule
 - when operands of the same base are divided, the exponents are subtracted to get the result
-
 ### Scientific notation
 - represents a number as a factor multiplied by a power of ten
-
 ### Adding & subtracting polynomials
 #### Polynomial
 - a finite amount of terms being the product of a real coefficient & variables raised to a whole power
@@ -289,16 +264,13 @@
 - like terms are combined
 #### Subtracting polynomials
 - like terms are subtracted
-
 ### Multiplying polynomials
 - if neither polynomial is monomial, each term of either polynomial is multiplied by every term in the other one
-
 ### FOIL
 - is used for two binomials
 #### Steps
 1. first, outer, inner & last terms of each binomial are multiplied together
 2. results are merged
-
 ### Special products
 - common polynomial products
 #### Square of a binomial
@@ -309,10 +281,8 @@
 #### Cube of a binomial
 - first form is `(a + b)^3 = a^3 + 3ba^2 + 3ab^2 + b^3`
 - second form is `(a - b)^3 = a^3 - 3ba^2 + 3ab^2 - b^3`
-
 ### Dividing polynomials by monomials
 - each term of the given polynomial is divided by the monomial
-
 ### Dividing polynomials
 #### Long division
 1. each polynomial is made sure to be in the standard form
@@ -324,30 +294,25 @@
 7. the rest of the dividend is appended to the result of the subtraction
 8. if dividend is less than divisior & the terms are over, the division is finished
 9. the final answer is an algebraic expression having the quotient as its first term plus a fraction representing the remainder
-
 ### Dividing polynomials with missing terms
 - meaning that one or more of the exponents of the given variable are missing
 #### Resolving by place holders
 - missing exponents of the variable is inserted in the polynomial with the coefficient of 0
-
 ### Finding the GCF of polynomials
 - the product of the common prime factors of the given terms with the least repetition
 - when a variable is involved, it is treated like a prime factor of its term
 #### Gratest common factor
 - largest divisor without remainder of the given terms
-
 ### Factoring out the GCF
 1. the GCF of all the terms inside the given polynomial is calculated
 2. the polynomial is divided by the GCF
 3. the answer is written as the product of GCF & the result of the division
-
 ### Factoring by grouping
 - GCF itself can be a polynomial
 #### Steps
 1. given polynomials are split into groups such that factoring out their GCF results in the same polynomial factor
 2. the GCF of each group is factored out
 3. the GCF of the entire polynomial, which is now the polynomial factor common to each group, is factored out
-
 ### Factoring trinomials into binomials
 - given polynomial is in the standard form of a quadratic equation
 1. any common factors is factored out
@@ -356,10 +321,8 @@
 4. resulted polynomial is factored using grouping
 #### Special case scenarios
 - if there aren't any pair of integers which satisfy the conditions in the first step, the given polynomial is prime
-
 ### Special factoring rules
 - special products, but in reversed
-
 ### Solving quadratic equations by factoring
 #### Zero product property
 - if the multiplication is equal to 0, a 0 is involved in it
@@ -372,7 +335,6 @@
 2. per each term including the variable in the final result of factoring an equation which is equal to 0 is solved
     - considering zero product property
 3. results of the generated equations are the solution set for the quadratic equation
-
 ### Introduction to rational expressions
 - a fraction whose numerator & denominator are polynomials, with the denominator not equal to 0
 #### Restricted values
@@ -382,19 +344,15 @@
 #### Simplifying rational expressions
 1. numerator & denominator of the given expression is factored
 2. common factors are cancelled
-
 ### Finding the LCD for a group of rational expressions
 - the procedure is the same as normal LCM with key differences
     - variables & expressions with variables inside parentheses are treated as prime factors
-
 ### Complex fractions
 - a fraction whose numerator & denominator is itself a fraction
-
 ### Solving equations with rational expressions
 1. each side of the equation is multiplied by the LCD to clear the denominators
 2. the equation is solved
 3. any solution that results in a 0 denominator is rejected as restricted value
-
 ### Variation
 - a value which varies directly with a term which has a constant & a variable
 - an equation in slope - intercept form where 'b' is 0
@@ -406,18 +364,15 @@
 #### Inverse variation
 - constant is divided by the variable
 - if the constant is positive, the value & the constant increase & decrease inversely; vice versa
-
 ### Introduction to roots
 #### The inverse property of exponents & roots
 - exponent of the radicand is divided by the index of the radical
 #### Perfect root
 - any number whos root is rational
-
 ### The distance formula
 #### formula of pythagoras in a coordinate plane
 - distance between two points is calculated by a third point forming a right triangle
 - overall form of the formula is: `radical((x2 - x1)^2 + (y2 - y1)^2)`
-
 ### Multiplying, dividing & symplifying radicals
 #### Simplified root
 - doesn't have a perfect root as a factor of its radicant
@@ -427,12 +382,10 @@
 - radical of a non-negative real number is equal to the product of radicals of its quotients (with the same index)
 #### The quotient Property of radicals
 - radical of a rational expression is equal to radical of its numerator divided by radical of its denominator
-
 ### Adding & subtracting radicals
 #### Like radicals
 - radicals with the same index & radicand
 - when combining, addition & subtraction operations are only applied on the coefficients
-
 ### Rationalizing the denominator
 - an irrational numbers can't be denominator in a rational expressions
 #### Steps
@@ -441,7 +394,6 @@
     - smallest irrational number which makes it rational
     - irrational factor in its denominator until it becomes rational
     - conjugate of its denominator
-
 ### Solving equations with radicals
 #### Radical equation
 - an equation containing radicals with variable factors as radicand
@@ -453,12 +405,10 @@
 2. both sides of the equation are raised to the index of the radical
 3. the equation is solved
 4. every solution is checked within the original equation (not optional)
-
 ### Using rational numbers as exponents
 - radicals can be represented by fractional exponents (using the inverse property of exponents & roots)
 #### The negative exponent property
 - a factor with a negative exponent is reversed having its denominator being raised to positive exponent
-
 ### Solving quadratic equations by completing the square
 #### Perfect square trinomial
 - can be factored as the square of a binomial
@@ -467,7 +417,6 @@
 2. coefficient of the squared variable is made 1
 3. coefficient of the first degree variable is divided by 2, squared & added to both sides of the equation
 4. the final equation is factored & solved
-
 ### Solving quadratic equations using the quadratic formula
 #### Steps
 1. the equation is transformed to the standard form
@@ -475,7 +424,6 @@
     - if the radicand is less than 0, there is not a real solution
     - if the radicand is equal to 0, there is one solution
     - if the radicand is greater than 0, there are two solutions
-
 ## Algebra 2 Full Course
 ### Sets
 - collections of unique elements or members, number of elements could be finite or infinite
@@ -503,7 +451,6 @@
 - set of all the elements in given sets
 #### Intersection
 - set of common elements between given sets
-
 ### Converting a repeating decimal into a fraction
 #### Repeating decimal
 - repeats the same pattern of digits forever
@@ -512,7 +459,6 @@
 2. both sides of the equation are multiplied by `10^(number of repeating digits)`
 3. the original equation is subtracted from the result of the multiplication
 4. the equation is solved
-
 ### Compound inequalities
 - consists of two inequalities linked by 'and' or 'or'
 #### Solving compound inequalities with 'and'
@@ -523,7 +469,6 @@
 - steps
     1. each inequality is solved separately
     2. the solution set contains all the elements that satisfy either the given inequalities (union of their solution sets)
-
 ### Solving absolute value equations
 #### Absolute value
 - distance between the given number & 0
@@ -534,7 +479,6 @@
 2. a compound equation is madde with 'or' without absolute values (bare values are used)
     - the additional equation has the bare value opposed
 3. resulted equations are solved
-
 ### Solving absolute value inequalities
 #### Steps
 1. absolute values are isolated
@@ -542,15 +486,12 @@
 2. a compound inequality is madde with 'or' without absolute values (bare values are used)
     - the additional inequality has the bare value opposed
 3. resulted inequalities are solved
-
-
 ### More on functions
 #### Restrictions
 - functions should be rational expressions, therefore they can't contain
     1. division by 0
     2. negative radicand with an even index
     3. negative number as a result of raising a base to an even exponent
-
 ### Function notation
 #### Explicit form
 - `function-name(variable-name, variable-name) = rational-expression-having-the-variables`
@@ -558,11 +499,9 @@
 - result of 'function-name' ('y') dependes on the value of arguments ('x')
 #### Implicit form
 - function is not solved for the dependent variable ('y')
-
 ### Variation
 #### Joint variation
 - a direct variation which is based on the product of two or more variables
-
 ### Solving systems of linear equations in three variables
 #### Ordered triple
 - three terms inside parentheses with 'x' being the first, 'y' being the second & 'z' being the third
@@ -577,7 +516,6 @@
 3. same variable is eliminated from the combination of the left out equation with either other two equations
 4. resulted system is solved
 5. either original equation is solved for the eliminated variable with the solutions of the generated system plugged in
-
 ### Solving systems of linear equations by matrix methods
 #### Matrix
 - an ordered array of numbers
@@ -606,10 +544,8 @@
 1. an augmented matrix is drawn based on given equations
 2. drawn matrix is transformed to reduced row echelon form using elementry row operations
 3. for each variable, the value is next to the separator in the row where its coefficient is equal 1
-
 ### Operations of polynomial functions
 - functions are treated like rational expressions
-
 ### Factoring trinomials into binomials using substitution
 - the given trinomial has a constant term & a degree which is half of the highest degree
 #### Steps
@@ -617,7 +553,6 @@
 - given trinomial is re written with the new variable such that its highest degree is 2
 - final trinomial is in quadratic equation standard form
 - quadratic equation is factored & the new variable is substituted with the original variable
-
 ### Complex numbers
 - an expressions consisting of products of the imaginary unit & other real terms
 - overall form is `a + bi`
@@ -627,7 +562,6 @@
 #### Operations with negative values under radicals having even indices
 1. a complex number is formed using the product property of radicals
 2. the operation is applied
-
 ### Graphing parabolas
 #### Vertex
 - lowest or highest point in the given parabola
@@ -642,7 +576,6 @@
 2. 'h' is equal to `-b / 2a`
 3. 'k' is equal to `(4ac - b^2) / 4a`
 4. other terms are plugged in from the standard from
-
 ### Quadratic & rational inequalities
 #### Solving quadratic inequalities
 1. a quadratic equation in standard form is extracted from the given inequality
@@ -661,7 +594,6 @@
 4. for each value that satisfies the inequality, its segment is considered one of the solution sets
 - strictness of the endpoint which is extracted from making the denominator 0 is always false
 - strictness of the endpoint which is extracted from making the numerator 0 is taken from the original inequality
-
 ### Inverse functions
 - relations which have the second component of their corresponding function associated to their first component
 - their domain & range are range & domain of their corresponding function respectively
@@ -677,7 +609,6 @@
 2. resulted equation is solved for 'x'
 - the inverse function is ready; it takes 'y' as argument & calculates 'x'
 - to make it formal (stupid ass!), 'x' & every 'y' is replaced by 'f^-1(x)' & 'x' respectively
-
 ### Exponential functions
 - overall form is `f(x) = a^x`
     - 'a' is greater than 0
@@ -693,7 +624,6 @@
 #### Solving exponential equations
 1. both sides are manipulated to have the same bases using exponent properties
 2. new non exponential equation is derived by equating exponents of both sides
-
 ### Logarithmic functions
 - inverse of exponentiation
 - takes a base & an argument
@@ -704,7 +634,6 @@
 #### Logarithm of one property
 - if given base is equal to argument, the result is equal to 1
 - if given argument is equal to 1, the result is equal to 0
-
 ### Properties of logarithms
 #### Product property of logarithms
 - logarithm of a product is equal to the sum of logarithms of the factors
@@ -715,7 +644,6 @@
 #### Inverse property of logarithms
 - a number raised to logarithm with the base of the same number results the argument
 - if the argument is equal to the base being raised by a power, result is the power
-
 ### Common & natural logarithms
 #### Common logarithms
 - default base for logarithms is 10 & may not be given
@@ -728,7 +656,6 @@
 #### Change of base property
 - states that any logarithm is equal to logarithm of its argument divided by logarithm of its base, both with a common base
 - can be reversed
-
 ### Solving exponential & logarithmic equations
 #### Exponential equations without common bases in sides
 1. both sides are put inside logarithm
@@ -739,7 +666,6 @@
 1. logarithmic terms are merged using properties
 2. the equation is written in exponential form
 3. equation is solved
-
 ### Solving non linear systems of equations
 #### Linear equation
 - forms an straight line when graphed
@@ -748,7 +674,6 @@
 #### Steps
 1. solved like any other systems of equations
 2. multiple order pairs could be in solution set, don't panic!
-
 ## Cool facts
 - equations in a single variable represent a single point in the line number ('x' axis)
     - therefore graphing inequalities in a single variable results in a line, cause infinite number of points are concatenated together
