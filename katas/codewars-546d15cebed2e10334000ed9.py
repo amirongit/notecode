@@ -22,7 +22,6 @@ def solve_runes(runes: str) -> int:
         at_result = result.replace('?', c)
 
         if eval(f'{at_first}{opr}{at_second}') == int(at_result):
-            print(f'{at_first}{opr}{at_second}')
             return int(c)
 
     return -1
