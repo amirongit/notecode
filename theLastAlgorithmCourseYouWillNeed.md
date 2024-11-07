@@ -19,4 +19,28 @@
     - usually an special under the hood insertion
 - big O of assigning & deleting an element in an array?
     - `read(starting point + index * segment width)`
-    - O(1)
+    - `O(1)`
+## Search
+### Linear search
+- `O(N)`
+#### Implementation
+```py
+def linear_search[T](array: Iterable[T], value: T) -> bool:
+    for item in array:
+        if item == value:
+            return True
+    return False
+```
+### Binary search
+- `O(log(n))`
+- given array must be sorted
+#### Implementation
+```py
+def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
+    return (
+        False if (length := len(array)) == 0 else
+        True if (middle_item := array[(middle_index := length // 2)]) == value else
+        binary_search(array[:middle_index], value) if middle_item > value else
+        binary_search(array[middle_index + 1:], value)
+    )
+```
