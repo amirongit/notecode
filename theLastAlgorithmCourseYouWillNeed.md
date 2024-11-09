@@ -32,15 +32,33 @@ def linear_search[T](array: Iterable[T], value: T) -> bool:
     return False
 ```
 ### Binary search
-- `O(log(n))`
+- `O(log(N))`
 - given array must be sorted
 #### Implementation
-```py
-def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
-    return (
-        False if (length := len(array)) == 0 else
-        True if (middle_item := array[(middle_index := length // 2)]) == value else
-        binary_search(array[:middle_index], value) if middle_item > value else
-        binary_search(array[middle_index + 1:], value)
-    )
-```
+- cool, but `O(N)`
+    - ```py
+        def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
+            return (
+                False if (length := len(array)) == 0 else
+                True if (middle_item := array[(middle_index := length // 2)]) == value else
+                binary_search(array[:middle_index], value) if middle_item > value else
+                binary_search(array[middle_index + 1:], value)
+            )
+    ```
+- boring, but `O(log(N))`
+    - ```py
+        def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
+            fi = 0
+            li = len(array)
+            while (length := abs(fi - li)) > 0:
+                if (mv := array[(si := fi + (length // 2))]) == value:
+                    return True
+                elif length == 1:
+                    return False
+                elif mv > value:
+                    li = si
+                elif mv < value:
+                    fi = si
+
+            return False
+    ```
