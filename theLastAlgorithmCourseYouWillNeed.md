@@ -60,3 +60,23 @@ def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
 
     return False
 ```
+## Sort
+### Bubble sort
+- `O(N^2)`
+#### Implementation
+```py
+def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
+    from copy import deepcopy
+    array_ = deepcopy(array)
+
+    li = len(array_) - 1
+    while li != 0:
+        fi = 0
+        while fi < li:
+            if (array_[fi] > array_[fi + 1]):
+                array_[fi], array_[fi + 1] = array_[fi + 1], array_[fi]
+            fi += 1
+        li -= 1
+
+    return array_
+```
