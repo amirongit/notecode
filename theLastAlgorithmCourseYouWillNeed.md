@@ -141,6 +141,9 @@ class LinkedList[T]:
         self._length += 1
 
     def delete(self, index: int) -> None:
+        if index == 0 and len(self) == 1:
+            raise ValueError
+
         node = self._get_node(index)
         next_ = node.next
         prev = node.previous
@@ -152,8 +155,6 @@ class LinkedList[T]:
             prev._next = next_
 
         if index == 0:
-            if len(self) == 1:
-                raise ValueError
             self._head = next_
 
         node._next = None
