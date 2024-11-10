@@ -8,7 +8,7 @@
     - if input size doesn't affect the growth rate, remaining constants are reduced to 1
     - constants are important practically
 - often the worst case scenario is calculated
-### Arrays data structure
+### Array data structure
 - fixed size contiguous block of memory
 - segmented by units called elements
 - elements are accessed by indices
@@ -79,4 +79,110 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
         li -= 1
 
     return array_
+```
+### Linked list data structure
+- made of containers which hold values & pointers to other containers
+#### Singly linked list
+- each container points to its next container only
+#### Dobly linked list
+- each container points to its next & previous containers
+##### Implementation
+```py
+from __future__ import annotations
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
+        self._value = value
+        self._next = next
+        self._previous = previous
+
+    @property
+    def value(self) -> T:
+        return self._value
+
+    @property
+    def previous(self) -> Node[T] | None:
+        return self._previous
+
+    @property
+    def next(self) -> Node[T] | None:
+        return self._next
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Node) or not isinstance(other.value, type(self.value)):
+            return False
+
+        return id(self.next) == id(other.next) and id(self.previous) == id(other.previous) and self.value == other.value
+
+
+class LinkedList[T]:
+    def __init__(self, *values: T) -> None:
+        if len(values) > 0:
+            self._head = Node(values[0])
+            self._length = 1
+
+        if len(values) > 1:
+            for index, value in enumerate(values[1:]):
+                self.insert(value, index + 1)
+
+    def insert(self, value: T, index: int) -> None:
+        if index == 0:
+            next_ = self._get_node(index)
+            next_._previous = Node(value, next=next_)
+            self._head = next_.previous
+        elif index == len(self):
+            prev = self._get_node(index - 1)
+            prev._next = Node(value, previous=prev)
+        else:
+            next_ = self._get_node(index)
+            prev = self._get_node(index - 1)
+            current = Node(value, previous=prev, next=next_)
+            next_._previous = current
+            prev._next = current
+
+        self._length += 1
+
+    @property
+    def head(self) -> T | None:
+        return self._head.value if self._head is not None else None
+
+    def _get_node(self, index: int) -> Node[T]:
+        if len(self) == 0 or self._head is None:
+            raise IndexError
+
+        if index == 0:
+            return self._head
+
+        node = self._head
+        counter = 0
+
+        while counter < index:
+            if node.next is None:
+                raise IndexError
+
+            node = node.next
+            counter += 1
+
+        return node
+
+    def __getitem__(self, index: int) -> T:
+        return self._get_node(index).value
+
+    def __len__(self) -> int:
+        return self._length
+
+    def __iter__(self):
+        self._current_loop = self._head
+        return self
+
+    def __next__(self):
+        if (holder := self._current_loop) is None:
+            raise StopIteration
+
+        self._current_loop = holder.next
+
+        return holder.value
+
+    def __str__(self) -> str:
+        return '<->'.join((str(n) for n in self))
 ```
