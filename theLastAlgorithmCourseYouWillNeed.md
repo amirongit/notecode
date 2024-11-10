@@ -87,6 +87,10 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 #### Doubly linked list
 - each container points to its next & previous containers
 ##### Implementation
+- `O(N)` for acquirement
+- insertino & deletion
+    - `O(1)` without acquirement
+    - `O(N)` with acquirement
 ```py
 from __future__ import annotations
 
@@ -135,6 +139,26 @@ class LinkedList[T]:
             prev._next = current
 
         self._length += 1
+
+    def delete(self, index: int) -> None:
+        node = self._get_node(index)
+        next_ = node.next
+        prev = node.previous
+
+        if next_ is not None:
+            next_._previous = prev
+
+        if prev is not None:
+            prev._next = next_
+
+        if index == 0:
+            if len(self) == 1:
+                raise ValueError
+            self._head = next_
+
+        node._next = None
+        node._previous = None
+        self._length -= 1
 
     @property
     def head(self) -> T | None:
