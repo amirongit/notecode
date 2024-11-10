@@ -84,7 +84,7 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 - made of containers which hold values & pointers to other containers
 #### Singly linked list
 - each container points to its next container only
-#### Dobly linked list
+#### Doubly linked list
 - each container points to its next & previous containers
 ##### Implementation
 ```py
@@ -107,12 +107,6 @@ class Node[T]:
     @property
     def next(self) -> Node[T] | None:
         return self._next
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Node) or not isinstance(other.value, type(self.value)):
-            return False
-
-        return id(self.next) == id(other.next) and id(self.previous) == id(other.previous) and self.value == other.value
 
 
 class LinkedList[T]:
