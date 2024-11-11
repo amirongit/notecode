@@ -35,8 +35,8 @@ def linear_search[T](array: Iterable[T], value: T) -> bool:
 - `O(log(N))`
 - given array must be sorted
 #### Implementation
-##### cool, but `O(N)`
 ```py
+# cool, but `O(N)`
 def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
     return (
         False if (length := len(array)) == 0 else
@@ -44,9 +44,8 @@ def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
         binary_search(array[:middle_index], value) if middle_item > value else
         binary_search(array[middle_index + 1:], value)
     )
-```
-##### boring, but `O(log(N))`
-```py
+
+# boring, but `O(log(N))`
 def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
     fi = 0
     li = len(array)
@@ -82,42 +81,29 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 ```
 ### Linked list data structure
 - made of containers which hold values & pointers to other containers
-#### Singly linked list
-- each container points to its next container only
-#### Doubly linked list
-- each container points to its next & previous containers
-##### Implementation
 - `O(N)` for acquirement
 - insertino & deletion
     - `O(1)` without acquirement
     - `O(N)` with acquirement
+#### Singly linked list
+- each container points to its next container only
+#### Doubly linked list
+- each container points to its next & previous containers
+#### Implementation
 ```py
 from __future__ import annotations
 
 class Node[T]:
     def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
-        self._value = value
-        self._next = next
-        self._previous = previous
-
-    @property
-    def value(self) -> T:
-        return self._value
-
-    @property
-    def previous(self) -> Node[T] | None:
-        return self._previous
-
-    @property
-    def next(self) -> Node[T] | None:
-        return self._next
-
+        self.value = value
+        self.next = next
+        self.prev = previous
 
 class LinkedList[T]:
     def __init__(self, *values: T) -> None:
         if len(values) > 0:
-            self._head = Node(values[0])
-            self._length = 1
+            self.head = Node(values[0])
+            self.length = 1
 
         if len(values) > 1:
             for index, value in enumerate(values[1:]):
@@ -126,19 +112,19 @@ class LinkedList[T]:
     def insert(self, value: T, index: int) -> None:
         if index == 0:
             next_ = self._get_node(index)
-            next_._previous = Node(value, next=next_)
-            self._head = next_.previous
+            next_.prev = Node(value, next=next_)
+            self.head = next_.prev
         elif index == len(self):
             prev = self._get_node(index - 1)
-            prev._next = Node(value, previous=prev)
+            prev.next = Node(value, previous=prev)
         else:
             next_ = self._get_node(index)
             prev = self._get_node(index - 1)
             current = Node(value, previous=prev, next=next_)
-            next_._previous = current
-            prev._next = current
+            next_.prev = current
+            prev.next = current
 
-        self._length += 1
+        self.length += 1
 
     def delete(self, index: int) -> None:
         if index == 0 and len(self) == 1:
@@ -146,33 +132,29 @@ class LinkedList[T]:
 
         node = self._get_node(index)
         next_ = node.next
-        prev = node.previous
+        prev = node.prev
 
         if next_ is not None:
-            next_._previous = prev
+            next_.prev = prev
 
         if prev is not None:
-            prev._next = next_
+            prev.next = next_
 
         if index == 0:
-            self._head = next_
+            self.head = next_
 
-        node._next = None
-        node._previous = None
-        self._length -= 1
-
-    @property
-    def head(self) -> T | None:
-        return self._head.value if self._head is not None else None
+        node.next = None
+        node.prev = None
+        self.length -= 1
 
     def _get_node(self, index: int) -> Node[T]:
-        if len(self) == 0 or self._head is None:
+        if len(self) == 0 or self.head is None:
             raise IndexError
 
         if index == 0:
-            return self._head
+            return self.head
 
-        node = self._head
+        node = self.head
         counter = 0
 
         while counter < index:
@@ -188,10 +170,10 @@ class LinkedList[T]:
         return self._get_node(index).value
 
     def __len__(self) -> int:
-        return self._length
+        return self.length
 
     def __iter__(self):
-        self._current_loop = self._head
+        self._current_loop = self.head
         return self
 
     def __next__(self):
@@ -204,4 +186,90 @@ class LinkedList[T]:
 
     def __str__(self) -> str:
         return '<->'.join((str(n) for n in self))
+```
+### Queue data structure
+- FIFO linked list without traversing
+- `O(1)` for pushing & popping
+#### FIFO structure
+- what goes first, comes out first
+#### Implementation
+```py
+from __future__ import annotations
+
+class Node[T]:
+    def __init__(self, value: T, *, next: Node[T] | None = None, prev: Node[T] | None = None) -> None:
+        self.value = value
+        self.next = next
+        self.prev = prev
+
+
+class Queue[T]:
+    def __init__(self) -> None:
+        self.head: Node[T] | None = None
+        self.tail: Node[T] | None = None
+        self.length = 0
+
+    def lpush(self, value: T) -> None:
+        if self.tail is None:
+            genesis = Node(value)
+            self.head = genesis
+            self.tail = genesis
+        elif self.head is None:
+            raise RuntimeError
+        else:
+            current = self.head
+            new = Node(value, next=current)
+            current.prev = new
+            self.head = new
+
+        self.length += 1;
+
+    def rpush(self, value: T) -> None:
+        if self.head is None:
+            genesis = Node(value)
+            self.head = genesis
+            self.tail = genesis
+        elif self.tail is None:
+            raise RuntimeError
+        else:
+            current = self.tail
+            new = Node(value, prev=current)
+            current.next = new
+            self.tail = new
+
+        self.length += 1;
+
+    def lpop(self) -> T:
+        if (current := self.head) is None:
+            raise ValueError
+
+        
+        if (next := current.next) is not None:
+            next.prev = None
+            self.head = next
+
+        self.length -= 1;
+        return current.value
+
+    def rpop(self) -> T:
+        if (current := self.tail) is None:
+            raise ValueError
+
+        if (prev := current.prev) is not None:
+            prev.next = None
+            self.tail = prev
+
+        self.length -= 1;
+        return current.value
+
+    def __len__(self) -> int:
+        return self.length
+
+    @property
+    def right(self) -> T | None:
+        return self.tail.value if self.tail is not None else None
+
+    @property
+    def left(self) -> T | None:
+        return self.head.value if self.head is not None else None
 ```
