@@ -273,3 +273,44 @@ class Queue[T]:
     def left(self) -> T | None:
         return self.head.value if self.head is not None else None
 ```
+### Stack data structure
+- FILO linked list without traversing
+- `O(1)` for pushing & popping
+#### FILO structure
+- what goes first, comes out last
+#### Implementation
+```py
+from __future__ import annotations
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None) -> None:
+        self.value = value
+        self.prev = previous
+
+
+class Stack[T]:
+    def __init__(self) -> None:
+        self.head: Node[T] | None = None
+        self.length = 0
+
+    def push(self, value: T) -> None:
+        self.head = Node(value, previous=self.head)
+        self.length += 1
+
+    def pop(self) -> T:
+        if self.head is None:
+            raise ValueError
+
+        current = self.head
+        self.head = current.prev
+        self.length -= 1
+
+        return current.value
+
+    @property
+    def top(self) -> T | None:
+        return self.head.value if self.head is not None else None
+
+    def __len__(self) -> int:
+        return self.length
+```
