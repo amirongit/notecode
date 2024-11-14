@@ -81,10 +81,12 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 ```
 ### Linked list data structure
 - made of containers which hold values & pointers to other containers
-- `O(N)` for acquirement
+- acquirement
+    - `O(N)` with traversing
+    - `O(1)` without traversing
 - insertino & deletion
-    - `O(1)` without acquirement
-    - `O(N)` with acquirement
+    - `O(1)` without traversing
+    - `O(N)` with traversing
 #### Singly linked list
 - each container points to its next container only
 #### Doubly linked list
@@ -243,7 +245,7 @@ class Queue[T]:
         if (current := self.head) is None:
             raise ValueError
 
-        
+
         if (next := current.next) is not None:
             next.prev = None
             self.head = next
@@ -314,3 +316,20 @@ class Stack[T]:
     def __len__(self) -> int:
         return self.length
 ```
+## Arrays
+### Array list
+- maintains an array which increases its size upon reaching its capacity
+- `O(1)` for acquirement
+- `O(1)` for changing
+- appending
+    - mostly (on average) `O(1)`
+    - increasing size requires copying all elements which is `O(N)`
+    - it's considered to be `O(1)` due to something called amortized analysis!
+- insertion
+    - `O(N)` with shifting
+    - `O(1)` without shifting
+- deletion
+    - `O(N)` with shifting
+    - `O(1)` without shifting
+#### Implementation
+- python doesn't have an actual array so i just can't!
