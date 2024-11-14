@@ -174,15 +174,15 @@ class LinkedList[T]:
     def __len__(self) -> int:
         return self.length
 
-    def __iter__(self):
-        self._current_loop = self.head
+    def __iter__(self) -> LinkedList[T]:
+        self.current_loop = self.head
         return self
 
-    def __next__(self):
-        if (holder := self._current_loop) is None:
+    def __next__(self) -> T:
+        if (holder := self.current_loop) is None:
             raise StopIteration
 
-        self._current_loop = holder.next
+        self.current_loop = holder.next
 
         return holder.value
 
@@ -320,16 +320,120 @@ class Stack[T]:
 ### Array list
 - maintains an array which increases its size upon reaching its capacity
 - `O(1)` for acquirement
-- `O(1)` for changing
+- `O(1)` for assignment
+- `O(N)` for insertion
+- `O(N)` for prepending
 - appending
     - mostly (on average) `O(1)`
     - increasing size requires copying all elements which is `O(N)`
     - it's considered to be `O(1)` due to something called amortized analysis!
-- insertion
-    - `O(N)` with shifting
-    - `O(1)` without shifting
-- deletion
-    - `O(N)` with shifting
-    - `O(1)` without shifting
 #### Implementation
-- python doesn't have an actual array so i just can't!
+```py
+from __future__ import annotations
+
+
+class FakeArray[T]:
+    def __init__(self, length: int) -> None:
+        if length < 0:
+            raise ValueError
+
+        self.inner: dict[int, T | None] = {}
+        self.length = length
+
+    def __getitem__(self, index: int) -> T | None:
+        if index > self.length:
+            raise IndexError
+
+        return self.inner.get(index)
+
+    def __setitem__(self, index: int, item: T | None) -> None:
+        if index > self.length or index < 0:
+            raise IndexError
+
+        self.inner[index] = item
+
+    def __iter__(self) -> FakeArray[T]:
+        self.current_loop = 0
+        return self
+
+    def __next__(self) -> T | None:
+        try:
+            val = self[self.current_loop]
+            self.current_loop += 1
+            return val
+        except IndexError:
+            raise StopIteration
+
+    def __str__(self) -> str:
+        return ', '.join(str(i) for i in self)
+
+    def __repr__(self) -> str:
+        return str(self)
+
+
+class ArrayList[T]:
+    def __init__(self, capacity: int) -> None:
+        self.capacity = capacity
+        self.length = 0
+        self.inner: FakeArray[T] = FakeArray(capacity)
+
+    def append(self, value: T) -> None:
+        if self.length - 1 == self.capacity:
+            self.extend_array()
+
+        self.inner[self.length] = value
+        self.length += 1
+
+    def prepend(self, value: T) -> None:
+        if self.length - 1 == self.capacity:
+            self.extend_array()
+
+        self.inner = ArrayList.shift_right(self.inner)
+        self.inner[0] = value
+        self.length += 1
+
+    def insert(self, index: int, value: T) -> None:
+        if self.length - 1 == self.capacity:
+            self.extend_array()
+
+        self.inner = ArrayList.shift_right(self.inner, index)
+        self.inner[index] = value
+        self.length += 1
+
+    def extend_array(self) -> None:
+        self.capacity *= 2
+        new: FakeArray[T] = FakeArray(self.capacity)
+        for i, v in enumerate(self.inner):
+            new[i] = v
+        self.inner = new
+
+    @staticmethod
+    def shift_right[TA](array: FakeArray[TA], offset: int = 0) -> FakeArray[TA]:
+        new: FakeArray[TA] = FakeArray(array.length)
+
+        if len(keys := array.inner.keys()) == 0:
+            return new
+
+        for i in range(offset):
+            new[i] = array[i]
+
+        for i in range(max(keys), offset - 1, -1):
+            new[i + 1] = array[i]
+
+        return new
+
+    def __getitem__(self, index: int) -> T | None:
+        self.inner[index]
+
+    def __setitem__(self, index: int, value: T | None) -> None:
+        self.inner[index] = value
+
+    def __len__(self) -> int:
+        return self.length
+
+    def __str__(self) -> str:
+        return str(self.inner)
+
+    def __repr__(self) -> str:
+        return repr(self.inner)
+```
