@@ -80,13 +80,10 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
     return array_
 ```
 ### Linked list data structure
-- made of containers which hold values & pointers to other containers
-- acquirement
-    - `O(N)` with traversing
-    - `O(1)` without traversing
-- insertino & deletion
-    - `O(1)` without traversing
-    - `O(N)` with traversing
+- growable sequence made of containers which hold values & pointers to other containers
+- `O(N)` for random access
+- `O(N)` for insertion
+- `O(N)` for deletion
 #### Singly linked list
 - each container points to its next container only
 #### Doubly linked list
@@ -113,15 +110,15 @@ class LinkedList[T]:
 
     def insert(self, value: T, index: int) -> None:
         if index == 0:
-            next_ = self._get_node(index)
+            next_ = self.get_node(index)
             next_.prev = Node(value, next=next_)
             self.head = next_.prev
         elif index == len(self):
-            prev = self._get_node(index - 1)
+            prev = self.get_node(index - 1)
             prev.next = Node(value, previous=prev)
         else:
-            next_ = self._get_node(index)
-            prev = self._get_node(index - 1)
+            next_ = self.get_node(index)
+            prev = self.get_node(index - 1)
             current = Node(value, previous=prev, next=next_)
             next_.prev = current
             prev.next = current
@@ -132,7 +129,7 @@ class LinkedList[T]:
         if index == 0 and len(self) == 1:
             raise ValueError
 
-        node = self._get_node(index)
+        node = self.get_node(index)
         next_ = node.next
         prev = node.prev
 
@@ -169,7 +166,7 @@ class LinkedList[T]:
         return node
 
     def __getitem__(self, index: int) -> T:
-        return self._get_node(index).value
+        return self.get_node(index).value
 
     def __len__(self) -> int:
         return self.length
@@ -191,7 +188,8 @@ class LinkedList[T]:
 ```
 ### Queue data structure
 - FIFO linked list without traversing
-- `O(1)` for pushing & popping
+- `O(1)` for pushing
+- `O(1)` for popping
 #### FIFO structure
 - what goes first, comes out first
 #### Implementation
@@ -319,7 +317,7 @@ class Stack[T]:
 ## Arrays
 ### Array list
 - maintains an array which increases its size upon reaching its capacity
-- `O(1)` for acquirement
+- `O(1)` for random access
 - `O(1)` for assignment
 - `O(N)` for insertion
 - `O(N)` for prepending
@@ -436,4 +434,101 @@ class ArrayList[T]:
 
     def __repr__(self) -> str:
         return repr(self.inner)
+```
+### Array buffers
+- fixed size queue implemented on arrays
+- `O(1)` for pushing
+- `O(1)` for popping
+- `O(1)` for random access
+#### Implementation
+```py
+from __future__ import annotations
+
+
+class FakeArray[T]:
+    def __init__(self, length: int) -> None:
+        if length < 0:
+            raise ValueError
+
+        self.inner: dict[int, T | None] = {}
+        self.length = length
+
+    def __getitem__(self, index: int) -> T | None:
+        if index > self.length:
+            raise IndexError
+
+        return self.inner.get(index)
+
+    def __setitem__(self, index: int, item: T | None) -> None:
+        if index > self.length or index < 0:
+            raise IndexError
+
+        self.inner[index] = item
+
+    def __iter__(self) -> FakeArray[T]:
+        self.current_loop = 0
+        return self
+
+    def __next__(self) -> T | None:
+        try:
+            val = self[self.current_loop]
+            self.current_loop += 1
+            return val
+        except IndexError:
+            raise StopIteration
+
+    def __str__(self) -> str:
+        return ', '.join(str(i) for i in self)
+
+    def __repr__(self) -> str:
+        return str(self)
+
+
+class RingBuffer[T]:
+    def __init__(self, capacity: int) -> None:
+        self.capacity = capacity
+        self.length = 0
+        self.head = -1
+        self.tail = -1
+        self.inner: FakeArray[T] = FakeArray(capacity)
+
+    def push(self, value: T) -> None:
+        if self.capacity == self.length - 1:
+            raise OverflowError
+
+        self.inner[index := (self.tail + 1) % (self.capacity + 1)] = value
+        self.tail = index
+        self.length += 1
+
+        if self.length == 1:
+            self.head += 1
+
+    def pop(self) -> T:
+        if (value := self.inner[(index := self.head)]) is None:
+            raise IndexError
+
+        self.inner[index] = None
+        self.head += 1
+        self.length -= 1
+
+        return value
+
+    def __getitem__(self, index: int) -> T | None:
+        return self.inner[index if index < self.capacity else index % self.capacity]
+
+    def __len__(self) -> int:
+        return self.length
+
+    def __str__(self) -> str:
+        return str(self.inner)
+
+    def __repr__(self) -> str:
+        return repr(self.inner)
+
+    @property
+    def top(self) -> T:
+        if (value := self.inner[self.tail]) is None:
+            raise IndexError
+
+        return value
 ```
