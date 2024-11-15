@@ -435,7 +435,7 @@ class ArrayList[T]:
     def __repr__(self) -> str:
         return repr(self.inner)
 ```
-### Array buffers
+### Array buffer
 - fixed size queue implemented on arrays
 - `O(1)` for pushing
 - `O(1)` for popping
