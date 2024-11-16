@@ -532,3 +532,66 @@ class RingBuffer[T]:
 
         return value
 ```
+## Recursion
+- function which calls itself untill one of the calls return due to a condition known as the base case
+#### Maze solution
+```py
+from copy import deepcopy
+from dataclasses import dataclass
+from time import sleep
+from subprocess import call
+
+
+@dataclass(kw_only=True)
+class Point:
+    x: int
+    y: int
+
+
+def visualize(maze: list[str], path: list[Point]) -> None:
+    dis = deepcopy(maze)
+
+    for p in path:
+        dis[p.y] = dis[p.y][:p.x] + 'O' + dis[p.y][p.x + 1:]
+
+    call('clear')
+    for row in dis:
+        print(row)
+    sleep(.05)
+
+
+def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
+
+    path: list[Point] = []
+
+    def walk(curr: Point, seen: list[Point]) -> bool:
+        if (curr.y >= len(maze) or curr.x >= len(maze[curr.y])) or maze[curr.y][curr.x] == 'X':
+            return False
+
+        visualize(maze, path)
+
+        if curr in seen:
+            return False
+
+        if curr == end:
+            return True
+
+        seen.append(curr)
+        path.append(curr)
+        for p in (
+            Point(x=curr.x, y=curr.y - 1),
+            Point(x=curr.x + 1, y=curr.y),
+            Point(x=curr.x, y=curr.y + 1),
+            Point(x=curr.x - 1, y=curr.y),
+        ):
+            if walk(p, seen):
+                path.append(p)
+                return True
+
+        path.pop()
+        return False
+
+    walk(start, [])
+    visualize(maze, path)
+    return path
+```
