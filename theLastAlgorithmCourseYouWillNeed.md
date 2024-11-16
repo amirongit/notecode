@@ -534,6 +534,10 @@ class RingBuffer[T]:
 ```
 ## Recursion
 - function which calls itself untill one of the calls return due to a condition known as the base case
+### Three major steps of recursion
+- pre recurse
+- recurse
+- post recurse
 #### Maze solution
 ```py
 from copy import deepcopy
@@ -568,8 +572,6 @@ def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
         if (curr.y >= len(maze) or curr.x >= len(maze[curr.y])) or maze[curr.y][curr.x] == 'X':
             return False
 
-        visualize(maze, path)
-
         if curr in seen:
             return False
 
@@ -592,6 +594,5 @@ def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
         return False
 
     walk(start, [])
-    visualize(maze, path)
     return path
 ```
