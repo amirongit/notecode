@@ -617,5 +617,5 @@ def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
         else:
             right.append(item)
 
-    return sort_quickly(left) + [middle] + sort_quickly(right)
+    return quick_sort(left) + [middle] + quick_sort(right)
 ```
