@@ -596,3 +596,26 @@ def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
     walk(start, [])
     return path
 ```
+## Quick sort
+- `O(N^2)`
+### Divide & conquer
+- spliting a problem into multiple subproblems
+### Implementation
+```py
+def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
+    if len(array) <= 1:
+        return array
+
+    middle_index = len(array) // 2
+    middle = array[middle_index]
+
+    left = []
+    right = []
+    for item in array[:middle_index] + array[middle_index + 1:]:
+        if item <= middle:
+            left.append(item)
+        else:
+            right.append(item)
+
+    return sort_quickly(left) + [middle] + sort_quickly(right)
+```
