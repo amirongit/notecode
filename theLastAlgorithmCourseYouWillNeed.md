@@ -619,3 +619,71 @@ def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 
     return quick_sort(left) + [middle] + quick_sort(right)
 ```
+## Trees
+- tree like structures consisting of nodes having child nodes & parents
+### Overview
+#### Root
+- the most parent node
+#### Height
+- number of nodes traversed to get from root to the most child node
+#### Binary tree
+- trees in which each node can have up to two child nodes
+#### General tree
+- trees in which each node can have unlimited number of child nodes
+#### Leaf
+- nodes without child nodes
+#### Balanced binary tree
+- have their subtrees
+    - differ in height by at most one
+    - balanced
+#### Branching factor
+- number of direct child nodes a node has
+### Traversal
+- the operation of visiting all the values of a tree
+- `O(N)`
+- stack data structure is implicitly being used (function call stack)
+#### Pre order
+- visiting current node before visiting its children
+#### In order
+- visiting current node in the middle of visiting its children
+- usually applicable on binary trees only
+#### Post order
+- visiting current node after visiting its children
+#### Implementation
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+
+def pre_order[T](root: Node[T] | None = None) -> None:
+    if root is None:
+        return
+
+    print(root.value)
+    pre_order(root.left)
+    pre_order(root.right)
+
+
+def in_order[T](root: Node[T] | None = None) -> None:
+    if root is None:
+        return
+
+    in_order(root.left)
+    print(root.value)
+    in_order(root.right)
+
+
+def post_order[T](root: Node[T] | None = None) -> None:
+    if root is None:
+        return
+
+    post_order(root.left)
+    post_order(root.right)
+    print(root.value)
+```
