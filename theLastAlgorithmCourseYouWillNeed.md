@@ -649,6 +649,8 @@ def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 - usually applicable on binary trees only
 #### Post order
 - visiting current node after visiting its children
+#### DFS
+- depth first search
 #### Implementation
 ```py
 from __future__ import annotations
@@ -686,4 +688,59 @@ def post_order[T](root: Node[T] | None = None) -> None:
     post_order(root.left)
     post_order(root.right)
     print(root.value)
+```
+## Tree search
+### BFS
+- breadth first search
+#### Implementation
+```py
+from __future__ import annotations
+from queue import Queue
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+
+def breadth_first[T](root: Node[T]) -> None:
+    q: Queue[Node[T]] = Queue(-1)
+
+    q.put(root)
+    while not q.empty():
+        print((node := q.get()).value)
+
+        if (left := node.left) is not None:
+            q.put(left)
+
+        if (right := node.right) is not None:
+            q.put(right)
+```
+### Tree comparison
+```py
+from __future__ import annotations
+from queue import Queue
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
+
+
+def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
+    if first is None and second is None:
+        return True
+    elif first is None or second is None:
+        return False
+    elif first.value != second.value:
+        return False
+
+    return compare(first.left, second.left) and compare(first.right, second.right)
 ```
