@@ -788,9 +788,6 @@ class Node[T]:
         self.left = left
         self.right = right
 
-    def __repr__(self) -> str:
-        return str(self.value)
-
 
 def delete[T](root: Node[T], path: Path) -> None:
     if len(path) < 1:
