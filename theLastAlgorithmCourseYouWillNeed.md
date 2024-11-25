@@ -597,7 +597,7 @@ def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
     return path
 ```
 ## Quick sort
-- `O(N^2)`
+- `O(N.log(N))` to `O(N^2)`
 ### Divide & conquer
 - spliting a problem into multiple subproblems
 ### Implementation
@@ -719,6 +719,8 @@ def breadth_first[T](root: Node[T]) -> None:
             q.put(right)
 ```
 ### Tree comparison
+- `O(N)`
+#### Implementation
 ```py
 from __future__ import annotations
 from queue import Queue
@@ -743,4 +745,61 @@ def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
         return False
 
     return compare(first.left, second.left) and compare(first.right, second.right)
+```
+### Binary search tree
+- `O(log(N))` to `O(N)`
+    - O of height of tree
+- given tree must be sorted
+#### Implementation
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
+
+
+def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
+    if tree.value == value:
+        return True
+    elif tree.value > value:
+        return False if tree.left is None else binary_search(tree.left, value)
+    else:
+        return False if tree.right is None else binary_search(tree.right, value)
+```
+### Binary tree insertion
+- `O(log(N))` to `O(N)`
+    - O of height of tree
+- given tree must be sorted
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
+
+
+def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
+    if value <= tree.value:
+        if tree.left is None:
+            tree.left = Node(value)
+        else:
+            insert(tree.left, value)
+    else:
+        if tree.right is None:
+            tree.right = Node(value)
+        else:
+            insert(tree.right, value)
 ```
