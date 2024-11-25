@@ -362,12 +362,6 @@ class FakeArray[T]:
         except IndexError:
             raise StopIteration
 
-    def __str__(self) -> str:
-        return ', '.join(str(i) for i in self)
-
-    def __repr__(self) -> str:
-        return str(self)
-
 
 class ArrayList[T]:
     def __init__(self, capacity: int) -> None:
@@ -428,12 +422,6 @@ class ArrayList[T]:
 
     def __len__(self) -> int:
         return self.length
-
-    def __str__(self) -> str:
-        return str(self.inner)
-
-    def __repr__(self) -> str:
-        return repr(self.inner)
 ```
 ### Array buffer
 - fixed size queue implemented on arrays
@@ -477,12 +465,6 @@ class FakeArray[T]:
         except IndexError:
             raise StopIteration
 
-    def __str__(self) -> str:
-        return ', '.join(str(i) for i in self)
-
-    def __repr__(self) -> str:
-        return str(self)
-
 
 class RingBuffer[T]:
     def __init__(self, capacity: int) -> None:
@@ -518,12 +500,6 @@ class RingBuffer[T]:
 
     def __len__(self) -> int:
         return self.length
-
-    def __str__(self) -> str:
-        return str(self.inner)
-
-    def __repr__(self) -> str:
-        return repr(self.inner)
 
     @property
     def top(self) -> T:
@@ -732,9 +708,6 @@ class Node[T]:
         self.left = left
         self.right = right
 
-    def __repr__(self) -> str:
-        return str(self.value)
-
 
 def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
     if first is None and second is None:
@@ -761,9 +734,6 @@ class Node[T]:
         self.left = left
         self.right = right
 
-    def __repr__(self) -> str:
-        return str(self.value)
-
 
 def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
     if tree.value == value:
@@ -787,9 +757,6 @@ class Node[T]:
         self.left = left
         self.right = right
 
-    def __repr__(self) -> str:
-        return str(self.value)
-
 
 def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
     if value <= tree.value:
@@ -802,4 +769,90 @@ def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
             tree.right = Node(value)
         else:
             insert(tree.right, value)
+```
+### Binary tree deletion
+- implementing it made me age
+#### Implementation
+```py
+from __future__ import annotations
+from typing import Literal, TypeAlias
+from random import choice
+
+
+Path: TypeAlias = tuple[Literal['l'] | Literal['r'], ...]
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
+
+
+def delete[T](root: Node[T], path: Path) -> None:
+    if len(path) < 1:
+        raise RuntimeError
+
+    node = get(root, path)
+    parent = get(root, path[:-1])
+    node_dir = path[-1]
+
+    if (node.left is not None) is not (node.right is not None):
+        if node.left is not None:
+            child = node.left
+            node.left = None
+        else:
+            child = node.right
+            node.right = None
+        if node_dir == 'l':
+            parent.left = child
+        else:
+            parent.right = child
+    elif node.left is None and node.right is None:
+        if node_dir == 'l':
+            parent.left = None
+        else:
+            parent.right = None
+    else:
+        if choice((False, True)):
+            last_node, last_node_path = lowest(node.right) # type: ignore
+            delete(node, ('r',) + last_node_path)
+        else:
+            last_node, last_node_path = highest(node.left) # type: ignore
+            delete(node, ('l',) + last_node_path)
+        if node_dir == 'l':
+            parent.left.value = last_node.value # type: ignore
+        else:
+            parent.right.value = last_node.value # type: ignore
+
+
+def lowest[T](root: Node[T]) -> tuple[Node[T], Path]:
+    node = root
+    path: Path = ()
+    while node.left is not None:
+        node = node.left
+        path += ('l',) # type: ignore
+    return node, path
+
+
+def highest[T](root: Node[T]) -> tuple[Node[T], Path]:
+    node = root
+    path: Path = ()
+    while node.right is not None:
+        node = node.right
+        path += ('r',) # type: ignore
+    return node, path
+
+
+def get[T](root: Node[T], path: Path) -> Node[T]:
+    node: Node[T] = root
+    for direction in path:
+        if direction == 'l':
+            node = node.left # type: ignore
+        else:
+            node = node.right # type: ignore
+    return node
 ```
