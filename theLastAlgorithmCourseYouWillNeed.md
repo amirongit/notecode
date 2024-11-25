@@ -772,6 +772,7 @@ def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
 ```
 ### Binary tree deletion
 - implementing it made me age
+- `O(N)`
 #### Implementation
 ```py
 from __future__ import annotations
