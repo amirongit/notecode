@@ -776,11 +776,11 @@ def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
 #### Implementation
 ```py
 from __future__ import annotations
-from typing import Literal, TypeAlias
+
 from random import choice
+from typing import Literal
 
-
-Path: TypeAlias = tuple[Literal['l'] | Literal['r'], ...]
+type Path = tuple[Literal["l"] | Literal["r"], ...]
 
 
 class Node[T]:
@@ -788,6 +788,9 @@ class Node[T]:
         self.value = value
         self.left = left
         self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
 
 
 def delete[T](root: Node[T], path: Path) -> None:
@@ -803,28 +806,28 @@ def delete[T](root: Node[T], path: Path) -> None:
             child = node.left
             node.left = None
         else:
-            child = node.right
+            child = node.right  # type: ignore
             node.right = None
-        if node_dir == 'l':
+        if node_dir == "l":
             parent.left = child
         else:
             parent.right = child
     elif node.left is None and node.right is None:
-        if node_dir == 'l':
+        if node_dir == "l":
             parent.left = None
         else:
             parent.right = None
     else:
         if choice((False, True)):
-            last_node, last_node_path = lowest(node.right) # type: ignore
-            delete(node, ('r',) + last_node_path)
+            last_node, last_node_path = lowest(node.right)  # type: ignore
+            delete(node, ("r",) + last_node_path)  # type: ignore
         else:
-            last_node, last_node_path = highest(node.left) # type: ignore
-            delete(node, ('l',) + last_node_path)
-        if node_dir == 'l':
-            parent.left.value = last_node.value # type: ignore
+            last_node, last_node_path = highest(node.left)  # type: ignore
+            delete(node, ("l",) + last_node_path)  # type: ignore
+        if node_dir == "l":
+            parent.left.value = last_node.value  # type: ignore
         else:
-            parent.right.value = last_node.value # type: ignore
+            parent.right.value = last_node.value  # type: ignore
 
 
 def lowest[T](root: Node[T]) -> tuple[Node[T], Path]:
@@ -832,7 +835,7 @@ def lowest[T](root: Node[T]) -> tuple[Node[T], Path]:
     path: Path = ()
     while node.left is not None:
         node = node.left
-        path += ('l',) # type: ignore
+        path += ("l",)  # type: ignore
     return node, path
 
 
@@ -841,16 +844,94 @@ def highest[T](root: Node[T]) -> tuple[Node[T], Path]:
     path: Path = ()
     while node.right is not None:
         node = node.right
-        path += ('r',) # type: ignore
+        path += ("r",)  # type: ignore
     return node, path
 
 
 def get[T](root: Node[T], path: Path) -> Node[T]:
     node: Node[T] = root
     for direction in path:
-        if direction == 'l':
-            node = node.left # type: ignore
+        if direction == "l":
+            node = node.left  # type: ignore
         else:
-            node = node.right # type: ignore
+            node = node.right  # type: ignore
     return node
+```
+### Binary tree visualization
+- did it!
+#### Implementation
+```py
+from __future__ import annotations
+
+from queue import Queue
+from typing import Any
+
+type Coordinate = tuple[int, int]
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def __repr__(self) -> str:
+        return str(self.value)
+
+
+def visualize[T](root: Node[T]) -> None:
+    val_coordinates = get_coordinates(root)
+    val_size = max(max(len(str(i[0])) for i in val_coordinates), 3)
+    grid_hei = ((get_height(root) + 1) * 2) - 1
+    grid_wid = get_width(root) * 3
+    grid_mid = grid_wid // 2
+
+    grid = [[" " * val_size for _ in range(grid_wid)] for _ in range(grid_hei)]
+
+    for i in val_coordinates:
+        val, y, x = i[0], abs(i[1][1]) * 2, grid_mid - i[1][0]
+        grid[y][x] = str(val).rjust(val_size, "-")
+
+        if y < grid_hei - 1:
+            grid[y + 1][x] = "/" + grid[y + 1][x][1:-1] + "\\"
+
+    print("\n".join(["".join(col) for col in grid]))
+
+
+def get_coordinates[T](root: Node[T]) -> set[tuple[T, Coordinate]]:
+    q: Queue[tuple[Node[T], Coordinate]] = Queue()
+    coordinates = set()
+
+    q.put((root, (0, 0)))
+    while not q.empty():
+        node = q.get()
+        coordinates.add((node[0].value, node[1]))
+
+        if (left := node[0].left) is not None:
+            q.put((left, (node[1][0] + get_width(node[0].left), node[1][1] - 1)))
+
+        if (right := node[0].right) is not None:
+            q.put((right, (node[1][0] - get_width(node[0].right), node[1][1] - 1)))
+
+    return coordinates
+
+
+def get_width(root: Node[Any] | None, current: int = 0) -> int:  # broken
+    return (
+        current
+        if root is None
+        else (
+            current + 1
+            if root.left is None and root.right is None
+            else current + get_width(root.left, current) + get_width(root.right, current)
+        )
+    )
+
+
+def get_height(root: Node[Any] | None, current: int = -1) -> int:  # broken
+    if root is None:
+        return current
+
+    current += 1
+    return max(get_height(root.left, current), get_height(root.right, current))
 ```
