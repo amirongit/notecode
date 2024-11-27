@@ -916,7 +916,7 @@ def get_coordinates[T](root: Node[T]) -> set[tuple[T, Coordinate]]:
     return coordinates
 
 
-def get_width(root: Node[Any] | None, current: int = 0) -> int:  # broken
+def get_width(root: Node[Any] | None, current: int = 0) -> int:
     return (
         current
         if root is None
@@ -928,7 +928,7 @@ def get_width(root: Node[Any] | None, current: int = 0) -> int:  # broken
     )
 
 
-def get_height(root: Node[Any] | None, current: int = -1) -> int:  # broken
+def get_height(root: Node[Any] | None, current: int = -1) -> int:
     if root is None:
         return current
 
