@@ -373,7 +373,7 @@ class ArrayList[T]:
         return new
 
     def __getitem__(self, index: int) -> T | None:
-        self.inner[index]
+        return self.inner[index]
 
     def __setitem__(self, index: int, value: T | None) -> None:
         self.inner[index] = value
@@ -779,7 +779,7 @@ from btnode import Node
 type Coordinate = tuple[int, int]
 
 
-def visualiz[T](root: Node[T]) -> None:
+def visualize[T](root: Node[T]) -> None:
     val_coor = get_coordinates(root)
     val_size = max(max(len(str(i[0])) for i in val_coor), 5)
     grid_hei = (root_hei := get_height(root)) * 2 - 1
