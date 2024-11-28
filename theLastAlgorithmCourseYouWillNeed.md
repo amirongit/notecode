@@ -779,16 +779,14 @@ from btnode import Node
 type Coordinate = tuple[int, int]
 
 
-def visualize[T](root: Node[T]) -> None:
-    val_coordinates = get_coordinates(root)
-    val_size = max(max(len(str(i[0])) for i in val_coordinates), 5)
-    grid_hei = ((get_height(root) + 1) * 2) - 1
-    grid_wid = get_width(root) * 3
-    grid_mid = grid_wid // 2
-
+def visualiz[T](root: Node[T]) -> None:
+    val_coor = get_coordinates(root)
+    val_size = max(max(len(str(i[0])) for i in val_coor), 5)
+    grid_hei = (root_hei := get_height(root)) * 2 - 1
+    grid_mid = (grid_wid := 2**root_hei) // 2
     grid = [[" " * val_size for _ in range(grid_wid)] for _ in range(grid_hei)]
 
-    for i in val_coordinates:
+    for i in val_coor:
         val, y, x = i[0], abs(i[1][1]) * 2, grid_mid - i[1][0]
         grid[y][x] = f'({str(val).rjust(val_size - 2, "_")})'
 
@@ -808,27 +806,15 @@ def get_coordinates[T](root: Node[T]) -> set[tuple[T, Coordinate]]:
         coordinates.add((node[0].value, node[1]))
 
         if (left := node[0].left) is not None:
-            q.put((left, (node[1][0] + get_width(node[0].left), node[1][1] - 1)))
+            q.put((left, (node[1][0] + (2 ** (get_height(node[0].left) - 1)), node[1][1] - 1)))
 
         if (right := node[0].right) is not None:
-            q.put((right, (node[1][0] - get_width(node[0].right), node[1][1] - 1)))
+            q.put((right, (node[1][0] - (2 ** (get_height(node[0].right) - 1)), node[1][1] - 1)))
 
     return coordinates
 
 
-def get_width(root: Node[Any] | None, current: int = 0) -> int:
-    return (
-        current
-        if root is None
-        else (
-            current + 1
-            if root.left is None and root.right is None
-            else current + get_width(root.left, current) + get_width(root.right, current)
-        )
-    )
-
-
-def get_height(root: Node[Any] | None, current: int = -1) -> int:
+def get_height(root: Node[Any] | None, current: int = 0) -> int:
     if root is None:
         return current
 
