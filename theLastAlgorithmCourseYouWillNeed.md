@@ -222,7 +222,7 @@ class Queue[T]:
             current.prev = new
             self.head = new
 
-        self.length += 1;
+        self.length += 1
 
     def rpush(self, value: T) -> None:
         if self.head is None:
@@ -237,7 +237,7 @@ class Queue[T]:
             current.next = new
             self.tail = new
 
-        self.length += 1;
+        self.length += 1
 
     def lpop(self) -> T:
         if (current := self.head) is None:
@@ -248,7 +248,7 @@ class Queue[T]:
             next.prev = None
             self.head = next
 
-        self.length -= 1;
+        self.length -= 1
         return current.value
 
     def rpop(self) -> T:
@@ -259,7 +259,7 @@ class Queue[T]:
             prev.next = None
             self.tail = prev
 
-        self.length -= 1;
+        self.length -= 1
         return current.value
 
     def __len__(self) -> int:
@@ -881,7 +881,7 @@ class Node[T]:
 
 def visualize[T](root: Node[T]) -> None:
     val_coordinates = get_coordinates(root)
-    val_size = max(max(len(str(i[0])) for i in val_coordinates), 3)
+    val_size = max(max(len(str(i[0])) for i in val_coordinates), 5)
     grid_hei = ((get_height(root) + 1) * 2) - 1
     grid_wid = get_width(root) * 3
     grid_mid = grid_wid // 2
@@ -890,7 +890,7 @@ def visualize[T](root: Node[T]) -> None:
 
     for i in val_coordinates:
         val, y, x = i[0], abs(i[1][1]) * 2, grid_mid - i[1][0]
-        grid[y][x] = str(val).rjust(val_size, "-")
+        grid[y][x] = f'({str(val).rjust(val_size - 2, "_")})'
 
         if y < grid_hei - 1:
             grid[y + 1][x] = "/" + grid[y + 1][x][1:-1] + "\\"
