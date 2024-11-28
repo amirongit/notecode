@@ -92,11 +92,7 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 ```py
 from __future__ import annotations
 
-class Node[T]:
-    def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
-        self.value = value
-        self.next = next
-        self.prev = previous
+from lldoublenode import Node
 
 class LinkedList[T]:
     def __init__(self, *values: T) -> None:
@@ -196,11 +192,7 @@ class LinkedList[T]:
 ```py
 from __future__ import annotations
 
-class Node[T]:
-    def __init__(self, value: T, *, next: Node[T] | None = None, prev: Node[T] | None = None) -> None:
-        self.value = value
-        self.next = next
-        self.prev = prev
+from lldoublenode import Node
 
 
 class Queue[T]:
@@ -282,10 +274,7 @@ class Queue[T]:
 ```py
 from __future__ import annotations
 
-class Node[T]:
-    def __init__(self, value: T, *, previous: Node[T] | None = None) -> None:
-        self.value = value
-        self.prev = previous
+from llsinglenode import Node
 
 
 class Stack[T]:
@@ -329,38 +318,7 @@ class Stack[T]:
 ```py
 from __future__ import annotations
 
-
-class FakeArray[T]:
-    def __init__(self, length: int) -> None:
-        if length < 0:
-            raise ValueError
-
-        self.inner: dict[int, T | None] = {}
-        self.length = length
-
-    def __getitem__(self, index: int) -> T | None:
-        if index > self.length:
-            raise IndexError
-
-        return self.inner.get(index)
-
-    def __setitem__(self, index: int, item: T | None) -> None:
-        if index > self.length or index < 0:
-            raise IndexError
-
-        self.inner[index] = item
-
-    def __iter__(self) -> FakeArray[T]:
-        self.current_loop = 0
-        return self
-
-    def __next__(self) -> T | None:
-        try:
-            val = self[self.current_loop]
-            self.current_loop += 1
-            return val
-        except IndexError:
-            raise StopIteration
+from fakearray import FakeArray
 
 
 class ArrayList[T]:
@@ -432,38 +390,7 @@ class ArrayList[T]:
 ```py
 from __future__ import annotations
 
-
-class FakeArray[T]:
-    def __init__(self, length: int) -> None:
-        if length < 0:
-            raise ValueError
-
-        self.inner: dict[int, T | None] = {}
-        self.length = length
-
-    def __getitem__(self, index: int) -> T | None:
-        if index > self.length:
-            raise IndexError
-
-        return self.inner.get(index)
-
-    def __setitem__(self, index: int, item: T | None) -> None:
-        if index > self.length or index < 0:
-            raise IndexError
-
-        self.inner[index] = item
-
-    def __iter__(self) -> FakeArray[T]:
-        self.current_loop = 0
-        return self
-
-    def __next__(self) -> T | None:
-        try:
-            val = self[self.current_loop]
-            self.current_loop += 1
-            return val
-        except IndexError:
-            raise StopIteration
+from fakearray import FakeArray
 
 
 class RingBuffer[T]:
@@ -631,12 +558,7 @@ def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 ```py
 from __future__ import annotations
 
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
+from btnode import Node
 
 
 def pre_order[T](root: Node[T] | None = None) -> None:
@@ -673,12 +595,7 @@ def post_order[T](root: Node[T] | None = None) -> None:
 from __future__ import annotations
 from queue import Queue
 
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
+from btnode import Node
 
 
 def breadth_first[T](root: Node[T]) -> None:
@@ -701,12 +618,7 @@ def breadth_first[T](root: Node[T]) -> None:
 from __future__ import annotations
 from queue import Queue
 
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
+from btnode import Node
 
 
 def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
@@ -727,12 +639,7 @@ def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
 ```py
 from __future__ import annotations
 
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
+from btnode import Node
 
 
 def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
@@ -750,12 +657,7 @@ def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
 ```py
 from __future__ import annotations
 
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
+from btnode import Node
 
 
 def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
@@ -780,54 +682,56 @@ from __future__ import annotations
 from random import choice
 from typing import Literal
 
+from btnode import Node
+
 type Path = tuple[Literal["l"] | Literal["r"], ...]
-
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
-
-    def __repr__(self) -> str:
-        return str(self.value)
 
 
 def delete[T](root: Node[T], path: Path) -> None:
     if len(path) < 1:
         raise RuntimeError
 
-    node = get(root, path)
+    target = get(root, path)
     parent = get(root, path[:-1])
-    node_dir = path[-1]
+    last_dir = path[-1]
 
-    if (node.left is not None) is not (node.right is not None):
-        if node.left is not None:
-            child = node.left
-            node.left = None
-        else:
-            child = node.right  # type: ignore
-            node.right = None
-        if node_dir == "l":
-            parent.left = child
-        else:
-            parent.right = child
-    elif node.left is None and node.right is None:
-        if node_dir == "l":
-            parent.left = None
-        else:
-            parent.right = None
+    if target.right is None or target.left is None:
+        replace_node(
+            parent,
+            (
+                None
+                if target.left is None and target.right is None
+                else target.right if target.left is None else target.left
+            ),
+            last_dir,
+        )
     else:
-        if choice((False, True)):
-            last_node, last_node_path = lowest(node.right)  # type: ignore
-            delete(node, ("r",) + last_node_path)  # type: ignore
+        if choice((True, False)):
+            repl, repl_path = lowest(target.right)
+            delete(target, ("r",) + repl_path)  # type: ignore
         else:
-            last_node, last_node_path = highest(node.left)  # type: ignore
-            delete(node, ("l",) + last_node_path)  # type: ignore
-        if node_dir == "l":
-            parent.left.value = last_node.value  # type: ignore
-        else:
-            parent.right.value = last_node.value  # type: ignore
+            repl, repl_path = highest(target.left)
+            delete(target, ("l",) + repl_path)  # type: ignore
+
+        replace_val(parent, repl, last_dir)
+
+
+def replace_node[T](parent: Node[T], repl: Node[T] | None, dir_: Direction) -> None:
+    if dir_ == "l":
+        parent.left = repl
+    else:
+        parent.right = repl
+
+
+def replace_val[T](parent: Node[T], repl: Node[T], dir_: Direction) -> None:
+    if dir_ == "l":
+        if parent.left is None:
+            raise RuntimeError
+        parent.left.value = repl.value
+    else:
+        if parent.right is None:
+            raise RuntimeError
+        parent.right.value = repl.value
 
 
 def lowest[T](root: Node[T]) -> tuple[Node[T], Path]:
@@ -852,9 +756,13 @@ def get[T](root: Node[T], path: Path) -> Node[T]:
     node: Node[T] = root
     for direction in path:
         if direction == "l":
-            node = node.left  # type: ignore
+            if node.left is None:
+                raise RuntimeError
+            node = node.left
         else:
-            node = node.right  # type: ignore
+            if node.right is None:
+                raise RuntimeError
+            node = node.right
     return node
 ```
 ### Binary tree visualization
@@ -866,17 +774,9 @@ from __future__ import annotations
 from queue import Queue
 from typing import Any
 
+from btnode import Node
+
 type Coordinate = tuple[int, int]
-
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
-
-    def __repr__(self) -> str:
-        return str(self.value)
 
 
 def visualize[T](root: Node[T]) -> None:
@@ -934,4 +834,76 @@ def get_height(root: Node[Any] | None, current: int = -1) -> int:
 
     current += 1
     return max(get_height(root.left, current), get_height(root.right, current))
+```
+
+## Modules
+### Linked list single link node
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None) -> None:
+        self.value = value
+        self.prev = previous
+```
+### Linked list double link node
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
+        self.value = value
+        self.next = next
+        self.prev = previous
+```
+### Binary tree node
+```py
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
+
+```
+### Fake array
+```py
+from __future__ import annotations
+
+
+class FakeArray[T]:
+    def __init__(self, length: int) -> None:
+        if length < 0:
+            raise ValueError
+
+        self.inner: dict[int, T | None] = {}
+        self.length = length
+
+    def __getitem__(self, index: int) -> T | None:
+        if index > self.length:
+            raise IndexError
+
+        return self.inner.get(index)
+
+    def __setitem__(self, index: int, item: T | None) -> None:
+        if index > self.length or index < 0:
+            raise IndexError
+
+        self.inner[index] = item
+
+    def __iter__(self) -> FakeArray[T]:
+        self.current_loop = 0
+        return self
+
+    def __next__(self) -> T | None:
+        try:
+            val = self[self.current_loop]
+            self.current_loop += 1
+            return val
+        except IndexError:
+            raise StopIteration
 ```
