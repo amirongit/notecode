@@ -866,7 +866,7 @@ class MinHeap[T: (int, float, str)](BaseHeap[T]):
             gleft = current is not None and left is not None and left < current
             gright = current is not None and right is not None and right < current
 ```
-### Min heap
+### Max heap
 - every parent is greater than or equal to its childrend
 #### Implementation
 ```py
