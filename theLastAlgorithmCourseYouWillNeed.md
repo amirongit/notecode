@@ -821,6 +821,91 @@ def get_height(root: Node[Any] | None, current: int = 0) -> int:
     current += 1
     return max(get_height(root.left, current), get_height(root.right, current))
 ```
+## Heap
+- abstraction of an array representing tree like structure
+### Heapify
+- to swap a heap element with other elements to make the tree conditions true
+- `O(log(N))`
+### Min heap
+- every parent is less than or equal to its childrend
+#### Implementation
+```py
+from baseheap import BaseHeap, NodeID
+
+
+class MinHeap[T: (int, float, str)](BaseHeap[T]):
+    def heapify_up(self, addr: NodeID) -> None:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+
+        current, parent = self.array[ci := index], self.array[pi := BaseHeap.get_up(ci)]
+        while current is not None and parent is not None and parent > current:
+            self.array[pi], self.array[ci] = current, parent
+            current, parent = self.array[ci := pi], self.array[pi := BaseHeap.get_up(ci)]
+
+    def heapify_down(self, addr: NodeID) -> None:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+
+        current = self.array[ci := index]
+        (left, li), (right, ri) = self.get_children(ci)
+        gleft = current is not None and left is not None and left < current
+        gright = current is not None and right is not None and right < current
+        while gleft or gright:
+            if gleft and gright:
+                if min(right, left) == right:  # type: ignore
+                    gleft = False
+                else:
+                    gright = False
+
+            if gleft:
+                self.array[ci], self.array[ci := li] = left, current
+            else:
+                self.array[ci], self.array[ci := ri] = right, current
+
+            current = self.array[ci]
+            (left, li), (right, ri) = self.get_children(ci)
+            gleft = current is not None and left is not None and left < current
+            gright = current is not None and right is not None and right < current
+```
+### Min heap
+- every parent is greater than or equal to its childrend
+#### Implementation
+```py
+from baseheap import BaseHeap, NodeID
+
+
+class MaxHeap[T: (int, float, str)](BaseHeap[T]):
+    def heapify_up(self, addr: NodeID) -> None:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+
+        current, parent = self.array[ci := index], self.array[pi := BaseHeap.get_up(ci)]
+        while current is not None and parent is not None and parent < current:
+            self.array[pi], self.array[ci] = current, parent
+            current, parent = self.array[ci := pi], self.array[pi := BaseHeap.get_up(ci)]
+
+    def heapify_down(self, addr: NodeID) -> None:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+
+        current = self.array[ci := index]
+        (left, li), (right, ri) = self.get_children(ci)
+        gleft = current is not None and left is not None and left > current
+        gright = current is not None and right is not None and right > current
+        while gleft or gright:
+            if gleft and gright:
+                if max(right, left) == right:  # type: ignore
+                    gleft = False
+                else:
+                    gright = False
+
+            if gleft:
+                self.array[ci], self.array[ci := li] = left, current
+            else:
+                self.array[ci], self.array[ci := ri] = right, current
+
+            current = self.array[ci]
+            (left, li), (right, ri) = self.get_children(ci)
+            gleft = current is not None and left is not None and left > current
+            gright = current is not None and right is not None and right > current
+```
 
 ## Modules
 ### Linked list single link node
@@ -892,4 +977,109 @@ class FakeArray[T]:
             return val
         except IndexError:
             raise StopIteration
+```
+### Base heap
+```py
+from typing import Literal
+
+from arraylist import ArrayList
+from btnode import Node
+
+type Direction = Literal["l"] | Literal["r"] | Literal["u"]
+type Path = tuple[Direction, ...]
+type NodeID = Path | int
+type NodeIDPair[T] = tuple[T | None, int]
+
+
+class BaseHeap[T]:
+    def __init__(self, height_capacity: int) -> None:
+        self.array: ArrayList[T] = ArrayList(height_capacity**2)
+        self.length = -1
+
+    def push(self, value: T) -> None:
+        self.array.append(value)
+        self.length += 1
+        self.heapify_up(self.length)
+
+    def pop(self) -> T | None:
+        out = self.array[0]
+
+        self.array[0] = self.array[self.length]
+        self.array[self.length] = None
+        self.length -= 1
+
+        self.heapify_down(0)
+
+        return out
+
+    def heapify_down(self, addr: NodeID) -> None:
+        raise NotImplementedError
+
+    def heapify_up(self, addr: NodeID) -> None:
+        raise NotImplementedError
+
+    def get_children(self, addr: NodeID) -> tuple[NodeIDPair[T], NodeIDPair[T]]:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+        li, ri = BaseHeap.get_left(index), BaseHeap.get_right(index)
+
+        try:
+            right = self.array[ri]
+        except IndexError:
+            right = None
+
+        try:
+            left = self.array[li]
+        except IndexError:
+            left = None
+
+        return ((left, li), (right, ri))
+
+    def to_btnode(self, index: int = 0) -> Node[T] | None:
+        if (val := self.array[index]) is None:
+            return None
+        else:
+            node = Node(val)
+
+        try:
+            if self.array[left := BaseHeap.get_left(index)] is not None:
+                node.left = self.to_btnode(left)
+        except IndexError:
+            pass
+
+        try:
+            if self.array[right := BaseHeap.get_right(index)] is not None:
+                node.right = self.to_btnode(right)
+        except IndexError:
+            pass
+
+        return node
+
+    def __getitem__(self, path: Path) -> T | None:
+        try:
+            return self.array[BaseHeap.resolve(path)]
+        except IndexError:
+            return None
+
+    @staticmethod
+    def resolve(path: Path) -> int:
+        needle = 0
+        for dir_ in path:
+            needle = (
+                BaseHeap.get_left(needle)
+                if dir_ == "l"
+                else BaseHeap.get_right(needle) if dir_ == "r" else BaseHeap.get_up(needle)
+            )
+        return needle
+
+    @staticmethod
+    def get_right(index: int) -> int:
+        return index * 2 + 2
+
+    @staticmethod
+    def get_left(index: int) -> int:
+        return index * 2 + 1
+
+    @staticmethod
+    def get_up(index: int) -> int:
+        return (index - 1) // 2
 ```
