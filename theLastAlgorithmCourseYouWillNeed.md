@@ -822,9 +822,9 @@ def get_height(root: Node[Any] | None, current: int = 0) -> int:
     return max(get_height(root.left, current), get_height(root.right, current))
 ```
 ## Heap
-- abstraction of an array representing tree like structure
+- representing a tree like structure by abstracting a weakly sorted array
 ### Heapify
-- to swap a heap element with other elements to make the tree conditions true
+- swapping a heap element with other elements to make the tree conditions true
 - `O(log(N))`
 ### Min heap
 - every parent is less than or equal to its childrend
@@ -835,17 +835,16 @@ from baseheap import BaseHeap, NodeID
 
 class MinHeap[T: (int, float, str)](BaseHeap[T]):
     def heapify_up(self, addr: NodeID) -> None:
-        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
-
-        current, parent = self.array[ci := index], self.array[pi := BaseHeap.get_up(ci)]
+        current, parent = (
+            self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr],
+            self.array[pi := BaseHeap.get_up(ci)],
+        )
         while current is not None and parent is not None and parent > current:
             self.array[pi], self.array[ci] = current, parent
             current, parent = self.array[ci := pi], self.array[pi := BaseHeap.get_up(ci)]
 
     def heapify_down(self, addr: NodeID) -> None:
-        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
-
-        current = self.array[ci := index]
+        current = self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr]
         (left, li), (right, ri) = self.get_children(ci)
         gleft = current is not None and left is not None and left < current
         gright = current is not None and right is not None and right < current
@@ -875,17 +874,16 @@ from baseheap import BaseHeap, NodeID
 
 class MaxHeap[T: (int, float, str)](BaseHeap[T]):
     def heapify_up(self, addr: NodeID) -> None:
-        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
-
-        current, parent = self.array[ci := index], self.array[pi := BaseHeap.get_up(ci)]
+        current, parent = (
+            self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr],
+            self.array[pi := BaseHeap.get_up(ci)],
+        )
         while current is not None and parent is not None and parent < current:
             self.array[pi], self.array[ci] = current, parent
             current, parent = self.array[ci := pi], self.array[pi := BaseHeap.get_up(ci)]
 
     def heapify_down(self, addr: NodeID) -> None:
-        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
-
-        current = self.array[ci := index]
+        current = self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr]
         (left, li), (right, ri) = self.get_children(ci)
         gleft = current is not None and left is not None and left > current
         gright = current is not None and right is not None and right > current
@@ -906,6 +904,52 @@ class MaxHeap[T: (int, float, str)](BaseHeap[T]):
             gleft = current is not None and left is not None and left > current
             gright = current is not None and right is not None and right > current
 ```
+## Graphs
+- set of vertices & edges
+### Edge
+- connection between vertices
+### Vertex
+- unique point, destination or identifier inside a graph
+- duplication of content is possible, but their identity remains unique
+### Neighbor
+- vertices connected directly by edges
+### Degree of vertex
+- number of edges connected to the vertex
+### Path
+- sequence of vertices connected by edges
+### Path length
+- number of edges in a path
+### Cycle
+- path that starts & ends at the same vertex
+### Connected vertices
+- at least one path exists between them
+### Connected graph
+- all of its vertices are connected
+### Connected component
+- subset of vertices of a graph which are connected
+### Directed graph
+- its edges are unidirectional
+### Undirected graph
+- its edges are bidirectional
+### Cyclic graph
+- contains cycles
+### Acyclic graph
+- doesn't contain cycles
+### Weight
+- attribute of edges
+- represent different properties in different contexts
+### Trees
+- connected & acyclic graphs
+    - broken if an edge is removed
+    - cyclic end if an edge is added
+### Representation
+#### Adjacency list
+- array whose indices associate with vertices & store edges of their corresponding vertices
+- hash maps can be used if graph identifiers aren't continuous
+#### Adjacency matrix
+- 2d matrix with rows & columns corresponding to each vertex
+- entries are considered as edges
+- applicable to finite graphs
 
 ## Modules
 ### Linked list single link node
