@@ -239,8 +239,8 @@
 #### Zero exponent rule
 - any non-zero value to the power of 0 results in 1
 #### Negative exponent rule
-- the factor is written as its reciprocal with the denominator being raised to the opposed exponent
-- its coefficient is written as the numerator of the fraction
+- the term is written as its reciprocal with its denominator being raised to the opposed exponent
+- its coefficient is also included in the denominator
 #### Algebraic version of the quotient rule
 - when operands of the same base are divided, the exponents are subtracted to get the result
 ### Scientific notation
