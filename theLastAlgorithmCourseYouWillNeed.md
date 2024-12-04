@@ -984,10 +984,10 @@ def matrix_breadth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list
     bfs: list[MatrixVertex] = [start]
 
     while not q.empty():
-        for v, w in enumerate(graph[q.get()]):
-            if w != 0 and v not in bfs:
-                bfs.append(v)
-                q.put(v)
+        for neighbor, weight in enumerate(graph[q.get()]):
+            if weight != 0 and neighbor not in bfs:
+                bfs.append(neighbor)
+                q.put(neighbor)
 
     return bfs
 ```
