@@ -945,11 +945,52 @@ class MaxHeap[T: (int, float, str)](BaseHeap[T]):
 ### Representation
 #### Adjacency list
 - array whose indices associate with vertices & store edges of their corresponding vertices
-- hash maps can be used if graph identifiers aren't continuous
+- hash maps can be used if graph identifiers aren't contiguous
 #### Adjacency matrix
 - 2d matrix with rows & columns corresponding to each vertex
 - entries are considered as edges
 - applicable to finite graphs
+### Graph BFS implementation
+#### Using Adjacency list
+```py
+from queue import Queue
+
+from graph import AdjGraphList, ListVertex
+
+
+def list_breadth_first[T: ListVertex](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+    q: Queue[T] = Queue()
+    q.put(vrtx := start if start is not None else sorted(graph.keys())[0])
+    bfs: list[T] = [vrtx]
+
+    while not q.empty():
+        for edge in graph[q.get()]:
+            if (neighbor := edge[0]) not in bfs:
+                bfs.append(neighbor)
+                q.put(neighbor)
+
+    return bfs
+```
+#### Using Adjacency matrix
+```py
+from queue import Queue
+
+from graph import AdjGraphMatrix, MatrixVertex
+
+
+def matrix_breadth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list[MatrixVertex]:
+    q: Queue[int] = Queue()
+    q.put(start)
+    bfs: list[MatrixVertex] = [start]
+
+    while not q.empty():
+        for v, w in enumerate(graph[q.get()]):
+            if w != 0 and v not in bfs:
+                bfs.append(v)
+                q.put(v)
+
+    return bfs
+```
 
 ## Modules
 ### Linked list single link node
@@ -1126,4 +1167,15 @@ class BaseHeap[T]:
     @staticmethod
     def get_up(index: int) -> int:
         return (index - 1) // 2
+```
+### Graph
+```py
+type Weight = int
+
+type ListVertex = int | float | str
+type ListEdge[T: ListVertex] = tuple[T, Weight]
+type AdjGraphList[T: ListVertex] = dict[T, set[ListEdge[T]]]
+
+type MatrixVertex = int
+type AdjGraphMatrix = list[list[Weight]]
 ```
