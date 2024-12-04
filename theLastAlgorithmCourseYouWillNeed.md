@@ -90,8 +90,6 @@ def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 - each container points to its next & previous containers
 #### Implementation
 ```py
-from __future__ import annotations
-
 from lldoublenode import Node
 
 class LinkedList[T]:
@@ -190,8 +188,6 @@ class LinkedList[T]:
 - what goes first, comes out first
 #### Implementation
 ```py
-from __future__ import annotations
-
 from lldoublenode import Node
 
 
@@ -272,8 +268,6 @@ class Queue[T]:
 - what goes first, comes out last
 #### Implementation
 ```py
-from __future__ import annotations
-
 from llsinglenode import Node
 
 
@@ -316,8 +310,6 @@ class Stack[T]:
     - it's considered to be `O(1)` due to something called amortized analysis!
 #### Implementation
 ```py
-from __future__ import annotations
-
 from fakearray import FakeArray
 
 
@@ -388,8 +380,6 @@ class ArrayList[T]:
 - `O(1)` for random access
 #### Implementation
 ```py
-from __future__ import annotations
-
 from fakearray import FakeArray
 
 
@@ -556,8 +546,6 @@ def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
 - depth first search
 #### Implementation
 ```py
-from __future__ import annotations
-
 from btnode import Node
 
 
@@ -592,7 +580,6 @@ def post_order[T](root: Node[T] | None = None) -> None:
 - breadth first search
 #### Implementation
 ```py
-from __future__ import annotations
 from queue import Queue
 
 from btnode import Node
@@ -615,7 +602,6 @@ def breadth_first[T](root: Node[T]) -> None:
 - `O(N)`
 #### Implementation
 ```py
-from __future__ import annotations
 from queue import Queue
 
 from btnode import Node
@@ -637,8 +623,6 @@ def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
 - given tree must be sorted
 #### Implementation
 ```py
-from __future__ import annotations
-
 from btnode import Node
 
 
@@ -655,8 +639,6 @@ def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
     - O of height of tree
 - given tree must be sorted
 ```py
-from __future__ import annotations
-
 from btnode import Node
 
 
@@ -677,8 +659,6 @@ def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
 - `O(N)`
 #### Implementation
 ```py
-from __future__ import annotations
-
 from random import choice
 from typing import Literal
 
@@ -769,8 +749,6 @@ def get[T](root: Node[T], path: Path) -> Node[T]:
 - did it!
 #### Implementation
 ```py
-from __future__ import annotations
-
 from queue import Queue
 from typing import Any
 
@@ -991,6 +969,44 @@ def matrix_breadth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list
 
     return bfs
 ```
+### Graph DFS implementation
+#### Using Adjacency list
+```py
+from graph import AdjGraphList, ListVertex
+
+
+def list_depth_first[T: ListVertex](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+    dfs: list[T] = [(vrtx := start if start is not None else sorted(graph.keys())[0])]
+
+    def walk(curr: T) -> None:
+        for edge in graph[curr]:
+            if edge[0] not in dfs:
+                dfs.append(edge[0])
+                walk(edge[0])
+
+    walk(vrtx)
+
+    return dfs
+```
+#### Using Adjacency matrix
+```py
+from graph import AdjGraphMatrix, MatrixVertex
+
+
+def matrix_depth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list[MatrixVertex]:
+    dfs: list[MatrixVertex] = [start]
+
+    def walk(curr: MatrixVertex) -> None:
+        for neighbor, weight in enumerate(graph[curr]):
+            if weight != 0 and neighbor not in dfs:
+                dfs.append(neighbor)
+                walk(neighbor)
+
+    walk(start)
+
+    return dfs
+```
+
 
 ## Modules
 ### Linked list single link node
