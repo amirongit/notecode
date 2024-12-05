@@ -36,8 +36,11 @@ def linear_search[T](array: Iterable[T], value: T) -> bool:
 - given array must be sorted
 #### Implementation
 ```py
+from fuckingperfecttyping import Comparable
+
+
 # cool, but `O(N)`
-def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
+def binary_search[T: Comparable](array: list[T], value: T) -> bool:
     return (
         False if (length := len(array)) == 0 else
         True if (middle_item := array[(middle_index := length // 2)]) == value else
@@ -46,7 +49,7 @@ def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
     )
 
 # boring, but `O(log(N))`
-def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
+def binary_search[T: Comparable](array: list[T], value: T) -> bool:
     fi = 0
     li = len(array)
     while (length := abs(fi - li)) > 0:
@@ -64,7 +67,10 @@ def binary_search[T: (int, float, str)](array: list[T], value: T) -> bool:
 - `O(N^2)`
 #### Implementation
 ```py
-def bubble_sort[T: (int, float, str)](array: list[T]) -> list[T]:
+from fuckingperfecttyping import Comparable
+
+
+def bubble_sort[T: Comparable](array: list[T]) -> list[T]:
     from copy import deepcopy
     array_ = deepcopy(array)
 
@@ -495,7 +501,10 @@ def solve_maze(start: Point, end: Point, maze: list[str]) -> list[Point]:
 - spliting a problem into multiple subproblems
 ### Implementation
 ```py
-def quick_sort[T: (int, float, str)](array: list[T]) -> list[T]:
+from fuckingperfecttyping import Comparable
+
+
+def quick_sort[T: Comparable](array: list[T]) -> list[T]:
     if len(array) <= 1:
         return array
 
@@ -624,9 +633,10 @@ def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
 #### Implementation
 ```py
 from btnode import Node
+from fuckingperfecttyping import Comparable
 
 
-def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
+def binary_search[T: Comparable](tree: Node[T], value: T) -> bool:
     if tree.value == value:
         return True
     elif tree.value > value:
@@ -640,9 +650,10 @@ def binary_search[T: (int, float, str)](tree: Node[T], value: T) -> bool:
 - given tree must be sorted
 ```py
 from btnode import Node
+from fuckingperfecttyping import Comparable
 
 
-def insert[T: (int, float, str)](tree: Node[T], value: T) -> None:
+def insert[T: Comparable](tree: Node[T], value: T) -> None:
     if value <= tree.value:
         if tree.left is None:
             tree.left = Node(value)
@@ -936,10 +947,11 @@ class MaxHeap[T: Comparable](BaseHeap[T]):
 ```py
 from queue import Queue
 
+from fuckingperfecttyping import Comparable
 from graph import AdjGraphList
 
 
-def list_breadth_first[T: (int, float, str)](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+def list_breadth_first[T: Comparable](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
     q: Queue[T] = Queue()
     q.put(vrtx := start if start is not None else sorted(graph.keys())[0])
     bfs: list[T] = [vrtx]
@@ -976,10 +988,11 @@ def matrix_breadth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list
 - `O(V+E)`
 #### Using Adjacency list
 ```py
+from fuckingperfecttyping import Comparable
 from graph import AdjGraphList
 
 
-def list_depth_first[T: (int, float, str)](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+def list_depth_first[T: Comparable](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
     dfs: list[T] = [(vrtx := start if start is not None else sorted(graph.keys())[0])]
 
     def walk(curr: T) -> None:
@@ -1230,10 +1243,13 @@ class BaseHeap[T]:
 ```
 ### Graph
 ```py
+from fuckingperfecttyping import Comparable
+
+
 type Weight = int
 
-type ListEdge[T: (int, float, str)] = tuple[T, Weight]
-type AdjGraphList[T: (int, float, str)] = dict[T, set[ListEdge[T]]]
+type ListEdge[T: Comparable] = tuple[T, Weight]
+type AdjGraphList[T: Comparable] = dict[T, set[ListEdge[T]]]
 
 type MatrixVertex = int
 type AdjGraphMatrix = list[list[Weight]]
