@@ -1017,7 +1017,7 @@ from graph import AdjGraphList
 from heap import MinHeap
 
 
-def list_dijkstra[T: (int, float, str)](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
+def dijkstras_shortest_path[T: (int, float, str)](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
     h: MinHeap[T] = MinHeap(len(graph))
     h.push(start)
     table: dict[T, tuple[T, Weight]] = {start: (start, 0)}
