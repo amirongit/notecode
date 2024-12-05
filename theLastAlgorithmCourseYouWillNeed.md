@@ -929,14 +929,15 @@ class MaxHeap[T: (int, float, str)](BaseHeap[T]):
 - entries are considered as edges
 - applicable to finite graphs
 ### Graph BFS implementation
+- `O(V+E)`
 #### Using Adjacency list
 ```py
 from queue import Queue
 
-from graph import AdjGraphList, ListVertex
+from graph import AdjGraphList
 
 
-def list_breadth_first[T: ListVertex](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+def list_breadth_first[T: (int, float, str)](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
     q: Queue[T] = Queue()
     q.put(vrtx := start if start is not None else sorted(graph.keys())[0])
     bfs: list[T] = [vrtx]
@@ -970,19 +971,20 @@ def matrix_breadth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list
     return bfs
 ```
 ### Graph DFS implementation
+- `O(V+E)`
 #### Using Adjacency list
 ```py
-from graph import AdjGraphList, ListVertex
+from graph import AdjGraphList
 
 
-def list_depth_first[T: ListVertex](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
+def list_depth_first[T: (int, float, str)](graph: AdjGraphList[T], start: T | None = None) -> list[T]:
     dfs: list[T] = [(vrtx := start if start is not None else sorted(graph.keys())[0])]
 
     def walk(curr: T) -> None:
         for edge in graph[curr]:
-            if edge[0] not in dfs:
-                dfs.append(edge[0])
-                walk(edge[0])
+            if (neighbor := edge[0]) not in dfs:
+                dfs.append(neighbor)
+                walk(neighbor)
 
     walk(vrtx)
 
@@ -1005,6 +1007,38 @@ def matrix_depth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list[M
     walk(start)
 
     return dfs
+```
+### Dijkstra's Shortest Path
+- `O(log(V).(V+E))`
+#### Implementation
+```py
+from graph import AdjGraphList
+
+from heap import MinHeap
+
+
+def list_dijkstra[T: (int, float, str)](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
+    h: MinHeap[T] = MinHeap(len(graph))
+    h.push(start)
+    table: dict[T, tuple[T, Weight]] = {start: (start, 0)}
+
+    while not h.empty():
+        for edge in graph[curr := h.pop()]:
+            score = edge[1] + table[curr][1]
+            if (vrtx := edge[0]) not in table:
+                table[vrtx] = (curr, score)
+                h.push(vrtx)
+            elif score < table[vrtx][1]:
+                table[vrtx] = (curr, score)
+
+    path: list[T] = [end, pre := table[end][0]]
+    while True:
+        path.append(pre := table[pre][0])
+        if pre == start:
+            break
+    path.reverse()
+
+    return path
 ```
 
 
@@ -1097,12 +1131,15 @@ class BaseHeap[T]:
         self.array: ArrayList[T] = ArrayList(height_capacity**2)
         self.length = -1
 
+    def empty(self) -> bool:
+        return self.length == -1
+
     def push(self, value: T) -> None:
-        self.array.append(value)
         self.length += 1
+        self.array.insert(self.length, value)
         self.heapify_up(self.length)
 
-    def pop(self) -> T | None:
+    def pop(self) -> T:
         out = self.array[0]
 
         self.array[0] = self.array[self.length]
@@ -1111,7 +1148,7 @@ class BaseHeap[T]:
 
         self.heapify_down(0)
 
-        return out
+        return out  # type: ignore
 
     def heapify_down(self, addr: NodeID) -> None:
         raise NotImplementedError
@@ -1188,9 +1225,8 @@ class BaseHeap[T]:
 ```py
 type Weight = int
 
-type ListVertex = int | float | str
-type ListEdge[T: ListVertex] = tuple[T, Weight]
-type AdjGraphList[T: ListVertex] = dict[T, set[ListEdge[T]]]
+type ListEdge[T: (int, float, str)] = tuple[T, Weight]
+type AdjGraphList[T: (int, float, str)] = dict[T, set[ListEdge[T]]]
 
 type MatrixVertex = int
 type AdjGraphMatrix = list[list[Weight]]
