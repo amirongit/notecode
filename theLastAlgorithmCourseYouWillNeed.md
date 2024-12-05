@@ -809,9 +809,10 @@ def get_height(root: Node[Any] | None, current: int = 0) -> int:
 #### Implementation
 ```py
 from baseheap import BaseHeap, NodeID
+from fuckingperfecttyping import Comparable
 
 
-class MinHeap[T: (int, float, str)](BaseHeap[T]):
+class MinHeap[T: Comparable](BaseHeap[T]):
     def heapify_up(self, addr: NodeID) -> None:
         current, parent = (
             self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr],
@@ -848,9 +849,10 @@ class MinHeap[T: (int, float, str)](BaseHeap[T]):
 #### Implementation
 ```py
 from baseheap import BaseHeap, NodeID
+from fuckingperfecttyping import Comparable
 
 
-class MaxHeap[T: (int, float, str)](BaseHeap[T]):
+class MaxHeap[T: Comparable](BaseHeap[T]):
     def heapify_up(self, addr: NodeID) -> None:
         current, parent = (
             self.array[ci := BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr],
@@ -1012,22 +1014,27 @@ def matrix_depth_first(graph: AdjGraphMatrix, start: MatrixVertex = 0) -> list[M
 - `O(log(V).(V+E))`
 #### Implementation
 ```py
+from fuckingperfecttyping import Comparable
 from graph import AdjGraphList
 
-from heap import MinHeap
+# the time complexity of this implementation is `O(V+E)` because a queue is used instead of a
+# min heap; using a queue, vertices are relaxed in an arbitary order which introduces more
+# update operations on the predecessor table because longer paths could be computed before
+# shorter paths; using a min heap should be such that pushed edges are sorted by their
+# associated weights
 
 
-def dijkstras_shortest_path[T: (int, float, str)](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
-    h: MinHeap[T] = MinHeap(len(graph))
-    h.push(start)
+def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
+    q: Queue[T] = Queue()
+    q.put(start)
     table: dict[T, tuple[T, Weight]] = {start: (start, 0)}
 
-    while not h.empty():
-        for edge in graph[curr := h.pop()]:
+    while not q.empty():
+        for edge in graph[curr := q.get()]:
             score = edge[1] + table[curr][1]
             if (vrtx := edge[0]) not in table:
                 table[vrtx] = (curr, score)
-                h.push(vrtx)
+                q.put(vrtx)
             elif score < table[vrtx][1]:
                 table[vrtx] = (curr, score)
 
@@ -1230,4 +1237,26 @@ type AdjGraphList[T: (int, float, str)] = dict[T, set[ListEdge[T]]]
 
 type MatrixVertex = int
 type AdjGraphMatrix = list[list[Weight]]
+```
+### Fucking perfect typing
+```py
+from abc import abstractmethod
+from typing import Protocol
+
+
+class Comparable(Protocol):
+    @abstractmethod
+    def __eq__(self, other: object, /) -> bool: ...
+
+    @abstractmethod
+    def __lt__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __gt__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __le__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __ge__[T](self: T, other: T, /) -> bool: ...
 ```
