@@ -100,15 +100,17 @@ from lldoublenode import Node
 
 class LinkedList[T]:
     def __init__(self, *values: T) -> None:
+        self.current_loop: Node[T] | None
+
         if len(values) > 0:
             self.head = Node(values[0])
             self.length = 1
 
         if len(values) > 1:
             for index, value in enumerate(values[1:]):
-                self.insert(value, index + 1)
+                self.insert(index + 1, value)
 
-    def insert(self, value: T, index: int) -> None:
+    def insert(self, index: int, value: T) -> None:
         if index == 0:
             next_ = self.get_node(index)
             next_.prev = Node(value, next=next_)
@@ -140,13 +142,13 @@ class LinkedList[T]:
             prev.next = next_
 
         if index == 0:
-            self.head = next_
+            self.head = next_  # type: ignore
 
         node.next = None
         node.prev = None
         self.length -= 1
 
-    def _get_node(self, index: int) -> Node[T]:
+    def get_node(self, index: int) -> Node[T]:
         if len(self) == 0 or self.head is None:
             raise IndexError
 
@@ -155,7 +157,6 @@ class LinkedList[T]:
 
         node = self.head
         counter = 0
-
         while counter < index:
             if node.next is None:
                 raise IndexError
@@ -184,7 +185,7 @@ class LinkedList[T]:
         return holder.value
 
     def __str__(self) -> str:
-        return '<->'.join((str(n) for n in self))
+        return f"""[{"<->".join((str(n) for n in self))}]"""
 ```
 ### Queue data structure
 - FIFO linked list without traversing
@@ -316,17 +317,20 @@ class Stack[T]:
     - it's considered to be `O(1)` due to something called amortized analysis!
 #### Implementation
 ```py
+from __future__ import annotations
+
 from fakearray import FakeArray
 
 
 class ArrayList[T]:
     def __init__(self, capacity: int) -> None:
+        self.current_loop: int
         self.capacity = capacity
         self.length = 0
         self.inner: FakeArray[T] = FakeArray(capacity)
 
     def append(self, value: T) -> None:
-        if self.length - 1 == self.capacity:
+        if self.length == self.capacity:
             self.extend_array()
 
         self.inner[self.length] = value
@@ -336,15 +340,15 @@ class ArrayList[T]:
         if self.length - 1 == self.capacity:
             self.extend_array()
 
-        self.inner = ArrayList.shift_right(self.inner)
+        ArrayList.shift_right(self.inner)
         self.inner[0] = value
         self.length += 1
 
     def insert(self, index: int, value: T) -> None:
-        if self.length - 1 == self.capacity:
+        while index > self.capacity:
             self.extend_array()
 
-        self.inner = ArrayList.shift_right(self.inner, index)
+        ArrayList.shift_right(self.inner, index)
         self.inner[index] = value
         self.length += 1
 
@@ -356,28 +360,38 @@ class ArrayList[T]:
         self.inner = new
 
     @staticmethod
-    def shift_right[TA](array: FakeArray[TA], offset: int = 0) -> FakeArray[TA]:
-        new: FakeArray[TA] = FakeArray(array.length)
+    def shift_right[TA](array: FakeArray[TA], offset: int = 0) -> None:
+        before = array[offset]
+        array[offset] = None
+        for i in range(offset + 1, array.length):
+            before, array[i] = array[i], before
 
-        if len(keys := array.inner.keys()) == 0:
-            return new
+    def __iter__(self) -> ArrayList[T]:
+        self.current_loop = 0
+        return self
 
-        for i in range(offset):
-            new[i] = array[i]
-
-        for i in range(max(keys), offset - 1, -1):
-            new[i + 1] = array[i]
-
-        return new
+    def __next__(self) -> T | None:
+        try:
+            val = self.inner[self.current_loop]
+            self.current_loop += 1
+            return val
+        except IndexError as e:
+            raise StopIteration from e
 
     def __getitem__(self, index: int) -> T | None:
         return self.inner[index]
 
     def __setitem__(self, index: int, value: T | None) -> None:
+        if index > self.length:
+            raise IndexError
+
         self.inner[index] = value
 
     def __len__(self) -> int:
         return self.length
+
+    def __str__(self) -> str:
+        return f"""[{",".join(str(e) for e in self)}]"""
 ```
 ### Array buffer
 - fixed size queue implemented on arrays
@@ -1035,6 +1049,8 @@ from graph import AdjGraphList
 # update operations on the predecessor table because longer paths could be computed before
 # shorter paths; using a min heap should be such that pushed edges are sorted by their
 # associated weights
+# although `O(V+E)` is faster than `O(log(V).(V+E))`, the latter is the time complexity of the
+# correct implementation; I have no idea why
 
 
 def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end: T) -> list[T]:
@@ -1060,6 +1076,7 @@ def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end
 
     return path
 ```
+## Maps & LRU
 
 
 ## Modules
@@ -1103,20 +1120,21 @@ from __future__ import annotations
 
 class FakeArray[T]:
     def __init__(self, length: int) -> None:
-        if length < 0:
+        if length < 1:
             raise ValueError
 
         self.inner: dict[int, T | None] = {}
         self.length = length
+        self.current_loop: int
 
     def __getitem__(self, index: int) -> T | None:
-        if index > self.length:
+        if index > self.length - 1:
             raise IndexError
 
         return self.inner.get(index)
 
     def __setitem__(self, index: int, item: T | None) -> None:
-        if index > self.length or index < 0:
+        if index > self.length - 1 or index < 0:
             raise IndexError
 
         self.inner[index] = item
@@ -1130,149 +1148,10 @@ class FakeArray[T]:
             val = self[self.current_loop]
             self.current_loop += 1
             return val
-        except IndexError:
-            raise StopIteration
-```
-### Base heap
-```py
-from typing import Literal
+        except IndexError as e:
+            raise StopIteration from e
 
-from arraylist import ArrayList
-from btnode import Node
+    def __str__(self) -> str:
+        return f"""[{",".join(str(e) for e in self)}]"""
 
-type Direction = Literal["l"] | Literal["r"] | Literal["u"]
-type Path = tuple[Direction, ...]
-type NodeID = Path | int
-type NodeIDPair[T] = tuple[T | None, int]
-
-
-class BaseHeap[T]:
-    def __init__(self, height_capacity: int) -> None:
-        self.array: ArrayList[T] = ArrayList(height_capacity**2)
-        self.length = -1
-
-    def empty(self) -> bool:
-        return self.length == -1
-
-    def push(self, value: T) -> None:
-        self.length += 1
-        self.array.insert(self.length, value)
-        self.heapify_up(self.length)
-
-    def pop(self) -> T:
-        out = self.array[0]
-
-        self.array[0] = self.array[self.length]
-        self.array[self.length] = None
-        self.length -= 1
-
-        self.heapify_down(0)
-
-        return out  # type: ignore
-
-    def heapify_down(self, addr: NodeID) -> None:
-        raise NotImplementedError
-
-    def heapify_up(self, addr: NodeID) -> None:
-        raise NotImplementedError
-
-    def get_children(self, addr: NodeID) -> tuple[NodeIDPair[T], NodeIDPair[T]]:
-        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
-        li, ri = BaseHeap.get_left(index), BaseHeap.get_right(index)
-
-        try:
-            right = self.array[ri]
-        except IndexError:
-            right = None
-
-        try:
-            left = self.array[li]
-        except IndexError:
-            left = None
-
-        return ((left, li), (right, ri))
-
-    def to_btnode(self, index: int = 0) -> Node[T] | None:
-        if (val := self.array[index]) is None:
-            return None
-        else:
-            node = Node(val)
-
-        try:
-            if self.array[left := BaseHeap.get_left(index)] is not None:
-                node.left = self.to_btnode(left)
-        except IndexError:
-            pass
-
-        try:
-            if self.array[right := BaseHeap.get_right(index)] is not None:
-                node.right = self.to_btnode(right)
-        except IndexError:
-            pass
-
-        return node
-
-    def __getitem__(self, path: Path) -> T | None:
-        try:
-            return self.array[BaseHeap.resolve(path)]
-        except IndexError:
-            return None
-
-    @staticmethod
-    def resolve(path: Path) -> int:
-        needle = 0
-        for dir_ in path:
-            needle = (
-                BaseHeap.get_left(needle)
-                if dir_ == "l"
-                else BaseHeap.get_right(needle) if dir_ == "r" else BaseHeap.get_up(needle)
-            )
-        return needle
-
-    @staticmethod
-    def get_right(index: int) -> int:
-        return index * 2 + 2
-
-    @staticmethod
-    def get_left(index: int) -> int:
-        return index * 2 + 1
-
-    @staticmethod
-    def get_up(index: int) -> int:
-        return (index - 1) // 2
-```
-### Graph
-```py
-from fuckingperfecttyping import Comparable
-
-
-type Weight = int
-
-type ListEdge[T: Comparable] = tuple[T, Weight]
-type AdjGraphList[T: Comparable] = dict[T, set[ListEdge[T]]]
-
-type MatrixVertex = int
-type AdjGraphMatrix = list[list[Weight]]
-```
-### Fucking perfect typing
-```py
-from abc import abstractmethod
-from typing import Protocol
-
-
-class Comparable(Protocol):
-    @abstractmethod
-    def __eq__(self, other: object, /) -> bool: ...
-
-    @abstractmethod
-    def __lt__[T](self: T, other: T, /) -> bool: ...
-
-    @abstractmethod
-    def __gt__[T](self: T, other: T, /) -> bool: ...
-
-    @abstractmethod
-    def __le__[T](self: T, other: T, /) -> bool: ...
-
-    @abstractmethod
-    def __ge__[T](self: T, other: T, /) -> bool: ...
 ```
