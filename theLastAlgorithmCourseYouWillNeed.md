@@ -108,6 +108,8 @@ class Node[T]:
 class LinkedList[T]:
     def __init__(self, *values: T) -> None:
         self.current_loop: Node[T] | None
+        self.length = 0
+        self.head: Node[T] | None = None
 
         if len(values) > 0:
             self.head = Node(values[0])
@@ -119,9 +121,12 @@ class LinkedList[T]:
 
     def insert(self, index: int, value: T) -> None:
         if index == 0:
-            next_ = self.get_node(index)
-            next_.prev = Node(value, next=next_)
-            self.head = next_.prev
+            if self.length == 0:
+                self.head = Node(value)
+            else:
+                next_ = self.get_node(index)
+                next_.prev = Node(value, next=next_)
+                self.head = next_.prev
         elif index == len(self):
             prev = self.get_node(index - 1)
             prev.next = Node(value, previous=prev)
@@ -135,9 +140,6 @@ class LinkedList[T]:
         self.length += 1
 
     def delete(self, index: int) -> None:
-        if index == 0 and len(self) == 1:
-            raise ValueError
-
         node = self.get_node(index)
         next_ = node.next
         prev = node.prev
@@ -373,7 +375,7 @@ class ArrayList[T]:
         self.inner = new
 
     @staticmethod
-    def shift_right[TA](array: FakeArray[TA], offset: int = 0) -> None:
+    def shift_right(array: FakeArray[T], offset: int = 0) -> None:
         before = array[offset]
         array[offset] = None
         for i in range(offset + 1, array.length):
@@ -398,7 +400,13 @@ class ArrayList[T]:
         if index > self.length:
             raise IndexError
 
+        if index == self.capacity:
+            self.extend_array()
+
         self.inner[index] = value
+
+        if index == self.length:
+            self.length += 1
 
     def __len__(self) -> int:
         return self.length
@@ -1216,6 +1224,84 @@ def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end
     path.reverse()
 
     return path
+```
+## Maps & LRU
+### Maps
+- datastructure that stores set of key, value pairs inside buckets
+- `O(1)` to `O(N)` for assignment, deletion & random access
+#### Key
+- hsahble value
+#### Load factor
+- amount of data divided by storage capacity
+#### Bucket
+- collection of key, value pairs associated with the same hash
+#### Implementation
+```py
+from typing import Hashable
+
+from fakearray import FakeArray
+from linkedlist import LinkedList
+
+type MapEntry[K: Hashable, V] = tuple[K, V]
+type MapBucket[K: Hashable, V] = LinkedList[MapEntry[K, V]]
+
+
+class Map[K: Hashable, V]:
+    def __init__(self, initial_capacity: int = 16) -> None:
+        self.capacity = initial_capacity
+        self.length = 0
+        self.bucket_arr: FakeArray[MapBucket[K, V]] = FakeArray(self.capacity)
+        for index in range(self.capacity):
+            self.bucket_arr[index] = LinkedList()
+
+    @property
+    def load_factor(self) -> float:
+        return len(self) / self.capacity
+
+    def __getitem__(self, key: K) -> V:
+        for entry in self.bucket_arr[self.get_bucket_index(key)]:  # type: ignore
+            if entry[0] == key:
+                return entry[1]
+        raise KeyError
+
+    def __setitem__(self, key: K, value: V) -> None:
+        if self.load_factor >= 0.75:
+            self.extend_array()
+
+        if not Map.remove_entry(bucket := self.bucket_arr[self.get_bucket_index(key)], key):  # type: ignore
+            self.length += 1
+        bucket.insert(len(bucket), (key, value))  # type: ignore
+
+    def __delitem__(self, key: K) -> None:
+        if Map.remove_entry(self.bucket_arr[self.get_bucket_index(key)], key):  # type: ignore
+            self.length -= 1
+        else:
+            raise KeyError
+
+    def __len__(self) -> int:
+        return self.length
+
+    def get_bucket_index(self, key: K) -> int:
+        return abs(hash(key)) % self.capacity
+
+    def extend_array(self) -> None:
+        old_arr = self.bucket_arr
+        self.capacity *= 2
+        self.bucket_arr = FakeArray(self.capacity)
+        for index in range(self.capacity):
+            self.bucket_arr[index] = LinkedList()
+        for bucket in old_arr:
+            for entry in bucket:  # type: ignore
+                curr_buck: MapBucket[K, V] = self.bucket_arr[self.get_bucket_index(entry[0])]  # type: ignore
+                curr_buck.insert(len(curr_buck), entry)
+
+    @staticmethod
+    def remove_entry(bucket: MapBucket[K, V], key: K) -> bool:
+        for index, entry in enumerate(bucket):
+            if entry[0] == key:
+                bucket.delete(index)
+                return True
+        return False
 ```
 
 ## Modules
