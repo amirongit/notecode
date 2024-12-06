@@ -94,9 +94,16 @@ def bubble_sort[T: Comparable](array: list[T]) -> list[T]:
 - each container points to its next container only
 #### Doubly linked list
 - each container points to its next & previous containers
-#### Implementation
+##### Implementation
 ```py
-from lldoublenode import Node
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
+        self.value = value
+        self.next = next
+        self.prev = previous
 
 class LinkedList[T]:
     def __init__(self, *values: T) -> None:
@@ -195,7 +202,7 @@ class LinkedList[T]:
 - what goes first, comes out first
 #### Implementation
 ```py
-from lldoublenode import Node
+from doublylinkedlist import Node
 
 
 class Queue[T]:
@@ -275,7 +282,13 @@ class Queue[T]:
 - what goes first, comes out last
 #### Implementation
 ```py
-from llsinglenode import Node
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, previous: Node[T] | None = None) -> None:
+        self.value = value
+        self.prev = previous
 
 
 class Stack[T]:
@@ -569,7 +582,14 @@ def quick_sort[T: Comparable](array: list[T]) -> list[T]:
 - depth first search
 #### Implementation
 ```py
-from btnode import Node
+from __future__ import annotations
+
+
+class Node[T]:
+    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
+        self.value = value
+        self.left = left
+        self.right = right
 
 
 def pre_order[T](root: Node[T] | None = None) -> None:
@@ -605,7 +625,7 @@ def post_order[T](root: Node[T] | None = None) -> None:
 ```py
 from queue import Queue
 
-from btnode import Node
+from btree import Node
 
 
 def breadth_first[T](root: Node[T]) -> None:
@@ -627,7 +647,7 @@ def breadth_first[T](root: Node[T]) -> None:
 ```py
 from queue import Queue
 
-from btnode import Node
+from btree import Node
 
 
 def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
@@ -646,7 +666,7 @@ def compare[T](first: Node[T] | None, second: Node[T] | None) -> bool:
 - given tree must be sorted
 #### Implementation
 ```py
-from btnode import Node
+from btree import Node
 from fuckingperfecttyping import Comparable
 
 
@@ -663,7 +683,7 @@ def binary_search[T: Comparable](tree: Node[T], value: T) -> bool:
     - O of height of tree
 - given tree must be sorted
 ```py
-from btnode import Node
+from btree import Node
 from fuckingperfecttyping import Comparable
 
 
@@ -687,7 +707,7 @@ def insert[T: Comparable](tree: Node[T], value: T) -> None:
 from random import choice
 from typing import Literal
 
-from btnode import Node
+from btree import Node
 
 type Path = tuple[Literal["l"] | Literal["r"], ...]
 
@@ -777,7 +797,7 @@ def get[T](root: Node[T], path: Path) -> Node[T]:
 from queue import Queue
 from typing import Any
 
-from btnode import Node
+from btree import Node
 
 type Coordinate = tuple[int, int]
 
@@ -826,12 +846,120 @@ def get_height(root: Node[Any] | None, current: int = 0) -> int:
 ```
 ## Heap
 - representing a tree like structure by abstracting a weakly sorted array
+### Implementation
+```py
+from typing import Literal
+
+from arraylist import ArrayList
+from btree import Node
+
+type Direction = Literal["l"] | Literal["r"] | Literal["u"]
+type Path = tuple[Direction, ...]
+type NodeID = Path | int
+type NodeIDPair[T] = tuple[T | None, int]
+
+
+class BaseHeap[T]:
+    def __init__(self, height_capacity: int) -> None:
+        self.array: ArrayList[T] = ArrayList(height_capacity**2)
+        self.length = -1
+
+    def empty(self) -> bool:
+        return self.length == -1
+
+    def push(self, value: T) -> None:
+        self.length += 1
+        self.array.insert(self.length, value)
+        self.heapify_up(self.length)
+
+    def pop(self) -> T:
+        out = self.array[0]
+
+        self.array[0] = self.array[self.length]
+        self.array[self.length] = None
+        self.length -= 1
+
+        self.heapify_down(0)
+
+        return out  # type: ignore
+
+    def heapify_down(self, addr: NodeID) -> None:
+        raise NotImplementedError
+
+    def heapify_up(self, addr: NodeID) -> None:
+        raise NotImplementedError
+
+    def get_children(self, addr: NodeID) -> tuple[NodeIDPair[T], NodeIDPair[T]]:
+        index = BaseHeap.resolve(addr) if isinstance(addr, tuple) else addr
+        li, ri = BaseHeap.get_left(index), BaseHeap.get_right(index)
+
+        try:
+            right = self.array[ri]
+        except IndexError:
+            right = None
+
+        try:
+            left = self.array[li]
+        except IndexError:
+            left = None
+
+        return ((left, li), (right, ri))
+
+    def to_btnode(self, index: int = 0) -> Node[T] | None:
+        if (val := self.array[index]) is None:
+            return None
+        else:
+            node = Node(val)
+
+        try:
+            if self.array[left := BaseHeap.get_left(index)] is not None:
+                node.left = self.to_btnode(left)
+        except IndexError:
+            pass
+
+        try:
+            if self.array[right := BaseHeap.get_right(index)] is not None:
+                node.right = self.to_btnode(right)
+        except IndexError:
+            pass
+
+        return node
+
+    def __getitem__(self, path: Path) -> T | None:
+        try:
+            return self.array[BaseHeap.resolve(path)]
+        except IndexError:
+            return None
+
+    @staticmethod
+    def resolve(path: Path) -> int:
+        needle = 0
+        for dir_ in path:
+            needle = (
+                BaseHeap.get_left(needle)
+                if dir_ == "l"
+                else BaseHeap.get_right(needle) if dir_ == "r" else BaseHeap.get_up(needle)
+            )
+        return needle
+
+    @staticmethod
+    def get_right(index: int) -> int:
+        return index * 2 + 2
+
+    @staticmethod
+    def get_left(index: int) -> int:
+        return index * 2 + 1
+
+    @staticmethod
+    def get_up(index: int) -> int:
+        return (index - 1) // 2
+```
 ### Heapify
 - swapping a heap element with other elements to make the tree conditions true
 - `O(log(N))`
-### Min heap
+#### Min heap
 - every parent is less than or equal to its childrend
-#### Implementation
+##### Implementation
 ```py
 from baseheap import BaseHeap, NodeID
 from fuckingperfecttyping import Comparable
@@ -869,9 +997,9 @@ class MinHeap[T: Comparable](BaseHeap[T]):
             gleft = current is not None and left is not None and left < current
             gright = current is not None and right is not None and right < current
 ```
-### Max heap
+#### Max heap
 - every parent is greater than or equal to its childrend
-#### Implementation
+##### Implementation
 ```py
 from baseheap import BaseHeap, NodeID
 from fuckingperfecttyping import Comparable
@@ -955,6 +1083,19 @@ class MaxHeap[T: Comparable](BaseHeap[T]):
 - 2d matrix with rows & columns corresponding to each vertex
 - entries are considered as edges
 - applicable to finite graphs
+##### Implementation
+```py
+from fuckingperfecttyping import Comparable
+
+
+type Weight = int
+
+type ListEdge[T: Comparable] = tuple[T, Weight]
+type AdjGraphList[T: Comparable] = dict[T, set[ListEdge[T]]]
+
+type MatrixVertex = int
+type AdjGraphMatrix = list[list[Weight]]
+```
 ### Graph BFS implementation
 - `O(V+E)`
 #### Using Adjacency list
@@ -1076,43 +1217,8 @@ def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end
 
     return path
 ```
-## Maps & LRU
-
 
 ## Modules
-### Linked list single link node
-```py
-from __future__ import annotations
-
-
-class Node[T]:
-    def __init__(self, value: T, *, previous: Node[T] | None = None) -> None:
-        self.value = value
-        self.prev = previous
-```
-### Linked list double link node
-```py
-from __future__ import annotations
-
-
-class Node[T]:
-    def __init__(self, value: T, *, previous: Node[T] | None = None, next: Node[T] | None = None) -> None:
-        self.value = value
-        self.next = next
-        self.prev = previous
-```
-### Binary tree node
-```py
-from __future__ import annotations
-
-
-class Node[T]:
-    def __init__(self, value: T, *, left: Node[T] | None = None, right: Node[T] | None = None) -> None:
-        self.value = value
-        self.left = left
-        self.right = right
-
-```
 ### Fake array
 ```py
 from __future__ import annotations
@@ -1153,5 +1259,26 @@ class FakeArray[T]:
 
     def __str__(self) -> str:
         return f"""[{",".join(str(e) for e in self)}]"""
+```
+### Fucking perfect typing
+```py
+from abc import abstractmethod
+from typing import Protocol
 
+
+class Comparable(Protocol):
+    @abstractmethod
+    def __eq__(self, other: object, /) -> bool: ...
+
+    @abstractmethod
+    def __lt__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __gt__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __le__[T](self: T, other: T, /) -> bool: ...
+
+    @abstractmethod
+    def __ge__[T](self: T, other: T, /) -> bool: ...
 ```
