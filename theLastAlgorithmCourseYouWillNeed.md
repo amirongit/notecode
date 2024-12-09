@@ -1348,7 +1348,7 @@ class LRUCache[**T_i, T_o]:
         self.val_map: HashMap[Tag, Node[DataUnit[T_o]]] = HashMap()
         self.val_lst: LinkedList[DataUnit[T_o]] = LinkedList()
         self.func = func
-        self.capacity: int = 16
+        self.capacity = 16
 
     def set_head(self, cache: Node[DataUnit[T_o]]) -> None:
         if (former_head := self.val_lst.head) is None:
