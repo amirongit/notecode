@@ -110,76 +110,71 @@ class LinkedList[T]:
         self.current_loop: Node[T] | None
         self.length = 0
         self.head: Node[T] | None = None
-
-        if len(values) > 0:
-            self.head = Node(values[0])
-            self.length = 1
-
-        if len(values) > 1:
-            for index, value in enumerate(values[1:]):
-                self.insert(index + 1, value)
+        self.tail: Node[T] | None = None
+        for index, value in enumerate(values):
+            self.insert(index, value)
 
     def insert(self, index: int, value: T) -> None:
         if index == 0:
             if self.length == 0:
                 self.head = Node(value)
+                self.tail = self.head
             else:
-                next_ = self.get_node(index)
+                next_ = self.traverse(index)
                 next_.prev = Node(value, next=next_)
                 self.head = next_.prev
-        elif index == len(self):
-            prev = self.get_node(index - 1)
+        elif index == self.length:
+            prev = cast(Node[T], self.tail)
             prev.next = Node(value, previous=prev)
+            self.tail = prev.next
         else:
-            next_ = self.get_node(index)
-            prev = self.get_node(index - 1)
+            next_ = self.traverse(index)
+            prev = self.traverse(index - 1)
             current = Node(value, previous=prev, next=next_)
             next_.prev = current
             prev.next = current
-
         self.length += 1
 
     def delete(self, index: int) -> None:
-        node = self.get_node(index)
+        node = self.traverse(index)
         next_ = node.next
         prev = node.prev
-
         if next_ is not None:
             next_.prev = prev
-
         if prev is not None:
             prev.next = next_
-
         if index == 0:
-            self.head = next_  # type: ignore
-
+            self.head = next_
+        if index == self.length - 1:
+            self.tail = prev
         node.next = None
         node.prev = None
         self.length -= 1
 
-    def get_node(self, index: int) -> Node[T]:
-        if len(self) == 0 or self.head is None:
+    def traverse(self, index: int) -> Node[T]:
+        if self.length == 0 or self.head is None or self.tail is None:
             raise IndexError
-
-        if index == 0:
-            return self.head
-
-        node = self.head
+        if index == self.length - 1:
+            return self.tail
         counter = 0
-        while counter < index:
-            if node.next is None:
-                raise IndexError
-
-            node = node.next
-            counter += 1
-
+        if index >= 0:
+            node = self.head
+            while counter < index:
+                if node.next is None:
+                    raise IndexError
+                node = node.next
+                counter += 1
+        else:
+            node = self.tail
+            while counter < abs(index + 1):
+                if node.prev is None:
+                    raise IndexError
+                node = node.prev
+                counter += 1
         return node
 
     def __getitem__(self, index: int) -> T:
-        return self.get_node(index).value
-
-    def __len__(self) -> int:
-        return self.length
+        return self.traverse(index).value
 
     def __iter__(self) -> LinkedList[T]:
         self.current_loop = self.head
@@ -188,13 +183,14 @@ class LinkedList[T]:
     def __next__(self) -> T:
         if (holder := self.current_loop) is None:
             raise StopIteration
-
         self.current_loop = holder.next
-
         return holder.value
 
     def __str__(self) -> str:
         return f"""[{"<->".join((str(n) for n in self))}]"""
+
+    def __repr__(self) -> str:
+        return str(self)
 ```
 ### Queue data structure
 - FIFO linked list without traversing
@@ -413,6 +409,9 @@ class ArrayList[T]:
 
     def __str__(self) -> str:
         return f"""[{",".join(str(e) for e in self)}]"""
+
+    def __repr__(self) -> str:
+        return str(self)
 ```
 ### Array buffer
 - fixed size queue implemented on arrays
@@ -1237,7 +1236,7 @@ def dijkstras_shortest_path[T: Comparable](graph: AdjGraphList[T], start: T, end
 - collection of key, value pairs associated with the same hash
 #### Implementation
 ```py
-from typing import Hashable
+from typing import Hashable, cast
 
 from fakearray import FakeArray
 from linkedlist import LinkedList
@@ -1246,7 +1245,7 @@ type MapEntry[K: Hashable, V] = tuple[K, V]
 type MapBucket[K: Hashable, V] = LinkedList[MapEntry[K, V]]
 
 
-class Map[K: Hashable, V]:
+class HashMap[K: Hashable, V]:
     def __init__(self, initial_capacity: int = 16) -> None:
         self.capacity = initial_capacity
         self.length = 0
@@ -1258,22 +1257,35 @@ class Map[K: Hashable, V]:
     def load_factor(self) -> float:
         return len(self) / self.capacity
 
+    def get[DV](self, key: K, default: DV) -> V | DV:
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def __contains__(self, key: K) -> bool:
+        try:
+            _ = self[key]
+            return True
+        except KeyError:
+            return False
+
     def __getitem__(self, key: K) -> V:
-        for entry in self.bucket_arr[self.get_bucket_index(key)]:  # type: ignore
+        for entry in cast(MapBucket[K, V], self.bucket_arr[self.get_bucket_index(key)]):
             if entry[0] == key:
                 return entry[1]
         raise KeyError
 
     def __setitem__(self, key: K, value: V) -> None:
-        if self.load_factor >= 0.75:
+        if self.load_factor >= 1.0:
             self.extend_array()
 
-        if not Map.remove_entry(bucket := self.bucket_arr[self.get_bucket_index(key)], key):  # type: ignore
+        if not HashMap.remove_entry(bucket := cast(MapBucket[K, V], self.bucket_arr[self.get_bucket_index(key)]), key):
             self.length += 1
-        bucket.insert(len(bucket), (key, value))  # type: ignore
+        bucket.insert(bucket.length, (key, value))
 
     def __delitem__(self, key: K) -> None:
-        if Map.remove_entry(self.bucket_arr[self.get_bucket_index(key)], key):  # type: ignore
+        if HashMap.remove_entry(cast(MapBucket[K, V], self.bucket_arr[self.get_bucket_index(key)]), key):
             self.length -= 1
         else:
             raise KeyError
@@ -1291,9 +1303,9 @@ class Map[K: Hashable, V]:
         for index in range(self.capacity):
             self.bucket_arr[index] = LinkedList()
         for bucket in old_arr:
-            for entry in bucket:  # type: ignore
-                curr_buck: MapBucket[K, V] = self.bucket_arr[self.get_bucket_index(entry[0])]  # type: ignore
-                curr_buck.insert(len(curr_buck), entry)
+            for entry in cast(MapBucket[K, V], bucket):
+                curr_buck = cast(MapBucket[K, V], self.bucket_arr[self.get_bucket_index(entry[0])])
+                curr_buck.insert(curr_buck.length, entry)
 
     @staticmethod
     def remove_entry(bucket: MapBucket[K, V], key: K) -> bool:
@@ -1302,6 +1314,74 @@ class Map[K: Hashable, V]:
                 bucket.delete(index)
                 return True
         return False
+
+    def __str__(self) -> str:
+        pairs: list[str] = []
+        for bucket in self.bucket_arr:
+            for entry in cast(MapBucket[K, V], bucket):
+                pairs.append(f"{str(entry[0])}: {str(entry[1])}")
+
+        return "{" + ", ".join(pairs) + "}"
+
+    def __repr__(self) -> str:
+        return str(self)
+```
+### LRU cache
+- least recently used
+- caching mechanism which evicts the least recently used item
+- `O(1)` for caching & reading from cache
+### Implementation
+```py
+from __future__ import annotations
+
+from typing import Callable, cast
+
+from hashmap import HashMap
+from linkedlist import LinkedList, Node
+
+type Tag = str
+type DataUnit[T] = tuple[Tag, T]
+
+
+class LRUCache[**T_i, T_o]:
+    def __init__(self, func: Callable[T_i, T_o]) -> None:
+        self.val_map: HashMap[Tag, Node[DataUnit[T_o]]] = HashMap()
+        self.val_lst: LinkedList[DataUnit[T_o]] = LinkedList()
+        self.func = func
+        self.capacity: int = 16
+
+    def set_head(self, cache: Node[DataUnit[T_o]]) -> None:
+        if (former_head := self.val_lst.head) is None:
+            raise RuntimeError
+        elif cache.prev is None:
+            return
+
+        cache.prev.next = cache.next
+
+        if cache.next is not None:
+            cache.next.prev = cache.prev
+        else:
+            self.val_lst.tail = cache.prev
+
+        cache.prev = None
+        cache.next = former_head
+        former_head.prev = cache
+        self.val_lst.head = cache
+
+    def get_tag(self, *args: T_i.args, **kwargs: T_i.kwargs) -> Tag:
+        return f"{args}{tuple(sorted(kwargs.items()))}"
+
+    def __call__(self, *args: T_i.args, **kwargs: T_i.kwargs) -> T_o:
+        if (cache := self.val_map.get(tag := self.get_tag(*args, **kwargs), None)) is not None:
+            self.set_head(cache)
+            return cache.value[1]
+        else:
+            self.val_lst.insert(0, (tag, res := self.func(*args, **kwargs)))
+            self.val_map[tag] = cast(Node[DataUnit[T_o]], self.val_lst.head)
+            if self.val_lst.length > self.capacity:
+                del self.val_map[cast(Node[DataUnit[T_o]], self.val_lst.tail).value[0]]
+                self.val_lst.delete(self.val_lst.length - 1)
+            return res
 ```
 
 ## Modules
@@ -1345,6 +1425,9 @@ class FakeArray[T]:
 
     def __str__(self) -> str:
         return f"""[{",".join(str(e) for e in self)}]"""
+
+    def __repr__(self) -> str:
+        return str(self)
 ```
 ### Fucking perfect typing
 ```py
