@@ -716,15 +716,15 @@ from typing import Literal
 
 from btree import Node
 
-type Path = tuple[Literal["l"] | Literal["r"], ...]
+type Path = tuple[Direction, ...]
+type Direction = Literal["l"] | Literal["r"]
 
 
 def delete[T](root: Node[T], path: Path) -> None:
     if len(path) < 1:
         raise RuntimeError
 
-    target = get(root, path)
-    parent = get(root, path[:-1])
+    target = get(parent := get(root, path[:-1]), (path[-1],))
     last_dir = path[-1]
 
     if target.right is None or target.left is None:
@@ -835,11 +835,15 @@ def get_coordinates[T](root: Node[T]) -> set[tuple[T, Coordinate]]:
         node = q.get()
         coordinates.add((node[0].value, node[1]))
 
-        if (left := node[0].left) is not None:
-            q.put((left, (node[1][0] + (2 ** (get_height(node[0].left) - 1)), node[1][1] - 1)))
+        left_height = 2 ** (get_height(left) - 1) if (left := node[0].left) is not None else 0
+        right_height = 2 ** (get_height(right) - 1) if (right := node[0].right) is not None else 0
+        height = max(left_height, right_height)
 
-        if (right := node[0].right) is not None:
-            q.put((right, (node[1][0] - (2 ** (get_height(node[0].right) - 1)), node[1][1] - 1)))
+        if left is not None:
+            q.put((left, (node[1][0] + height, node[1][1] - 1)))
+
+        if right is not None:
+            q.put((right, (node[1][0] - height, node[1][1] - 1)))
 
     return coordinates
 
