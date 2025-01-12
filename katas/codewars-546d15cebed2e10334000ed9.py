@@ -1,6 +1,6 @@
 def solve_runes(runes: str) -> int:
 
-    from re import search, findall, match
+    from re import findall, match, search
     from string import digits
 
     opr = runes[(fe := search(r'^-?[\d,?]+', runes).end()):fe + 1] # type: ignore
