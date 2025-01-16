@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from itertools import groupby
 from typing import NamedTuple, cast
 
 
