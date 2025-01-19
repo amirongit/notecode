@@ -1,11 +1,9 @@
 def dbl_linear(n: int) -> int:
-    yfunc = lambda x: 2 * x + 1
-    zfunc = lambda x: 3 * x + 1
 
     seq = [1]
 
     for i in range(n * 5):
-        seq.append(yfunc(seq[i]))
-        seq.append(zfunc(seq[i]))
+        seq.append(2 * seq[i] + 1)
+        seq.append(3 * seq[i] + 1)
 
     return sorted(set(seq))[n]
