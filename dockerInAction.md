@@ -1,15 +1,11 @@
 # Docker In Action
-
 ## Welcome to docker
-
 - jails
 - containers
 - the difference between containers and virtualization
 - docker's role
 - user vs kernel space memory
-
 ## Running software in containers
-
 - detatched containers
 - interactive containers
 - daemons or services
@@ -30,9 +26,7 @@
 - entrypoint scripts
 - removing containers
 - inspecting metadata of docker entities
-
 ## Software installation simplified
-
 - images
 - repositories
 - tags
@@ -43,9 +37,7 @@
 - layers
 - UFS
 - chroot
-
 ## working with storage and volumes
-
 - MNT namespaces
 - bind mounts
 - in memory storage
@@ -54,9 +46,7 @@
 - sharing bind mounts and volumes between containers
 - anonymous voluems
 - copying volumes directly and transitively
-
 ## Single host networking
-
 - default docker networks
 - network scopes
 - creating networks
@@ -67,9 +57,7 @@
 - bridge network driver
 - port publishing
 - adding custom hosts to /etc/hosts file in containers
-
 ## Limiting risk with resource controls
-
 - default resource restrictions for docker containers
 - restrincting memory usage
 - memory reservation vs protection
@@ -83,9 +71,7 @@
 - user id spaces
 - adding and dropping linux capabilities from containers
 - priviledged containers
-
 ## Packaging software in images
-
 - the path way of creating an image from a container
 - reviewing filesystem changes on a container
 - image attributes
@@ -96,9 +82,7 @@
 - examining layers of an image
 - exporting flat filesystems
 - importing flat filesystems
-
 ## Building images automatically with Dockerfiles
-
 - dockerfiles
 - building images from dockerfiles
 - the special empty repository/image
@@ -113,9 +97,7 @@
 - multistage dockerfiles
 - healthchecks
 - appropriate way and time to set the default user
-
 ## Image piplines
-
 - all in one pattern
 - build plus runtime pattern
 - build plus multiple runtimes
