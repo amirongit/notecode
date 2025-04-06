@@ -16,7 +16,7 @@ the degree to which data matches the given query
 ### Full-text search
 technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on meta data
 ### Inverted Index
-general purpose data structure which maps contents to their location; enable efficient loookups for where specific terms or elements occur within a dataset
+general purpose data structure which maps contents to their location; enable efficient loookups for locations of occurrences of terms or elements
 ### Elastic Stack
 - elasticsearch
 - logstash
