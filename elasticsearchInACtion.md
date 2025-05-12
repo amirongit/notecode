@@ -85,10 +85,10 @@ simple json-based query language provided by elasticsearch which is extensively 
 - `<index1>,<index2>/_count`
 #### Documents Themselves
 - `<index>/_doc/<id>`
-    -  `_doc` is replaced `_source` to omit the metadata
+    -  `_doc` is replaced by `_source` to omit the metadata
 - `<index>/_search`
     - array of `id`s is passed to `query.ids.values` to filter documents by identifier
-    - `query._source` can be set to false to omit the documents
-    - array of fields is passed to `query._source` to specify returned fields of documents
+    - `_source` can be set to false to omit the documents
+    - array of fields is passed to `_source` to specify returned fields of documents
     - if query isn't provided, it is considered a `match_all` query with no arguments
 <!-- 2.3 full text search -->
