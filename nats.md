@@ -54,19 +54,21 @@ storage of messages in a queue until they can be processed; messages are sent to
 - last
 - starting from specific seq number
 - starting from specific start time
-#### Retention policies & limits
-##### Limits
+#### Streams
+message stores defining limits, discard & retention policies; consume normal NATS subjects & caputre published messages
+##### Retention policies & limits
+###### Limits
 practical wise, streams can't grow forever; therefore limits are set
 - message age
 - total stream size
 - number of messages in stream
 - indivisual message size
 - number of consumers of stream at any given time
-##### Discard policies
+###### Discard policies
 when limits are reached & new messages are published, discard policies are applied
 - discard old
 - discard new
-##### Retention policies
+###### Retention policies
 limits & discard policies always apply regardless of retention policy
 - limits
     - allows replays
@@ -76,4 +78,44 @@ limits & discard policies always apply regardless of retention policy
 - ineterest
     - allows exactly once consumption (for consumers)
     - messages are removed as they are consumed by all consumers interested in the subject
-<-- JetStream.Consumers -->
+##### Placement
+refers to the placement of stream stream assets (data); defaults to the local cluster
+can be specified using node names & tags
+##### Sources & mirrors
+streams configured with source or mirrors, automatically & asynchronously replicate messages from an origin stream while being able to have their own limits, discard & retention policies; also, deleting or publishing messages isn't reflected on the origin stream
+- mirror
+    - enables streams to source data from exactly one other stream; clients aren't allowed to write or publish messages
+- source
+    - enables streams to source data from multiple other streams while also allowing clients to publish messages
+    - better or generalized version of mirror
+##### `AllowRollUp`
+if enabled, the stream will support `Nats-Rollup` header for messages which is used to indicate that all prior messages should be purged; two possible values for it are all & sub
+- all
+    - purges all prior messages of the stream
+- sub
+    - purges prior messages of the subject of the message
+#### Consumers
+stateful views on streams; act as an interface for clients to consume a subset of messages stored in a stream and will keep track of which messages were delivered and acknowledged by clients
+##### Dispatch type
+- push-based
+    - messages are delivered to a specific subject
+- pull-based
+    - allows clients to request batchs of messages on demand
+##### Persistence
+- durable
+- ephermal
+    - doesn't persist state (in memory only)
+    - is automatically cleaned up after a period of inactivity
+##### `AckPolicy`
+- `AckExplicit`
+- `AckNone`
+- `AckAll`
+    - when is message is acknowledged, all previous messages are automatically done so
+##### `DeliverPolicy`
+- `DeliverAll`
+- `DeliverLast`
+- `DeliverLastPerSubject`
+- `DeliverNew`
+- `DeliverNew`
+- `DeliverByStartSequence`
+- `DeliverByStartTime`
