@@ -1,6 +1,6 @@
 # Elasticsearch In Action
 ## Overview
-### Data flavors
+### Data Flavors
 - structured
     - follows an specific schema or format
     - easily searchable
@@ -13,10 +13,10 @@
     - usually is unstructured data with meta-data describing it
 ### Relevancy
 the degree to which data matches the given query
-### Full-text search
+### Full-Text Search
 technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on meta data
 ### Inverted Index
-general purpose data structure which maps contents to their location; enable efficient loookups for locations of occurrences of terms or elements
+general purpose data structure which maps contents to their location; enable efficient lookups for locations of occurrences of terms or elements
 ### Elastic Stack
 - elasticsearch
 - logstash
@@ -65,7 +65,7 @@ some resources are as follow
 - index
 - documents (`_doc` is a generic pointer to the single document type an index is able to store)
 <!---->
-APIs are exposed as a suffix of their corresponding resource; sometimes multiple resources on the same level can be used together separated by commas
+APIs are exposed as a suffix of their corresponding resource; sometimes multiple comma-separated resources on the same level can be used
 - components
     - HTTP method (action) (verbs)
     - hostname & port
@@ -91,4 +91,11 @@ simple json-based query language provided by elasticsearch which is extensively 
     - `_source` can be set to false to omit the documents
     - array of fields is passed to `_source` to specify returned fields of documents
     - if query isn't provided, it is considered a `match_all` query with no arguments
-<!-- 2.3 full text search -->
+### Full-Text Search
+#### Match Query
+used to search for words across unstructured or full-text data <br/>
+- usages (single-item json object passed to `query.match`; implicitly applies `OR` operator on given space-separated terms)
+    - `{<field>: <value>}`
+    - `{<field>: {"query": <value>, "operator": <operator>}}`
+#### Prefix Query
+works like match query; is term-level; used to search with shortend version of words
