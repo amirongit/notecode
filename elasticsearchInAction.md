@@ -95,25 +95,15 @@ simple json-based query language provided by elasticsearch which is extensively 
 GET <indices>/_search
 {
     "query": {"ids": {"values": <array-of-IDs>}},
-    "_source": [<array-of-fields>,<boolean>]
+    "_source": [<fields>,<boolean>]
 }
 ```
 ### Full-Text Search
 operators are applied between multiple space-separated terms in "value" fields
 #### Match
 used to perform full-text search on a single field<br/>
-- without operator (implicitly applies "OR")<br/>
-```
-GET <indices>/_search
-{
-    "query": {
-        "match": {
-            <field>: <value>
-        }
-    }
-}
-```
-- with explicit operator<br/>
+logical operator is indicated by the `operator` parameter (defaults to "OR")<br/>
+number of allowed misspells is indicated by `fuzziness` parameter<br/>
 ```
 GET <indices>/_search
 {
@@ -121,7 +111,8 @@ GET <indices>/_search
         "match": {
             <field>: {
                 "query": <value>,
-                "operator": <operator>
+                "operator": <operator>,
+                "fuzziness": <allowed-misspells>
             }
         }
     }
@@ -138,11 +129,25 @@ GET <indices>/_search
     "query": {
         "multi_match": {
             "query": <value>,
-            "fields": <array-of-fields>
+            "fields": <fields>
         }
     }
 }
 ```
 #### Relevancy Score
 "_score" field is a positive floating-point number which indicates how relevant a particular result is to the query
-<!--2.3.5 search phrases-->
+#### Search Phrase
+used to search for a sequence of words in an exact order
+number of missing words in the given phrase can be indicated by `slop` parameter
+```
+GET <indices>/_search
+{
+    "query": {
+        "match_phrase": {
+            <field>: <phrase>
+        }
+    "slop": <missing-words>
+    }
+}
+```
+<!--2.4 term level queries-->
