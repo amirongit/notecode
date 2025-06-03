@@ -118,8 +118,6 @@ GET <indices>/_search
     }
 }
 ```
-#### Prefix
-works like match query; is term-level; used to search with shortend version of words
 #### Multi Match
 used to perform full-text search on multiple fields<br/>
 fields can be boosted by their name being appended with `^<boost-factor>`
@@ -150,4 +148,17 @@ GET <indices>/_search
     }
 }
 ```
-<!--2.4 term level queries-->
+### Term Level Queries
+used to query precise values such as numbers, dates, ranges & IP addresses in structured data
+#### Prefix
+works like match query; used to search with shortend version of words
+```
+GET books/_search
+{
+    "query": {
+        "match_phrase_prefix": {
+            <field>: <prefix>
+        }
+    }
+}
+```
