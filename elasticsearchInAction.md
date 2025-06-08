@@ -194,3 +194,27 @@ GET <indices>/_search
     }
 }
 ```
+### Compound Queries
+provides a mechanism to combine leaf queries in order to build complex queries
+#### Leaf Query
+looks for specific values in specific fields; can be used by itself
+#### Boolean
+used to create sophisticated query logic; consists of four optional clauses made of leaf queries
+- must: all leaf queries match (matches contribute to relevancy score)
+- should: one of leaf queries matches (matches contribute to relevancy score)
+- must not: non of leaf queries match (matches don't contribute to relevancy score)
+- filter: all leaf queries match (matches don't contribute to relevancy score)
+<!---->
+```
+GET <indices>/_search
+{
+    "query": {
+        "bool": {
+            "must": <leaf-queries>,
+            "must_not": <leaf-queries>,
+            "should": <leaf-queries>,
+            "filter": <leaf-queries>,
+        }
+    }
+}
+```
