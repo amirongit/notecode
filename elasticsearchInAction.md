@@ -135,7 +135,7 @@ GET <indices>/_search
 #### Relevancy Score
 "_score" field is a positive floating-point number which indicates how relevant a particular result is to the query
 #### Search Phrase
-used to search for a sequence of words in an exact order
+used to search for a sequence of words in an exact order<br/>
 number of missing words in the given phrase can be indicated by `slop` parameter
 ```
 GET <indices>/_search
@@ -148,16 +148,48 @@ GET <indices>/_search
     }
 }
 ```
-### Term Level Queries
-used to query precise values such as numbers, dates, ranges & IP addresses in structured data
+### Term-Level Queries
+used to query precise values such as numbers, dates, ranges & IP addresses in structured data<br/>
+produces binary results, meaning that items either match the query or don't
 #### Prefix
 works like match query; used to search with shortend version of words
 ```
-GET books/_search
+GET <indices>/_search
 {
     "query": {
         "match_phrase_prefix": {
             <field>: <prefix>
+        }
+    }
+}
+```
+#### Term
+used to search for exact non-textual structured values
+```
+GET <indices>/_search
+{
+    "query": {
+        "term": {
+            <field>: {
+                "value": <value>
+            }
+        }
+    }
+}
+```
+#### Range
+used to search for values that match given range
+```
+GET <indices>/_search
+{
+    "query": {
+        "range": {
+            <field>: {
+                "lt": <less-than>,
+                "gt": <greater-than>,
+                "lte": <less-than-or-equal>,
+                "gte": <greater-than-or-equal>,
+            }
         }
     }
 }
