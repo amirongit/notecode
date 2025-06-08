@@ -186,9 +186,9 @@ GET <indices>/_search
         "range": {
             <field>: {
                 "lt": <less-than>,
-                "gt": <greater-than>,
                 "lte": <less-than-or-equal>,
-                "gte": <greater-than-or-equal>,
+                "gt": <greater-than>,
+                "gte": <greater-than-or-equal>
             }
         }
     }
@@ -200,10 +200,14 @@ provides a mechanism to combine leaf queries in order to build complex queries
 looks for specific values in specific fields; can be used by itself
 #### Boolean
 used to create sophisticated query logic; consists of four optional clauses made of leaf queries
-- must: all leaf queries match (matches contribute to relevancy score)
-- should: one of leaf queries matches (matches contribute to relevancy score)
-- must not: non of leaf queries match (matches don't contribute to relevancy score)
-- filter: all leaf queries match (matches don't contribute to relevancy score)
+- must
+    - all leaf queries match (matches contribute to relevancy score)
+- should
+    - one of leaf queries matches (matches contribute to relevancy score)
+- must not
+    - non of leaf queries match (matches don't contribute to relevancy score)
+- filter
+    - all leaf queries match (matches don't contribute to relevancy score)
 <!---->
 ```
 GET <indices>/_search
@@ -213,8 +217,25 @@ GET <indices>/_search
             "must": <leaf-queries>,
             "must_not": <leaf-queries>,
             "should": <leaf-queries>,
-            "filter": <leaf-queries>,
+            "filter": <leaf-queries>
         }
     }
 }
 ```
+### Aggregations
+used to provide analytics & high level data
+#### Metric
+simple aggregations like "avg", "sum", "min", "max", "stats" & "extended_stats"
+```
+GET <indices>/_search
+{
+    "aggs": {
+        <name>: {
+            <aggregation-type>: {
+                "field": <field>
+            }
+        }
+    }
+}
+```
+<!-- 2.6.2 bucket aggregation -->
