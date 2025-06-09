@@ -63,7 +63,7 @@ bucket which is dedicated to collect similar data (doesn't enforce schema)
 ### APIs
 some resources are as follow
 - index
-- documents (`_doc` is a generic pointer to the single document type an index is able to store)
+- documents ("_doc" is a generic pointer to the single document type an index is able to store)
 <!---->
 APIs are exposed as a suffix of their corresponding resource; sometimes multiple comma-separated resources on the same level can be used
 - components
@@ -101,9 +101,9 @@ GET <indices>/_search
 ### Full-Text Search
 operators are applied between multiple space-separated terms in "value" fields
 #### Match
-used to perform full-text search on a single field<br/>
-logical operator is indicated by the `operator` parameter (defaults to "OR")<br/>
-number of allowed misspells is indicated by `fuzziness` parameter<br/>
+- used to perform full-text search on a single field
+- logical operator is indicated by the `operator` parameter (defaults to "OR")
+- number of allowed misspells is indicated by `fuzziness` parameter
 ```
 GET <indices>/_search
 {
@@ -119,8 +119,8 @@ GET <indices>/_search
 }
 ```
 #### Multi Match
-used to perform full-text search on multiple fields<br/>
-fields can be boosted by their name being appended with `^<boost-factor>`
+- used to perform full-text search on multiple fields
+- fields can be boosted by their name being appended with `^<boost-factor>`
 ```
 GET <indices>/_search
 {
@@ -135,8 +135,8 @@ GET <indices>/_search
 #### Relevancy Score
 "_score" field is a positive floating-point number which indicates how relevant a particular result is to the query
 #### Search Phrase
-used to search for a sequence of words in an exact order<br/>
-number of missing words in the given phrase can be indicated by `slop` parameter
+- used to search for a sequence of words in an exact order
+- number of missing words in the given phrase can be indicated by `slop` parameter
 ```
 GET <indices>/_search
 {
@@ -149,8 +149,8 @@ GET <indices>/_search
 }
 ```
 ### Term-Level Queries
-used to query precise values such as numbers, dates, ranges & IP addresses in structured data<br/>
-produces binary results, meaning that items either match the query or don't
+- used to query precise values such as numbers, dates, ranges & IP addresses in structured data
+- produces binary results, meaning that items either match the query or don't
 #### Prefix
 works like match query; used to search with shortend version of words
 ```
@@ -238,4 +238,42 @@ GET <indices>/_search
     }
 }
 ```
-<!-- 2.6.2 bucket aggregation -->
+#### Bucket
+segregates data by intervals into buckets; useful for building visualizations
+#### Pipeline
+aggregations that work on the output of other aggregations
+## Architecture
+### The Building Blocks
+#### Documents
+- basic unit of information in "json" form
+- each field is analyzed for faster searches & analyzatics
+- storing multiple types of documents in a single index was supported prior to v5.x
+    - since v7.0, "_doc" is the generic single document type an index is able to store
+    - this was forced by lucene's inability to define multiple fields with a common name but different data type on each index
+#### Indices
+- logical connections between similar documents
+- documents of an index share the same mapping
+    - definition of the schema of documents
+- composed of shards
+    - indices have a primary & a replica shard by default
+- can either exist on a single node or be distributed in a cluster
+#### Data Streams
+- specific type of extended alias
+- templates are used to create associated indices in an interval
+    - each index indicates an specific range in time
+- write operations execute on the last (current) index
+- read operations execute on all indices
+#### Shards & Replicas
+- shards
+    - software components that hold data
+    - physical instances of lucene
+        - high performance full-text search engine
+    - usually distributed across a cluster for availability & failover
+- replicas
+    - duplicated copies of primary shards
+    - allow redundancy
+    - usually don't share the same location with their primary shard
+- clusters
+    - collections of nodes
+- nodes
+    - instances of elasticsearch server
