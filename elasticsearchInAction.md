@@ -246,7 +246,7 @@ aggregations that work on the output of other aggregations
 ### The Building Blocks
 #### Documents
 - basic unit of information in "json" form
-- each field is analyzed for faster searches & analyzatics
+- each field is analyzed for faster searches & analytics
 - storing multiple types of documents in a single index was supported prior to v5.x
     - since v7.0, "_doc" is the generic single document type an index is able to store
     - this was forced by lucene's inability to define multiple fields with a common name but different data type on each index
@@ -265,15 +265,26 @@ aggregations that work on the output of other aggregations
 - read operations execute on all indices
 #### Shards & Replicas
 - shards
-    - software components that hold data
+    - software components that hold some amount of data
     - physical instances of lucene
         - high performance full-text search engine
     - usually distributed across a cluster for availability & failover
 - replicas
     - duplicated copies of primary shards
     - allow redundancy
+    - can accept read requests in order to balance heavy loads in the cluster
     - usually don't share the same location with their primary shard
-- clusters
-    - collections of nodes
+#### Nodes & Clusters
 - nodes
     - instances of elasticsearch server
+    - host sets of shards & replicas
+- clusters
+    - collections of nodes
+    - can be in one of three health states
+        - red
+            - not all shards are assigned & ready
+        - yellow
+            - shards are assigned & ready, but replicas aren't
+        - green
+            - shards & replicas are assigned & ready
+<!-- 117 MULTI-NODE MULTICLUSTERS -->
