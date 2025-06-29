@@ -287,4 +287,19 @@ aggregations that work on the output of other aggregations
             - shards are assigned & ready, but replicas aren't
         - green
             - shards & replicas are assigned & ready
-<!-- 117 MULTI-NODE MULTICLUSTERS -->
+- node roles
+    - each role makes a node take specific responsibilities
+        - master: cluster management
+            - doesn't participate in CRUD operations
+            - knows the location of each document
+        - data: document persistence & retrieval
+            - I/O intensive
+        - ingest: transformation of data before indexing
+        - coordination: handling client requests (default role)
+            - taken on by all nodes as an additional role
+            - nodes with only this specific role can act like a load balancer
+        - ...
+### Inverted Indices
+- used by elasticsearch for each full-text field during the indexing phase
+<!-- what's the scope?! -->
+<!-- 121 -> 137 -->
