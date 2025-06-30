@@ -11,12 +11,8 @@
 - semi-structured
     - falls between structured & unstructured data
     - usually is unstructured data with meta-data describing it
-### Relevancy
-the degree to which data matches the given query
 ### Full-Text Search
 technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on meta data
-### Inverted Index
-general purpose data structure which maps contents to their location; enable efficient lookups for locations of occurrences of terms or elements
 ### Elastic Stack
 - elasticsearch
 - logstash
@@ -300,6 +296,6 @@ aggregations that work on the output of other aggregations
             - nodes with only this specific role can act like a load balancer
         - ...
 ### Inverted Indices
-- used by elasticsearch for each full-text field during the indexing phase
-<!-- what's the scope?! -->
-<!-- 121 -> 137 -->
+- data structure which maps tokens to containing documents & their frequency of repetition
+- enables full-text search
+### Relevancy
