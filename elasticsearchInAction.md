@@ -128,8 +128,6 @@ GET <indices>/_search
     }
 }
 ```
-#### Relevancy Score
-"_score" field is a positive floating-point number which indicates how relevant a particular result is to the query
 #### Search Phrase
 - used to search for a sequence of words in an exact order
 - number of missing words in the given phrase can be indicated by `slop` parameter
@@ -299,3 +297,20 @@ aggregations that work on the output of other aggregations
 - data structure which maps tokens to containing documents & their frequency of repetition
 - enables full-text search
 ### Relevancy
+#### Relevancy Score
+positive floating-point number which indicates how relevant a particular result is to the query
+#### Relevancy Algorithms
+configured per field
+- TF-IDF
+    - term frequency
+        - number of times a term appears in an specific document
+    - inverse document frequency
+        - measure of how common or rare a term is across all of the documents
+    - assignes weight terms based on their TF & IDF
+    - terms with more TF & less IDF are considered to be more relevant
+- BM25 (Best Matching 25)
+    - default relevancy algorithm
+    - improvement over TF-IDF
+    - prevents terms with high TF from receiving excessively high scores
+    - employs document length normalization to counter the bias towards longer documents
+<!-- 126 THE OKAPI BM25 ALGORITHM -->
