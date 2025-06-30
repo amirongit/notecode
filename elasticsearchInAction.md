@@ -83,9 +83,9 @@ simple json-based query language provided by elasticsearch which is extensively 
 #### Documents Themselves
 - single document<br/>
     - with meta data<br/>
-    `GET <index>/_doc/<id>` 
+    `GET <index>/_doc/<id>`
     - just the document<br/>
-    `GET <index>/_source/<id>` 
+    `GET <index>/_source/<id>`
 - multiple documents (considered a "match_all" query when used without any specification)
 ```
 GET <indices>/_search
@@ -303,9 +303,9 @@ positive floating-point number which indicates how relevant a particular result 
 configured per field
 - TF-IDF
     - term frequency
-        - number of times a term appears in an specific document
+        - number of times the search word appears in an specific field of a document
     - inverse document frequency
-        - measure of how common or rare a term is across all of the documents
+        - number of times the search word appears across the whole set of documents
     - assignes weight terms based on their TF & IDF
     - terms with more TF & less IDF are considered to be more relevant
 - BM25 (Best Matching 25)
@@ -313,4 +313,20 @@ configured per field
     - improvement over TF-IDF
     - prevents terms with high TF from receiving excessively high scores
     - employs document length normalization to counter the bias towards longer documents
-<!-- 126 THE OKAPI BM25 ALGORITHM -->
+- ...
+### Routing Algorithm
+determines exactly one primary shard for a document as its location (in the context of indices)
+```
+hash(document.id) % number-of-primary-shards
+```
+changing number of shards would break this for existing documents, reindexing is done in this situation
+### Scaling
+#### Scaling Up (Vertical Scaling)
+- the process of adding computational resources to the currently existing units of computation
+    - namely CPU & RAM
+- usually causes downtime due to hardware upgradation
+#### Scaling Out (Horizontal Scaling)
+- the process of adding units of computation to a farm or cluster
+    - namely VMs or nodes
+- doesn't cause downtime
+- the process of distributing data among new nodes begins instantly
