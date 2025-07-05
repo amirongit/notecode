@@ -323,10 +323,21 @@ changing number of shards would break this for existing documents, reindexing is
 ### Scaling
 #### Scaling Up (Vertical Scaling)
 - the process of adding computational resources to the currently existing units of computation
-    - namely CPU & RAM
+    - like CPU & RAM
 - usually causes downtime due to hardware upgradation
 #### Scaling Out (Horizontal Scaling)
 - the process of adding units of computation to a farm or cluster
-    - namely VMs or nodes
+    - like VMs or nodes
 - doesn't cause downtime
 - the process of distributing data among new nodes begins instantly
+## Mapping
+### Overview Of Mapping
+- the process of developing a definition of the schema which represents fields & their associated data types of a document
+- elasticsearch expects a single mapping per index which tells it how to treat each field of its documents
+### Dynamic Mapping
+- the process in which elasticsearch implicitly derives an schema definition from a document for an index
+- usually happens when a document is indexed without an schema definition up front
+#### Limitations Of Dynamic Mappings
+data type of each field is derived based on the value of the first indexed document; therefore, elasticsearch is unable to<br/>
+determine the correct schema if a broader prespective is needed to do so.
+<!-- 143, explicit mapping -->
