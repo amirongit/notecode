@@ -374,3 +374,26 @@ operational indidces with data fields are considered live; modifying the schema 
 search results, thus, prohibited. reindexing is done in this situation.
 #### Type Coercion
 the process of casting a value in the format of another data type to the desired data which is in the schema definition.
+### Data Types
+every field can have one or more associated data types
+- simple types
+    - common data types which represent basic & primitive values
+    - like text, boolean, long, date, double & binary
+- complex types
+    - created by composing additional types; similar to compound or container types in programming languages
+    - can be flattened or nested
+    - like object, nested, flattened & join
+- specialized types
+    - used for specialized cases such as geolocation & IP addresses
+    - like geo_shape, geo_point, ip & range types like date_range & ip_range
+<!---->
+schema definition is retrieved using mapping API
+```
+GET <indices>/_mapping
+```
+### Core Data Types
+#### The Text Data Type
+- unstructured full-text data
+- values of this data type are analyzed before persistence
+    - analyzers enrich, enhance & transform data into internal data structures for easy access
+<!-- 152, ANALYZING TEXT FIELDS -->
