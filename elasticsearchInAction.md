@@ -340,4 +340,37 @@ changing number of shards would break this for existing documents, reindexing is
 #### Limitations Of Dynamic Mappings
 data type of each field is derived based on the value of the first indexed document; therefore, elasticsearch is unable to<br/>
 determine the correct schema if a broader prespective is needed to do so.
-<!-- 143, explicit mapping -->
+### Explicit Mapping
+#### Mapping Using The Indexing API
+an schema definition is created simultaneously with its index using "create index" API
+```
+PUT <index>
+{
+    "mappings": {
+        "properties": {
+            <field>: {
+                "type": <data-type>,
+                <parameter>: <value>
+            }
+        }
+    }
+}
+```
+#### Mapping Using The Mapping API
+used to update schema definitions of already existing indices
+```
+PUT <index>/_mapping
+{
+    "properties": {
+        <field>: {
+            "type": <data-type>,
+            <parameter>: <value>
+        }
+    }
+}
+```
+#### Modifying Existing Fields Is Not Allowed
+operational indidces with data fields are considered live; modifying the schema definition of these indices will cause wrong<br/>
+search results, thus, prohibited. reindexing is done in this situation.
+#### Type Coercion
+the process of casting a value in the format of another data type to the desired data which is in the schema definition.
