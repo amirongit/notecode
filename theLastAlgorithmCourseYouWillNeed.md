@@ -70,20 +70,19 @@ def binary_search[T: Comparable](array: list[T], value: T) -> bool:
 from fuckingperfecttyping import Comparable
 
 
-def bubble_sort[T: Comparable](array: list[T]) -> list[T]:
+def bubble_sort_2[T: Comparable](array: list[T]) -> list[T]:
     from copy import deepcopy
-    array_ = deepcopy(array)
+    arr_copy = deepcopy(array)
 
-    li = len(array_) - 1
-    while li != 0:
-        fi = 0
-        while fi < li:
-            if (array_[fi] > array_[fi + 1]):
-                array_[fi], array_[fi + 1] = array_[fi + 1], array_[fi]
-            fi += 1
-        li -= 1
-
-    return array_
+    window = len(arr_copy) - 1
+    while window > 0:
+        curr = 0
+        while curr < window:
+            if arr_copy[curr] > arr_copy[next := curr + 1]:
+                arr_copy[curr], arr_copy[next] = arr_copy[next], arr_copy[curr]
+            curr += 1
+        window -= 1
+    return arr_copy
 ```
 ### Linked list data structure
 - growable sequence made of containers which hold values & pointers to other containers
@@ -426,44 +425,48 @@ from fakearray import FakeArray
 class RingBuffer[T]:
     def __init__(self, capacity: int) -> None:
         self.capacity = capacity
-        self.length = 0
         self.head = -1
         self.tail = -1
         self.inner: FakeArray[T] = FakeArray(capacity)
 
     def push(self, value: T) -> None:
-        if self.capacity == self.length - 1:
+        if (length := len(self)) == self.capacity:
             raise OverflowError
-
-        self.inner[index := (self.tail + 1) % (self.capacity + 1)] = value
-        self.tail = index
-        self.length += 1
-
-        if self.length == 1:
-            self.head += 1
+        elif length == 0:
+            self.inner[0] = value
+            self.head = 0
+            self.tail = 0
+        else:
+            self.inner[new_head := (self.head + 1) % self.capacity] = value
+            self.head = new_head
 
     def pop(self) -> T:
-        if (value := self.inner[(index := self.head)]) is None:
+        if len(self) == 0:
             raise IndexError
 
-        self.inner[index] = None
-        self.head += 1
-        self.length -= 1
-
-        return value
+        out: T = cast(T, self.inner[self.tail])
+        self.inner[self.tail] = None
+        if self.tail == self.head:
+            self.tail = -1
+            self.head = -1
+        else:
+            self.tail = (self.tail + 1) % self.capacity
+        return out
 
     def __getitem__(self, index: int) -> T | None:
-        return self.inner[index if index < self.capacity else index % self.capacity]
+        return self.inner[index % self.capacity]
 
     def __len__(self) -> int:
-        return self.length
+        if self.head == -1 and self.tail == -1:
+            return 0
+        elif self.head == self.tail:
+            return 1
+        else:
+            return abs(self.head - self.tail)
 
     @property
-    def top(self) -> T:
-        if (value := self.inner[self.tail]) is None:
-            raise IndexError
-
-        return value
+    def top(self) -> T | None:
+        return self.inner[self.head]
 ```
 ## Recursion
 - function which calls itself untill one of the calls return due to a condition known as the base case
@@ -1428,7 +1431,7 @@ class FakeArray[T]:
             raise StopIteration from e
 
     def __str__(self) -> str:
-        return f"""[{",".join(str(e) for e in self)}]"""
+        return f"""[{", ".join(str(e) for e in self)}]"""
 
     def __repr__(self) -> str:
         return str(self)
