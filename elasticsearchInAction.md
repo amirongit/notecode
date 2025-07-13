@@ -396,4 +396,6 @@ GET <indices>/_mapping
 - unstructured full-text data
 - values of this data type are analyzed before persistence
     - analyzers enrich, enhance & transform data into internal data structures for easy access
-<!-- 152, ANALYZING TEXT FIELDS -->
+    - stemmers can be used to reduce tokens & words to their root
+#### The Keyword Data Types
+<!-- 156 -->
