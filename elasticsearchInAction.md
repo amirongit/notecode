@@ -395,7 +395,9 @@ GET <indices>/_mapping
 #### The Text Data Type
 - unstructured full-text data
 - values of this data type are analyzed before persistence
-    - analyzers enrich, enhance & transform data into internal data structures for easy access
+    - analyzers enrich, enhance & transform data into internal data structures
     - stemmers can be used to reduce tokens & words to their root
 #### The Keyword Data Types
-<!-- 156 -->
+- structured data
+- queried in binary manner (no relevancy score)
+- values aren't touched when being persisted
