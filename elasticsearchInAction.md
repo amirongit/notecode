@@ -407,7 +407,7 @@ GET <indices>/_mapping
 - integer types
 
 |name|signed|size|
-| -- | -- | -- |
+|-|-|-|
 |byte|+|8bit|
 |short|+|16bit|
 |integer|+|32bit|
@@ -417,7 +417,7 @@ GET <indices>/_mapping
 - floating-point types
 
 |name|size|
-| -- | -- |
+|-|-|
 |float|32bit|
 |double|64bit|
 |half float|16bit|
@@ -427,4 +427,63 @@ GET <indices>/_mapping
 - structured data
 - represent lower & upper bound of a field
 - defined by operators suchs as "lt", "lte", "gt" & "gte"
-<!-- 131 ADVANCED DATA TYPES -->
+### Advanced Data Types
+#### The Geo Point Data Type
+- represents a single geographical point
+- can be queried using "get_bounding_box"
+    - takes two geo points to form a boxed area
+    - searches for points inside the area
+```
+GET indices/_search
+{
+    "query": {
+        "geo_bounding_box": {
+            <field>: {
+                "top_left": {
+                    "lat": <latitude>,
+                    "lon": <longitude>
+                },
+                "top_right": {
+                    "lat": <latitude>,
+                    "lon": <longitude>,
+                }
+            }
+        }
+    }
+}
+```
+#### The Object Data Type
+- hierarchical structured data
+- inner properties are flattened before persistence
+    - this causes them to lose their collective identity implied by each object
+- flattened properties can be accessed using `<parent>.<child>` syntax in queries
+#### The Nested Data Type
+- specialized form of object
+- maintains collective identity of properties implied by each object
+#### The Flattened Data Type
+- data held in subfields with keyword data type
+- subfields aren't defined in the schema definition & used on an ad hoc basis
+- no analyzation happens when documents get persisted
+    - this makes writing operations cheap
+### Fields With Multiple Data Types
+additional "fields" key can be provided in order to store desired fields using multiple data types
+```
+PUT <index>
+{
+    "mappings": {
+        "properties": {
+            <field>: {
+                "type": <data-type>,
+                <parameter>: <value>,
+                "fields": {
+                    <field-as-data-type>: {
+                        "type": <data-type>,
+                        <parameter>: <value>,
+                    }
+                }
+            }
+        }
+    }
+}
+```
+fields as additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
