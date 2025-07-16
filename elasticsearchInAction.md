@@ -397,7 +397,34 @@ GET <indices>/_mapping
 - values of this data type are analyzed before persistence
     - analyzers enrich, enhance & transform data into internal data structures
     - stemmers can be used to reduce tokens & words to their root
+    - this is done so the values can be queried more easily
 #### The Keyword Data Types
 - structured data
+- can't be used in range queries
 - queried in binary manner (no relevancy score)
-- values aren't touched when being persisted
+- values get persisted as they are
+#### Numberic Data Types
+- integer types
+
+|name|signed|size|
+| -- | -- | -- |
+|byte|+|8bit|
+|short|+|16bit|
+|integer|+|32bit|
+|long|+|64bit|
+|unsigned long|-|64bit|
+
+- floating-point types
+
+|name|size|
+| -- | -- |
+|float|32bit|
+|double|64bit|
+|half float|16bit|
+|scaled float|64bit|
+
+#### The Range Data Types
+- structured data
+- represent lower & upper bound of a field
+- defined by operators suchs as "lt", "lte", "gt" & "gte"
+<!-- 131 ADVANCED DATA TYPES -->
