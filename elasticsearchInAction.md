@@ -55,7 +55,7 @@ technique to search specific phrases within the entire data rather than looking 
 ### Being Schema-Less
 when the data store doesn't require a defined schema before storing data
 ### Index
-bucket which is dedicated to collect similar data (doesn't enforce schema)
+logical bucket which is dedicated to collect similar data (doesn't enforce schema)
 ### APIs
 some resources are as follow
 - index
@@ -339,7 +339,7 @@ changing number of shards would break this for existing documents, reindexing is
 - usually happens when a document is indexed without an schema definition up front
 #### Limitations Of Dynamic Mappings
 data type of each field is derived based on the value of the first indexed document; therefore, elasticsearch is unable to<br/>
-determine the correct schema if a broader prespective is needed to do so.
+determine the correct schema if a broader prespective is needed to do so
 ### Explicit Mapping
 #### Mapping Using The Indexing API
 an schema definition is created simultaneously with its index using "create index" API
@@ -371,9 +371,9 @@ PUT <index>/_mapping
 ```
 #### Modifying Existing Fields Is Not Allowed
 operational indidces with data fields are considered live; modifying the schema definition of these indices will cause wrong<br/>
-search results, thus, prohibited. reindexing is done in this situation.
+search results, thus, prohibited; reindexing is done in this situation
 #### Type Coercion
-the process of casting a value in the format of another data type to the desired data which is in the schema definition.
+the process of casting a value in the format of another data type to the desired data which is in the schema definition
 ### Data Types
 every field can have one or more associated data types
 - simple types
@@ -487,3 +487,12 @@ PUT <index>
 }
 ```
 fields as additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
+## Working With Documents
+### Indexing Documents
+#### Document APIs
+- document identifiers
+    - unique identifier associated to documents for their lifetime
+    - "PUT" method is used when identifier is provided by user
+        - `PUT <index>/_doc/<identifier>`
+    - "POST" method is used when identifier is expected to be generated
+<!-- 154, FIRST LINE OF PAGE -->
