@@ -495,4 +495,12 @@ fields as additional data types are accessed by "<field>.<field-as-data-type>" s
     - "PUT" method is used when identifier is provided by user
         - `PUT <index>/_doc/<identifier>`
     - "POST" method is used when identifier is expected to be generated
-<!-- 154, FIRST LINE OF PAGE -->
+        - `POST <index>/_doc/<identifier>`
+        - identifier is optional
+<!---->
+these endpoints update or overwrite the document if it already exists
+- avoiding overwrites
+    - "_doc" is replaced by "_create"
+    - indicates that the document should be created
+    - raises error if the document already exists
+<!-- 158 mechanics of indexing -->
