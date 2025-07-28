@@ -287,7 +287,7 @@ aggregations that work on the output of other aggregations
             - doesn't participate in CRUD operations
             - knows the location of each document
         - data: document persistence & retrieval
-            - I/O intensive
+            - IO intensive
         - ingest: transformation of data before indexing
         - coordination: handling client requests (default role)
             - taken on by all nodes as an additional role
@@ -503,4 +503,38 @@ these endpoints update or overwrite the document if it already exists
     - "_doc" is replaced by "_create"
     - indicates that the document should be created
     - raises error if the document already exists
-<!-- 158 mechanics of indexing -->
+#### Mechanics Of Indexing
+1. routing algorithm is used to determine document's location
+2. chosen shard holds the given document in its heap memory buffer
+    - this is done to avoid frequent IO operations
+3. after refresh signal is issued by lucene
+    - buffered docuemnts will be collected into segments
+    - segments contain inverted indices & docuemnts themselves
+    - segments are immutable
+4. data is written to the FS cache & then commited to the physical disk
+    - documents can be searched & accessed in this step
+5. after formation of three segments
+    - peer segments are merged together
+    - this happens recursively until a certain point (which idk about)
+<!---->
+- delete operation marks documents to be removed later, as segments are immutable
+    - this probably happens in the process of segments being merged
+#### Customizing The Refresh Process
+- server side
+```
+PUT <indices>/settings
+{
+    "index": {
+        "refresh_interval": <refresh-interval>
+    }
+}
+```
+- client side
+    - `refresh` query param is used with one of three values
+        - "false": tells the engine not to force the refresh operation; the default option
+        - "true": forces the engine to do a refresh operation
+        - "wait_for": blocks the request & returns after a refresh operation happens
+- buffered documents may be lost in the case of server breakdown before a successfull refresh operation
+- there is a direct (positive) correlation between refresh rate & weight of IO operations
+- there is an indirect (negative) correlation between refresh rate & the possibality of data loss
+<!-- 161 retrieving documents -->
