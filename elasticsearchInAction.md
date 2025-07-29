@@ -12,7 +12,7 @@
     - falls between structured & unstructured data
     - usually is unstructured data with meta-data describing it
 ### Full-Text Search
-technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on meta data
+technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on metadata
 ### Elastic Stack
 - elasticsearch
 - logstash
@@ -82,7 +82,7 @@ simple json-based query language provided by elasticsearch which is extensively 
 `GET <indices>/_count`
 #### Documents Themselves
 - single document<br/>
-    - with meta data<br/>
+    - with metadata<br/>
     `GET <index>/_doc/<id>`
     - just the document<br/>
     `GET <index>/_source/<id>`
@@ -90,16 +90,25 @@ simple json-based query language provided by elasticsearch which is extensively 
 ```
 GET <indices>/_search
 {
-    "query": {"ids": {"values": <array-of-IDs>}},
-    "_source": [<fields>,<boolean>]
+    "query": {
+        "ids": {
+            "values": [
+                <identifier>
+            ]
+        }
+    },
+    "_source": [
+        <fields>,
+        <boolean>
+    ]
 }
 ```
 ### Full-Text Search
 operators are applied between multiple space-separated terms in "value" fields
 #### Match
 - used to perform full-text search on a single field
-- logical operator is indicated by the `operator` parameter (defaults to "OR")
-- number of allowed misspells is indicated by `fuzziness` parameter
+- logical operator is indicated by the "operator" parameter (defaults to "OR")
+- number of allowed misspells is indicated by "fuzziness" parameter
 ```
 GET <indices>/_search
 {
@@ -130,7 +139,7 @@ GET <indices>/_search
 ```
 #### Search Phrase
 - used to search for a sequence of words in an exact order
-- number of missing words in the given phrase can be indicated by `slop` parameter
+- number of missing words in the given phrase can be indicated by "slop" parameter
 ```
 GET <indices>/_search
 {
@@ -466,7 +475,7 @@ GET indices/_search
 - no analyzation happens when documents get persisted
     - this makes writing operations cheap
 ### Fields With Multiple Data Types
-additional "fields" key can be provided in order to store desired fields using multiple data types
+additional "fields" attribute can be provided in order to store desired fields using multiple data types
 ```
 PUT <index>
 {
@@ -530,11 +539,50 @@ PUT <indices>/settings
 }
 ```
 - client side
-    - `refresh` query param is used with one of three values
+    - "refresh" query param is used with one of three values
         - "false": tells the engine not to force the refresh operation; the default option
         - "true": forces the engine to do a refresh operation
         - "wait_for": blocks the request & returns after a refresh operation happens
 - buffered documents may be lost in the case of server breakdown before a successfull refresh operation
 - there is a direct (positive) correlation between refresh rate & weight of IO operations
 - there is an indirect (negative) correlation between refresh rate & the possibality of data loss
-<!-- 161 retrieving documents -->
+### Retrieving Documents
+#### Using The Single Document API
+- data & metadata retrieve
+    - `GET <index>/_doc/<identifier>`
+<!--
+        - response of this endpoint consists of two main sections
+            - metadata
+                - consists of fields like "_index", "_type", "_id", "_version" & so on
+                - can be retrieved alone by passing "false" to "_source" query param
+            - data (docuemnt itself)
+                - is enclosed in the "_source" attribute of response
+-->
+- existence check
+    - `HEAD <index>/_doc/<identifier>`
+#### Retrieving Multiple Documents
+- from single index
+```
+GET <index>/_mget
+{
+    "ids": <array-of-identifiers>
+}
+```
+- from multiple indices
+```
+GET _mget
+{
+    "docs": [
+        {
+            "_index": <index>,
+            "_id": <identifier>
+        }
+    ]
+}
+```
+### Manupulating Responses
+#### Removing Metadata From The Response
+- response objects usually consist of metadata & data (the original document)
+- "_source" attribute encompasses the document (the data)
+    - retrieved alone by replacing "_doc" with "_source"
+<!-- 167, SUPPRESSING THE SOURCE DOCUMENT -->
