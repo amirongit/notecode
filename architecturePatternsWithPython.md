@@ -22,3 +22,5 @@
 - domain functions
     - justified when an operation doesn't belong to an specific model
 - domain exceptions
+## Event Driven Architecture
+### Dependecny Injection (And Bootstrapping)
