@@ -83,9 +83,9 @@ simple json-based query language provided by elasticsearch which is extensively 
 #### Documents Themselves
 - single document<br/>
     - with metadata<br/>
-    `GET <index>/_doc/<id>`
+    `GET <index>/_doc/<identifier>`
     - just the document<br/>
-    `GET <index>/_source/<id>`
+    `GET <index>/_source/<identifier>`
 - multiple documents (considered a "match_all" query when used without any specification)
 ```
 GET <indices>/_search
@@ -550,14 +550,6 @@ PUT <indices>/settings
 #### Using The Single Document API
 - data & metadata retrieve
     - `GET <index>/_doc/<identifier>`
-<!--
-        - response of this endpoint consists of two main sections
-            - metadata
-                - consists of fields like "_index", "_type", "_id", "_version" & so on
-                - can be retrieved alone by passing "false" to "_source" query param
-            - data (docuemnt itself)
-                - is enclosed in the "_source" attribute of response
--->
 - existence check
     - `HEAD <index>/_doc/<identifier>`
 #### Retrieving Multiple Documents
@@ -585,4 +577,29 @@ GET _mget
 - response objects usually consist of metadata & data (the original document)
 - "_source" attribute encompasses the document (the data)
     - retrieved alone by replacing "_doc" with "_source"
-<!-- 167, SUPPRESSING THE SOURCE DOCUMENT -->
+#### Suppressing The Source Document
+done by setting "_source" query param to "false"
+#### Including & Excluding Fields
+- including fields is done by passing comma-separated names of fields to "_source_include" query param
+- excluding fields is done by passing comma-separated names of fields to "_source_exclude" query param
+- both can be done in the same query at the same time
+### Updating Documents
+#### Document Update Mechanics
+- procedure of updating docuemnts
+    1. fetch
+    2. modify
+    3. increment version
+    4. mark old one for deletion
+    5. index new one (reindex)
+- this means that documents is replaced with newer version of itself
+#### The "_update" API
+```
+POST <index>/_update/<identifier>
+{
+    "_doc": {
+        <field>: <value>
+    }
+}
+```
+values are replaced
+<!--173, SCRIPTED UPDATES-->
