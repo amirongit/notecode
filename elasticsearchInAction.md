@@ -465,7 +465,7 @@ GET indices/_search
 - hierarchical structured data
 - inner properties are flattened before persistence
     - this causes them to lose their collective identity implied by each object
-- flattened properties can be accessed using `<parent>.<child>` syntax in queries
+- flattened properties can be accessed using "<parent>.<child>" syntax in queries
 #### The Nested Data Type
 - specialized form of object
 - maintains collective identity of properties implied by each object
@@ -602,4 +602,58 @@ POST <index>/_update/<identifier>
 }
 ```
 values are replaced
-<!--173, SCRIPTED UPDATES-->
+#### Scripted Updates
+```
+POST <index>/_update/<identifier>
+{
+    "script": {
+        "source": <script>,
+        "params": <parameters>
+    }
+}
+```
+- document updates based on context & conditions
+- context is contained in "ctx" variable
+- scripting language
+    - `params.<param>`
+    - `ctx._source.<field>`
+    - `ctx._source.remove(<field>)`
+    - `ctx._source.<array-field>.add(<value>)`
+    - `ctx._source.<array-field>.remove(<value>)`
+    - `ctx._source.<array-field>.indexOf(<value>)`
+    - `if (<condition>) {<instrcution>} else {<instrcution>}`
+- anatomy script object
+    - source: contains conditions, expressions, assignments & modifications
+    - lange: contains expression language; defaults to "painless"
+    - params: enables passing data to script dynamically
+#### [Replacing Documents](#document-apis)
+#### Upserts
+meaning update if exists insert otherwise
+```
+POST <index>/_update/<identifier>
+{
+    "script": <script>,
+    "upsert": <document>
+}
+```
+#### Updates As Upserts
+```
+POST <index>/_update/<identifier>
+{
+    "doc": <document>,
+    "doc_as_upsert": <boolean>
+}
+```
+setting "doc_as_upsert" to "true" causes "document" to be saved if it doesn't exist already
+#### Updating With A Query
+updating set of documents matching specific criteria
+failures will be logged but won't stop the operation
+retries, logs & batch sizes can be configured
+```
+POST <index>/_update_by_query
+{
+    "query": <query>,
+    "script": <script>
+}
+```
+<!-- 181, DELETING DOCUMENTS -->
