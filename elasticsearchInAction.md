@@ -517,8 +517,8 @@ these endpoints update or overwrite the document if it already exists
 2. chosen shard holds the given document in its heap memory buffer
     - this is done to avoid frequent IO operations
 3. after refresh signal is issued by lucene
-    - buffered docuemnts will be collected into segments
-    - segments contain inverted indices & docuemnts themselves
+    - buffered documents will be collected into segments
+    - segments contain inverted indices & documents themselves
     - segments are immutable
 4. data is written to the FS cache & then commited to the physical disk
     - documents can be searched & accessed in this step
@@ -585,7 +585,7 @@ done by setting "_source" query param to "false"
 - both can be done in the same query at the same time
 ### Updating Documents
 #### Document Update Mechanics
-- procedure of updating docuemnts
+- procedure of updating documents
     1. fetch
     2. modify
     3. increment version
@@ -624,7 +624,7 @@ POST <index>/_update/<identifier>
     - `if (<condition>) {<instrcution>} else {<instrcution>}`
 - anatomy script object
     - source: contains conditions, expressions, assignments & modifications
-    - lange: contains expression language; defaults to "painless"
+    - lang: contains expression language; defaults to "painless"
     - params: enables passing data to script dynamically
 #### [Replacing Documents](#document-apis)
 #### Upserts
@@ -656,4 +656,35 @@ POST <index>/_update_by_query
     "script": <script>
 }
 ```
-<!-- 181, DELETING DOCUMENTS -->
+### Deleting Documents
+#### Deleting With An ID
+- `DELETE <index>/_doc/<identifier>`
+- causes "_version" to be increased if done successfully
+#### Deleting By Query
+deleting set of documents matching specific criteria
+```
+POST <index>/_delete_by_query
+{
+    "query": <query>
+}
+```
+### Working With Documents In Bulk
+- request body
+    ```
+    POST _bulk
+    {<operation>: <metadata>}
+    <document>
+    ```
+- metadata
+    ```
+    {"_index": <index>, "_id": <identifier>}
+    ```
+- operation
+    - index
+    - delete
+    - create
+        - avoids overrides
+    - update
+- uses "ndjson" instead of "json"
+- different components could be moved or omitted based on contextual conditions
+<!-- 190, REINDEXING DOCUMENTS -->
