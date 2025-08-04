@@ -687,4 +687,12 @@ POST <index>/_delete_by_query
     - update
 - uses "ndjson" instead of "json"
 - different components could be moved or omitted based on contextual conditions
-<!-- 190, REINDEXING DOCUMENTS -->
+### Reindexing Documents
+moving documents between two indices
+```
+POST _reindex
+{
+    "source": {"index": <index>},
+    "dest": {"index": <index>},
+}
+```
