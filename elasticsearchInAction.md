@@ -696,3 +696,8 @@ POST _reindex
     "dest": {"index": <index>},
 }
 ```
+## Indexing Operations
+- sets of configurations of indices
+    - settings
+    - mappings
+    - aliases
