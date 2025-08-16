@@ -798,7 +798,7 @@ DELETE <index-patterns>/_alias/<alias>
 ```
 ### Closing & Opening Indices
 #### Closing Indices
-indices are put on hold for any operations (read & write)
+indices are put on hold for any operation (including read & write)
 ```
 POST <index>/_close
 ```
