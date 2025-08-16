@@ -505,7 +505,7 @@ fields as additional data types are accessed by "<field>.<field-as-data-type>" s
         - `PUT <index>/_doc/<identifier>`
     - "POST" method is used when identifier is expected to be generated
         - `POST <index>/_doc/<identifier>`
-        - identifier is optional
+        - "identifier" is optional
 <!---->
 these endpoints update or overwrite the document if it already exists
 - avoiding overwrites
@@ -701,3 +701,75 @@ POST _reindex
     - settings
     - mappings
     - aliases
+- three components of indices
+    - aliases
+    - settings
+    - schema mappings
+### Creating Indices
+#### Indices With Custom Settings
+- index settings
+    - static
+        - applied in the process of creation
+        - can't be changed on operational indices
+    - dynamic
+        - able to change on live indices
+- creating indices with explicit non-default settings
+```
+PUT <index>
+{
+    "settings": {
+        <setting>: <value>
+    }
+}
+```
+- updating dynamic settings of indices
+```
+PUT <index>/_settings
+{
+    "settings": {
+        <setting>: <value>
+    }
+}
+```
+- getting settings of indices
+```
+GET <index-patterns>/_settings/<setting>
+```
+    - "setting" is optional
+#### Index With Aliases
+- aliases
+    - alternate names given to indices
+- creating aliases
+    - using index API
+    ```
+    PUT <index>
+    {
+        "aliases": {
+            <alias>: {}
+        }
+    }
+    ```
+    - using alias API
+    ```
+    PUT <index-patterns>/_alias/<alias>
+    ```
+- multiple aliasing operations
+    - _aliases API combines adding & removing aliases as well as deleting indices
+    ```
+    POST _aliases
+    {
+        "actions": [<actions>]
+    }
+    ```
+    - actions
+    ```
+    {
+        <operation>: {
+            "index": <index>,
+            "indices": <indices>,
+            "alias": <alias>
+        }
+    }
+    ```
+        - "operations" is either "add" or "remove"
+<!-- 207, READING INDICES -->
