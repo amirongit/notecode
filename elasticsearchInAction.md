@@ -761,15 +761,15 @@ POST _reindex
             "actions": [<actions>]
         }
         ```
-    - actions
-        ```
-        {
-            <operation>: {
-                "index": <index>,
-                "indices": <indices>,
-                "alias": <alias>
+        - actions
+            ```
+            {
+                <operation>: {
+                    "index": <index>,
+                    "indices": <indices>,
+                    "alias": <alias>
+                }
             }
-        }
-        ```
-    - "operations" is either "add" or "remove"
+            ```
+            - "operations" is either "add" or "remove"
 <!-- 207, READING INDICES -->
