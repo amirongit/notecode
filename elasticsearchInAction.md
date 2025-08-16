@@ -772,4 +772,38 @@ POST _reindex
             }
             ```
             - "operations" is either "add" or "remove"
-<!-- 207, READING INDICES -->
+### Reading Indices
+#### Reading Public Indices
+fetching details of indices, including settings, schema mappings & aliases
+```
+GET <index-patterns>/<component>/<field>
+```
+- component is optional
+    - "_settings"
+    - "_mapping"
+    - "_alias"
+- field is optional
+    - should be specific field of mentioned component
+#### Reading Hidden Indices
+- indices with "." as the first character of their name
+- will be reserved for system related stuff in future versions
+### Deleting Indices
+- deleting indices
+```
+DELETE <index-patterns>
+```
+- deleting aliases
+```
+DELETE <index-patterns>/_alias/<alias>
+```
+### Closing & Opening Indices
+#### Closing Indices
+indices are put on hold for any operations (read & write)
+```
+POST <index>/_close
+```
+#### Opening Indices
+```
+POST <index>/_open
+```
+<!-- 212, INDEX TEMPLATE -->
