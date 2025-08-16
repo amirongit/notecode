@@ -714,27 +714,27 @@ POST _reindex
     - dynamic
         - able to change on live indices
 - creating indices with explicit non-default settings
-```
-PUT <index>
-{
-    "settings": {
-        <setting>: <value>
+    ```
+    PUT <index>
+    {
+        "settings": {
+            <setting>: <value>
+        }
     }
-}
-```
+    ```
 - updating dynamic settings of indices
-```
-PUT <index>/_settings
-{
-    "settings": {
-        <setting>: <value>
+    ```
+    PUT <index>/_settings
+    {
+        "settings": {
+            <setting>: <value>
+        }
     }
-}
-```
+    ```
 - getting settings of indices
-```
-GET <index-patterns>/_settings/<setting>
-```
+    ```
+    GET <index-patterns>/_settings/<setting>
+    ```
     - "setting" is optional
 #### Index With Aliases
 - aliases
@@ -755,21 +755,21 @@ GET <index-patterns>/_settings/<setting>
     ```
 - multiple aliasing operations
     - _aliases API combines adding & removing aliases as well as deleting indices
-    ```
-    POST _aliases
-    {
-        "actions": [<actions>]
-    }
-    ```
-    - actions
-    ```
-    {
-        <operation>: {
-            "index": <index>,
-            "indices": <indices>,
-            "alias": <alias>
+        ```
+        POST _aliases
+        {
+            "actions": [<actions>]
         }
-    }
-    ```
-        - "operations" is either "add" or "remove"
+        ```
+    - actions
+        ```
+        {
+            <operation>: {
+                "index": <index>,
+                "indices": <indices>,
+                "alias": <alias>
+            }
+        }
+        ```
+    - "operations" is either "add" or "remove"
 <!-- 207, READING INDICES -->
