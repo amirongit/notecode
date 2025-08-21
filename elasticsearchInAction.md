@@ -384,7 +384,7 @@ search results, thus, prohibited; reindexing is done in this situation
 #### Type Coercion
 the process of casting a value in the format of another data type to the desired data which is in the schema definition
 ### Data Types
-every field can have one or more associated data types
+- every field can have one or more associated data types
 - simple types
     - common data types which represent basic & primitive values
     - like text, boolean, long, date, double & binary
@@ -806,4 +806,41 @@ POST <index>/_close
 ```
 POST <index>/_open
 ```
-<!-- 212, INDEX TEMPLATE -->
+### Index Template
+- templates with pre defined index components and an index pattern
+- applied to inidices whos name match the index pattern (when being created)
+- explicit index components begin set override templates
+- template priorities are used when overlapping happens
+- composable templates
+    - able to compose multiple component templates
+    - able to define index components on their own
+- component templates
+    - reusable set of pre defined index components
+    - able to be used by multiple composable templates
+    - can't be used on its own
+#### Creating Composable Templates
+```
+POST _index_template/<template>
+{
+    "index_patterns": <index-patterns>,
+    "priority": <priority>,
+    "template": {
+        "mappings": <mappings>,
+        "settings": <settings>,
+        "aliases": <aliases>,
+    },
+    "composed_of": <component-templates>
+}
+```
+#### Creating Component Templates
+```
+POST _component_template/<component-template>
+{
+    "template": {
+        "mappings": <mappings>,
+        "settings": <settings>,
+        "aliases": <aliases>,
+    }
+}
+```
+<!-- 216, MONITORING AND MANAGING INDICES -->
