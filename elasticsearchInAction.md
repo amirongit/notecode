@@ -843,4 +843,4 @@ POST _component_template/<component-template>
     }
 }
 ```
-<!-- 216, MONITORING AND MANAGING INDICES -->
+<!-- 220, ADVANCED OPERATIONS -->
