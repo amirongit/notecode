@@ -396,7 +396,7 @@ the process of casting a value in the format of another data type to the desired
     - used for specialized cases such as geolocation & IP addresses
     - like geo_shape, geo_point, ip & range types like date_range & ip_range
 <!---->
-schema definition is retrieved using mapping API
+schema definition is retrieved using "mapping" API
 ```
 GET <indices>/_mapping
 ```
@@ -740,7 +740,7 @@ POST _reindex
 - aliases
     - alternate names given to indices
 - creating aliases
-    - using index API
+    - using "index" API
     ```
     PUT <index>
     {
@@ -749,7 +749,7 @@ POST _reindex
         }
     }
     ```
-    - using alias API
+    - using "alias" API
     ```
     PUT <index-patterns>/_alias/<alias>
     ```
@@ -843,4 +843,53 @@ POST _component_template/<component-template>
     }
 }
 ```
-<!-- 220, ADVANCED OPERATIONS -->
+### Advanced Operations
+#### Splitting An Index
+- splitting indices into more shards
+- write operations should be disabled on indices before getting splitted
+    ```
+    PUT <index>/_settings
+    {
+        "index.blocks.writes": true
+    }
+    ```
+- settings with intention of preparing indices for splitting process must be undone explicitly
+- dest should not exist before splitting process
+- index components are copied from source to dest if not explicitly set
+- number of shards of dest should be multiple of number of shards of source
+- using "split" API
+    ```
+    POST <source-index>/_split/<dest-index>
+    {
+        "settings": <settings>,
+        "mappings": <mappings>,
+        "aliases": <aliases>
+    }
+    ```
+#### Shrinking An Index
+- shrinking indices into fewer shards
+- write operations should be disabled on & shards should be on one single node for indices before getting shrinked
+    ```
+    PUT <index>/_settings
+    {
+        "index.blocks.writes": true,
+        "index.routing.allocation.require._name": <node>
+    }
+    ```
+- settings with intention of preparing indices for shrinking process must be undone explicitly
+- dest should not exist before splitting process
+- index components are copied from source to dest if not explicitly set
+- number of shards of dest should be factor of number of shards of source
+- using "shrink" API
+    ```
+    POST <source-index>/_shrink/<dest-index>
+    {
+        "settings": <settings>,
+        "mappings": <mappings>,
+        "aliases": <aliases>
+    }
+    ```
+#### Rolling Over An Index Alias
+- process of making an old index read-only & creating new index behind the same alias
+- triggered by conditions like time, volume etc...
+<!-- 225 -->
