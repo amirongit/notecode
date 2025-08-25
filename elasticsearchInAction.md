@@ -737,6 +737,8 @@ POST _reindex
     ```
     - "setting" is optional
 #### Index With Aliases
+- "is_write_index" configuration is used to mark indices as writable through aliases
+    - should be set to true on at least one index when creating aliases for multiple indices
 - aliases
     - alternate names given to indices
 - creating aliases
@@ -745,7 +747,9 @@ POST _reindex
     PUT <index>
     {
         "aliases": {
-            <alias>: {}
+            <alias>: {
+                "is_write_index": <is-write-index>
+            }
         }
     }
     ```
@@ -767,7 +771,8 @@ POST _reindex
                 <operation>: {
                     "index": <index>,
                     "indices": <indices>,
-                    "alias": <alias>
+                    "alias": <alias>,
+                    "is_write_index": <is-write-index>
                 }
             }
             ```
@@ -778,11 +783,11 @@ fetching details of indices, including settings, schema mappings & aliases
 ```
 GET <index-patterns>/<component>/<field>
 ```
-- component is optional
+- "component" is optional
     - "_settings"
     - "_mapping"
     - "_alias"
-- field is optional
+- "field" is optional
     - should be specific field of mentioned component
 #### Reading Hidden Indices
 - indices with "." as the first character of their name
@@ -890,6 +895,18 @@ POST _component_template/<component-template>
     }
     ```
 #### Rolling Over An Index Alias
-- process of making an old index read-only & creating new index behind the same alias
+- process of making an old index read only & creating new index behind the same alias
 - triggered by conditions like time, volume etc...
-<!-- 225 -->
+- steps
+    1. an alias is created
+        - value of "is_write_index" is set to true for at least one index
+        - index names confirm to pattern "<prefix>-<digits>"
+    2. rollover happens
+        - using "rollover" API
+            ```
+            POST <alias>/_rollover/<new-index>
+            ```
+            - "new-index" is optional
+    3. new writable index is created with digits incremented by one
+    4. old index is put in read only mode
+    5. alias is chaned to point to new index
