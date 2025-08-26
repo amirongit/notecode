@@ -203,22 +203,24 @@
 ### Compound Queries
 - provides a mechanism to combine leaf queries in order to build complex queries
 #### Leaf Query
-- looks for specific values in specific fields; can be used by itself
+- looks for specific values in specific fields
+- can be used by itself
 #### Boolean
-- used to create sophisticated query logic; consists of four optional clauses made of leaf queries
+- used to create sophisticated query logic
     ```
     GET <indices>/_search
     {
         "query": {
             "bool": {
                 "must": <query>,
-                "must_not": <query>,
-                "should": <query>,
-                "filter": <query>
+                    "must_not": <query>,
+                    "should": <query>,
+                    "filter": <query>
             }
         }
     }
     ```
+- consists of four optional clauses made of leaf queries
     - must
         - all leaf queries match (matches contribute to score)
     - should
@@ -245,7 +247,8 @@
     }
     ```
 #### Bucket
-- segregates data by intervals into buckets; useful for building visualizations
+- segregates data by intervals into buckets
+- useful for building visualizations
 #### Pipeline
 - aggregations that work on the output of other aggregations
 ## Architecture
@@ -301,7 +304,7 @@
         - data: document persistence & retrieval
             - IO intensive
         - ingest: transformation of data before indexing
-        - coordination: handling client requests (default role)
+        - coordination: handling client requests (default)
             - taken on by all nodes as an additional role
             - nodes with only this specific role can act like a load balancer
         - ...
@@ -321,8 +324,7 @@
             - number of times the search word appears across the whole set of documents
         - assignes weight terms based on their TF & IDF
         - terms with more TF & less IDF are considered to be more relevant
-    - BM25 (Best Matching 25)
-        - default relevancy algorithm
+    - BM25 (Best Matching 25) (default)
         - improvement over TF-IDF
         - prevents terms with high TF from receiving excessively high scores
         - employs document length normalization to counter the bias towards longer documents
@@ -392,7 +394,8 @@
     - common data types which represent basic & primitive values
     - like text, boolean, long, date, double & binary
 - complex types
-    - created by composing additional types; similar to compound or container types in programming languages
+    - created by composing additional types
+    - similar to compound or container types in programming languages
     - can be flattened or nested
     - like object, nested, flattened & join
 - specialized types
@@ -541,7 +544,7 @@
     ```
 - client side
     - "refresh" query param is used with one of three values
-        - "false": tells the engine not to force the refresh operation; the default option
+        - "false": tells the engine not to force the refresh operation (default)
         - "true": forces the engine to do a refresh operation
         - "wait_for": blocks the request & returns after a refresh operation happens
 - buffered documents may be lost in the case of server breakdown before a successfull refresh operation
@@ -625,7 +628,7 @@ POST <index>/_update/<identifier>
     - `if (<condition>) {<instrcution>} else {<instrcution>}`
 - anatomy script object
     - source: contains conditions, expressions, assignments & modifications
-    - lang: contains expression language; defaults to "painless"
+    - lang: contains expression language (defaults to "painless")
     - params: enables passing data to script dynamically
 #### [Replacing Documents](#document-apis)
 #### Upserts
@@ -700,7 +703,7 @@ POST <index>/_update/<identifier>
     - settings
     - mappings
     - aliases
-- three components of indices
+- components of indices
     - aliases
     - settings
     - schema mappings
@@ -844,7 +847,7 @@ POST _component_template/<component-template>
     }
     ```
 - settings with intention of preparing indices for splitting process must be undone explicitly
-- dest should not exist before splitting process
+- dest shouldn't exist before splitting process
 - index components are copied from source to dest if not explicitly set
 - number of shards of dest should be multiple of number of shards of source
 - using "split" API
@@ -867,7 +870,7 @@ POST _component_template/<component-template>
     }
     ```
 - settings with intention of preparing indices for shrinking process must be undone explicitly
-- dest should not exist before splitting process
+- dest shouldn't exist before splitting process
 - index components are copied from source to dest if not explicitly set
 - number of shards of dest should be factor of number of shards of source
 - using "shrink" API
@@ -903,6 +906,32 @@ POST _component_template/<component-template>
 #### Analyzers To The Rescue
 - [text data type](#the-text-data-type)
 - full text queries are tokenized in order to match existing tokens
-#### Analyzer Modules
+### Analyzer Modules
 - software components used to tokenize & normalize full text data
-<!-- 238 - TOKENIZATION -->
+#### Tokenization
+- process of chopping full text data into small sections called tokens by following certain rules, example:
+    - token delimiters
+    - ignored parts
+#### Normalization
+- process of modification, enrichment & transformation of tokens, example:
+    - reducing tokens to their root word (stemming)
+    - finding synonyms
+    - removing stop words
+    - making tokens lowercase
+#### Anatomy Of An Analyzer
+- components of analyzer modules
+    - character filters
+        - remove unwanted characters across all of data
+        - able to match & replace characters by regex patterns
+        - are optional
+        - there can be multiple instance of them
+    - tokenizers
+        - handle tokenization
+        - able to split data into tokens by stop words, punctuations & etc...
+        - there should be one single instance of them
+    - token filters
+        - handle normalization
+        - able to change case of, find & add synonyms to & provide & replace root words with tokens
+        - are optional
+        - there can be multiple instance of them
+<!-- 241 - TESTING ANALYZERS -->
