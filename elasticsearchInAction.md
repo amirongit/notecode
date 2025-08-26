@@ -881,7 +881,6 @@ POST _component_template/<component-template>
     ```
 #### Rolling Over An Index Alias
 - process of making an old index read only & creating new index behind the same alias
-- triggered by conditions like time, volume etc...
 - steps
     1. an alias is created
         - value of "is_write_index" is set to true for at least one index
