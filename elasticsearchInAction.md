@@ -901,12 +901,13 @@ POST _component_template/<component-template>
     1. an alias is created
         - value of "is_write_index" is set to true for at least one index
         - index names confirm to pattern "<prefix>-<digits>"
-    2. rollover happens
+    2. rollover is invoked
         - using "rollover" API
             ```
             POST <alias>/_rollover/<new-index>
             ```
             - "new-index" is optional
+        - this can be configured to be automatic
     3. new writable index is created with digits incremented by one
     4. old index is put in read only mode
     5. alias is chaned to point to new index
