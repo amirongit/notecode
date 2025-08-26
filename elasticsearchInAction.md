@@ -5,14 +5,15 @@
     - follows an specific schema or format
     - easily searchable
     - binary matching determination logic
-- unstructured (or full-text)
+- unstructured (or full text)
     - is unorganized, schema-free & in no specific format
     - non-binary matching determination logic
 - semi-structured
     - falls between structured & unstructured data
     - usually is unstructured data with meta-data describing it
-### Full-Text Search
-technique to search specific phrases within the entire data rather than looking for it in specific fields or sections; doesn't depend on metadata
+### Full Text Search
+- technique to search for phrases in entire data rather than specific fields or sections
+- doesn't depend on metadata
 ### Elastic Stack
 - elasticsearch
 - logstash
@@ -53,33 +54,34 @@ technique to search specific phrases within the entire data rather than looking 
 - geo
     - specialized for geospatial data
 ### Being Schema-Less
-when the data store doesn't require a defined schema before storing data
+- when the data store doesn't require a defined schema before storing data
 ### Index
-logical bucket which is dedicated to collect similar data (doesn't enforce schema)
+- logical bucket which is dedicated to collect similar data (doesn't enforce schema)
 ### APIs
-some resources are as follow
-- index
-- documents ("_doc" is a generic pointer to the single document type an index is able to store)
+- some resources are as follow
+    - index
+    - documents ("_doc" is a generic pointer to the single document type an index is able to store)
 <!---->
-APIs are exposed as a suffix of their corresponding resource; sometimes multiple comma-separated resources on the same level can be used
-- components
-    - HTTP method (action) (verbs)
-    - hostname & port
-    - resource
-    - request body
+- APIs are exposed as a suffix of their corresponding resource
+    - sometimes multiple comma-separated resources on the same level can be used
+    - components
+        - HTTP method (action) (verbs)
+        - hostname & port
+        - resource
+        - request body
 <!---->
-some elasticsearch APIs allow bodies passed in GET requests
+- some elasticsearch APIs allow bodies passed in GET requests
 ### Query DSL
-simple json-based query language provided by elasticsearch which is extensively used in kibana
+- simple json-based query language provided by elasticsearch which is extensively used in kibana
 ### Indexing A Document
 - HTTP verbs have their own exact meaning
 - representation of a document can be anything in json format since elasticsearch is schema-less
 ### Retrieving Data
 #### Number Of Documents
 - all documents<br/>
-`GET _count/`
+    `GET _count/`
 - documents of specific indices<br/>
-`GET <indices>/_count`
+    `GET <indices>/_count`
 #### Documents Themselves
 - single document<br/>
     - with metadata<br/>
@@ -87,164 +89,165 @@ simple json-based query language provided by elasticsearch which is extensively 
     - just the document<br/>
     `GET <index>/_source/<identifier>`
 - multiple documents (considered a "match_all" query when used without any specification)
-```
-GET <indices>/_search
-{
-    "query": {
-        "ids": {
-            "values": [
-                <identifier>
-            ]
-        }
-    },
-    "_source": [
-        <fields>,
-        <boolean>
-    ]
-}
-```
-### Full-Text Search
-operators are applied between multiple space-separated terms in "value" fields
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "ids": {
+                "values": [
+                    <identifier>
+                ]
+            }
+        },
+        "_source": [
+            <fields>,
+            <boolean>
+        ]
+    }
+    ```
+### Full Text Search
+- operators are applied between multiple space-separated terms in "value" fields
 #### Match
-- used to perform full-text search on a single field
+- used to perform full text search on a single field
 - logical operator is indicated by the "operator" parameter (defaults to "OR")
 - number of allowed misspells is indicated by "fuzziness" parameter
-```
-GET <indices>/_search
-{
-    "query": {
-        "match": {
-            <field>: {
-                "query": <value>,
-                "operator": <operator>,
-                "fuzziness": <allowed-misspells>
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "match": {
+                <field>: {
+                    "query": <value>,
+                    "operator": <operator>,
+                    "fuzziness": <allowed-misspells>
+                }
             }
         }
     }
-}
-```
+    ```
 #### Multi Match
-- used to perform full-text search on multiple fields
+- used to perform full text search on multiple fields
 - fields can be boosted by their name being appended with `^<boost-factor>`
-```
-GET <indices>/_search
-{
-    "query": {
-        "multi_match": {
-            "query": <value>,
-            "fields": <fields>
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "multi_match": {
+                "query": <value>,
+                "fields": <fields>
+            }
         }
     }
-}
-```
+    ```
 #### Search Phrase
 - used to search for a sequence of words in an exact order
 - number of missing words in the given phrase can be indicated by "slop" parameter
-```
-GET <indices>/_search
-{
-    "query": {
-        "match_phrase": {
-            <field>: <phrase>
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "match_phrase": {
+                <field>: <phrase>
+            }
+        "slop": <missing-words>
         }
-    "slop": <missing-words>
     }
-}
-```
-### Term-Level Queries
+    ```
+### Term Level Queries
 - used to query precise values such as numbers, dates, ranges & IP addresses in structured data
 - produces binary results, meaning that items either match the query or don't
 #### Prefix
-works like match query; used to search with shortend version of words
-```
-GET <indices>/_search
-{
-    "query": {
-        "match_phrase_prefix": {
-            <field>: <prefix>
+- works like match query
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "match_phrase_prefix": {
+                <field>: <prefix>
+            }
         }
     }
-}
-```
+    ```
+- used to search with shortend version of words
 #### Term
-used to search for exact non-textual structured values
-```
-GET <indices>/_search
-{
-    "query": {
-        "term": {
-            <field>: {
-                "value": <value>
+- used to search for exact non-textual structured values
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "term": {
+                <field>: {
+                    "value": <value>
+                }
             }
         }
     }
-}
-```
+    ```
 #### Range
-used to search for values that match given range
-```
-GET <indices>/_search
-{
-    "query": {
-        "range": {
-            <field>: {
-                "lt": <less-than>,
-                "lte": <less-than-or-equal>,
-                "gt": <greater-than>,
-                "gte": <greater-than-or-equal>
+- used to search for values that match given range
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "range": {
+                <field>: {
+                    "lt": <less-than>,
+                    "lte": <less-than-or-equal>,
+                    "gt": <greater-than>,
+                    "gte": <greater-than-or-equal>
+                }
             }
         }
     }
-}
-```
+    ```
 ### Compound Queries
-provides a mechanism to combine leaf queries in order to build complex queries
+- provides a mechanism to combine leaf queries in order to build complex queries
 #### Leaf Query
-looks for specific values in specific fields; can be used by itself
+- looks for specific values in specific fields; can be used by itself
 #### Boolean
-used to create sophisticated query logic; consists of four optional clauses made of leaf queries
-- must
-    - all leaf queries match (matches contribute to relevancy score)
-- should
-    - one of leaf queries matches (matches contribute to relevancy score)
-- must not
-    - non of leaf queries match (matches don't contribute to relevancy score)
-- filter
-    - all leaf queries match (matches don't contribute to relevancy score)
-<!---->
-```
-GET <indices>/_search
-{
-    "query": {
-        "bool": {
-            "must": <leaf-queries>,
-            "must_not": <leaf-queries>,
-            "should": <leaf-queries>,
-            "filter": <leaf-queries>
-        }
-    }
-}
-```
-### Aggregations
-used to provide analytics & high level data
-#### Metric
-simple aggregations like "avg", "sum", "min", "max", "stats" & "extended_stats"
-```
-GET <indices>/_search
-{
-    "aggs": {
-        <name>: {
-            <aggregation-type>: {
-                "field": <field>
+- used to create sophisticated query logic; consists of four optional clauses made of leaf queries
+    ```
+    GET <indices>/_search
+    {
+        "query": {
+            "bool": {
+                "must": <query>,
+                "must_not": <query>,
+                "should": <query>,
+                "filter": <query>
             }
         }
     }
-}
-```
+    ```
+    - must
+        - all leaf queries match (matches contribute to score)
+    - should
+        - one of leaf queries matches (matches contribute to score)
+    - must not
+        - non of leaf queries match (matches don't contribute to score)
+    - filter
+        - all leaf queries match (matches don't contribute to score)
+<!---->
+### Aggregations
+- used to provide analytics & high level data
+#### Metric
+- simple aggregations like "avg", "sum", "min", "max", "stats" & "extended_stats"
+    ```
+    GET <indices>/_search
+    {
+        "aggs": {
+            <name>: {
+                <aggregation-type>: {
+                    "field": <field>
+                }
+            }
+        }
+    }
+    ```
 #### Bucket
-segregates data by intervals into buckets; useful for building visualizations
+- segregates data by intervals into buckets; useful for building visualizations
 #### Pipeline
-aggregations that work on the output of other aggregations
+- aggregations that work on the output of other aggregations
 ## Architecture
 ### The Building Blocks
 #### Documents
@@ -270,7 +273,7 @@ aggregations that work on the output of other aggregations
 - shards
     - software components that hold some amount of data
     - physical instances of lucene
-        - high performance full-text search engine
+        - high performance full text search engine
     - usually distributed across a cluster for availability & failover
 - replicas
     - duplicated copies of primary shards
@@ -304,31 +307,30 @@ aggregations that work on the output of other aggregations
         - ...
 ### Inverted Indices
 - data structure which maps tokens to containing documents & their frequency of repetition
-- enables full-text search
+- enables full text search
 ### Relevancy
 #### Relevancy Score
-positive floating-point number which indicates how relevant a particular result is to the query
+- positive floating-point number indicating how relevant results are to query
+- alternative to binary matching logic
 #### Relevancy Algorithms
-configured per field
-- TF-IDF
-    - term frequency
-        - number of times the search word appears in an specific field of a document
-    - inverse document frequency
-        - number of times the search word appears across the whole set of documents
-    - assignes weight terms based on their TF & IDF
-    - terms with more TF & less IDF are considered to be more relevant
-- BM25 (Best Matching 25)
-    - default relevancy algorithm
-    - improvement over TF-IDF
-    - prevents terms with high TF from receiving excessively high scores
-    - employs document length normalization to counter the bias towards longer documents
-- ...
+- configured per field
+    - TF-IDF
+        - term frequency
+            - number of times the search word appears in an specific field of a document
+        - inverse document frequency
+            - number of times the search word appears across the whole set of documents
+        - assignes weight terms based on their TF & IDF
+        - terms with more TF & less IDF are considered to be more relevant
+    - BM25 (Best Matching 25)
+        - default relevancy algorithm
+        - improvement over TF-IDF
+        - prevents terms with high TF from receiving excessively high scores
+        - employs document length normalization to counter the bias towards longer documents
+    - ...
 ### Routing Algorithm
-determines exactly one primary shard for a document as its location (in the context of indices)
-```
-hash(document.id) % number-of-primary-shards
-```
-changing number of shards would break this for existing documents, reindexing is done in this situation
+- determines exactly one primary shard for a document as its location (in the context of indices)<br/>
+    `hash(document.id) % number-of-primary-shards`
+- changing number of shards would break this for existing documents, reindexing is done in this situation
 ### Scaling
 #### Scaling Up (Vertical Scaling)
 - the process of adding computational resources to the currently existing units of computation
@@ -347,15 +349,29 @@ changing number of shards would break this for existing documents, reindexing is
 - the process in which elasticsearch implicitly derives an schema definition from a document for an index
 - usually happens when a document is indexed without an schema definition up front
 #### Limitations Of Dynamic Mappings
-data type of each field is derived based on the value of the first indexed document; therefore, elasticsearch is unable to<br/>
-determine the correct schema if a broader prespective is needed to do so
+- data type of each field is derived based on the value of the first indexed document
+- correct schema can't be determined if broader prespective is needed
 ### Explicit Mapping
 #### Mapping Using The Indexing API
-an schema definition is created simultaneously with its index using "create index" API
-```
-PUT <index>
-{
-    "mappings": {
+- schema definition is created simultaneously with its index using "create index" API
+    ```
+    PUT <index>
+    {
+        "mappings": {
+            "properties": {
+                <field>: {
+                    "type": <data-type>,
+                    <parameter>: <value>
+                }
+            }
+        }
+    }
+    ```
+#### Mapping Using The Mapping API
+- used to update schema definitions of already existing indices
+    ```
+    PUT <index>/_mapping
+    {
         "properties": {
             <field>: {
                 "type": <data-type>,
@@ -363,26 +379,13 @@ PUT <index>
             }
         }
     }
-}
-```
-#### Mapping Using The Mapping API
-used to update schema definitions of already existing indices
-```
-PUT <index>/_mapping
-{
-    "properties": {
-        <field>: {
-            "type": <data-type>,
-            <parameter>: <value>
-        }
-    }
-}
-```
+    ```
 #### Modifying Existing Fields Is Not Allowed
-operational indidces with data fields are considered live; modifying the schema definition of these indices will cause wrong<br/>
-search results, thus, prohibited; reindexing is done in this situation
+- operational indidces with data fields are considered live
+- modifying the schema definition of live indices will cause wrong search results & is prohibited
+- reindexing is done in this situation
 #### Type Coercion
-the process of casting a value in the format of another data type to the desired data which is in the schema definition
+- process of casting values in form of another data type to desired data format specified in schema definition
 ### Data Types
 - every field can have one or more associated data types
 - simple types
@@ -396,13 +399,11 @@ the process of casting a value in the format of another data type to the desired
     - used for specialized cases such as geolocation & IP addresses
     - like geo_shape, geo_point, ip & range types like date_range & ip_range
 <!---->
-schema definition is retrieved using "mapping" API
-```
-GET <indices>/_mapping
-```
+- schema definition is retrieved using "mapping" API<br/>
+    `GET <indices>/_mapping`
 ### Core Data Types
 #### The Text Data Type
-- unstructured full-text data
+- unstructured full text data
 - values of this data type are analyzed before persistence
     - analyzers enrich, enhance & transform data into internal data structures
     - stemmers can be used to reduce tokens & words to their root
@@ -440,27 +441,27 @@ GET <indices>/_mapping
 #### The Geo Point Data Type
 - represents a single geographical point
 - can be queried using "get_bounding_box"
-    - takes two geo points to form a boxed area
-    - searches for points inside the area
-```
-GET indices/_search
-{
-    "query": {
-        "geo_bounding_box": {
-            <field>: {
-                "top_left": {
-                    "lat": <latitude>,
-                    "lon": <longitude>
-                },
-                "top_right": {
-                    "lat": <latitude>,
-                    "lon": <longitude>,
+    ```
+    GET indices/_search
+    {
+        "query": {
+            "geo_bounding_box": {
+                <field>: {
+                    "top_left": {
+                        "lat": <latitude>,
+                            "lon": <longitude>
+                    },
+                        "top_right": {
+                            "lat": <latitude>,
+                            "lon": <longitude>,
+                        }
                 }
             }
         }
     }
-}
-```
+    ```
+    - takes two geo points to form a boxed area
+    - searches for points inside the area
 #### The Object Data Type
 - hierarchical structured data
 - inner properties are flattened before persistence
@@ -475,39 +476,39 @@ GET indices/_search
 - no analyzation happens when documents get persisted
     - this makes writing operations cheap
 ### Fields With Multiple Data Types
-additional "fields" attribute can be provided in order to store desired fields using multiple data types
-```
-PUT <index>
-{
-    "mappings": {
-        "properties": {
-            <field>: {
-                "type": <data-type>,
-                <parameter>: <value>,
-                "fields": {
-                    <field-as-data-type>: {
-                        "type": <data-type>,
-                        <parameter>: <value>,
+- additional "fields" attribute is provided in order to store desired fields using multiple data types
+    ```
+    PUT <index>
+    {
+        "mappings": {
+            "properties": {
+                <field>: {
+                    "type": <data-type>,
+                    <parameter>: <value>,
+                    "fields": {
+                        <field-as-data-type>: {
+                            "type": <data-type>,
+                            <parameter>: <value>,
+                        }
                     }
                 }
             }
         }
     }
-}
-```
-fields as additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
+    ```
+- additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
 ## Working With Documents
 ### Indexing Documents
 #### Document APIs
 - document identifiers
     - unique identifier associated to documents for their lifetime
+    - documents are updated or overwritten in case of existence
     - "PUT" method is used when identifier is provided by user
         - `PUT <index>/_doc/<identifier>`
     - "POST" method is used when identifier is expected to be generated
         - `POST <index>/_doc/<identifier>`
         - "identifier" is optional
 <!---->
-these endpoints update or overwrite the document if it already exists
 - avoiding overwrites
     - "_doc" is replaced by "_create"
     - indicates that the document should be created
@@ -530,14 +531,14 @@ these endpoints update or overwrite the document if it already exists
     - this probably happens in the process of segments being merged
 #### Customizing The Refresh Process
 - server side
-```
-PUT <indices>/settings
-{
-    "index": {
-        "refresh_interval": <refresh-interval>
+    ```
+    PUT <indices>/settings
+    {
+        "index": {
+            "refresh_interval": <refresh-interval>
+        }
     }
-}
-```
+    ```
 - client side
     - "refresh" query param is used with one of three values
         - "false": tells the engine not to force the refresh operation; the default option
@@ -548,37 +549,37 @@ PUT <indices>/settings
 - there is an indirect (negative) correlation between refresh rate & the possibality of data loss
 ### Retrieving Documents
 #### Using The Single Document API
-- data & metadata retrieve
-    - `GET <index>/_doc/<identifier>`
-- existence check
-    - `HEAD <index>/_doc/<identifier>`
+- data & metadata retrieve<br/>
+    `GET <index>/_doc/<identifier>`
+- existence check<br/>
+    `HEAD <index>/_doc/<identifier>`
 #### Retrieving Multiple Documents
 - from single index
-```
-GET <index>/_mget
-{
-    "ids": <array-of-identifiers>
-}
-```
+    ```
+    GET <index>/_mget
+    {
+        "ids": <array-of-identifiers>
+    }
+    ```
 - from multiple indices
-```
-GET _mget
-{
-    "docs": [
-        {
-            "_index": <index>,
-            "_id": <identifier>
-        }
-    ]
-}
-```
+    ```
+    GET _mget
+    {
+        "docs": [
+            {
+                "_index": <index>,
+                "_id": <identifier>
+            }
+        ]
+    }
+    ```
 ### Manupulating Responses
 #### Removing Metadata From The Response
 - response objects usually consist of metadata & data (the original document)
 - "_source" attribute encompasses the document (the data)
     - retrieved alone by replacing "_doc" with "_source"
 #### Suppressing The Source Document
-done by setting "_source" query param to "false"
+- done by setting "_source" query param to "false"
 #### Including & Excluding Fields
 - including fields is done by passing comma-separated names of fields to "_source_include" query param
 - excluding fields is done by passing comma-separated names of fields to "_source_exclude" query param
@@ -601,7 +602,7 @@ POST <index>/_update/<identifier>
     }
 }
 ```
-values are replaced
+- values are replaced
 #### Scripted Updates
 ```
 POST <index>/_update/<identifier>
@@ -628,14 +629,14 @@ POST <index>/_update/<identifier>
     - params: enables passing data to script dynamically
 #### [Replacing Documents](#document-apis)
 #### Upserts
-meaning update if exists insert otherwise
-```
-POST <index>/_update/<identifier>
-{
-    "script": <script>,
-    "upsert": <document>
-}
-```
+- meaning update if exists insert otherwise
+    ```
+    POST <index>/_update/<identifier>
+    {
+        "script": <script>,
+        "upsert": <document>
+    }
+    ```
 #### Updates As Upserts
 ```
 POST <index>/_update/<identifier>
@@ -644,30 +645,30 @@ POST <index>/_update/<identifier>
     "doc_as_upsert": <boolean>
 }
 ```
-setting "doc_as_upsert" to "true" causes "document" to be saved if it doesn't exist already
+- setting "doc_as_upsert" to "true" causes "document" to be saved if it doesn't exist already
 #### Updating With A Query
-updating set of documents matching specific criteria
-failures will be logged but won't stop the operation
-retries, logs & batch sizes can be configured
-```
-POST <index>/_update_by_query
-{
-    "query": <query>,
-    "script": <script>
-}
-```
+- updating set of documents matching specific criteria
+    ```
+    POST <index>/_update_by_query
+    {
+        "query": <query>,
+            "script": <script>
+    }
+    ```
+- failures will be logged but won't stop the operation
+- retries, logs & batch sizes can be configured
 ### Deleting Documents
 #### Deleting With An ID
 - `DELETE <index>/_doc/<identifier>`
 - causes "_version" to be increased if done successfully
 #### Deleting By Query
-deleting set of documents matching specific criteria
-```
-POST <index>/_delete_by_query
-{
-    "query": <query>
-}
-```
+- deleting set of documents matching specific criteria
+    ```
+    POST <index>/_delete_by_query
+    {
+        "query": <query>
+    }
+    ```
 ### Working With Documents In Bulk
 - request body
     ```
@@ -675,27 +676,25 @@ POST <index>/_delete_by_query
     {<operation>: <metadata>}
     <document>
     ```
-- metadata
-    ```
-    {"_index": <index>, "_id": <identifier>}
-    ```
+- metadata<br/>
+    `{"_index": <index>, "_id": <identifier>}`
 - operation
-    - index
-    - delete
-    - create
+    - "index"
+    - "delete"
+    - "create"
         - avoids overrides
-    - update
+    - "update"
 - uses "ndjson" instead of "json"
 - different components could be moved or omitted based on contextual conditions
 ### Reindexing Documents
-moving documents between two indices
-```
-POST _reindex
-{
-    "source": {"index": <index>},
-    "dest": {"index": <index>},
-}
-```
+- moving documents between two indices
+    ```
+    POST _reindex
+    {
+        "source": {"index": <index>},
+        "dest": {"index": <index>},
+    }
+    ```
 ## Indexing Operations
 - sets of configurations of indices
     - settings
@@ -731,10 +730,8 @@ POST _reindex
         }
     }
     ```
-- getting settings of indices
-    ```
-    GET <index-patterns>/_settings/<setting>
-    ```
+- getting settings of indices<br/>
+    `GET <index-patterns>/_settings/<setting>`
     - "setting" is optional
 #### Index With Aliases
 - "is_write_index" configuration is used to mark indices as writable through aliases
@@ -743,20 +740,18 @@ POST _reindex
     - alternate names given to indices
 - creating aliases
     - using "index" API
-    ```
-    PUT <index>
-    {
-        "aliases": {
-            <alias>: {
-                "is_write_index": <is-write-index>
+        ```
+        PUT <index>
+        {
+            "aliases": {
+                <alias>: {
+                    "is_write_index": <is-write-index>
+                }
             }
         }
-    }
-    ```
-    - using "alias" API
-    ```
-    PUT <index-patterns>/_alias/<alias>
-    ```
+        ```
+    - using "alias" API<br/>
+        `PUT <index-patterns>/_alias/<alias>`
 - multiple aliasing operations
     - _aliases API combines adding & removing aliases as well as deleting indices
         ```
@@ -779,38 +774,28 @@ POST _reindex
             - "operations" is either "add" or "remove"
 ### Reading Indices
 #### Reading Public Indices
-fetching details of indices, including settings, schema mappings & aliases
-```
-GET <index-patterns>/<component>/<field>
-```
-- "component" is optional
-    - "_settings"
-    - "_mapping"
-    - "_alias"
-- "field" is optional
-    - should be specific field of mentioned component
+- fetching details of indices, including settings, schema mappings & aliases<br/>
+    `GET <index-patterns>/<component>/<field>`
+    - "component" is optional
+        - "_settings"
+        - "_mapping"
+        - "_alias"
+    - "field" is optional
+        - should be specific field of mentioned component
 #### Reading Hidden Indices
 - indices with "." as the first character of their name
 - will be reserved for system related stuff in future versions
 ### Deleting Indices
-- deleting indices
-```
-DELETE <index-patterns>
-```
-- deleting aliases
-```
-DELETE <index-patterns>/_alias/<alias>
-```
+- deleting indices<br/>
+    `DELETE <index-patterns>`
+- deleting aliases<br/>
+    `DELETE <index-patterns>/_alias/<alias>`
 ### Closing & Opening Indices
 #### Closing Indices
-indices are put on hold for any operation (including read & write)
-```
-POST <index>/_close
-```
+- indices are put on hold for any operation (including read & write)<br/>
+    `POST <index>/_close`
 #### Opening Indices
-```
-POST <index>/_open
-```
+`POST <index>/_open`
 ### Index Template
 - templates with pre defined index components and an index pattern
 - applied to inidices whos name match the index pattern (when being created)
@@ -902,12 +887,23 @@ POST _component_template/<component-template>
         - value of "is_write_index" is set to true for at least one index
         - index names confirm to pattern "<prefix>-<digits>"
     2. rollover is invoked
-        - using "rollover" API
-            ```
-            POST <alias>/_rollover/<new-index>
-            ```
+        - using "rollover" API<br/>
+            `POST <alias>/_rollover/<new-index>`
             - "new-index" is optional
         - this can be configured to be automatic
     3. new writable index is created with digits incremented by one
     4. old index is put in read only mode
     5. alias is chaned to point to new index
+## Text Analysis
+- process of breaking text into tokens & storing them in internal an data structure
+- makes query results faster & enables relevance based scoring
+### Overview
+#### Querying Unstructured Data
+- [data flavors](#data-flavors)
+- [relevancy](#relevancy)
+#### Analyzers To The Rescue
+- [text data type](#the-text-data-type)
+- full text queries are tokenized in order to match existing tokens
+#### Analyzer Modules
+- software components used to tokenize & normalize full text data
+<!-- 238 - TOKENIZATION -->
