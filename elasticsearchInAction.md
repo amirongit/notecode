@@ -53,7 +53,7 @@
     - allows efficient handling of large datasets by breaking them into smaller pieces
 - geo
     - specialized for geospatial data
-### Being Schema-Less
+### Being Schema Less
 - when the data store doesn't require a defined schema before storing data
 ### Index
 - logical bucket which is dedicated to collect similar data (doesn't enforce schema)
@@ -555,7 +555,7 @@
 - data & metadata retrieve<br/>
     `GET <index>/_doc/<identifier>`
 - existence check<br/>
-    `HEAD <index>/_doc/<identifier>`
+    `HEAD <index>/_doc/<patterns>`
 #### Retrieving Multiple Documents
 - from single index
     ```
@@ -734,7 +734,7 @@ POST <index>/_update/<identifier>
     }
     ```
 - getting settings of indices<br/>
-    `GET <index-patterns>/_settings/<setting>`
+    `GET <patterns>/_settings/<setting>`
     - "setting" is optional
 #### Index With Aliases
 - "is_write_index" configuration is used to mark indices as writable through aliases
@@ -754,7 +754,7 @@ POST <index>/_update/<identifier>
         }
         ```
     - using "alias" API<br/>
-        `PUT <index-patterns>/_alias/<alias>`
+        `PUT <patterns>/_alias/<alias>`
 - multiple aliasing operations
     - _aliases API combines adding & removing aliases as well as deleting indices
         ```
@@ -778,7 +778,7 @@ POST <index>/_update/<identifier>
 ### Reading Indices
 #### Reading Public Indices
 - fetching details of indices, including settings, schema mappings & aliases<br/>
-    `GET <index-patterns>/<component>/<field>`
+    `GET <patterns>/<component>/<field>`
     - "component" is optional
         - "_settings"
         - "_mapping"
@@ -790,9 +790,9 @@ POST <index>/_update/<identifier>
 - will be reserved for system related stuff in future versions
 ### Deleting Indices
 - deleting indices<br/>
-    `DELETE <index-patterns>`
+    `DELETE <patterns>`
 - deleting aliases<br/>
-    `DELETE <index-patterns>/_alias/<alias>`
+    `DELETE <patterns>/_alias/<alias>`
 ### Closing & Opening Indices
 #### Closing Indices
 - indices are put on hold for any operation (including read & write)<br/>
@@ -815,7 +815,7 @@ POST <index>/_update/<identifier>
 ```
 POST _index_template/<template>
 {
-    "index_patterns": <index-patterns>,
+    "index_patterns": <patterns>,
     "priority": <priority>,
     "template": {
         "mappings": <mappings>,
@@ -890,8 +890,8 @@ POST _component_template/<component-template>
         - index names confirm to pattern "<prefix>-<digits>"
     2. rollover is invoked
         - using "rollover" API<br/>
-            `POST <alias>/_rollover/<new-index>`
-            - "new-index" is optional
+            `POST <alias>/_rollover/<index>`
+            - "index" is optional
         - this can be configured to be automatic
     3. new writable index is created with digits incremented by one
     4. old index is put in read only mode
@@ -909,11 +909,11 @@ POST _component_template/<component-template>
 ### Analyzer Modules
 - software components used to tokenize & normalize full text data
 #### Tokenization
-- process of chopping full text data into small sections called tokens by following certain rules, example:
+- process of chopping full text data into small sections called tokens by following certain rules
     - token delimiters
     - ignored parts
 #### Normalization
-- process of modification, enrichment & transformation of tokens, example:
+- process of modification, enrichment & transformation of tokens
     - reducing tokens to their root word (stemming)
     - finding synonyms
     - removing stop words
@@ -921,17 +921,77 @@ POST _component_template/<component-template>
 #### Anatomy Of An Analyzer
 - components of analyzer modules
     - character filters
-        - remove unwanted characters across all of data
-        - able to match & replace characters by regex patterns
-        - are optional
-        - there can be multiple instance of them
+        - remove unwanted characters across data
+        - able to match & replace characters using regex patterns
+        - there can be zero to multiple instance of them
     - tokenizers
         - handle tokenization
-        - able to split data into tokens by stop words, punctuations & etc...
         - there should be one single instance of them
     - token filters
         - handle normalization
-        - able to change case of, find & add synonyms to & provide & replace root words with tokens
-        - are optional
-        - there can be multiple instance of them
-<!-- 241 - TESTING ANALYZERS -->
+        - able to change case of, find & add synonyms to & replace root words with tokens
+        - there can be zero to multiple instance of them
+#### Testing Analyzers
+- "_analyze" API
+    ```
+    GET _analyze
+    {
+        "text": <text>,
+        "analyzer": <analyzer>,
+        "tokenizer": <tokenizer>,
+        "filter": <filters>
+    }
+    ```
+    - all fields other than "text" are optional
+    - can be used to debug full text queries
+### Built in Analyzers
+- there are built in analyzers
+- official documentation would make more sense to read, use & refer to
+### Custom Analyzers
+- using "setting" object through "create index" API
+    ```
+    put <index>
+    {
+        "settings": {
+            "analysis": {
+                "analyzer": {
+                    <analyzer>: {
+                        "type": "custom",
+                        "char_filter": <character-filters>,
+                        "tokenizer": <tokenizer>,
+                        "filter": <token-filters>
+                    }
+                },
+                "char_filter": {
+                    <character-filter>: {
+                        "type": <type>,
+                        <parameter>: <value>
+                    }
+                },
+                "tokenizer": {
+                    <tokenizer>: {
+                        "type": <type>,
+                        <parameter>: <value>
+                    }
+                },
+                "filter": {
+                    <token-filter>: {
+                        "type": <type>,
+                        <parameter>: <value>
+                    }
+                },
+            }
+        }
+    }
+    ```
+    - can also be defined on templates
+    - "char_filter", "tokenizer" & "filter" are optional
+- testing custom analyzers using "_analyze" API
+    ```
+    post <index>/_analyze
+    {
+        "text": <text>,
+        "analyzer": <analyzer>
+    }
+    ```
+<!-- 261 - SPECIFYING ANALYZERS -->
