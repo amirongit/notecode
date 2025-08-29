@@ -30,12 +30,12 @@
     - multi-purpose web interface for the stack
 ### Consistency Types
 - strong
+    - offers immediate data consistency
+    - becoms slow under heavy loads of CRUD operations
+- eventual
     - deosn't provide immediate data consistency amongst multiple nodes
     - guarantees consistency after enough time has passed
     - can work with huge loads of CRUD operations
-- eventual
-    - offers immediate data consistency
-    - becoms slow under heavy loads of CRUD operations
 ## Getting Started
 ### Aggregation Types
 - metric
