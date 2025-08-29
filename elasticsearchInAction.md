@@ -354,6 +354,13 @@
 - data type of each field is derived based on the value of the first indexed document
 - correct schema can't be determined if broader prespective is needed
 ### Explicit Mapping
+- mapping property object
+    ```
+    {
+        "type": <data-type>,
+        <parameter>: <value>
+    }
+    ```
 #### Mapping Using The Indexing API
 - schema definition is created simultaneously with its index using "create index" API
     ```
@@ -361,10 +368,7 @@
     {
         "mappings": {
             "properties": {
-                <field>: {
-                    "type": <data-type>,
-                    <parameter>: <value>
-                }
+                <field>: <mapping-property-object>
             }
         }
     }
@@ -375,10 +379,7 @@
     PUT <index>/_mapping
     {
         "properties": {
-            <field>: {
-                "type": <data-type>,
-                <parameter>: <value>
-            }
+            <field>: <mapping-property-object>
         }
     }
     ```
@@ -479,26 +480,7 @@
 - no analyzation happens when documents get persisted
     - this makes writing operations cheap
 ### Fields With Multiple Data Types
-- additional "fields" attribute is provided in order to store desired fields using multiple data types
-    ```
-    PUT <index>
-    {
-        "mappings": {
-            "properties": {
-                <field>: {
-                    "type": <data-type>,
-                    <parameter>: <value>,
-                    "fields": {
-                        <field-as-data-type>: {
-                            "type": <data-type>,
-                            <parameter>: <value>,
-                        }
-                    }
-                }
-            }
-        }
-    }
-    ```
+- "fields" parameter in ["mapping-property-object"](#explicit-mapping) is used for additional data types
 - additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
 ## Working With Documents
 ### Indexing Documents
@@ -994,4 +976,11 @@ POST _component_template/<component-template>
         "analyzer": <analyzer>
     }
     ```
-<!-- 261 - SPECIFYING ANALYZERS -->
+### Specifying Analyzers
+#### Analyzers For Indexing
+- "analyzer" parameter in ["mapping-property-object"](#explicit-mapping) is used to specify field level analyzer
+- "analysis.analyzer.default" index setting is used to specify indexl level analyzer
+#### Analyzers For Searching
+- "search_analyzer" parameter in ["mapping-property-object"](#explicit-mapping) is used to specify field level analyzer for searching purposes
+- "analysis.analyzer.default_search" index setting is used to specify indexl level analyzer for searching purposes
+- analyzer specification is done in different ways for different types of queries
