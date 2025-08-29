@@ -31,9 +31,9 @@
 ### Consistency Types
 - strong
     - offers immediate data consistency
-    - becoms slow under heavy loads of CRUD operations
+    - becomes slow under heavy loads of CRUD operations
 - eventual
-    - deosn't provide immediate data consistency amongst multiple nodes
+    - doesn't provide immediate data consistency amongst multiple nodes
     - guarantees consistency after enough time has passed
     - can work with huge loads of CRUD operations
 ## Getting Started
@@ -558,7 +558,7 @@
         ]
     }
     ```
-### Manupulating Responses
+### Manipulating Responses
 #### Removing Metadata From The Response
 - response objects usually consist of metadata & data (the original document)
 - "_source" attribute encompasses the document (the data)
@@ -607,7 +607,7 @@ POST <index>/_update/<identifier>
     - `ctx._source.<array-field>.add(<value>)`
     - `ctx._source.<array-field>.remove(<value>)`
     - `ctx._source.<array-field>.indexOf(<value>)`
-    - `if (<condition>) {<instrcution>} else {<instrcution>}`
+    - `if (<condition>) {<instruction>} else {<instruction>}`
 - anatomy script object
     - source: contains conditions, expressions, assignments & modifications
     - lang: contains expression language (defaults to "painless")
