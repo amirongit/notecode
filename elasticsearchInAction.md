@@ -782,7 +782,7 @@ POST <index>/_update/<identifier>
 #### Opening Indices
 `POST <index>/_open`
 ### Index Template
-- templates with pre defined index components and an index pattern
+- templates with pre defined index components & an index pattern
 - applied to inidices whos name match the index pattern (when being created)
 - explicit index components begin set override templates
 - template priorities are used when overlapping happens
@@ -984,3 +984,14 @@ POST _component_template/<component-template>
 - "search_analyzer" parameter in ["mapping-property-object"](#explicit-mapping) is used to specify field level analyzer for searching purposes
 - "analysis.analyzer.default_search" index setting is used to specify indexl level analyzer for searching purposes
 - analyzer specification is done in different ways for different types of queries
+## Introducing Search
+### Overview
+- [structured search](#data-flavors)
+    - performed using term level queries
+- [unstructured search](#data-flavors)
+### How Does Search Work
+1. search request is passed to an available [coordinator](#nodes-&-clusters) node
+2. [data](#nodes-&-clusters) nodes having applicable shards are determined
+3. query is processed by determined nodes on corresponding shards
+4. active coordinator merges & sorts results from determined nodes & returns
+<!-- 285, SEARCH FUNDAMENTALS -->
