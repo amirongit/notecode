@@ -933,7 +933,7 @@ POST _component_template/<component-template>
 4. active coordinator merges & sorts results from determined nodes & returns
 ### Search Fundamentals
 #### The "_search" Endpoint
-- supported HTTP methods
+- supported invocation methods
     - URI: query is provided as query parameter (discouraged)
     - query DSL: query is wrapped in json object with specific syntax (preferred)
 #### Query vs Filter Context
