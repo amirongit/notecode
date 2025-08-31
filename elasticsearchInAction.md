@@ -6,14 +6,13 @@
     - easily searchable
     - binary matching determination logic
 - unstructured (or full text)
-    - is unorganized, schema-free & in no specific format
-    - non-binary matching determination logic
-- semi-structured
+    - is unorganized, schema free & in no specific format
+    - non binary matching determination logic
+- semi structured
     - falls between structured & unstructured data
-    - usually is unstructured data with meta-data describing it
+    - usually is unstructured data with meta data describing it
 ### Full Text Search
-- technique to search for phrases in entire data rather than specific fields or sections
-- doesn't depend on metadata
+- technique to search for phrases in entire data rather than specific fields or sections (doesn't depend on metadata)
 ### Elastic Stack
 - elasticsearch
 - logstash
@@ -21,13 +20,12 @@
     - processes data after extracting it from different sources
     - usually transfers or enrichs data while processing it
     - sends data to a variety of target destinations after processing it
-    - can be looked at as a real-time data-ingestion pipeline due to its architecture
+    - can be looked at as a real time data ingestion pipeline due to its architecture
 - beats
     - single purposed data consumption component
     - loads data from different external systems & pump it into Elasticsearch
     - requires its agents to be installed on the host machine (or VM)
-- kibana
-    - multi-purpose web interface for the stack
+- kibana (multi purpose web interface for the stack)
 ### Consistency Types
 - strong
     - offers immediate data consistency
@@ -38,21 +36,18 @@
     - can work with huge loads of CRUD operations
 ## Getting Started
 ### Aggregation Types
-- metric
-    - calculates statistics or metrics over a set of documents
+- metric (calculates statistics or metrics over a set of documents)
 - bucket
     - groups documents into buckets based on specific criterias
     - allows analyzation of buckets
 - pipeline
     - processes the results of other aggregations
     - enables step based calculations
-- matrix
-    - performs operations on multiple fields simultaneously
+- matrix (performs operations on multiple fields simultaneously)
 - composite
     - creates paginated bucket aggregations
     - allows efficient handling of large datasets by breaking them into smaller pieces
-- geo
-    - specialized for geospatial data
+- geo (specialized for geospatial data)
 ### Being Schema Less
 - when the data store doesn't require a defined schema before storing data
 ### Index
@@ -63,7 +58,7 @@
     - documents ("_doc" is a generic pointer to the single document type an index is able to store)
 <!---->
 - APIs are exposed as a suffix of their corresponding resource
-    - sometimes multiple comma-separated resources on the same level can be used
+    - sometimes multiple comma separated resources on the same level can be used
     - components
         - HTTP method (action) (verbs)
         - hostname & port
@@ -72,41 +67,21 @@
 <!---->
 - some elasticsearch APIs allow bodies passed in GET requests
 ### Query DSL
-- simple json-based query language provided by elasticsearch which is extensively used in kibana
+- simple json based query language provided by elasticsearch which is extensively used in kibana
 ### Indexing A Document
 - HTTP verbs have their own exact meaning
-- representation of a document can be anything in json format since elasticsearch is schema-less
+- representation of a document can be anything in json format since elasticsearch is schema less
 ### Retrieving Data
 #### Number Of Documents
 - all documents<br/>
-    `GET _count/`
+    `GET _count`
 - documents of specific indices<br/>
     `GET <indices>/_count`
 #### Documents Themselves
-- single document<br/>
-    - with metadata<br/>
-    `GET <index>/_doc/<identifier>`
-    - just the document<br/>
-    `GET <index>/_source/<identifier>`
-- multiple documents (considered a "match_all" query when used without any specification)
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "ids": {
-                "values": [
-                    <identifier>
-                ]
-            }
-        },
-        "_source": [
-            <fields>,
-            <boolean>
-        ]
-    }
-    ```
+- [single document](#using-the-single-document-api)<br/>
+- [multiple documents](#retrieving-multiple-documents)
 ### Full Text Search
-- operators are applied between multiple space-separated terms in "value" fields
+- operators are applied between multiple space separated terms in "value" fields
 #### Match
 - used to perform full text search on a single field
 - logical operator is indicated by the "operator" parameter (defaults to "OR")
@@ -170,7 +145,7 @@
     ```
 - used to search with shortend version of words
 #### Term
-- used to search for exact non-textual structured values
+- used to search for exact non textual structured values
     ```
     GET <indices>/_search
     {
@@ -221,14 +196,10 @@
     }
     ```
 - consists of four optional clauses made of leaf queries
-    - must
-        - all leaf queries match (matches contribute to score)
-    - should
-        - one of leaf queries matches (matches contribute to score)
-    - must not
-        - non of leaf queries match (matches don't contribute to score)
-    - filter
-        - all leaf queries match (matches don't contribute to score)
+    - must: all leaf queries match (matches contribute to score)
+    - should: one of leaf queries matches (matches contribute to score)
+    - must not: non of leaf queries match (matches don't contribute to score)
+    - filter: all leaf queries match (matches don't contribute to score)
 <!---->
 ### Aggregations
 - used to provide analytics & high level data
@@ -261,22 +232,18 @@
     - this was forced by lucene's inability to define multiple fields with a common name but different data type on each index
 #### Indices
 - logical connections between similar documents
-- documents of an index share the same mapping
-    - definition of the schema of documents
-- composed of shards
-    - indices have a primary & a replica shard by default
+- documents of an index share the same [schema definition](#mapping)
+- composed of shards (one primary & one replica shard by default)
 - can either exist on a single node or be distributed in a cluster
 #### Data Streams
 - specific type of extended alias
 - templates are used to create associated indices in an interval
-    - each index indicates an specific range in time
 - write operations execute on the last (current) index
 - read operations execute on all indices
 #### Shards & Replicas
 - shards
     - software components that hold some amount of data
-    - physical instances of lucene
-        - high performance full text search engine
+    - physical instances of lucene (high performance full text search engine)
     - usually distributed across a cluster for availability & failover
 - replicas
     - duplicated copies of primary shards
@@ -290,19 +257,15 @@
 - clusters
     - collections of nodes
     - can be in one of three health states
-        - red
-            - not all shards are assigned & ready
-        - yellow
-            - shards are assigned & ready, but replicas aren't
-        - green
-            - shards & replicas are assigned & ready
+        - red: not all shards are assigned & ready
+        - yellow: shards are assigned & ready, but replicas aren't
+        - green: shards & replicas are assigned & ready
 - node roles
     - each role makes a node take specific responsibilities
         - master: cluster management
             - doesn't participate in CRUD operations
             - knows the location of each document
-        - data: document persistence & retrieval
-            - IO intensive
+        - data: document persistence & retrieval (IO intensive)
         - ingest: transformation of data before indexing
         - coordination: handling client requests (default)
             - taken on by all nodes as an additional role
@@ -313,15 +276,13 @@
 - enables full text search
 ### Relevancy
 #### Relevancy Score
-- positive floating-point number indicating how relevant results are to query
+- positive floating point number indicating how relevant results are to query
 - alternative to binary matching logic
 #### Relevancy Algorithms
 - configured per field
     - TF-IDF
-        - term frequency
-            - number of times the search word appears in an specific field of a document
-        - inverse document frequency
-            - number of times the search word appears across the whole set of documents
+        - term frequency: number of times the search word appears in an specific field of a document
+        - inverse document frequency: number of times the search word appears across the whole set of documents
         - assignes weight terms based on their TF & IDF
         - terms with more TF & less IDF are considered to be more relevant
     - BM25 (Best Matching 25) (default)
@@ -331,19 +292,18 @@
     - ...
 ### Routing Algorithm
 - determines exactly one primary shard for a document as its location (in the context of indices)<br/>
-    `hash(document.id) % number-of-primary-shards`
+    `hash(document.id) % <number-of-primary-shards>`
 - changing number of shards would break this for existing documents, reindexing is done in this situation
 ### Scaling
 #### Scaling Up (Vertical Scaling)
-- the process of adding computational resources to the currently existing units of computation
-    - like CPU & RAM
+- the process of adding computational resources to the currently existing units of computation (like CPU & RAM)
 - usually causes downtime due to hardware upgradation
 #### Scaling Out (Horizontal Scaling)
-- the process of adding units of computation to a farm or cluster
-    - like VMs or nodes
+- the process of adding units of computation to a farm or cluster (like VMs or nodes)
 - doesn't cause downtime
 - the process of distributing data among new nodes begins instantly
 ## Mapping
+- field are able to hold zero to more values; all data types are array of "T" by default
 ### Overview Of Mapping
 - the process of developing a definition of the schema which represents fields & their associated data types of a document
 - elasticsearch expects a single mapping per index which tells it how to treat each field of its documents
@@ -397,7 +357,6 @@
 - complex types
     - created by composing additional types
     - similar to compound or container types in programming languages
-    - can be flattened or nested
     - like object, nested, flattened & join
 - specialized types
     - used for specialized cases such as geolocation & IP addresses
@@ -428,7 +387,7 @@
 |long|+|64bit|
 |unsigned long|-|64bit|
 
-- floating-point types
+- floating point types
 
 |name|size|
 |-|-|
@@ -468,17 +427,15 @@
     - searches for points inside the area
 #### The Object Data Type
 - hierarchical structured data
-- inner properties are flattened before persistence
-    - this causes them to lose their collective identity implied by each object
+- inner properties are flattened before persistence (this causes them to lose their collective identity implied by each object)
 - flattened properties can be accessed using "<parent>.<child>" syntax in queries
 #### The Nested Data Type
 - specialized form of object
 - maintains collective identity of properties implied by each object
 #### The Flattened Data Type
 - data held in subfields with keyword data type
-- subfields aren't defined in the schema definition & used on an ad hoc basis
-- no analyzation happens when documents get persisted
-    - this makes writing operations cheap
+- subfields aren't defined in the schema definition & are used on an ad hoc basis
+- no analyzation happens when documents get persisted (this makes writing operations cheap)
 ### Fields With Multiple Data Types
 - "fields" parameter in ["mapping-property-object"](#explicit-mapping) is used for additional data types
 - additional data types are accessed by "<field>.<field-as-data-type>" syntax in queries
@@ -488,11 +445,10 @@
 - document identifiers
     - unique identifier associated to documents for their lifetime
     - documents are updated or overwritten in case of existence
-    - "PUT" method is used when identifier is provided by user
-        - `PUT <index>/_doc/<identifier>`
-    - "POST" method is used when identifier is expected to be generated
-        - `POST <index>/_doc/<identifier>`
-        - "identifier" is optional
+    - "PUT" method is used when identifier is provided by user<br/>
+        `PUT <index>/_doc/<identifier>`
+    - "POST" method is used when identifier is expected to be generated ("identifier" is optional)<br/>
+        `POST <index>/_doc/<identifier>`
 <!---->
 - avoiding overwrites
     - "_doc" is replaced by "_create"
@@ -500,20 +456,17 @@
     - raises error if the document already exists
 #### Mechanics Of Indexing
 1. routing algorithm is used to determine document's location
-2. chosen shard holds the given document in its heap memory buffer
-    - this is done to avoid frequent IO operations
+2. chosen shard holds the given document in its heap memory buffer (this is done to avoid frequent IO operations)
 3. after refresh signal is issued by lucene
     - buffered documents will be collected into segments
     - segments contain inverted indices & documents themselves
     - segments are immutable
-4. data is written to the FS cache & then commited to the physical disk
-    - documents can be searched & accessed in this step
+4. data is written to the FS cache & then commited to the physical disk (documents can be searched & accessed in this step)
 5. after formation of three segments
     - peer segments are merged together
     - this happens recursively until a certain point (which idk about)
 <!---->
-- delete operation marks documents to be removed later, as segments are immutable
-    - this probably happens in the process of segments being merged
+- delete operation marks documents to be removed later, as segments are immutable (this probably happens in the process of segments being merged)
 #### Customizing The Refresh Process
 - server side
     ```
@@ -561,23 +514,21 @@
 ### Manipulating Responses
 #### Removing Metadata From The Response
 - response objects usually consist of metadata & data (the original document)
-- "_source" attribute encompasses the document (the data)
-    - retrieved alone by replacing "_doc" with "_source"
+- "_source" attribute encompasses the document (the data) (retrieved alone by replacing "_doc" with "_source")
 #### Suppressing The Source Document
 - done by setting "_source" query param to "false"
 #### Including & Excluding Fields
-- including fields is done by passing comma-separated names of fields to "_source_include" query param
-- excluding fields is done by passing comma-separated names of fields to "_source_exclude" query param
+- including fields is done by passing comma separated names of fields to "_source_include" query param
+- excluding fields is done by passing comma separated names of fields to "_source_exclude" query param
 - both can be done in the same query at the same time
 ### Updating Documents
 #### Document Update Mechanics
-- procedure of updating documents
+- procedure of updating documents (replacing documents with newer version of themselves)
     1. fetch
     2. modify
     3. increment version
     4. mark old one for deletion
     5. index new one (reindex)
-- this means that documents is replaced with newer version of itself
 #### The "_update" API
 ```
 POST <index>/_update/<identifier>
@@ -666,8 +617,7 @@ POST <index>/_update/<identifier>
 - operation
     - "index"
     - "delete"
-    - "create"
-        - avoids overrides
+    - "create" (avoids overrides)
     - "update"
 - uses "ndjson" instead of "json"
 - different components could be moved or omitted based on contextual conditions
@@ -695,9 +645,8 @@ POST <index>/_update/<identifier>
     - static
         - applied in the process of creation
         - can't be changed on operational indices
-    - dynamic
-        - able to change on live indices
-- creating indices with explicit non-default settings
+    - dynamic (able to change on live indices)
+- creating indices with explicit non default settings
     ```
     PUT <index>
     {
@@ -715,14 +664,11 @@ POST <index>/_update/<identifier>
         }
     }
     ```
-- getting settings of indices<br/>
+- getting settings of indices ("setting" is optional)<br/>
     `GET <patterns>/_settings/<setting>`
-    - "setting" is optional
 #### Index With Aliases
-- "is_write_index" configuration is used to mark indices as writable through aliases
-    - should be set to true on at least one index when creating aliases for multiple indices
-- aliases
-    - alternate names given to indices
+- "is_write_index" configuration is used to mark indices as writable through aliases (should be set to true on at least one index when creating aliases for multiple indices)
+- aliases (alternate names given to indices)
 - creating aliases
     - using "index" API
         ```
@@ -738,6 +684,20 @@ POST <index>/_update/<identifier>
     - using "alias" API<br/>
         `PUT <patterns>/_alias/<alias>`
 - multiple aliasing operations
+    - actions
+    ```
+    {
+        <operation>: {
+            "index": <index>,
+                "indices": <indices>,
+                "alias": <alias>,
+                "is_write_index": <is-write-index>
+        }
+    }
+    ```
+    - operation
+        - add
+        - remove
     - _aliases API combines adding & removing aliases as well as deleting indices
         ```
         POST _aliases
@@ -745,28 +705,14 @@ POST <index>/_update/<identifier>
             "actions": [<actions>]
         }
         ```
-        - actions
-            ```
-            {
-                <operation>: {
-                    "index": <index>,
-                    "indices": <indices>,
-                    "alias": <alias>,
-                    "is_write_index": <is-write-index>
-                }
-            }
-            ```
-            - "operations" is either "add" or "remove"
 ### Reading Indices
 #### Reading Public Indices
-- fetching details of indices, including settings, schema mappings & aliases<br/>
+- component
+    - "_settings"
+    - "_mapping"
+    - "_alias"
+- fetching details of indices, including settings, schema mappings & aliases ("field" is optional; should be specific field of mentioned component)<br/>
     `GET <patterns>/<component>/<field>`
-    - "component" is optional
-        - "_settings"
-        - "_mapping"
-        - "_alias"
-    - "field" is optional
-        - should be specific field of mentioned component
 #### Reading Hidden Indices
 - indices with "." as the first character of their name
 - will be reserved for system related stuff in future versions
@@ -870,11 +816,9 @@ POST _component_template/<component-template>
     1. an alias is created
         - value of "is_write_index" is set to true for at least one index
         - index names confirm to pattern "<prefix>-<digits>"
-    2. rollover is invoked
-        - using "rollover" API<br/>
+    2. rollover is invoked (can be configured to be automatic)
+        - using "rollover" API ("index" is optional)<br/>
             `POST <alias>/_rollover/<index>`
-            - "index" is optional
-        - this can be configured to be automatic
     3. new writable index is created with digits incremented by one
     4. old index is put in read only mode
     5. alias is chaned to point to new index
@@ -891,9 +835,7 @@ POST _component_template/<component-template>
 ### Analyzer Modules
 - software components used to tokenize & normalize full text data
 #### Tokenization
-- process of chopping full text data into small sections called tokens by following certain rules
-    - token delimiters
-    - ignored parts
+- process of chopping full text data into small sections called tokens by following certain rules (delimiters, ignored parts, etc...)
 #### Normalization
 - process of modification, enrichment & transformation of tokens
     - reducing tokens to their root word (stemming)
@@ -914,7 +856,7 @@ POST _component_template/<component-template>
         - able to change case of, find & add synonyms to & replace root words with tokens
         - there can be zero to multiple instance of them
 #### Testing Analyzers
-- "_analyze" API
+- "_analyze" API (fields other than "text" are optional)
     ```
     GET _analyze
     {
@@ -924,13 +866,11 @@ POST _component_template/<component-template>
         "filter": <filters>
     }
     ```
-    - all fields other than "text" are optional
-    - can be used to debug full text queries
 ### Built in Analyzers
 - there are built in analyzers
 - official documentation would make more sense to read, use & refer to
 ### Custom Analyzers
-- using "setting" object through "create index" API
+- using "setting" object through "create index" API ("char_filter", "tokenizer" & "filter" are optional)
     ```
     put <index>
     {
@@ -966,8 +906,6 @@ POST _component_template/<component-template>
         }
     }
     ```
-    - can also be defined on templates
-    - "char_filter", "tokenizer" & "filter" are optional
 - testing custom analyzers using "_analyze" API
     ```
     post <index>/_analyze
@@ -986,12 +924,37 @@ POST _component_template/<component-template>
 - analyzer specification is done in different ways for different types of queries
 ## Introducing Search
 ### Overview
-- [structured search](#data-flavors)
-    - performed using term level queries
+- [structured search](#data-flavors) (performed using term level queries)
 - [unstructured search](#data-flavors)
 ### How Does Search Work
-1. search request is passed to an available [coordinator](#nodes-&-clusters) node
-2. [data](#nodes-&-clusters) nodes having applicable shards are determined
+1. search request is passed to an available [coordinator](#nodes--clusters) node
+2. [data](#nodes--clusters) nodes having applicable shards are determined
 3. query is processed by determined nodes on corresponding shards
 4. active coordinator merges & sorts results from determined nodes & returns
-<!-- 285, SEARCH FUNDAMENTALS -->
+### Search Fundamentals
+#### The "_search" Endpoint
+- supported HTTP methods
+    - URI: query is provided as query parameter (discouraged)
+    - query DSL: query is wrapped in json object with specific syntax (preferred)
+#### Query vs Filter Context
+- execution context
+    - query: relevancy score is calculated for each result
+    - filter: relevancy score isn't calculated for results (takes less time)
+### Anatomy Of Requests & Responses
+#### Search Requests
+```
+GET <search-criteria>/_search
+{
+    "query": {
+        <query-type>: <query-criteria>
+    }
+}
+```
+- "search-criteria" (optional)
+    - comma separated indices & aliases
+    - if not provided, means all indices of cluster
+- "query-criteria" (optional)
+    - defines suitable query in regarding "query-type" (optional)
+    - includes pagination related properties, included & excluded fields, etc... (all of which is optional)
+- "query-type"
+<!-- 290, SEARCH RESPONSES -->
