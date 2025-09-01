@@ -957,4 +957,12 @@ GET <search-criteria>/_search
     - defines suitable query in regarding "query-type" (optional)
     - includes pagination related properties, included & excluded fields, etc... (all of which is optional)
 - "query-type"
-<!-- 290, SEARCH RESPONSES -->
+#### Search Responses
+- "took": time it took coordinator to process request & return response
+- "timed_out": if any shards failed to respond (responses of shards are aggregated & returned)
+- "shards": number of total, failed, successfull & skipped shards
+- "hits": information about query result & result itself
+    - "hits": array of results (& usually their meta data) (sorted descendingly by relevancy score by default)
+    - "total": number of results
+    - "max_score": highest relevancy score across results
+<!-- 291, URI REQUEST SEARCHES -->
