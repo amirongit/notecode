@@ -66,8 +66,7 @@
         - request body
 <!---->
 - some elasticsearch APIs allow bodies passed in GET requests
-### Query DSL
-- simple json based query language provided by elasticsearch which is extensively used in kibana
+### [Query DSL](#query-dsl-1)
 ### Indexing A Document
 - HTTP verbs have their own exact meaning
 - representation of a document can be anything in json format since elasticsearch is schema less
@@ -78,7 +77,7 @@
 - documents of specific indices<br/>
     `GET <indices>/_count`
 #### Documents Themselves
-- [single document](#using-the-single-document-api)<br/>
+- [single document](#using-the-single-document-api)
 - [multiple documents](#retrieving-multiple-documents)
 ### Full Text Search
 - operators are applied between multiple space separated terms in "value" fields
@@ -175,11 +174,8 @@
         }
     }
     ```
-### Compound Queries
-- provides a mechanism to combine leaf queries in order to build complex queries
-#### Leaf Query
-- looks for specific values in specific fields
-- can be used by itself
+#### [Compound Query](#leaf--compound-queries)
+#### [Leaf Query](#leaf--compound-queries)
 #### Boolean
 - used to create sophisticated query logic
     ```
@@ -965,4 +961,24 @@ GET <search-criteria>/_search
     - "hits": array of results (& usually their meta data) (sorted descendingly by relevancy score by default)
     - "total": number of results
     - "max_score": highest relevancy score across results
-<!-- 291, URI REQUEST SEARCHES -->
+### Query DSL
+```
+<verb> <endpoint>
+{
+    "query": <query>
+}
+```
+- json based query language
+- used for search & analytics
+- used to create basic, complex & nested queries
+#### Leaf & Compound Queries
+- leaf query
+    - queries single set of fields with single operation
+    - isn't able to combine multiple criteria or queries
+    - can be taught as atomic unit of queries
+- compound query
+    - used to combine multiple queries (leaf or compound)
+    - clauses are usually joined using logical operators
+<!-- ### Search Features -->
+<!-- 298, PAGINATION -->
+
