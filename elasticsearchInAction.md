@@ -993,6 +993,11 @@ GET <search-criteria>/_search
 - order
     - "asc"
     - "desc"
+- results are sorted descendingly by relevancy score by default
+- "sort" property is used to manage sorting (expects array of "sort-object"s or field names)
+    - relevancy score isn't calculated if "_score" isn't one of the items in "sort" property
+    - "track_scores" property is used to force calculation of relevancy score
+#### Manipulating Results
 - script field object
     ```
     {
@@ -1008,11 +1013,6 @@ GET <search-criteria>/_search
         "excludes": <fields>
     }
     ```
-- results are sorted descendingly by relevancy score by default
-- "sort" property is used to manage sorting (expects array of "sort-object"s or field names)
-    - relevancy score isn't calculated if "_score" isn't one of the items in "sort" property
-    - "track_scores" property is used to force calculation of relevancy score
-#### Manipulating Results
 - "_source" property is used to suppress or limit returned fields
     - boolean is passed to suppress or allow whole document
     - array of field names is passed to specify included fields
