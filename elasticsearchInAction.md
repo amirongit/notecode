@@ -1030,3 +1030,6 @@ GET <search-criteria>/_search
     }
     ```
 - "indices_boost" property is used to boost or nerf results by their indices (expects array of "index-boost-object"s)
+## Term Level Search
+- designed to work with [structured data](#data-flavors)
+- queries aren't analysed
