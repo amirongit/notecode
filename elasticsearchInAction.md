@@ -507,17 +507,16 @@
         ]
     }
     ```
-### Manipulating Responses
-#### Removing Metadata From The Response
-- response objects usually consist of metadata & data (the original document)
-- "_source" attribute encompasses the document (the data) (retrieved alone by replacing "_doc" with "_source")
-#### Suppressing The Source Document
-- done by setting "_source" query param to "false"
-#### Including & Excluding Fields
-- including fields is done by passing comma separated names of fields to "_source_include" query param
-- excluding fields is done by passing comma separated names of fields to "_source_exclude" query param
-- both can be done in the same query at the same time
+### [Manipulating Responses](#manipulating-results)
 ### Updating Documents
+- script object
+    ```
+    {
+        "source": <script>,
+        "params": <parameters>,
+        "lang": <language>
+    }
+    ```
 #### Document Update Mechanics
 - procedure of updating documents (replacing documents with newer version of themselves)
     1. fetch
@@ -539,10 +538,7 @@ POST <index>/_update/<identifier>
 ```
 POST <index>/_update/<identifier>
 {
-    "script": {
-        "source": <script>,
-        "params": <parameters>
-    }
+    "script": <script-object>
 }
 ```
 - document updates based on context & conditions
@@ -681,16 +677,16 @@ POST <index>/_update/<identifier>
         `PUT <patterns>/_alias/<alias>`
 - multiple aliasing operations
     - actions
-    ```
-    {
-        <operation>: {
-            "index": <index>,
-                "indices": <indices>,
-                "alias": <alias>,
-                "is_write_index": <is-write-index>
+        ```
+        {
+            <operation>: {
+                "index": <index>,
+                    "indices": <indices>,
+                    "alias": <alias>,
+                    "is_write_index": <is-write-index>
+            }
         }
-    }
-    ```
+        ```
     - operation
         - add
         - remove
@@ -958,14 +954,14 @@ GET <search-criteria>/_search
 - "timed_out": if any shards failed to respond (responses of shards are aggregated & returned)
 - "shards": number of total, failed, successfull & skipped shards
 - "hits": information about query result & result itself
-    - "hits": array of results (& usually their meta data) (sorted descendingly by relevancy score by default)
+    - "hits": array of results (& usually their meta data)
     - "total": number of results
     - "max_score": highest relevancy score across results
 ### Query DSL
 ```
 <verb> <endpoint>
 {
-    "query": <query>
+    "query": <query-object>
 }
 ```
 - json based query language
@@ -979,6 +975,58 @@ GET <search-criteria>/_search
 - compound query
     - used to combine multiple queries (leaf or compound)
     - clauses are usually joined using logical operators
-<!-- ### Search Features -->
-<!-- 298, PAGINATION -->
-
+### Search Features
+#### Pagination
+- "size" property is used to determine maximum number of results
+- "from" property is used to offset results
+#### Highlighting
+#### Explaining Relevancy Score
+#### Sorting
+- sort object
+    ```
+    {
+        <field>: {
+            "order": <order>
+        }
+    }
+    ```
+- order
+    - "asc"
+    - "desc"
+- script field object
+    ```
+    {
+        <field>: {
+            "script": <script-object>
+        }
+    }
+    ```
+- source object
+    ```
+    {
+        "includes": <fields>,
+        "excludes": <fields>
+    }
+    ```
+- results are sorted descendingly by relevancy score by default
+- "sort" property is used to manage sorting (expects array of "sort-object"s or field names)
+    - relevancy score isn't calculated if "_score" isn't one of the items in "sort" property
+    - "track_scores" property is used to force calculation of relevancy score
+#### Manipulating Results
+- "_source" property is used to suppress or limit returned fields
+    - boolean is passed to suppress or allow whole document
+    - array of field names is passed to specify included fields
+    - source object is passed to specify included & excluded fields
+    - is able to work with wild cards
+- "fields" property is used to specify present fields (expects array of field names)
+    - causes fields to return inside arrays
+    - is able to work with wild cards
+- "script_fields" property is used to generate fields on the fly (expects script field object)
+#### Searching Across Indices & Data Streams
+- index boost object
+    ```
+    {
+        <index>: <boost>
+    }
+    ```
+- "indices_boost" property is used to boost or nerf results by their indices (expects array of "index-boost-object"s)
