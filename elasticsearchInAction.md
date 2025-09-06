@@ -127,9 +127,7 @@
         }
     }
     ```
-### Term Level Queries
-- used to query precise values such as numbers, dates, ranges & IP addresses in structured data
-- produces binary results, meaning that items either match the query or don't
+### [Term Level Queries](#term-level-search)
 #### Prefix
 - works like match query
     ```
@@ -143,20 +141,7 @@
     }
     ```
 - used to search with shortend version of words
-#### Term
-- used to search for exact non textual structured values
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "term": {
-                <field>: {
-                    "value": <value>
-                }
-            }
-        }
-    }
-    ```
+#### [Term](#the-term-query)
 #### Range
 - used to search for values that match given range
     ```
@@ -174,8 +159,8 @@
         }
     }
     ```
-#### [Compound Query](#leaf--compound-queries)
-#### [Leaf Query](#leaf--compound-queries)
+### [Compound Queries](#leaf--compound-queries)
+#### [Leaf Queries](#leaf--compound-queries)
 #### Boolean
 - used to create sophisticated query logic
     ```
@@ -196,7 +181,6 @@
     - should: one of leaf queries matches (matches contribute to score)
     - must not: non of leaf queries match (matches don't contribute to score)
     - filter: all leaf queries match (matches don't contribute to score)
-<!---->
 ### Aggregations
 - used to provide analytics & high level data
 #### Metric
@@ -339,7 +323,7 @@
         }
     }
     ```
-#### Modifying Existing Fields Is Not Allowed
+#### Modifying Existing Fields Isn't Allowed
 - operational indidces with data fields are considered live
 - modifying the schema definition of live indices will cause wrong search results & is prohibited
 - reindexing is done in this situation
@@ -551,7 +535,7 @@ POST <index>/_update/<identifier>
     - `ctx._source.<array-field>.remove(<value>)`
     - `ctx._source.<array-field>.indexOf(<value>)`
     - `if (<condition>) {<instruction>} else {<instruction>}`
-- anatomy script object
+- anatomy of script object
     - source: contains conditions, expressions, assignments & modifications
     - lang: contains expression language (defaults to "painless")
     - params: enables passing data to script dynamically
@@ -1031,5 +1015,54 @@ GET <search-criteria>/_search
     ```
 - "indices_boost" property is used to boost or nerf results by their indices (expects array of "index-boost-object"s)
 ## Term Level Search
+### Overview Of Term Level Search
 - designed to work with [structured data](#data-flavors)
-- queries aren't analysed
+- results are determined in binary manner
+### The Term Query
+- term query object ("boost" is optional)
+    ```
+    {
+        "term": {
+            <field>: <field-value>
+        }
+    }
+    ```
+    - shortend "field value"
+        ```
+        <value>
+        ```
+    - full "field value"
+        ```
+        {
+            "value": <value>,
+            "boost": <boost>
+        }
+        ```
+- fetches documents whose value of "field" equals to "value"
+- "value" is compared against each single token without getting analyzed
+### The Terms Query
+- terms query object
+    ```
+    {
+        "terms": {
+            <field>: <field-values>
+        }
+    }
+    ```
+    - values array "field values"
+        ```
+        <values>
+        ```
+    - term lookup "field values"
+        ```
+        {
+            "index": <index>,
+            "id": <identifier>,
+            "path": <remote-field>
+        }
+        ```
+- fetches documents whose value of "field" is present in "values"
+- items of "values" are compared against each single token without getting analyzed one by one
+#### The Term Lookup Query
+- modification of terms query
+- used to build queries based on obtained values from other documents (possibly of other indices)
