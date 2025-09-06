@@ -1027,10 +1027,8 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - shortend "field value"
-        ```
-        <value>
-        ```
+    - shortend "field value"<br/>
+        `<value>`
     - full "field value"
         ```
         {
@@ -1049,10 +1047,8 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - values array "field values"
-        ```
-        <values>
-        ```
+    - values array "field values"<br/>
+        `<values>`
     - term lookup "field values"
         ```
         {
