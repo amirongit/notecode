@@ -128,37 +128,9 @@
     }
     ```
 ### [Term Level Queries](#term-level-search)
-#### Prefix
-- works like match query
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "match_phrase_prefix": {
-                <field>: <prefix>
-            }
-        }
-    }
-    ```
-- used to search with shortend version of words
+#### [Prefix](#the-prefix-query)
 #### [Term](#the-term-query)
-#### Range
-- used to search for values that match given range
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "range": {
-                <field>: {
-                    "lt": <less-than>,
-                    "lte": <less-than-or-equal>,
-                    "gt": <greater-than>,
-                    "gte": <greater-than-or-equal>
-                }
-            }
-        }
-    }
-    ```
+#### [Range](#the-range-query)
 ### [Compound Queries](#leaf--compound-queries)
 #### [Leaf Queries](#leaf--compound-queries)
 #### Boolean
@@ -472,13 +444,7 @@
 - existence check<br/>
     `HEAD <index>/_doc/<patterns>`
 #### Retrieving Multiple Documents
-- from single index
-    ```
-    GET <index>/_mget
-    {
-        "ids": <array-of-identifiers>
-    }
-    ```
+- [from single index](#the-ids-query)
 - from multiple indices
     ```
     GET _mget
@@ -535,7 +501,7 @@ POST <index>/_update/<identifier>
     - `ctx._source.<array-field>.remove(<value>)`
     - `ctx._source.<array-field>.indexOf(<value>)`
     - `if (<condition>) {<instruction>} else {<instruction>}`
-- anatomy of script object
+- anatomy of script-object
     - source: contains conditions, expressions, assignments & modifications
     - lang: contains expression language (defaults to "painless")
     - params: enables passing data to script dynamically
@@ -1000,12 +966,12 @@ GET <search-criteria>/_search
 - "_source" property is used to suppress or limit returned fields
     - boolean is passed to suppress or allow whole document
     - array of field names is passed to specify included fields
-    - source object is passed to specify included & excluded fields
-    - is able to work with wild cards
+    - source-object is passed to specify included & excluded fields
+    - is able to work with wildcards
 - "fields" property is used to specify present fields (expects array of field names)
     - causes fields to return inside arrays
-    - is able to work with wild cards
-- "script_fields" property is used to generate fields on the fly (expects script field object)
+    - is able to work with wildcards
+- "script_fields" property is used to generate fields on the fly (expects script-field-object)
 #### Searching Across Indices & Data Streams
 - index boost object
     ```
@@ -1023,19 +989,13 @@ GET <search-criteria>/_search
     ```
     {
         "term": {
-            <field>: <field-value>
+            <field>: {
+                "value": <value>,
+                "boost": <boost>
+            }
         }
     }
     ```
-    - shortend "field value"<br/>
-        `<value>`
-    - full "field value"
-        ```
-        {
-            "value": <value>,
-            "boost": <boost>
-        }
-        ```
 - fetches documents whose value of "field" equals to "value"
 - "value" is compared against each single token without getting analyzed
 ### The Terms Query
@@ -1062,3 +1022,96 @@ GET <search-criteria>/_search
 #### The Term Lookup Query
 - modification of terms query
 - used to build queries based on obtained values from other documents (possibly of other indices)
+### The IDs Query
+- ids query object
+    ```
+    {
+        "ids": {
+            "values": <identifiers>
+        }
+    }
+    ```
+- fetches documents whose identifier is present in "identifiers"
+- terms query can also be used with "_id" field
+### The Exists Query
+- exists query object
+    ```
+    {
+        "exists": {
+            "field": <field>
+        }
+    }
+    ```
+- fetches documents which have "field" as one of their fields
+### The Range Query
+- range query object
+    ```
+    {
+        "range": {
+            <field>: <range-object>
+        }
+    }
+    ```
+- range object (could have multiple pairs of operators & values)
+    ```
+    {
+        <operator>: <value>
+    }
+    ```
+    - operators
+        - "lt": less than
+        - "lte": less than or equal to
+        - "gt": greater than
+        - "gte": greater than or equal to
+- fetches documents whose value of "field" falls in <range>
+### The Wildcard Query
+- wildcard query object
+    ```
+    {
+        "wildcard": {
+            <field>: {
+                "value": <pattern>
+            }
+        }
+    }
+    ```
+    - special characters in "pattern"
+        - "?": exactly one character
+        - "*": zero or more characters
+- fetches documents whose value of "field" matches "pattern"
+- "pattern" is compared with against tokens without its normal characters getting analyzed
+### The Prefix Query
+- prefix query object
+    ```
+    {
+        "prefix": {
+            <field>: {
+                "value": <value>
+            }
+        }
+    }
+    ```
+- fetches documents whose value of "field" starts with "value"
+#### Speeding Up Prefix Queries
+- index prefix object
+    ```
+    {
+        "min_chars": <min-chars>,
+        "max_chars": <max-chars>
+    }
+    ```
+    - "min-chars" is optional (defaults to 2)
+    - "max-chars" is optional (defaults to 5)
+- "index_prefixes" parameter in ["mapping-property-object"](#explicit-mapping) is used in order to index prefixes when indexing documents (expects "index-prefix-object")
+### Fuzzy Queries
+- fuzzy query object
+    ```
+    {
+        "fuzzy": {
+            <field>: <value>,
+            "fuzziness": <fuzziness>
+        }
+    }
+    ```
+- fetches documents whose value of "field" is similar to "value"
+- levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
