@@ -67,8 +67,7 @@
 <!---->
 - some elasticsearch APIs allow bodies passed in GET requests
 ### [Query DSL](#query-dsl-1)
-### Indexing A Document
-- HTTP verbs have their own exact meaning
+### [Indexing A Document](##indexing-documents)
 - representation of a document can be anything in json format since elasticsearch is schema less
 ### Retrieving Data
 #### Number Of Documents
