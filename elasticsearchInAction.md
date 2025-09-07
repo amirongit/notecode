@@ -1063,7 +1063,7 @@ GET <search-criteria>/_search
         - "lte": less than or equal to
         - "gt": greater than
         - "gte": greater than or equal to
-- fetches documents whose value of "field" satisfies "range object"
+- fetches documents whose value of "field" satisfies conditions of "range object"
 ### The Wildcard Query
 - wildcard query object
     ```
@@ -1115,3 +1115,18 @@ GET <search-criteria>/_search
     ```
 - fetches documents whose value of "field" is similar to "value"
 - levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
+## Full Text Searches
+- designed to work with [unstructured data](#data-flavors)
+### Overview
+- results are determined using [relevancy algorithms](#relevancy-algorithms)
+- precision & recall are used to evaluate results of search query (inversely proportional)
+#### Precision
+- portion of retrieved data relevant to search query (quality of results)<br/>
+    `true postivies / (true positives + false positives)`
+- true positives: documents correctly included (correctly matched search query)
+- false positives: documents incorrectly included (incorrectly matched search query)
+#### Recall
+- portion of relevant data retrieved (quantity of results)<br/>
+    `true positives / (true positives + false negatives)`
+- false negatives: documents incorrectly excluded (incorrectly didn't match search query)
+<!-- 338, SAMPLE DATA -->
