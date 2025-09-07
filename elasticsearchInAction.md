@@ -1063,7 +1063,7 @@ GET <search-criteria>/_search
         - "lte": less than or equal to
         - "gt": greater than
         - "gte": greater than or equal to
-- fetches documents whose value of "field" falls in <range>
+- fetches documents whose value of "field" satisfies "range object"
 ### The Wildcard Query
 - wildcard query object
     ```
