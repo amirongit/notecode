@@ -80,24 +80,7 @@
 - [multiple documents](#retrieving-multiple-documents)
 ### Full Text Search
 - operators are applied between multiple space separated terms in "value" fields
-#### Match
-- used to perform full text search on a single field
-- logical operator is indicated by the "operator" parameter (defaults to "OR")
-- number of allowed misspells is indicated by "fuzziness" parameter
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "match": {
-                <field>: {
-                    "query": <value>,
-                    "operator": <operator>,
-                    "fuzziness": <allowed-misspells>
-                }
-            }
-        }
-    }
-    ```
+#### [Match](#the-match-query)
 #### Multi Match
 - used to perform full text search on multiple fields
 - fields can be boosted by their name being appended with `^<boost-factor>`
@@ -983,6 +966,7 @@ GET <search-criteria>/_search
 ### Overview Of Term Level Search
 - designed to work with [structured data](#data-flavors)
 - results are determined in binary manner
+- queried values usually aren't analyzed before being compared against text fields
 ### The Term Query
 - term query object ("boost" is optional)
     ```
@@ -996,7 +980,6 @@ GET <search-criteria>/_search
     }
     ```
 - fetches documents whose value of "field" equals to "value"
-- "value" is compared against each single token without getting analyzed
 ### The Terms Query
 - terms query object
     ```
@@ -1017,7 +1000,6 @@ GET <search-criteria>/_search
         }
         ```
 - fetches documents whose value of "field" is present in "values"
-- items of "values" are compared against each single token without getting analyzed one by one
 #### The Term Lookup Query
 - modification of terms query
 - used to build queries based on obtained values from other documents (possibly of other indices)
@@ -1078,7 +1060,6 @@ GET <search-criteria>/_search
         - "?": exactly one character
         - "*": zero or more characters
 - fetches documents whose value of "field" matches "pattern"
-- "pattern" is compared with against tokens without its normal characters getting analyzed
 ### The Prefix Query
 - prefix query object
     ```
@@ -1116,16 +1097,58 @@ GET <search-criteria>/_search
 - levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
 ## Full Text Searches
 - designed to work with [unstructured data](#data-flavors)
+- results are determined in non binary manner
+- queried values usually are analyzed before being compared against text fields
 ### Overview
 - results are determined using [relevancy algorithms](#relevancy-algorithms)
 - precision & recall are used to evaluate results of search query (inversely proportional)
 #### Precision
 - portion of retrieved data relevant to search query (quality of results)<br/>
     `true postivies / (true positives + false positives)`
-- true positives: documents correctly included (correctly matched search query)
-- false positives: documents incorrectly included (incorrectly matched search query)
+- "true positives": documents correctly included (correctly matched search query)
+- "false positives": documents incorrectly included (incorrectly matched search query)
 #### Recall
 - portion of relevant data retrieved (quantity of results)<br/>
     `true positives / (true positives + false negatives)`
-- false negatives: documents incorrectly excluded (incorrectly didn't match search query)
-<!-- 338, SAMPLE DATA -->
+- "false negatives": documents incorrectly excluded (incorrectly didn't match search query)
+### The "match_all" Query
+- match_all query object
+    ```
+    {
+        "match_all": {
+            "boost": <boost>
+        }
+    }
+    ```
+- used as default query when query type isn't specified for ["_search" API](#the-_search-endpoint)
+- 100% recall
+- fetches all available documents
+### The "match_none" Query
+- match_none query object
+    ```
+    {
+        "match_none": {}
+    }
+    ```
+- doesn't fetch any document
+### The Match Query
+- match query object
+    ```
+    {
+        "match": {
+            <field>: {
+                <parameter>: <setting>
+            }
+        }
+    }
+    ```
+    - "query" (required): text to be queried
+    - "operator": logical operator used to determine matching results
+        - "AND": all tokens of queried text tokens are matched
+        - "OR": at least one token of queried text tokens is matched (default)
+    - "analyzer": analyzer used to convert text being queried into tokens (defaults to the same analyzer as <field>)
+        - "AUTO" is passed as an special value to let the engine deal with it in an smarter way!
+    - "fuzziness": allowed number of misspells
+    - "minimum_should_match": minimum number of matched tokens of queried text tokens (works with "OR" operator)
+- levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
+<!-- 345, THE MATCH PHRASE QUERY -->
