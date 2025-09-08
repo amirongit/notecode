@@ -81,34 +81,8 @@
 ### Full Text Search
 - operators are applied between multiple space separated terms in "value" fields
 #### [Match](#the-match-query)
-#### Multi Match
-- used to perform full text search on multiple fields
-- fields can be boosted by their name being appended with `^<boost-factor>`
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "multi_match": {
-                "query": <value>,
-                "fields": <fields>
-            }
-        }
-    }
-    ```
-#### Search Phrase
-- used to search for a sequence of words in an exact order
-- number of missing words in the given phrase can be indicated by "slop" parameter
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "match_phrase": {
-                <field>: <phrase>
-            }
-        "slop": <missing-words>
-        }
-    }
-    ```
+#### [Multi Match](#the-multi_match-query)
+#### [Match Phrase](#the-match_phrase-query)
 ### [Term Level Queries](#term-level-search)
 #### [Prefix](#the-prefix-query)
 #### [Term](#the-term-query)
@@ -1137,7 +1111,7 @@ GET <search-criteria>/_search
     {
         "match": {
             <field>: {
-                <parameter>: <setting>
+                <parameter>: <value>
             }
         }
     }
@@ -1151,4 +1125,32 @@ GET <search-criteria>/_search
     - "fuzziness": allowed number of misspells
     - "minimum_should_match": minimum number of matched tokens of queried text tokens (works with "OR" operator)
 - levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
-<!-- 345, THE MATCH PHRASE QUERY -->
+- order of tokens aren't considered when being compared
+### The "match_phrase" Query
+- match_phrase query object
+    ```
+    {
+        "match_phrase": {
+            <field>: {
+                "query": <phrase>,
+                "slop": <slop>,
+                "analyzer": <analyzer>
+            }
+        }
+    }
+    ```
+    - slop: number of allowed absent tokens
+    - analyzer: analyzer used to convert "phrase" into tokens
+- fetches documents whose value of "field" contains tokens of "phrase" in the same order
+### The "multi_match" Query
+- multi_match query object
+    ```
+    {
+        "multi_match": {
+            "query": <query>
+            "fields": <fields>
+        }
+    }
+    ```
+- fetches documents whose tokens of values of one of "fields" fields match "query"
+<!-- 350 - THE DIS MAX QUERY -->
