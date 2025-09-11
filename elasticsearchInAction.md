@@ -1003,14 +1003,10 @@ GET <search-criteria>/_search
     ```
     {
         "range": {
-            <field>: <range-object>
+            <field>: {
+                <operator>: <value>
+            }
         }
-    }
-    ```
-- range object (could have multiple pairs of operators & values)
-    ```
-    {
-        <operator>: <value>
     }
     ```
     - operators
@@ -1018,7 +1014,7 @@ GET <search-criteria>/_search
         - "lte": less than or equal to
         - "gt": greater than
         - "gte": greater than or equal to
-- fetches documents whose value of "field" satisfies conditions of "range object"
+- fetches documents whose value of "field" satisfies conditions regarding "operator" & "value"
 ### The Wildcard Query
 - wildcard query object
     ```
@@ -1152,5 +1148,15 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents whose tokens of values of one of "fields" fields match "query"
-<!-- 350 - THE DIS MAX QUERY -->
+- fields are boosted by being written like `<field>^<boost>`
+- fetches documents having tokens of values of one of "fields" fields matching "query"
+### The "dis_max" Query
+- dis_max query object
+    ```
+    {
+        "dis_max": {
+            "queries": <queries>
+        }
+    }
+    ```
+- fetches documents matching one or more members of "queries"
