@@ -87,28 +87,9 @@
 #### [Prefix](#the-prefix-query)
 #### [Term](#the-term-query)
 #### [Range](#the-range-query)
-### [Compound Queries](#leaf--compound-queries)
-#### [Leaf Queries](#leaf--compound-queries)
-#### Boolean
-- used to create sophisticated query logic
-    ```
-    GET <indices>/_search
-    {
-        "query": {
-            "bool": {
-                "must": <query>,
-                    "must_not": <query>,
-                    "should": <query>,
-                    "filter": <query>
-            }
-        }
-    }
-    ```
-- consists of four optional clauses made of leaf queries
-    - must: all leaf queries match (matches contribute to score)
-    - should: one of leaf queries matches (matches contribute to score)
-    - must not: non of leaf queries match (matches don't contribute to score)
-    - filter: all leaf queries match (matches don't contribute to score)
+### [Compound Queries](#compound-queries)
+#### [Leaf Queries](#leaf-queries)
+#### [Boolean](#the-boolean-query)
 ### Aggregations
 - used to provide analytics & high level data
 #### Metric
@@ -162,23 +143,24 @@
 - nodes
     - instances of elasticsearch server
     - host sets of shards & replicas
-- clusters
-    - collections of nodes
-    - can be in one of three health states
-        - red: not all shards are assigned & ready
-        - yellow: shards are assigned & ready, but replicas aren't
-        - green: shards & replicas are assigned & ready
-- node roles
-    - each role makes a node take specific responsibilities
-        - master: cluster management
-            - doesn't participate in CRUD operations
-            - knows the location of each document
-        - data: document persistence & retrieval (IO intensive)
-        - ingest: transformation of data before indexing
-        - coordination: handling client requests (default)
-            - taken on by all nodes as an additional role
-            - nodes with only this specific role can act like a load balancer
-        - ...
+- clusters (collections of nodes)
+
+|health status|description|
+|-|-|
+|red|not all shards are assigned & ready|
+|yellow|shards are assigned & ready, but replicas aren't|
+|green|shards & replicas are assigned & ready|
+
+- node roles (duties assigned to each node)
+
+|role|description|
+|-|-|
+|master|cluster management; doesn't participate in CRUD operations|
+|data|document persistence & retrieval (IO intensive)|
+|ingest|transformation of data before indexing|
+|coordination|handling client requests (taken on by all nodes as an additional role)|
+|...|...|
+
 ### Inverted Indices
 - data structure which maps tokens to containing documents & their frequency of repetition
 - enables full text search
@@ -385,12 +367,15 @@
         }
     }
     ```
-- client side
-    - "refresh" query param is used with one of three values
-        - "false": tells the engine not to force the refresh operation (default)
-        - "true": forces the engine to do a refresh operation
-        - "wait_for": blocks the request & returns after a refresh operation happens
-- buffered documents may be lost in the case of server breakdown before a successfull refresh operation
+- client side ("refresh" query parameter)
+
+|parameter value|description|
+|-|-|
+|false|doesn't force the refresh operation (default)|
+|true|forces the refresh operation|
+|wait_for|blocks the request & returns after a refresh operation happens|
+
+- buffered documents may be lost in the case of server breakdown before successfull refresh operation
 - there is a direct (positive) correlation between refresh rate & weight of IO operations
 - there is an indirect (negative) correlation between refresh rate & the possibality of data loss
 ### Retrieving Documents
@@ -458,9 +443,13 @@ POST <index>/_update/<identifier>
     - `ctx._source.<array-field>.indexOf(<value>)`
     - `if (<condition>) {<instruction>} else {<instruction>}`
 - anatomy of script-object
-    - source: contains conditions, expressions, assignments & modifications
-    - lang: contains expression language (defaults to "painless")
-    - params: enables passing data to script dynamically
+
+|part|description|
+|-|-|
+|source|conditions, expressions, assignments & modifications|
+|lang|expression language (defaults to "painless")|
+|params|enables passing data to script dynamically|
+
 #### [Replacing Documents](#document-apis)
 #### Upserts
 - meaning update if exists insert otherwise
@@ -832,12 +821,20 @@ POST _component_template/<component-template>
 ### Search Fundamentals
 #### The "_search" Endpoint
 - supported invocation methods
-    - URI: query is provided as query parameter (discouraged)
-    - query DSL: query is wrapped in json object with specific syntax (preferred)
+
+|method|description|
+|-|-|
+|URI|query is provided as query parameter (discouraged)|
+|query DSL|query is wrapped in json object with specific syntax (preferred)|
+
 #### Query vs Filter Context
 - execution context
-    - query: relevancy score is calculated for each result
-    - filter: relevancy score isn't calculated for results (takes less time)
+
+|context|description|
+|-|-|
+|query|relevancy score is calculated for each result|
+|filter|relevancy score isn't calculated|
+
 ### Anatomy Of Requests & Responses
 #### Search Requests
 ```
@@ -873,14 +870,10 @@ GET <search-criteria>/_search
 - json based query language
 - used for search & analytics
 - used to create basic, complex & nested queries
-#### Leaf & Compound Queries
-- leaf query
-    - queries single set of fields with single operation
-    - isn't able to combine multiple criteria or queries
-    - can be taught as atomic unit of queries
-- compound query
-    - used to combine multiple queries (leaf or compound)
-    - clauses are usually joined using logical operators
+#### Leaf Queries
+- queries single set of fields with single operation
+- isn't able to combine multiple criteria or queries
+- can be taught as atomic unit of queries
 ### Search Features
 #### Pagination
 - "size" property is used to determine maximum number of results
@@ -1009,11 +1002,14 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - operators
-        - "lt": less than
-        - "lte": less than or equal to
-        - "gt": greater than
-        - "gte": greater than or equal to
+
+|operator|description|
+|-|-|
+|lt|less than|
+|lte|less than or equal to|
+|gt|greater than|
+|gte|greater than or equal to|
+
 - fetches documents whose value of "field" satisfies conditions regarding "operator" & "value"
 ### The Wildcard Query
 - wildcard query object
@@ -1026,9 +1022,12 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - special characters in "pattern"
-        - "?": exactly one character
-        - "*": zero or more characters
+
+|special character|description|
+|-|-|
+|?|exactly one character|
+|*|zero or more characters|
+
 - fetches documents whose value of "field" matches "pattern"
 ### The Prefix Query
 - prefix query object
@@ -1050,8 +1049,12 @@ GET <search-criteria>/_search
         "max_chars": <max-chars>
     }
     ```
-    - "min-chars" is optional (defaults to 2)
-    - "max-chars" is optional (defaults to 5)
+
+|clause|default value|
+|-|-|
+|min_chars|2|
+|max_chars|5|
+
 - "index_prefixes" parameter in ["mapping-property-object"](#explicit-mapping) is used in order to index prefixes when indexing documents (expects "index-prefix-object")
 ### Fuzzy Queries
 - fuzzy query object
@@ -1072,15 +1075,18 @@ GET <search-criteria>/_search
 ### Overview
 - results are determined using [relevancy algorithms](#relevancy-algorithms)
 - precision & recall are used to evaluate results of search query (inversely proportional)
+
+|determination|description|
+|-|-|
+|true positive|correctly included|
+|false positive|incorrectly included|
+|false negative|incorrectly excluded |
 #### Precision
 - portion of retrieved data relevant to search query (quality of results)<br/>
     `true postivies / (true positives + false positives)`
-- "true positives": documents correctly included (correctly matched search query)
-- "false positives": documents incorrectly included (incorrectly matched search query)
 #### Recall
 - portion of relevant data retrieved (quantity of results)<br/>
     `true positives / (true positives + false negatives)`
-- "false negatives": documents incorrectly excluded (incorrectly didn't match search query)
 ### The "match_all" Query
 - match_all query object
     ```
@@ -1112,16 +1118,16 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - "query" (required): text to be queried
-    - "operator": logical operator used to determine matching results
-        - "AND": all tokens of queried text tokens are matched
-        - "OR": at least one token of queried text tokens is matched (default)
-    - "analyzer": analyzer used to convert text being queried into tokens (defaults to the same analyzer as <field>)
-        - "AUTO" is passed as an special value to let the engine deal with it in an smarter way!
-    - "fuzziness": allowed number of misspells
-    - "minimum_should_match": minimum number of matched tokens of queried text tokens (works with "OR" operator)
-- levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
-- order of tokens aren't considered when being compared
+
+|parameter|description|possible values|default|
+|-|-|-|-|
+|query\*|text to be queried|
+|operator|logical operator used to determine matching results|"AND", "OR"|"OR"|
+|analyzer|used to convert value of "query" into tokens|"AUTO", ...|analyzer of "field"|
+|fuzziness|allowed number of misspells (levenshtein distance algorithm)|
+|minimum_should_match|minimum number of matched tokens|
+
+- fetches documents whose value of "field" contains tokens of value of "query"
 ### The "match_phrase" Query
 - match_phrase query object
     ```
@@ -1135,8 +1141,12 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - slop: number of allowed absent tokens
-    - analyzer: analyzer used to convert "phrase" into tokens
+
+|clause|description|
+|-|-|
+|slop|number of allowed absent tokens|
+|analyzer|analyzer used to convert "phrase" into tokens|
+
 - fetches documents whose value of "field" contains tokens of "phrase" in the same order
 ### The "multi_match" Query
 - multi_match query object
@@ -1150,13 +1160,30 @@ GET <search-criteria>/_search
     ```
 - fields are boosted by being written like `<field>^<boost>`
 - fetches documents having tokens of values of one of "fields" fields matching "query"
-### The "dis_max" Query
-- dis_max query object
+## Compound Queries
+- used to combine multiple compund or [leaf](#leaf-queries) queries
+- clauses are usually joined using logical operators & conditions
+- offer complex functionalities suchs as custom scoring, boosting & negating logic
+### The Boolean Query
+- bool query object
     ```
     {
-        "dis_max": {
-            "queries": <queries>
+        "bool": {
+            <clause>: <queries>
         }
     }
     ```
-- fetches documents matching one or more members of "queries"
+    - "minimum_should_match" parameter of bool query object
+        - used to set minimum number of wrapped queries which documents must satisfy
+        - defaults to 0 when "must" caluse isn't empty
+        - defaults to 1 when "must caluse is empty"
+    - "_name" parameter of wrapped queries
+        - used to name queries
+        - if set, result documents will contain name of queries they matched
+
+|clause|logical operator|queries to be matched|execution context|
+|-|-|-|-|
+|must|"AND"|all|query|
+|must_not|"NOT"|none|filter|
+|should|"OR"|"minimum_should_match"|query|
+|filter|"AND"|all|filter|
