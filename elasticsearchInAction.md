@@ -88,7 +88,7 @@
 #### [Term](#the-term-query)
 #### [Range](#the-range-query)
 ### [Compound Queries](#compound-queries)
-#### [Leaf Queries](#leaf-queries)
+#### [Leaf Queries](#leaf-queries-1)
 #### [Boolean](#the-boolean-query)
 ### Aggregations
 - used to provide analytics & high level data
