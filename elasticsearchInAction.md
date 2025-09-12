@@ -78,8 +78,7 @@
 #### Documents Themselves
 - [single document](#using-the-single-document-api)
 - [multiple documents](#retrieving-multiple-documents)
-### Full Text Search
-- operators are applied between multiple space separated terms in "value" fields
+### [Full Text Search](#full-text-searches)
 #### [Match](#the-match-query)
 #### [Multi Match](#the-multi_match-query)
 #### [Match Phrase](#the-match_phrase-query)
