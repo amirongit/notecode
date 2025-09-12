@@ -1122,8 +1122,8 @@ GET <search-criteria>/_search
 |parameter|description|possible values|default|
 |-|-|-|-|
 |query\*|text to be queried|
-|operator|logical operator used to determine matching results|"AND", "OR"|"OR"|
-|analyzer|used to convert value of "query" into tokens|"AUTO", ...|analyzer of "field"|
+|operator|logical operator used to determine matching results|AND, OR|OR|
+|analyzer|used to convert value of "query" into tokens|AUTO, ...|analyzer of "field"|
 |fuzziness|allowed number of misspells (levenshtein distance algorithm)|
 |minimum_should_match|minimum number of matched tokens|
 
@@ -1183,7 +1183,7 @@ GET <search-criteria>/_search
 
 |clause|logical operator|queries to be matched|execution context|
 |-|-|-|-|
-|must|"AND"|all|query|
-|must_not|"NOT"|none|filter|
-|should|"OR"|"minimum_should_match"|query|
-|filter|"AND"|all|filter|
+|must|AND|all|query|
+|must_not|NOT|none|filter|
+|should|OR|minimum_should_match|query|
+|filter|AND|all|filter|
