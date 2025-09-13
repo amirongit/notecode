@@ -89,27 +89,10 @@
 ### [Compound Queries](#compound-queries)
 #### [Leaf Queries](#leaf-queries-1)
 #### [Boolean](#the-boolean-query)
-### Aggregations
-- used to provide analytics & high level data
-#### Metric
-- simple aggregations like "avg", "sum", "min", "max", "stats" & "extended_stats"
-    ```
-    GET <indices>/_search
-    {
-        "aggs": {
-            <name>: {
-                <aggregation-type>: {
-                    "field": <field>
-                }
-            }
-        }
-    }
-    ```
-#### Bucket
-- segregates data by intervals into buckets
-- useful for building visualizations
-#### Pipeline
-- aggregations that work on the output of other aggregations
+### [Aggregations](#aggregations-1)
+#### [Metric](#metric-aggregations)
+#### [Bucket](#bucket-aggregations)
+#### [Pipeline](#pipeline-aggregations)
 ## Architecture
 ### The Building Blocks
 #### Documents
@@ -1086,7 +1069,7 @@ GET <search-criteria>/_search
 #### Recall
 - portion of relevant data retrieved (quantity of results)<br/>
     `true positives / (true positives + false negatives)`
-### The "match_all" Query
+### The "match_all" Query (default)
 - fetches all available documents (100% recall)
 - match_all query object
     ```
@@ -1197,3 +1180,33 @@ GET <search-criteria>/_search
         }
     }
     ```
+## Aggregations
+- used to summerize data as statistics, metrics & other types of analytics
+### Overview
+- categories
+
+|name|description|
+|-|-|
+|metric|generates metrics like sum, average, minimum, maximum, top hits, mode & ...|
+|bucket|groups data into interval buckets|
+|pipeline|combines other aggregations & creates chains of analytics|
+
+#### The Endpoint & Syntax
+- anatomy of aggregation requests
+    ```
+    GET <aggregation-criteria>/_search
+    {
+        "aggregations": <aggregation-object>
+    }
+    ```
+- aggregation object
+    ```
+    {
+        <aggregation-name>: {
+            <aggregation-type>: {
+                <param>: <value>
+            }
+        }
+    }
+    ```
+- input of aggregations is result of "query" object which is ["match_all"](#the-match_all-query) by default
