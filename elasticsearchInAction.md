@@ -934,6 +934,7 @@ GET <search-criteria>/_search
 - results are determined in binary manner
 - queried values usually aren't analyzed before being compared against text fields
 ### The Term Query
+- fetches documents whose value of "field" equals to "value"
 - term query object ("boost" is optional)
     ```
     {
@@ -945,8 +946,8 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents whose value of "field" equals to "value"
 ### The Terms Query
+- fetches documents whose value of "field" is present in "values"
 - terms query object
     ```
     {
@@ -965,11 +966,11 @@ GET <search-criteria>/_search
             "path": <remote-field>
         }
         ```
-- fetches documents whose value of "field" is present in "values"
 #### The Term Lookup Query
 - modification of terms query
 - used to build queries based on obtained values from other documents (possibly of other indices)
 ### The IDs Query
+- fetches documents whose identifier is present in "identifiers"
 - ids query object
     ```
     {
@@ -978,9 +979,9 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents whose identifier is present in "identifiers"
 - terms query can also be used with "_id" field
 ### The Exists Query
+- fetches documents which have "field" as one of their fields
 - exists query object
     ```
     {
@@ -989,8 +990,8 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents which have "field" as one of their fields
 ### The Range Query
+- fetches documents whose value of "field" satisfies conditions regarding "operator" & "value"
 - range query object
     ```
     {
@@ -1009,8 +1010,8 @@ GET <search-criteria>/_search
 |gt|greater than|
 |gte|greater than or equal to|
 
-- fetches documents whose value of "field" satisfies conditions regarding "operator" & "value"
 ### The Wildcard Query
+- fetches documents whose value of "field" matches "pattern"
 - wildcard query object
     ```
     {
@@ -1027,8 +1028,8 @@ GET <search-criteria>/_search
 |?|exactly one character|
 |*|zero or more characters|
 
-- fetches documents whose value of "field" matches "pattern"
 ### The Prefix Query
+- fetches documents whose value of "field" starts with "value"
 - prefix query object
     ```
     {
@@ -1039,7 +1040,6 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents whose value of "field" starts with "value"
 #### Speeding Up Prefix Queries
 - index prefix object
     ```
@@ -1056,6 +1056,7 @@ GET <search-criteria>/_search
 
 - "index_prefixes" parameter in ["mapping-property-object"](#explicit-mapping) is used in order to index prefixes when indexing documents (expects "index-prefix-object")
 ### Fuzzy Queries
+- fetches documents whose value of "field" is similar to "value"
 - fuzzy query object
     ```
     {
@@ -1065,7 +1066,6 @@ GET <search-criteria>/_search
         }
     }
     ```
-- fetches documents whose value of "field" is similar to "value"
 - levenshtein distance algorithm is used to calculate similarity regarding "fuzziness"
 ## Full Text Searches
 - designed to work with [unstructured data](#data-flavors)
@@ -1087,6 +1087,7 @@ GET <search-criteria>/_search
 - portion of relevant data retrieved (quantity of results)<br/>
     `true positives / (true positives + false negatives)`
 ### The "match_all" Query
+- fetches all available documents (100% recall)
 - match_all query object
     ```
     {
@@ -1096,17 +1097,16 @@ GET <search-criteria>/_search
     }
     ```
 - used as default query when query type isn't specified for ["_search" API](#the-_search-endpoint)
-- 100% recall
-- fetches all available documents
 ### The "match_none" Query
+- doesn't fetch any document
 - match_none query object
     ```
     {
         "match_none": {}
     }
     ```
-- doesn't fetch any document
 ### The Match Query
+- fetches documents whose value of "field" contains tokens of value of "query"
 - match query object
     ```
     {
@@ -1126,8 +1126,8 @@ GET <search-criteria>/_search
 |fuzziness|allowed number of misspells (levenshtein distance algorithm)|
 |minimum_should_match|minimum number of matched tokens|
 
-- fetches documents whose value of "field" contains tokens of value of "query"
 ### The "match_phrase" Query
+- fetches documents whose value of "field" contains tokens of "phrase" in the same order
 - match_phrase query object
     ```
     {
@@ -1146,8 +1146,8 @@ GET <search-criteria>/_search
 |slop|number of allowed absent tokens|
 |analyzer|analyzer used to convert "phrase" into tokens|
 
-- fetches documents whose value of "field" contains tokens of "phrase" in the same order
 ### The "multi_match" Query
+- fetches documents having tokens of values of one of "fields" fields matching "query"
 - multi_match query object
     ```
     {
@@ -1158,12 +1158,12 @@ GET <search-criteria>/_search
     }
     ```
 - fields are boosted by being written like `<field>^<boost>`
-- fetches documents having tokens of values of one of "fields" fields matching "query"
 ## Compound Queries
-- used to combine multiple compund or [leaf](#leaf-queries) queries
+- used to combine multiple compund or [leaf](#leaf-queries-1) queries
 - clauses are usually joined using logical operators & conditions
 - offer complex functionalities suchs as custom scoring, boosting & negating logic
 ### The Boolean Query
+- fetches documents who pass clauses
 - bool query object
     ```
     {
@@ -1180,9 +1180,20 @@ GET <search-criteria>/_search
         - used to name queries
         - if set, result documents will contain name of queries they matched
 
-|clause|logical operator|queries to be matched|execution context|
+|clause|logical operator|queries to be matched|[execution context](#query-vs-filter-context)|
 |-|-|-|-|
 |must|AND|all|query|
 |must_not|NOT|none|filter|
 |should|OR|minimum_should_match|query|
 |filter|AND|all|filter|
+
+### The Disjoint Max ("dis_max") query
+- fetches documents satisfying one or more [leaf queries](#leaf-queries-1) wrapped as "queries"
+- dis_max query object
+    ```
+    {
+        "dis_max": {
+            "queries": <queries>
+        }
+    }
+    ```
