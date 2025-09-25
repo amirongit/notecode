@@ -32,3 +32,15 @@
     - wireup
 #### It Provides Maximum Value With Minimum Maintenance Costs
 - writing valuable unit test isn't possible without properly structured & written code
+## What Is A Unit Test?
+### The Definition Of "unit test"
+- essential attributes among most definitions
+    - is automated
+    - verifies small piece of code (unit)
+    - is isolated (doesn't depend on other unit tests) (controversial)
+#### The Isolation Issue: The London Take
+- defines isolation as isolating units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
+- reduces external influence on the unit when it is being tested
+- removes the need of composing or creating dependencies of the unit
+- separates behaviour from external state
+- splits object graph
