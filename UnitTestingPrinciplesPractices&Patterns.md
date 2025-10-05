@@ -1,17 +1,17 @@
 # Unit Testing: Principles, Practices & Patterns
-## The Goald Of Unit Testing
-### The Of Unit Testing
+## The Goal Of Unit Testing
+### The Goal Of Unit Testing
 - keeping reasonable ratio between coding or debugging time & adding or modifying features (sustainability & scalability)
 #### What Makes A Good Or Bad Test?
 - test code also has maintenance cost
 ### Using Coverage Metrics To Measure Test Suite Quality
 - coverage is good negative & bad positive indicator tool
 #### Understanding The Code Coverage Metric
-- ratio between lines executed by test suite & all of code
+- ratio between lines exercised by test suite & all of code
 - easy to manipulate by making code more compact  (using inline syntaxes, etc...)
 - aka test coverage (?)
 #### Understanding The Branch Coverage Metric
-- ratio between exercised by test suite & all branches of code
+- ratio between lines exercised by test suite & all branches of code
 - focused on flow control structures
 #### Problems With Coverage Metrics
 - test suite quality can't be determined by coverage metrics
@@ -42,5 +42,6 @@
 - defines isolation as isolating units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
 - reduces external influence on the unit when it is being tested
 - removes the need of composing or creating dependencies of the unit
-- separates behaviour from external state
-- splits object graph
+- separates behaviour from external state which makes it precise & direct
+- splits object graph which reduces the amount of preparation in test code
+- asserts against the unit & its interactions with its collabolators rather than their state
