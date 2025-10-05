@@ -37,11 +37,20 @@
 - essential attributes among most definitions
     - is automated
     - verifies small piece of code (unit)
-    - is isolated (doesn't depend on other unit tests) (controversial)
+    - is isolated
 #### The Isolation Issue: The London Take
-- defines isolation as isolating units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
+- isolates units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
+- defines units as capsules of limited data & behaviour
 - reduces external influence on the unit when it is being tested
 - removes the need of composing or creating dependencies of the unit
 - separates behaviour from external state which makes it precise & direct
 - splits object graph which reduces the amount of preparation in test code
 - asserts against the unit & its interactions with its collabolators rather than their state
+#### The Isolation Issue: The Classical Take
+- makes unit tests independent from each other & their side effects
+- defines units as behaviour (which could be spread across multiple capsules)
+- types of dependencies
+    - shared
+    - private
+    - out of process
+<!-- 27 -->
