@@ -9,15 +9,14 @@ from temporalio.worker import Worker
 
 @workflow.defn
 class Umbrella:
-    def __init__(self, name: str) -> None:
-        self.name = name
+    def __init__(self) -> None: ...
 
     @workflow.run
     async def calculate(self, dur: int | None = None) -> None:
         if dur is None:
             dur = randint(0, 10)
         await sleep(dur)
-        print(f"{self.name} spreaded their umbrella for {dur} seconds!")
+        print(f"sepehr spreaded their umbrella for {dur} seconds!")
 
 
 async def main() -> None:
