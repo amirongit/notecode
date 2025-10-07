@@ -50,7 +50,7 @@
 - makes unit tests independent from each other & their side effects
 - defines units as behaviour (which could be spread across multiple capsules)
 - types of dependencies
-    - shared
+    - shared: provides means for tests to affect each other's outcome; usually an static mutable field
     - private
     - out of process
 <!-- 27 -->

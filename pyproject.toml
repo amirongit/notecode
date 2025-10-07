@@ -1,3 +1,13 @@
+[project]
+name = "notecode"
+version = "0.0.0"
+description = "sample codes and notes for learning things. pretty much everything I know (or less); what a shame, huh?!"
+readme = "readme.txt"
+requires-python = ">=3.13"
+dependencies = [
+    "temporalio>=1.18.1",
+]
+
 [tool.ruff]
 line-length = 120
 target-version = "py312"
