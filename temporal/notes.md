@@ -89,3 +89,10 @@
 - workers are able to pick up workflow executions from where another worker failed
 ### Choosing Names For Task Qeues
 - names are case sensitive
+# Executing A Workflow
+## Executing A Workflow From The Command Line
+### Using `temporal` To Start A Workflow
+
+```bash
+temporal workflow start --type <workflow-type> --task-queue <task-queue> --workflow-id <workflow-execution-id> --input <input> --address <frontend-address>
+```
