@@ -92,7 +92,28 @@
 # Executing A Workflow
 ## Executing A Workflow From The Command Line
 ### Using `temporal` To Start A Workflow
-
 ```bash
 temporal workflow start --type <workflow-type> --task-queue <task-queue> --workflow-id <workflow-execution-id> --input <input> --address <frontend-address>
 ```
+# Viewing Workflow Execution History
+## Viewing Workflow Execution History With The Temporal CLI
+### Running `temporal workflow show`
+```bash
+temporal workflow show --workflow-id <workflow-execution-id> --address <frontend-address>
+```
+- `--detailed` could be used to produce more detailed result
+# Modifying An Existing Workflow
+## Making Changes To A Workflow
+- backwards compatibility is important consideration in workflow definitions
+- when workflows fail, their state is reconstructed within the current version
+### Input Parameters & Return Values
+- number of parameters should not be changed
+- dataclasses are suitable options because the enable addition of optional arguments without changing types of workflow argument
+### [Determinism](https://docs.temporal.io/workflow-definition#deterministic-constraints)
+- workflows must produce the same output given the same input
+- workflows must perform the same steps (including invocation of other workflows) given the same input
+### Versioning
+- SDK feature which enables changing workflow definitions non deterministically
+- enables new executions to use the latest workflow definition while older executions will be using the older one(s)
+## Restarting The Worker Process
+- required for new changes to take effect
