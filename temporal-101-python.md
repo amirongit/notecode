@@ -118,6 +118,27 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - enables new executions to use the latest workflow definition while older executions will be using the older one(s)
 ## Restarting The Worker Process
 - required for new changes to take effect
+# [Workflow Sandbox](https://github.com/temporalio/sdk-python?tab=readme-ov-file#workflow-sandbox)
+- workflows get executed & resumed inside sandboxes in order to avoid non deterministic code
+    - this ensures isolation of workflow executions & their context
+    - it is encouraged to have workflow definitions in separate files to avoid side effects
+- if non deterministic code is performed, an exception is raised
+## How Does The Sandbox Work?
+1. global state isolation (achieved through python's builtin `exec` function)
+2. restrictions to prevent known non deterministic library calls (the python SDK implementes its own custom importer (achieved by re implementing [importlib](https://docs.python.org/3/library/importlib.html)))
+## Avoiding The Sandbox
+1. `temporalio.workflow.unsafe.sandbox_unrestricted` is used to remove restrictions for code blocks
+2. `sandboxed` parameter of `workflow.defn` decorator is set to `False` to avoid the workflow being executed inside the sandbox
+3. instance of `temporalio.worker.UnsandboxedWorkflowRunner` is passed to `workflow_runner` parameter of `Worker` class in order to disable sandbox for the given worker
+## Pass Through Modules
+- used to exclude activities & desired non deterministic code from sandbox & being imported on workflow definition loads
+- makes marked modules to be used directly from outside of the sandbox
+- possible because of the custom import system
+- it is encouraged to mark all known deterministic side effect free code as pass through to avoid repetitive & expensive imports
+### Marking Modules As Pass Through
+1. `temporalio.workflow.unsafe.imports_passed_through` is used to mark imports as pass through
+2. `SandboxRestrictions.default.with_passthrough_modules(<modules>)` is passed to `restrictions` parameter of `SandboxedWorkflowRunner` which is passed to `workflow_runner` parameter of `Worker` class to mark specified modules as pass through at sandbox level
+3. `SandboxRestrictions.default.with_passthrough_all_modules()` is passed to `restrictions` parameter of `SandboxedWorkflowRunner` which is passed to `workflow_runner` parameter of `Worker` class to mark all modules as pass through at sandbox level
 # Developing An Activity
 ## What Are Activities?
 - activities are used to encapsulate sequences of steps that are prone to failure (therefore, non deterministic)
@@ -126,3 +147,16 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - activities are execution points from where failed workflow executions pick up & continue to perform other steps
 ## Registering Activities
 - activities should also be bound to wokers in order to get executed
+## Executing Activities
+### Importing Moduels Into Workflow Files
+- since activities could be non deterministic, they are marked as pass through
+### Specifying Activity Options
+- custom wrappers in SDK is used to execute activities
+- this allows temporal cluster to detect crashed workers, set options like timeout, scheduling & etc...
+### Retrieving The Result
+- workflows don't execute activity
+- using wrappers, workflows request the execution of activities to the temporal cluster
+- wrappers named `execute...` are synchronous; therefore, they block & return the result when possible
+- wrappers named `start...` are asynchronous
+    - they request the execution of activities to the temporal cluster & return handlers
+    - returned handlers could be awaited in order to get results of wrapped activities
