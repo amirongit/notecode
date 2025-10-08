@@ -124,3 +124,5 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - executed as part of workflow definitions
 - their execution is retried if failed
 - activities are execution points from where failed workflow executions pick up & continue to perform other steps
+## Registering Activities
+- activities should also be bound to wokers in order to get executed
