@@ -66,7 +66,7 @@
 - workflow type: name assigned to each workflow
 ## Input Parameters & Return Values
 ### Values Must Be Serializable
-- inputs & outputs of workflows must be serializable
+- inputs & outputs of workflows & activities must be serializable
 - temporal enforces this constraint in order to be able to track state of workflows
 ### Data Confidentiality
 - it is possible to write custom data converters
@@ -112,8 +112,15 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 ### [Determinism](https://docs.temporal.io/workflow-definition#deterministic-constraints)
 - workflows must produce the same output given the same input
 - workflows must perform the same steps (including invocation of other workflows) given the same input
+- this implies that workflow definitions should not perform I/O bound tasks directly (?)
 ### Versioning
 - SDK feature which enables changing workflow definitions non deterministically
 - enables new executions to use the latest workflow definition while older executions will be using the older one(s)
 ## Restarting The Worker Process
 - required for new changes to take effect
+# Developing An Activity
+## What Are Activities?
+- activities are used to encapsulate sequences of steps that are prone to failure (therefore, non deterministic)
+- executed as part of workflow definitions
+- their execution is retried if failed
+- activities are execution points from where failed workflow executions pick up & continue to perform other steps
