@@ -6,7 +6,7 @@
     - I/O outage
     - server crash
     - application crash
-- removes the need for writing application code which handles & recovers from mentioned failures
+- removes need for writing application code which handles & recovers from mentioned failures
 ### Workflows
 - abstraction used to build temporal applications
 - resilient
@@ -28,7 +28,7 @@
 ### Money Transfer
 - workflows could be composed of other workflows
 - remotely calling procedures makes systems "distributed" (in broader senses thogh!)
-- temporal workflows are able to track state between multiple systems, thus, provide the possibility of
+- temporal workflows are able to track state between multiple systems, thus, provide possibility of
     - defining atomic transactions
     - rolling them back
 ## Architectural Overview
@@ -105,17 +105,16 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 # Modifying An Existing Workflow
 ## Making Changes To A Workflow
 - backwards compatibility is important consideration in workflow definitions
-- when workflows fail, their state is reconstructed within the current version
+- when workflows fail, their state is reconstructed within current version
 ### Input Parameters & Return Values
 - number of parameters should not be changed
-- dataclasses are suitable options because the enable addition of optional arguments without changing types of workflow argument
+- dataclasses are suitable options because they enable adding optional arguments without changing types of arguments of workflows
 ### [Determinism](https://docs.temporal.io/workflow-definition#deterministic-constraints)
-- workflows must produce the same output given the same input
-- workflows must perform the same steps (including invocation of other workflows) given the same input
+- given same input, workflows must produce same output & perform same steps (including invocation of other workflows)
 - this implies that workflow definitions should not perform I/O bound tasks directly (?)
 ### Versioning
 - SDK feature which enables changing workflow definitions non deterministically
-- enables new executions to use the latest workflow definition while older executions will be using the older one(s)
+- enables new executions to use latest workflow definition while older executions will be using older one(s)
 ## Restarting The Worker Process
 - required for new changes to take effect
 # [Workflow Sandbox](https://github.com/temporalio/sdk-python?tab=readme-ov-file#workflow-sandbox)
@@ -125,15 +124,15 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - if non deterministic code is performed, an exception is raised
 ## How Does The Sandbox Work?
 1. global state isolation (achieved through python's builtin `exec` function)
-2. restrictions to prevent known non deterministic library calls (the python SDK implementes its own custom importer (achieved by re implementing [importlib](https://docs.python.org/3/library/importlib.html)))
+2. restrictions to prevent known non deterministic library calls (python SDK implementes its own custom importer (achieved by re implementing [importlib](https://docs.python.org/3/library/importlib.html)))
 ## Avoiding The Sandbox
 1. `temporalio.workflow.unsafe.sandbox_unrestricted` is used to remove restrictions for code blocks
-2. `sandboxed` parameter of `workflow.defn` decorator is set to `False` to avoid the workflow being executed inside the sandbox
-3. instance of `temporalio.worker.UnsandboxedWorkflowRunner` is passed to `workflow_runner` parameter of `Worker` class in order to disable sandbox for the given worker
+2. `sandboxed` parameter of `workflow.defn` decorator is set to `False` to avoid workflows being executed inside sandbox
+3. instance of `temporalio.worker.UnsandboxedWorkflowRunner` is passed to `workflow_runner` parameter of `Worker` class in order to disable sandbox for given worker
 ## Pass Through Modules
 - used to exclude activities & desired non deterministic code from sandbox & being imported on workflow definition loads
-- makes marked modules to be used directly from outside of the sandbox
-- possible because of the custom import system
+- makes marked modules to be used directly from outside of sandbox
+- possible because of custom import system
 - it is encouraged to mark all known deterministic side effect free code as pass through to avoid repetitive & expensive imports
 ### Marking Modules As Pass Through
 1. `temporalio.workflow.unsafe.imports_passed_through` is used to mark imports as pass through
@@ -155,8 +154,14 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - this allows temporal cluster to detect crashed workers, set options like timeout, scheduling & etc...
 ### Retrieving The Result
 - workflows don't execute activity
-- using wrappers, workflows request the execution of activities to the temporal cluster
-- wrappers named `execute...` are synchronous; therefore, they block & return the result when possible
+- using wrappers, workflows request execution of activities to temporal cluster
+- wrappers named `execute...` are synchronous; therefore, they block & return activity results when possible
 - wrappers named `start...` are asynchronous
-    - they request the execution of activities to the temporal cluster & return handlers
+    - they request execution of activities to temporal cluster & return handlers without furthur blocking
     - returned handlers could be awaited in order to get results of wrapped activities
+## Using Appropriate Timeouts
+- high value for timeouts delay this detection of crashed workers because this is how temporal cluster does it
+# Handling Activity Failure
+## How Temporal Handles Activity Failure
+- temporal retries failed activities (with short delays between each attempt) untill succession or cancelation (by reaching maxium attempts or maximum interval)
+- attempts, intervals are configurable using dedicated SDK parameters
