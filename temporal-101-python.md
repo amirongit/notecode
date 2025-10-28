@@ -59,7 +59,7 @@
     - does it through orchestration
     - doesn't even have access to application code
 ## Temporal Command Line Interface: `temporal`
-### What Is `Temporal`?
+### What Is `temporal`?
 - command line interface for temporal which allows communication with cluster
 # Developing A Workflow
 ## Writing A Workflow Definition
@@ -111,7 +111,7 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 - dataclasses are suitable options because they enable adding optional arguments without changing types of arguments of workflows
 ### [Determinism](https://docs.temporal.io/workflow-definition#deterministic-constraints)
 - given same input, workflows must produce same output & perform same steps (including invocation of other workflows)
-- this implies that workflow definitions should not perform I/O bound tasks directly (?)
+- this implies that workflow definitions should not perform I/O bound tasks directly
 ### Versioning
 - SDK feature which enables changing workflow definitions non deterministically
 - enables new executions to use latest workflow definition while older executions will be using older one(s)
