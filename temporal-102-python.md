@@ -47,7 +47,7 @@
     - allow adding or changing types of arguments without breaking backward compatibility
     - don't break ongoing executions upon changing
 ### Logging In Workflows & Activities
-- using loggers from temporal SDK enables suppressing logs during state restoration possible
+- using loggers from temporal SDK enables suppressing logs during state restoration (event history replay) possible
 - `temporalio.workflow.loggier` is used to log in workflows
 - `temporalio.activity.loggier` is used to log in activities
 ### Accessing Workflow Results
@@ -99,4 +99,42 @@
 - size of input parameters, returned values & variables are limited to 2MB in total
 - size of event history is limited to 50MB
 - [claim check pattern](https://www.enterpriseintegrationpatterns.com/patterns/messaging/StoreInLibrary.html) is used to avoid reaching event history size limits
-<!-- Understanding Workflow Determinism -->
+## Understanding Workflow Determinism
+### History Replay: How Temporal Provides Durable Execution
+- commands & event histories of workflows are replayed in order
+- history replay avoids duplicated execution of activity or workflows (execution results are accessible through event history)
+### Why Temporal Requires Determinism For Workflows
+- determinism enables temporal to achive exact state of previous executions through history replay
+- activities have the ability to inject non deterministic values into the event history
+### Python Sandbox Environment
+- temporal python SDK executes workflow code inside sandbox
+- the sandbox will raise exceptions if non deterministic events happen
+- passed through mechanism of sandbox is used to import non deterministic modules (which calls to should be deterministic)
+- most parts of standard library of python & temporal python SDK itself are passed through by default
+- the sandbox is consisted of two parts
+    1. global state isolation (uses `exec` to compile & evaluate statements)
+    2. restrictions (prevents known non deterministic library calls like `random.*`, `datetime.datetime.now`, etc...)
+### Common Sources Of Non Determinism
+- external systems or states
+- unordered iteration
+- random values
+- system time
+- threads
+- run id
+### How Workflow Changes Can Lead To Non Deterministic Errors
+- deploying modifications of workflows in ways that break input, path, & output of workflows while there are open executions of them
+- these would cause errors
+    - adding, removing & switching activity calls
+    - adding or removing timers
+    - altering execution order
+- these wouldn't
+    - modifying statements which do not affect generated commands
+    - changing `ActivityOptions` or `RetryPolicy`
+    - modifying activity code
+    - changing duration of timers (?)
+## Testing Your Temporal Application Code
+### Testing Activities
+- `temporalio.testing.ActivityEnvironment.run` can be used to execute activities in test code (without engaging cluster)
+### Testing Workflows
+- static methods of `temporalio.testing.WorkflowEnvironment` can be used to create test environment of running temporal server instance
+- instance of `temporalio.worker.Worker` can be created using the test client in order to execute workflows
