@@ -42,13 +42,12 @@
 - isolates units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
 - defines units as capsules of limited data & behaviour
 - reduces external influence on the unit when it is being tested
-- removes the need of composing or creating dependencies of the unit
 - separates behaviour from external state which makes it precise & direct
 - splits object graph which reduces the amount of preparation in test code
 - asserts against the unit & its interactions with its collabolators rather than their state
 #### The Isolation Issue: The Classical Take
-- makes unit tests independent from each other & their side effects
-- defines units as behaviour (which could be spread across multiple capsules)
+- isolates tests & their side effects rather than units
+- defines units as behaviour (which could be spread across multiple capsules of behaviour, data or both)
 - types of dependencies
     - shared: provides means for tests to affect each other's outcome; usually an static mutable field
     - private
