@@ -13,7 +13,7 @@ is the description or measurement of the overall performance of a service, parti
     - offers at least once & exactly once QoS
 ### Subject-Based Messaging
 #### Interest based messaging
-when using this method of messaging, listeners have to subscribe to subsets of subjects in order to recieve messages published on them
+when using this method of messaging, listeners have to subscribe to subsets of subjects in order to receive messages published on them
 #### Subject
 named communication channels for publishing & listening for messages; made on top of an string of characters that form a name which is used by publishers & subscribers to find each other
 #### Subject hierarchies
@@ -36,11 +36,11 @@ composed of:
 - optional `reply` address field
 maximum size is specified in server configuration
 #### Request-reply
-common pattern in modern distributed systems in which request is sent & the sender either awaits the response or recieves it asynchronously
+common pattern in modern distributed systems in which request is sent & the sender either awaits the response or receives it asynchronously
 ### JetStream
 NATS builtin persistence engine
 #### Durable subscribers
-type of subscribers that can recieve messages published when they are inactive
+type of subscribers that can receive messages published when they are inactive
 #### Streaming
 continuous flow of data in real-time; data is processed is it arrives under this paradigm
 #### Queuing

@@ -127,7 +127,7 @@ temporal workflow show --workflow-id <workflow-execution-id> --address <frontend
 2. restrictions to prevent known non deterministic library calls (python SDK implementes its own custom importer (achieved by re implementing [importlib](https://docs.python.org/3/library/importlib.html)))
 ## Avoiding The Sandbox
 1. `temporalio.workflow.unsafe.sandbox_unrestricted` is used to remove restrictions for code blocks
-2. `sandboxed` parameter of `workflow.defn` decorator is set to `False` to avoid workflows being executed inside sandbox
+2. `sandboxed` parameter of `workflow.defn` is set to `False` to avoid workflows being executed inside sandbox
 3. instance of `temporalio.worker.UnsandboxedWorkflowRunner` is passed to `workflow_runner` parameter of `Worker` class in order to disable sandbox for given worker
 ## Pass Through Modules
 - used to exclude activities & desired non deterministic code from sandbox & being imported on workflow definition loads
