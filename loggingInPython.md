@@ -1,12 +1,12 @@
 # Logging In Python
 ## Logging - Logging Facility In Python
 - simple examplel
-```py
-import logging
-logger = logging.getLogger(__name__)
-logger.info(<log>)
-# INFO: __main__: <log>
-```
+    ```py
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(<log>)
+    # INFO: __main__: <log>
+    ```
 - this enables modules to create & use module level loggers
 - standard logging library is implemented in hierarchical manner
     - logs are delivered to higher level log handlers
@@ -56,7 +56,7 @@ logger.info(<log>)
     - `handle`
         - used to handle given record by passing it to all handlers of self & its ancestors
         - passing to ancestors stops when `False` value of propagate is found
-#### Logging Levels
+#### [Logging Levels](https://docs.python.org/3/library/logging.html#logging-levels)
 |level|numeric value|desc|
 |-|-|-|
 |DEBUG|10|detailed information, usually for developers|
@@ -64,9 +64,41 @@ logger.info(<log>)
 |WARNING|30|indication for unexpected behaviour or near future problem while application is still safe|
 |ERROR|40|indication for problems causing application to not behave as expected|
 |ERROR|50|indication for problems that cause application to stop running|
+...
+### Log Record Objects
+- created by automatically logger object methods
+- created manually using `logging.makeLogRecord`
+- contains all information of logged event
+#### [Log Record Attributes](https://docs.python.org/3/library/logging.html#logrecord-attributes)
+|attribute|place holder|desc|
+|-|-|-|
+|args|-|dict or tuple of arguments|
+|asctime|asctime|human readable time when self was created|
+|created|created|timestamp of time when self was created|
+|exc_info|-|tuple of exceptions or `None`|
+|filename|filename|file portion of `pathname`|
+|funcName|funcName|name of function in which logging call happend|
+|lineno|lineno|line number in which logging call happend|
+|message|message|compiled (merged) message after formatting|
+|module|module|name portion of `filename`|
+|name|name|name of logger object on which logging call happend|
+|pathname|pathname|full path of source file in which logging call happend|
 ### Module Level Functions
 - `logging.getLogger`
     - returns logger with specified name if name is given, otherwise the root logger
     - calls to with same name will return reference to the same logger
     - name is usually dot separated & corresponds to the current logging hierarchy
 - `logging.{debug,info,warning,error,critical,log,exception}`: wrappers for methods of root logger
+## Logging How To
+### Basic Logging Tutorial
+- logging: used to track events of software executions (potentially containing variable data)
+- importance of logging events are described using severity levels
+- the default logging level is "WARNING"
+#### Logging To A File
+- `logging.basicConfig` is used to log the root logger object
+    ```py
+    import logging
+    logging.basicConfig(filename=<filename>, filemode=<filemode>, encoding=<encoding>, level=<level>, format=<format>)
+    ```
+- call to `logging.basicConfig` should happen before any logging events
+- otherwise, the root logger will be configured automatically by logging methods
