@@ -14,14 +14,12 @@
     - this enables down stream control from high level code over logs
 - standard logging library is composed of
     1. `Logger`s: used by application code for logging
-    2. `Handler`s: used to send log records to appropriate destinations
+    2. `Handler`s: used to send log records to their appropriate destinations
     3. `Filter`s: used to determine which log records to output
-    4. `Formatter`s:
-        - used to specify layout of log records 
-        - reponsible for converting `logging.LogRecord` objects to strings
+    4. `Formatter`s: reponsible for converting `logging.LogRecord` objects to log strings
 ### Logger Objects
 - should never be instantiated directly
-- `class logging.Logger`
+- `logging.Logger`
     - `level`
         - defaults to "NOTSET" if self isn't the root logger & to "WARNING" otherwise
         - "NOTSET" will cause all events to delegate to parent loggers
@@ -102,3 +100,41 @@
     ```
 - call to `logging.basicConfig` should happen before any logging events
 - otherwise, the root logger will be configured automatically by logging methods
+### Advanced Logging Tutorial
+- events are passed between loggers, handlers, filters & formatters in wrapped in `logging.logRecord` instances
+- logger objects have names & are arranged conceptually in namespace hierarchy
+- using `__name__` as logger names is encrouraged in order to keep the hierarchy structure
+- name of the root logger is "root"
+#### [Logging Flow](https://docs.python.org/3/howto/logging.html#logging-flow)
+![logging flow](./noteCodeStaticFiles/loggingInPython.LoggingHowTo.AdvancedLoggingTutorial.LoggingFlow.png)
+#### Loggers
+- perform these jobs
+    1. expose methods to application code in order to log events
+    2. decide which log records to process based on their severity & attached filter objects
+    3. pass along relevant log records to ancesotr loggers if specific conditions are met
+- common configuration methods
+    - `setLevel`
+    - `addHandler`
+    - `removeHandler`
+    - `addFilter`
+    - `removeFilter`
+- effective level
+    - used to determine if events should be processed or ommited
+    - if level of logger object isn't set explicitly, level of its parent logger will be used
+- propagation enables configuring low level loggers through high level ones
+#### Handlers
+- should not be instantiated directly
+- reponsible for dispatching log messages to their corresponding destination
+- common configuration methods
+    - `setLevel`
+    - `setFormatter`
+    - `addFilter`
+    - `removeFilter`
+#### Formatters
+- used to configure structure & content of the final log message string
+#### Configuring Logging
+- explicitly using python code
+- [logging config file](https://docs.python.org/3/library/logging.config.html#logging.config.fileConfig)
+- [logging config dictionary](https://docs.python.org/3/library/logging.config.html#logging.config.dictConfig)
+#### [Useful Handlers](https://docs.python.org/3/howto/logging.html#useful-handlers)
+- bunch of built in handlers provided by standard library
