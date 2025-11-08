@@ -61,7 +61,7 @@
 |INFO|20|confirmation for as expected behaviour|
 |WARNING|30|indication for unexpected behaviour or near future problem while application is still safe|
 |ERROR|40|indication for problems causing application to not behave as expected|
-|ERROR|50|indication for problems that cause application to stop running|
+|CRITICAL|50|indication for problems that cause application to stop running|
 ...
 ### Log Record Objects
 - created by automatically logger object methods
