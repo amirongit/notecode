@@ -78,7 +78,7 @@
 - workflow executions are identified by "run id"
 - workflow executions could be in one of two states
     1. open (currently running; cycling between progression & awaiting execution results)
-        1. [continued as new](https://docs.temporal.io/develop/python/continue-as-new)
+        1. [continue as new](https://docs.temporal.io/develop/python/continue-as-new)
     2. closed
         1. completed
         2. failed
