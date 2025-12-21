@@ -35,18 +35,18 @@
 ## What Is A Unit Test?
 ### The Definition Of "unit test"
 - essential attributes among most definitions
-    - is automated
+    - automated
+    - isolated
     - verifies small piece of code (unit)
-    - is isolated
 #### The Isolation Issue: The London Take
-- isolates units under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
+- isolates modules under test from their collabolators by injecting or monkey patching [test double](https://martinfowler.com/bliki/TestDouble.html)s
 - defines units as capsules of limited data & behaviour
 - reduces external influence on the unit when it is being tested
 - separates behaviour from external state which makes it precise & direct
 - splits object graph which reduces the amount of preparation in test code
-- asserts against the unit & its interactions with its collabolators rather than their state
-#### The Isolation Issue: The Classical Take
-- isolates tests & their side effects rather than units
+- asserts against the modules & their interactions with its collabolators
+#### The Isolation Issue: The Detroit Take
+- isolates tests & their side effects rather than modules
 - defines units as behaviour (which could be spread across multiple capsules of behaviour, data or both)
 - types of dependencies
     - shared: provides means for tests to affect each other's outcome; usually an static mutable field
