@@ -1,6 +1,6 @@
 # Logging In Python
 ## Logging - Logging Facility In Python
-- simple examplel
+- simple example
     ```py
     import logging
     logger = logging.getLogger(__name__)
@@ -64,7 +64,7 @@
 |CRITICAL|50|indication for problems that cause application to stop running|
 ...
 ### Log Record Objects
-- created by automatically logger object methods
+- created automatically by logger object methods
 - created manually using `logging.makeLogRecord`
 - contains all information of logged event
 #### [Log Record Attributes](https://docs.python.org/3/library/logging.html#logrecord-attributes)
