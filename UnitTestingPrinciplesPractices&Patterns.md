@@ -70,17 +70,14 @@
 ### The Classical & London Schools Of Unit Testing
 |school|isolation of|units are|test doubles used for|
 |-|-|-|-|
-|london take|units|single classes or methods|mutable dependencies|
-|detroit take|unit tests|depends!|shared dependencies|
-
-- mutable dependencies whose internal state changes their external behaviour
+|london take|modules|single classes or methods|mutable dependencies (whose internal state changes their external behaviour)|
+|detroit take|test cases|behaviour|shared dependencies|
 #### How The Classical & London Schools Handle Dependencies
-- value object
-    - also called value
-    - has no individual identity
-    - identified by its content
-    - interchangeable with another object containing the same content
-    - considered as immutable & private dependency
+- value objects
+    - also called values
+    - have no individual identity
+    - identified by their content
+    - interchangeable with other objects containing similar content
 - shared or mutable dependencies are also called collaborators
 ### Contrasting The Classical & London Schools Of Unit Testing
 - benefits of the london school
@@ -90,7 +87,7 @@
 #### Unit Testing One Class At A Time
 <!--
     heavily opinionated, page 35
-    meaningless classes (& other objections towards the classical school in the following paragraphs)
+    meaningless classes (& other objections towards the london school in the following paragraphs)
     are signs of shitty code, which can't be resolved by merely thinking about tests.
 -->
 > tests should tell stories about the domain, thus, they should be cohesive & meaningful to non programmers
@@ -100,4 +97,27 @@
 ### Integration Tests In The Two Schools
 - for the london school, integration tests use real collaborators
 - for the classical school, side effects of integration tests aren't isolated
-<!-- 41 -->
+## The Anatomy Of A Unit Test
+### How To Structure A Unit Test
+#### Using The 3A Pattern
+- unit tests are splitted into 3 parts (aka "given, when, then" pattern among non technical people)
+- arrange (given): bringing the system to desired state
+- act (when): invoking the system using prepared dependencies in the arrange phase & capturing its output
+- assert (then): verify the outcome which might include
+    - comparing values
+    - verifying state of the system itself
+    - verifying state of collaborators
+    - verifying methods of collaborators being invoked by the system
+#### Avoid Multiple 3A sections
+- this indicates verification of multiple units
+#### Avoid If Statements In Tests
+- this indicates either verification of too many things at once or non deterministic behaviours of domain code
+- this is an anti pattern which increases maintenance cost of test code
+#### How Large Should Each Section Be?
+- arrange
+    - doesn't matter
+    - [object mother](https://martinfowler.com/bliki/ObjectMother.html) & test data builder patterns could be used to make it more compact
+- act
+    - usually should be one line of could which invokes the system
+    - more code might be an indication of bad public API of the system (lacking encapsulation)
+<!-- learn about invariance, covariance & continue for invariant violation, page 46 -->
