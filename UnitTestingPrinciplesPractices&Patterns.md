@@ -114,10 +114,33 @@
 - this indicates either verification of too many things at once or non deterministic behaviours of domain code
 - this is an anti pattern which increases maintenance cost of test code
 #### How Large Should Each Section Be?
+> the act of protecting your code against potential inconsistencies is called encapsulation
 - arrange
     - doesn't matter
     - [object mother](https://martinfowler.com/bliki/ObjectMother.html) & test data builder patterns could be used to make it more compact
 - act
     - usually should be one line of could which invokes the system
-    - more code might be an indication of bad public API of the system (lacking encapsulation)
-<!-- learn about invariance, covariance & continue for invariant violation, page 46 -->
+    - having to do more increases the possibility of state inconsistency & indicates lack of encapsulation
+### Reusing Test Fixtures Between Tests
+- fixture
+    - used to reduce "arrange" phase related code
+    - regular dependency of system under test or some data
+    - needs to be in one single known state before each test, hence the term fixture
+#### High Coupling Between Tests Is An Anti Pattern
+> modification of one test should not affect other tests
+- shared states used as arrangement will cause common assumptions between tests (coupling)
+<!--
+    but fixtures are "fixed" & should be allowed as common assumptions because shall not change!
+-->
+#### The Use Of Constructors In Tests Diminishes Test Readability
+- extracting arrangement code out of test cases makes them less readable by moving assumptions somewhere else
+#### A Better Way To Reuse Test Fixtures
+- using private factory methods
+    - shortens arrangement code without coupling or removing context
+    - allows more flexibality & reusabality
+### Refactoring To Parameterized Tests
+- parameterized tests allow providing arguments for unit tests
+- unit tests having common 3A phases with different values can be grouped together using this feature
+- parameterized tests allow capturing different branches behind the unit in one single test
+- there is trade off between readability & the amount of test code here
+<!-- page 65 -->
