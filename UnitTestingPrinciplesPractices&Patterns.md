@@ -143,4 +143,29 @@
 - unit tests having common 3A phases with different values can be grouped together using this feature
 - parameterized tests allow capturing different branches behind the unit in one single test
 - there is trade off between readability & the amount of test code here
-<!-- page 65 -->
+## The Four Pillars Of A Good Unit Test
+### Diving Into The Four Pillars Of A Good Unit Test
+1. protection against regressions
+2. resistance to refactoring
+3. fast feedback
+4. maintainability
+#### The First Pillar: Protection Against Regressions
+> regression is when features stop working after certain events such as refactoring or adding features
+- amount of regression potential is related to the amount of code
+- evaluation factors
+    - amount of exercised code (with proper assertions)
+    - complexity of exercised code
+    - domain significance of exercised code
+#### The Second Pillar: Resistance To Refactoring
+> refactoring means to change existing code without modifying its obsevable behaviour
+<!-- -->
+> false positives are test failures caused by refactoring (while the system under test is healthy, correct & works)
+- degree to which tests are able to sustain refactoring of system under test withou failing
+- tests make growth of code sustainable by allowing safe & regular refactoring & development of features
+- false positives punish refactoring & allow real problems slip into production environment slowly, thus removing the value of test suites
+#### What Causes False Positives
+- amount of false positives is related to the way that the test cases are structured
+- solution to false positives is to decouple test cases from implementation details
+- test cases shall treat the system under test from the point of view of its real client
+- thus, verifying only end results (obsevable behaviours), not steps taken to produce them (implementation or algorithm)
+<!-- 76, 4.2 -->
