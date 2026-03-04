@@ -61,7 +61,7 @@
         - provides means for tests to affect each other's outcome
         - usually an static mutable field accessible by all unit tests
     - private:
-        - is not shared between unit tests
+        - isn't shared between unit tests
         - usually in memory
     - volatile:
         - may require runtime environment setup like databases & 3rd party APIs
@@ -114,7 +114,9 @@
 - this indicates either verification of too many things at once or non deterministic behaviours of domain code
 - this is an anti pattern which increases maintenance cost of test code
 #### How Large Should Each Section Be?
-> the act of protecting your code against potential inconsistencies is called encapsulation
+> the act of protecting your code against potential inconsistencies (invariant violations) is called encapsulation
+<!-- -->
+> invariants are conditions which shall hold true at all times
 - arrange
     - doesn't matter
     - [object mother](https://martinfowler.com/bliki/ObjectMother.html) & test data builder patterns could be used to make it more compact
@@ -124,7 +126,7 @@
 ### Reusing Test Fixtures Between Tests
 - fixture
     - used to reduce "arrange" phase related code
-    - regular dependency of system under test or some data
+    - regular dependency of SUT or some data
     - needs to be in one single known state before each test, hence the term fixture
 #### High Coupling Between Tests Is An Anti Pattern
 > modification of one test should not affect other tests
@@ -159,13 +161,13 @@
 #### The Second Pillar: Resistance To Refactoring
 > refactoring means to change existing code without modifying its observable behaviour
 <!-- -->
-> false positives are test failures caused by refactoring (while system under test is healthy & correct)
-- degree to which tests are able to sustain refactoring of system under test withou failing
+> false positives are test failures caused by refactoring (while SUT is healthy & correct)
+- degree to which tests are able to sustain refactoring of SUT withou failing
 - tests make growth of code sustainable by allowing safe & regular refactoring & development of features
 - false positives punish refactoring & allow real problems slip into production environment slowly, thus removing the value of test suites
 #### What Causes False Positives
 - solution to false positives is to decouple test cases from implementation details
-- test cases shall treat system under test from the point of view of its real client
+- test cases shall treat SUT from the point of view of its real client
 - thus, verifying only end results (observable behaviours), not steps taken to produce them (implementation or algorithm)
 ### The Intrinsic Connection Between The First Two Attributes
 #### Maximizing Test Accuracy
@@ -175,7 +177,7 @@
 |pass|incorrect|false negative|[protection against regression](#the-first-pillar-protection-against-regressions)|
 |fail|incorrect|true positive|-|
 |fail|correct|false positive|[resistance to refactoring](#the-second-pillar-resistance-to-refactoring)|
-### The Third And Fourth Pillars: Fast Feedback & Maintainability
+### The Third & Fourth Pillars: Fast Feedback & Maintainability
 - fast feedback
     - cost of fixing bugs is related to the time it took for them to be noticed
     - slow running test cases avoid bugs to be noticed, thus allow moving forward in wrong direction
@@ -200,4 +202,54 @@
 - white box testing
     - verifies inner workings of software
     - derived from source code rather than specifications
-<!-- 92 -->
+## Mocks & Test Fragility
+### Differentiating Mocks From Stubs
+#### The Types Of Test Doubles
+> test double is an overarching term that describes all kinds of non production ready fake dependencies in tests
+- passed as fake dependencies to systems under tests instead of real ones
+- used when cost of passing real dependencies to the SUT is too heavy
+- variations of test doubles
+    - mocks: emulate & examin outgoing interactions (called by SUT to change state)
+        - mock: made using already existing libraries
+        - spy: hand written mocks
+    - stubs: emulate incoming interactions (called by SUT to get input data)
+        - dummy
+            - its only job is to satisfy method signatures
+            - may return hard coded & fakse values
+            - doesn't participate in production of final outcome
+        - stub: smart dependency configurable to return certain values in different situations
+        - fake: same as stub, but implemented as replacement for dependencies not yet existing
+#### Don't Assert Interactions With Stubs
+- this is an anti pattern which leads to fragile tests
+- mocks are used to examin outgoing interactions which are meaningful in domain model
+- stubs are used to emulate incoming interactions which are implementation details
+- assertion against implementation details is against "resistance to refactoring" attribute
+- practice of verifying events that aren't part of end result is called "overspecification"
+#### Using Mocks & Stubs Together
+- stubs & mocks can be on one test double but within different methods
+#### How Mocks & Stubs Relate To Commands & Queries
+> CQS principle states that each method should either be command or query, but not both
+- commands produce side effects without returning values
+- queries are side effect free & return values
+- mocks substitute commands
+- stubs substitute queries
+### Observable Behaviour vs. Implementation Details
+- test fragility corresponds to "resistance to refactoring" attribute
+#### Observable Behaviour Isn't The Same As Public API
+> an operations is one method that calculates, incurs side effects or both
+- code can be categorized along two dimensions
+    1. public API vs. private API
+    2. observable behaviour vs. implementation details
+- these dimensions don't overlap, meaning that one piece of code belongs to either one of the categories, but not both
+- observable behaviour is code that exposes either of these in order to directly help clients achieve specific goals
+    - operations
+    - state of system
+- code exposing neither is considered as implementation detail
+- ideally, public API & observable behaviour are together & coincide with each other
+#### Leacking Implementation Details: An Example With An Operation
+- ideally, any individual goal shall be achieved through one single operation
+- otherwise, public API might be leaking implementation details
+#### Well Designed API & Encapsulation
+- exposing implementation details allows invariant violations by giving control of internal state to clients
+- encapsulation reduces code complexity & the possibility of invariant violations by hiding internal state
+<!-- 104, read the linked article -->
