@@ -60,18 +60,18 @@
     - shared
         - provides means for tests to affect each other's outcome
         - usually an static mutable field accessible by all unit tests
-    - private:
+    - private
         - isn't shared between unit tests
         - usually in memory
-    - volatile:
+    - volatile
         - may require runtime environment setup like databases & 3rd party APIs
         - may contain non deterministic behaviour
 - asserts against state of system
 ### The Classical & London Schools Of Unit Testing
 |school|isolation of|units are|test doubles used for|
 |-|-|-|-|
-|london take|modules|single classes or methods|mutable dependencies (whose internal state changes their external behaviour)|
-|detroit take|test cases|behaviour|shared dependencies|
+|london take|units|single classes or methods|mutable dependencies (whose internal state changes their external behaviour)|
+|detroit take|unit test cases|behaviour spread across classes or methods|shared dependencies|
 #### How The Classical & London Schools Handle Dependencies
 - value objects
     - also called values
@@ -90,7 +90,7 @@
     meaningless classes (& other objections towards london school in the following paragraphs)
     are signs of shitty code, which can't be resolved by merely thinking about tests.
 -->
-> tests should tell stories about domain, thus, they should be cohesive & meaningful to non programmers
+- tests should tell stories about domain, thus, they should be cohesive & meaningful to non programmers
 - unit tests should verify units of behaviour rather than units of code
 - number of classes (or modules) it takes to implement behaviours is irrelevant
 - it is hard to tell what exactly unit tests verify if they exercise things less than units of behaviour
@@ -114,9 +114,8 @@
 - this indicates either verification of too many things at once or non deterministic behaviours of domain code
 - this is an anti pattern which increases maintenance cost of test code
 #### How Large Should Each Section Be?
-> the act of protecting your code against potential inconsistencies (invariant violations) is called encapsulation
-<!-- -->
-> invariants are conditions which shall hold true at all times
+- the act of protecting your code against potential inconsistencies (invariant violations) is called encapsulation
+- invariants are conditions which shall hold true at all times
 - arrange
     - doesn't matter
     - [object mother](https://martinfowler.com/bliki/ObjectMother.html) & test data builder patterns could be used to make it more compact
@@ -129,10 +128,10 @@
     - regular dependency of SUT or some data
     - needs to be in one single known state before each test, hence the term fixture
 #### High Coupling Between Tests Is An Anti Pattern
-> modification of one test should not affect other tests
+- modification of one test should not affect other tests
 - shared states used as arrangement will cause common assumptions between tests (coupling)
 <!--
-    but fixtures are "fixed" & should be allowed as common assumptions because shall not change!
+    but fixtures are "fixed" & should be allowed as common assumptions because they shall not change!
 -->
 #### The Use Of Constructors In Tests Diminishes Test Readability
 - extracting arrangement code out of test cases makes them less readable by moving assumptions somewhere else
@@ -152,16 +151,15 @@
 3. fast feedback
 4. maintainability
 #### The First Pillar: Protection Against Regressions
-> regression is when features stop working after certain events such as refactoring or adding features
+- regression is when features stop working after certain events such as refactoring or adding features
 - amount of regression potential is related to amount of code
 - evaluation factors
     - amount of exercised code (with proper assertions)
     - complexity of exercised code
     - domain significance of exercised code
 #### The Second Pillar: Resistance To Refactoring
-> refactoring means to change existing code without modifying its observable behaviour
-<!-- -->
-> false positives are test failures caused by refactoring (while SUT is healthy & correct)
+- refactoring means to change existing code without modifying its observable behaviour
+- false positives are test failures caused by refactoring (while SUT is healthy & correct)
 - degree to which tests are able to sustain refactoring of SUT withou failing
 - tests make growth of code sustainable by allowing safe & regular refactoring & development of features
 - false positives punish refactoring & allow real problems slip into production environment slowly, thus removing the value of test suites
@@ -205,7 +203,7 @@
 ## Mocks & Test Fragility
 ### Differentiating Mocks From Stubs
 #### The Types Of Test Doubles
-> test double is an overarching term that describes all kinds of non production ready fake dependencies in tests
+- test double is an overarching term that describes all kinds of non production ready fake dependencies in tests
 - passed as fake dependencies to systems under tests instead of real ones
 - used when cost of passing real dependencies to the SUT is too heavy
 - variations of test doubles
@@ -228,7 +226,7 @@
 #### Using Mocks & Stubs Together
 - stubs & mocks can be on one test double but within different methods
 #### How Mocks & Stubs Relate To Commands & Queries
-> CQS principle states that each method should either be command or query, but not both
+- CQS principle states that each method should either be command or query, but not both
 - commands produce side effects without returning values
 - queries are side effect free & return values
 - mocks substitute commands
@@ -236,7 +234,7 @@
 ### Observable Behaviour vs. Implementation Details
 - test fragility corresponds to "resistance to refactoring" attribute
 #### Observable Behaviour Isn't The Same As Public API
-> an operations is one method that calculates, incurs side effects or both
+- an operations is one method that calculates, incurs side effects or both
 - code can be categorized along two dimensions
     1. public API vs. private API
     2. observable behaviour vs. implementation details
@@ -252,4 +250,61 @@
 #### Well Designed API & Encapsulation
 - exposing implementation details allows invariant violations by giving control of internal state to clients
 - encapsulation reduces code complexity & the possibility of invariant violations by hiding internal state
-<!-- 104, read the linked article -->
+<!--
+    i won't be able to read the article at https://martinfowler.com/bliki/TellDontAsk.html
+    because of censorship during the greate last war!
+    this is the price i'll be willingly pay for mullahs to get fucked & burried in history.
+    fuck muslims. fuck islam. fuck schizophrenic religious psycho pahts
+-->
+#### Leaking Implementation Details: An Example With State
+- making APIs well designed automatically improves unit tests
+- absolute minimum amount of operations & state shall be exposed to clients (only the most direct ones)
+- everything else shall be hidden from clients & considered as private state
+- it isn't even possible to leak or hide observable behaviour because of its very definition
+### The Relationship Between Mocks & Test Fragility
+#### Defining Hexagonal Architecture
+- hexagonal architecture emphasizes on three guidelines
+    1. separation of concerns between the domain & application service layer
+        - domain layer should be as isolated as possible (collection of "how to"s)
+        - application service layer orchestrates domain layer, dependencies & clients in order to achieve goals (use cases) (collection of "what to"s)
+    2. communications inside application
+        - dependencies shall flow only from application service layer to domain layer
+        - classes inside domain layer shall only depend on each other
+    3. communications between applications
+        - applications shall communicate through common interfaces maintained by & in application service layers
+        - domain layer shall not be accessed directly
+- each layer contains observable behaviours & implementation details
+- test cases working on different layers could be verifying the same behaviours on different levels (or have overlaps)
+- for domain layer, application service layer is client which for external client itself is considered as client
+#### Intra System vs. Inter System Communications
+- intra system
+    - communications between classes inside one application
+    - not directly related to goals of clients
+    - implementation detail
+    - verification by test cases makes them fragile & falls short in "resistance to refactoring" attribute
+    - can be replaced by stubs in test cases
+- inter system
+    - communications between multiple applications
+    - considered as outcome or side effect which is part of end result
+    - observable behaviour
+    - shall be verified by test cases using mocks
+    - communication protocols of this type are contracts (shared interfaces) with external clients
+    - therefore, backward compatibality is important & refactoring shall not change way or content of these type of communications
+#### The Classical School vs. London School Of Unit Testing, Revisited
+<!--
+    but what if intra system communications happened also upon interfaces which mocks maintained?
+    is that too much maintenance cost?
+    but of course they won't be mocks anymore. they'll be another implementation of the mentioned interfaces.
+-->
+- london school advocates mocking all but immutable dependencies regardless of type of communications
+- this will lead to test fragility by violating "resistance to refactoring" attribute by verifying implementation details
+#### Not All Out Of Process Dependencies Should Be Mocked Out
+- detroit school advocates avoiding shared dependencies to keep of executing unit tests in parallel through isolation of side effects possible
+- shared & not out of process dependencies are easy to avoid being reused by providing new instances of them in each unit test
+- shared out of process dependencies are usually replaced by test doubles, because its not practical to spawn processes per each unit test
+- if such dependency is only accessible by one application, communications with it aren't part of observable behaviours
+- therefore, need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
+- using mocks for such dependencies violates "resistance to refactor" attribute because of control the application has on such dependency
+- this poses an issue: how the work with such dependency is verified without violation of "fast feedback" attribute
+#### Using Mocks To Verify Behaviour
+- only communications which can be traced back to client goals shall be verified
