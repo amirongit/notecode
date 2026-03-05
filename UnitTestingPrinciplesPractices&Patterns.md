@@ -162,7 +162,7 @@
 - false positives are test failures caused by refactoring (while SUT is healthy & correct)
 - degree to which tests are able to sustain refactoring of SUT withou failing
 - tests make growth of code sustainable by allowing safe & regular refactoring & development of features
-- false positives punish refactoring & allow real problems slip into production environment slowly, thus removing the value of test suites
+- false positives punish refactoring & allow real problems slip into production environment slowly, thus, removing the value of test suites
 #### What Causes False Positives
 - solution to false positives is to decouple test cases from implementation details
 - test cases shall treat SUT from the point of view of its real client
@@ -305,6 +305,78 @@
 - if such dependency is only accessible by one application, communications with it aren't part of observable behaviours
 - therefore, need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
 - using mocks for such dependencies violates "resistance to refactor" attribute because of control the application has on such dependency
-- this poses an issue: how the work with such dependency is verified without violation of "fast feedback" attribute
+- this poses an issue: how the work with such dependency is verified without violation of "fast feedback" attribute?
 #### Using Mocks To Verify Behaviour
 - only communications which can be traced back to client goals shall be verified
+## Styles Of Unit Testing
+### The Three Styles Of Unit Testing
+- it is possible to employ more than one of these styles in one single unit test
+- detroit school prefers state based style
+- london school prefers communication based style
+- output based style is preferred anyways & shall be employed solely when possible
+#### Defining The Output Based Style
+- feeds specific input to SUT & checks for specific outputs (aka functional)
+- applicable to code which doesn't produce side effects (by mutating state), so only returned output needs to get checked
+#### Defining The State Based Style
+- verifies state of SUT or one of its dependencies after invoking some operation
+#### Defining The Communication Based Style
+- uses test doubles to verify communications between SUT & its dependencies
+### Comparing The Three Styles Of Unit Testing
+#### Comparing The Styles Using The Metrics Of Protection Against Regressions & Fast Feedback
+- extreme cases of communication based style may violate "protection against regressions" attribute by exercising little amounts of code
+- if no out of process dependencies is used by SUT, all styles score the same for "fast feedback" attribute
+#### Comparing The Styles Using The Metric Of Resistance To Refactoring
+- test cases of output based style are only coupled to SUT itself & its output, thus, scoring highest
+- state based test cases are more prone to false positives by also being coupled to state of SUT, covering larger API surface, scoring second best
+- communication based test cases score lowest by being coupled to internal communications of SUT
+#### Comparing The Styles Using The Metric Of Maintainability
+- output based test cases score highest by having smaller 3A phases than other styles & not checking for any states
+- state based test cases score second best by having large assertion phases which also may engage with out of process dependencies
+- communication based test cases score lowest by having large arrange & assert phases which also may contain mock chains
+#### Comparing The Styles: Test Results
+- output based tests are the best! (:
+- but this style of testing can only be applied on functional code (zero to non side effects & internal dependencies)
+### Understanding Functional Architecture
+#### What Is Functional Programming
+- mathematical functions (aka pure functions)
+    - don't have hidden inputs or outputs
+    - all inputs & outputs are explicitly expressed method signatures
+    - produce same output for same input regardless of time, states or present conditions (are deterministic)
+    - match mathematical definition of functions: relation in which each unique first component corresponds to one non-unique second component
+    - replaceable by values they return (aka referential transparency)
+- programming with mathematical functions
+- hidden inputs & outputs make code less testable & readable
+    - side effects
+    - exceptions
+    - references to internal or external states: such as accessing current date & time or data stores (introducing non determinism)
+#### What Is Functional Architecture?
+- pushes side effects to edge of domain operations
+- maximizes purely functional code & minimizes code that deals with side effects
+- introduces separation between domain model & code that incurs side effects
+    1. functional core (aka mutable core)
+        - makes decisions
+        - doesn't require side effects
+        - can be implemented by mathematical functions
+        - shall not depend on mutable shell
+    2. mutable shell
+        - acts upon decisions
+        - gathers input
+        - calls functional core
+        - converts decisions into effects
+        - should be as dump as possible (domain wise) (so it also takes minimum amount of test cases to verify its behaviour)
+#### Comparing Functional & Hexagonal Architecture
+- since in functional programming everything is immutable, state modification is impossible
+- therefore, side effects are completely pushed to edge of domain operations
+- but in hexagonal architecture, domain layer is able to modify states within the same layer
+- functional programming can be considered as subset of hexagonal architecture or its radical successor
+### Understanding The Drawbacks Of Functional Architecture
+#### Applicability Of Functional Architecture
+- immutable internal states can be considered as constant values in mathematical functions, not hidden inputs
+- collaborators differ from values
+    - they allow modification of their state
+    - this changes their behaviour (introducing references to internal or external states)
+    - thus, considered as hidden inputs
+<!--
+    didn't understand performance drawbacks tbh
+-->
+<!-- page 151 -->
