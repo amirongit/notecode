@@ -38,7 +38,7 @@
 #### It Provides Maximum Value With Minimum Maintenance Costs
 - writing valuable unit test isn't possible without properly structured & written code
 ## What Is A Unit Test?
-### The Definition Of "unit test"
+### The Definition Of Unit Test
 - essential attributes among most definitions
     - verifies small piece of code (unit)
     - executed automatically & quickly
@@ -56,7 +56,7 @@
 - types of dependencies
     - out of process
         - runs outside the application's execution process
-        - calls to these dependencies violates the "quick" attribute of unit tests
+        - calls to these dependencies violates the quick attribute of unit tests
     - shared
         - provides means for tests to affect each other's outcome
         - usually an static mutable field accessible by all unit tests
@@ -100,7 +100,7 @@
 ## The Anatomy Of A Unit Test
 ### How To Structure A Unit Test
 #### Using The 3A Pattern
-- unit tests are splitted into 3 parts (aka "given, when, then" pattern among non technical people)
+- unit tests are splitted into 3 parts (aka given, when, then pattern among non technical people)
 - arrange (given): bringing system to desired state
 - act (when): invoking system using prepared dependencies in arrange phase & capturing its output
 - assert (then): verify the outcome which might include
@@ -124,14 +124,14 @@
     - having to do more increases the possibility of state inconsistency & indicates lack of encapsulation
 ### Reusing Test Fixtures Between Tests
 - fixture
-    - used to reduce "arrange" phase related code
+    - used to reduce arrange phase related code
     - regular dependency of SUT or some data
     - needs to be in one single known state before each test, hence the term fixture
 #### High Coupling Between Tests Is An Anti Pattern
 - modification of one test should not affect other tests
 - shared states used as arrangement will cause common assumptions between tests (coupling)
 <!--
-    but fixtures are "fixed" & should be allowed as common assumptions because they shall not change!
+    but fixtures are fixed & should be allowed as common assumptions because they shall not change!
 -->
 #### The Use Of Constructors In Tests Diminishes Test Readability
 - extracting arrangement code out of test cases makes them less readable by moving assumptions somewhere else
@@ -162,7 +162,7 @@
 - false positives are test failures caused by refactoring (while SUT is healthy & correct)
 - degree to which tests are able to sustain refactoring of SUT withou failing
 - tests make growth of code sustainable by allowing safe & regular refactoring & development of features
-- false positives punish refactoring & allow real problems slip into production environment slowly, thus, removing the value of test suites
+- false positives punish refactoring & allow real problems slip into production environment, removing value of test suites
 #### What Causes False Positives
 - solution to false positives is to decouple test cases from implementation details
 - test cases shall treat SUT from the point of view of its real client
@@ -196,7 +196,7 @@
 - black box testing
     - aims at testing software without knowing its internal structure
     - usually built on specifications
-    - focused on "what" rather than "how"
+    - focused on what rather than how
 - white box testing
     - verifies inner workings of software
     - derived from source code rather than specifications
@@ -221,8 +221,8 @@
 - this is an anti pattern which leads to fragile tests
 - mocks are used to examin outgoing interactions which are meaningful in domain model
 - stubs are used to emulate incoming interactions which are implementation details
-- assertion against implementation details is against "resistance to refactoring" attribute
-- practice of verifying events that aren't part of end result is called "overspecification"
+- assertion against implementation details is against resistance to refactoring attribute
+- practice of verifying events that aren't part of end result is called overspecification
 #### Using Mocks & Stubs Together
 - stubs & mocks can be on one test double but within different methods
 #### How Mocks & Stubs Relate To Commands & Queries
@@ -232,10 +232,10 @@
 - mocks substitute commands
 - stubs substitute queries
 ### Observable Behaviour vs. Implementation Details
-- test fragility corresponds to "resistance to refactoring" attribute
+- test fragility corresponds to resistance to refactoring attribute
 #### Observable Behaviour Isn't The Same As Public API
 - an operations is one method that calculates, incurs side effects or both
-- code can be categorized along two dimensions
+- code can be categorized into two dimensions
     1. public API vs. private API
     2. observable behaviour vs. implementation details
 - these dimensions don't overlap, meaning that one piece of code belongs to either one of the categories, but not both
@@ -265,8 +265,8 @@
 #### Defining Hexagonal Architecture
 - hexagonal architecture emphasizes on three guidelines
     1. separation of concerns between the domain & application service layer
-        - domain layer should be as isolated as possible (collection of "how to"s)
-        - application service layer orchestrates domain layer, dependencies & clients in order to achieve goals (use cases) (collection of "what to"s)
+        - domain layer should be as isolated as possible (collection of how tos)
+        - application service layer orchestrates domain layer, dependencies & clients in order to achieve goals (use cases) (collection of what tos)
     2. communications inside application
         - dependencies shall flow only from application service layer to domain layer
         - classes inside domain layer shall only depend on each other
@@ -281,7 +281,7 @@
     - communications between classes inside one application
     - not directly related to goals of clients
     - implementation detail
-    - verification by test cases makes them fragile & falls short in "resistance to refactoring" attribute
+    - verification by test cases makes them fragile & falls short in resistance to refactoring attribute
     - can be replaced by stubs in test cases
 - inter system
     - communications between multiple applications
@@ -297,15 +297,14 @@
     but of course they won't be mocks anymore. they'll be another implementation of the mentioned interfaces.
 -->
 - london school advocates mocking all but immutable dependencies regardless of type of communications
-- this will lead to test fragility by violating "resistance to refactoring" attribute by verifying implementation details
+- this will lead to test fragility by violating resistance to refactoring attribute by verifying implementation details
 #### Not All Out Of Process Dependencies Should Be Mocked Out
 - detroit school advocates avoiding shared dependencies to keep of executing unit tests in parallel through isolation of side effects possible
 - shared & not out of process dependencies are easy to avoid being reused by providing new instances of them in each unit test
 - shared out of process dependencies are usually replaced by test doubles, because its not practical to spawn processes per each unit test
 - if such dependency is only accessible by one application, communications with it aren't part of observable behaviours
 - therefore, need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
-- using mocks for such dependencies violates "resistance to refactor" attribute because of control the application has on such dependency
-- this poses an issue: how the work with such dependency is verified without violation of "fast feedback" attribute?
+- using mocks for such dependencies violates resistance to refactoring attribute because of control the application has on such dependency
 #### Using Mocks To Verify Behaviour
 - only communications which can be traced back to client goals shall be verified
 ## Styles Of Unit Testing
@@ -323,8 +322,8 @@
 - uses test doubles to verify communications between SUT & its dependencies
 ### Comparing The Three Styles Of Unit Testing
 #### Comparing The Styles Using The Metrics Of Protection Against Regressions & Fast Feedback
-- extreme cases of communication based style may violate "protection against regressions" attribute by exercising little amounts of code
-- if no out of process dependencies is used by SUT, all styles score the same for "fast feedback" attribute
+- extreme cases of communication based style may violate protection against regressions attribute by exercising little amounts of code
+- if no out of process dependencies is used by SUT, all styles score the same for fast feedback attribute
 #### Comparing The Styles Using The Metric Of Resistance To Refactoring
 - test cases of output based style are only coupled to SUT itself & its output, thus, scoring highest
 - state based test cases are more prone to false positives by also being coupled to state of SUT, covering larger API surface, scoring second best
@@ -353,7 +352,7 @@
 - pushes side effects to edge of domain operations
 - maximizes purely functional code & minimizes code that deals with side effects
 - introduces separation between domain model & code that incurs side effects
-    1. functional core (aka mutable core)
+    1. functional core (aka immutable core)
         - makes decisions
         - doesn't require side effects
         - can be implemented by mathematical functions
@@ -379,4 +378,81 @@
 <!--
     didn't understand performance drawbacks tbh
 -->
-<!-- page 151 -->
+## Refactoring Toward Valuable Unit Tests
+### Identifying The Code To Refactor
+- it usually isn't possible to improve test suite without refactoring underlying production code
+#### The Four Types Of Code
+- code can be categorized into two dimensions
+    1. complexity or domain significance
+        - corresponds directly to number of decision making points (branches)
+        - calculated using formula of cyclomatic complexity: `1 + <number of branching points using simplest predicates>`
+    2. number of collaborators
+        - large number of collaborators makes systems hard to test due to maintainability attribute & large arrange phases
+- combination of these factors produces four types of code
+    1. domain model algorithms
+        - few collaborators but high domain complexity
+        - most valuable test cases becuase of low maintenance cost, fast feedback & high protection against regressions
+    2. trivial
+        - few collaborators & zero complexity
+        - low value test cases becuase of high maintenance cost & exercising code which has already been tested
+    3. controller
+        - large number of (usually domain related) collaborators but zero complexity
+        - low value test cases becuase of high maintenance cost & exercising code which has already been tested
+    4. overcomplicated
+        - large number of collaborators & high domain complexity
+        - hard to test but too risky to be left without being tested
+        - shall be splitted into domain model algorithms & controllers
+- the more complexy or significant code is, the less collaborators it should have
+#### Using The Humble Object Pattern To Split Overcomplicated Code
+- to split overcomplicated code
+    - testable parts of it (domain algorithms) are extracted out & called from within it to be used with collaborators
+    - remaining code becomes humble object which wraps together domain logic & collaborators
+    - this humble object doesn't contain any domain algorithms to be tested & can be treated like controllers
+- similarities of functional & hexagonal architectural to humble object pattern
+    - domain algorithms
+        - immutable core in functional architecture
+        - domain layer in hexagonal architecture
+    - humble objects themselves
+        - application service layer in hexagonal architecture
+        - mutable shell in functional architecture
+- how humble object pattern enforces single responsibility principle
+    - orchestration of collaborators is one responsibility
+    - making domain related decisions is one responsibility
+    - one piece of code shall take both responsibilities
+### Analysis Of Optimal Unit Test Coverage
+#### Should You Test Preconditions?
+- preconditions which state domain related invariants shall verified by test cases
+### Handling Conditional Logic In Controllers
+- seperation between domain algorithms & orchestration works best when operations have three distinct stages
+    1. retrieving data
+    2. executing domain algorithms
+    3. presisting data
+- but operations may conditionally need to retrieve or store data
+- three options are available in such situations
+    1. pushing all I/O calls to orchestrators: controllers will retrieve & store all potentially relevant data regardless (reduces performance)
+    2. injection of collaborators into domain algorithms: algorithms will directly call collaborators if needed (reduces testability of domain algorithms)
+    3. making decision making processes more granular: controllers will act upon each step of operation
+        - reduces simplicity of controllers
+        - leaks internal state
+        - could lead to invariant violations
+- three attributes must be balanced in such situations
+    1. testability of domain algorithms: derived from number & type of its collaborators, ideally zero
+    2. simplicity of controllers: dependes on amount of its involvement in domain decision making process, also ideally zero
+    3. performance: relates to number of calls to out of process dependencies & amount of data travelled, ideally as minimum as possible
+#### Using The CanExecute/Execute Pattern
+- in addition to operations, another function is implemented usually with the name `can_<operation-name>`
+- this function shall indicate wether additional data needs to be retrieved, operation must be stopped or etc... by being called within controller
+- this function is also called as precondition inside operation itself
+- introducing this function will keep protecting application from invariant violations while also letting controllers know if I/O calls should be made
+- branches inside controllers which act upon this function aren't considered as part of domain algorithm because they are merely acting on decisions
+#### Using Domain Events To Track Changes In The Domain Model
+- domain events describe meaningful events for domain experts
+- domain events are usually implemented as immutable classes containing data needed to notify external systems about & with names in past tense
+- calling specific collaborators as part of observable behaviour is considered as part of domain algorithm
+- decision to make such calls shall not be made by controllers
+- domain events are used to prevent domain algorithm fragmentation with methods that check if these collaborators should be called
+### Conclusion
+- keep side effects in memory until operations are finished
+- this will make it easy to write test cases for operations with low maintenance cost & without involving out of process dependencies
+- its easier to test abstractions than things they abstract (branches & algorithms aren't part of abstractions though!)
+- give up hope of separating orchestration from decision making one hundered percent
