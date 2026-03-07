@@ -2,6 +2,8 @@
     Dependency Injection: Principles, Practices, Patterns
     Algebraic Data Types
     http://mng.bz/KE9O
+    https://martinfowler.com/bliki/TellDontAsk.html
+    https://enterprisecraftsmanship.com/posts/ocp-vs-yagni
 -->
 # Unit Testing: Principles, Practices & Patterns
 ## The Goal Of Unit Testing
@@ -14,14 +16,13 @@
 #### Understanding The Code Coverage Metric
 - ratio between lines exercised by test suite & all of code
 - easy to manipulate by making code more compact  (using inline syntaxes, etc...)
-- aka test coverage (?)
 #### Understanding The Branch Coverage Metric
 - ratio between lines exercised by test suite & all branches of code
 - focused on flow control structures
 #### Problems With Coverage Metrics
 - test suite quality can't be determined by coverage metrics
 - code coverage exercises code but doesn't verify results (it is done by assertions)
-- branch coverage ignores paths of external libraries (?)
+- branch coverage ignores paths of external libraries (they don't need to be tested though?!)
 #### Aiming At A Particular Coverage Number
 - coverage metrics are indicators, not goals in & of themselves
 ### What Makes A Successfull Test Suite?
@@ -165,7 +166,7 @@
 - false positives punish refactoring & allow real problems slip into production environment, removing value of test suites
 #### What Causes False Positives
 - solution to false positives is to decouple test cases from implementation details
-- test cases shall treat SUT from the point of view of its real client
+- test cases shall treat SUT from the POV of its real client
 - thus, verifying only end results (observable behaviours), not steps taken to produce them (implementation or algorithm)
 ### The Intrinsic Connection Between The First Two Attributes
 #### Maximizing Test Accuracy
@@ -250,12 +251,7 @@
 #### Well Designed API & Encapsulation
 - exposing implementation details allows invariant violations by giving control of internal state to clients
 - encapsulation reduces code complexity & the possibility of invariant violations by hiding internal state
-<!--
-    i won't be able to read the article at https://martinfowler.com/bliki/TellDontAsk.html
-    because of censorship during the greate last war!
-    this is the price i'll be willingly pay for mullahs to get fucked & burried in history.
-    fuck muslims. fuck islam. fuck schizophrenic religious psycho pahts
--->
+<!-- complete after reading tell don't ask by martin fowler -->
 #### Leaking Implementation Details: An Example With State
 - making APIs well designed automatically improves unit tests
 - absolute minimum amount of operations & state shall be exposed to clients (only the most direct ones)
@@ -278,7 +274,7 @@
 - for domain layer, application service layer is client which for external client itself is considered as client
 #### Intra System vs. Inter System Communications
 - intra system
-    - communications between classes inside one application
+    - communications between components inside one application
     - not directly related to goals of clients
     - implementation detail
     - verification by test cases makes them fragile & falls short in resistance to refactoring attribute
@@ -289,7 +285,7 @@
     - observable behaviour
     - shall be verified by test cases using mocks
     - communication protocols of this type are contracts (shared interfaces) with external clients
-    - therefore, backward compatibality is important & refactoring shall not change way or content of these type of communications
+    - therefore, backward compatibality is important & refactoring shall not change the way or content of these type of communications
 #### The Classical School vs. London School Of Unit Testing, Revisited
 <!--
     but what if intra system communications happened also upon interfaces which mocks maintained?
@@ -303,7 +299,7 @@
 - shared & not out of process dependencies are easy to avoid being reused by providing new instances of them in each unit test
 - shared out of process dependencies are usually replaced by test doubles, because its not practical to spawn processes per each unit test
 - if such dependency is only accessible by one application, communications with it aren't part of observable behaviours
-- therefore, need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
+- therefore, the need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
 - using mocks for such dependencies violates resistance to refactoring attribute because of control the application has on such dependency
 #### Using Mocks To Verify Behaviour
 - only communications which can be traced back to client goals shall be verified
@@ -455,4 +451,70 @@
 - keep side effects in memory until operations are finished
 - this will make it easy to write test cases for operations with low maintenance cost & without involving out of process dependencies
 - its easier to test abstractions than things they abstract (branches & algorithms aren't part of abstractions though!)
-- give up hope of separating orchestration from decision making one hundered percent
+- give up hope of separating orchestration from decision making one hundred percent
+## Why Integration Testing?
+### What Is An Integration Test?
+#### The Role Of Integration Tests
+- integration tests are tests that fall out of [definitions of unit tests](#the-definition-of-unit-test) which usually verify
+    - how the application works with its collaborators (controller code)
+    - code that isn't complex but is focused on communications between components (wide code)
+#### The Test Pyramid Revisited
+- two factors which increase maintenance cost of integration tests
+    1. keeping out of process dependencies operationl in order to execute test cases
+    2. 3A phases of test cases grow in size with number of collaborators
+- two attributes of good test cases provided by integration tests
+    1. protection against regression: by exercising more code from both the application & its libraries
+    2. resistance to refactoring: by being detached from production code & approching it from POV of its end user
+- ration between unit & integration tests
+    - as many as possible number of domain edge cases shall be covered by unit tests
+    - integration tests shall cover successfull scenarios & edge cases which aren't possible to be tested by unit tests
+#### Integration Testing vs. Failing Fast
+- fail fast principle
+    - can be an alternative to integration test cases
+    - stands for stopping current operation as soon as unexpected errors occur (such as preconditions not being met)
+    - makes the application more stable by shortening the feedback loop & protecting persistence state
+- edge cases leading to application crashes by conforming to fail fast principle shall not be tested
+- all communications with all collaborators shall be verified by testing longest successfull scenarios
+### Which Out Of Process Dependencies To Test Directly
+#### The Two Types Of Out Of Process Dependencies
+1. managed
+    - fully controlled & only accessible by the application
+    - their state isn't directly visible to & doesn't directly affect other applications
+    - communications with them are considered as implementation details
+    - real instances of them shall be used & their state shall be verified directly when being tested
+2. unmanaged
+    - not fully controlled by the application
+    - accessed directly by other applications
+    - communications with them are considered as observable behaviour
+    - mocked versions of them shall be used for testing
+### Uinsg Interfaces To Abstract Dependencies
+#### Interfaces & Loose Coupling
+- genuine abstractions are discovered, not invented
+#### Why Use Interfaces For Out Of Process Dependencies?
+- to enable mocking
+- interfaces shall not be introduced for out of process dependencies unless they need to be mocked out
+- therefore, interfaces shall only be used for unmanaged dependencies
+### Integration Testing Best Practices
+#### Making Domain Model Boundaries Explicit
+- domain model should be within some explicit boundary
+- this will help differentiation between controllers & domain algorithms
+- thus, making it easy to think about & write unit & integration tests
+#### Reducing The Number Of Layers
+- extra layers make implementation of features be scattered & puts assumptions on different layers
+- also, boundaries between domain algorithms & controllers will be obscured, which will cause overcomplicated code & invaluable test cases
+#### Eliminating Circular Dependencies
+- circular dependencies happen when two or more classes depend on each other directly or indirectly
+- this makes flow execution be scattered across components & obscures entrypoint of flows themselves
+- introduction of interfaces to resolve circular dependencies moves this problem from compile time to runtime
+- this will not solve problems with circular dependencies
+#### Using Multiple Act Sections In A Test
+- this is allowed if arrange phase is hard on specific out of process dependencies (or hits certain external limits put by dependencies)
+#### Should You Test Logging?
+- there are two types of logs
+    1. support logging: meant to be used by domain experts
+    2. diagnostic logging: meant to be used by developers
+- this question can be answered by answering this question: is logging part of observable behaviour of the application?
+#### How Should You Test Logging
+- standard logging capabilities shouldn't be used for support logging
+- introducing interfaces can be useful in order to mock & examing communications between the application & logging dependency
+<!-- page 216 -->
