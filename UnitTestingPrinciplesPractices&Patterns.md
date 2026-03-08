@@ -91,7 +91,7 @@
     meaningless classes (& other objections towards london school in the following paragraphs)
     are signs of shitty code, which can't be resolved by merely thinking about tests.
 -->
-- tests should tell stories about domain, thus, they should be cohesive & meaningful to non programmers
+- tests should tell stories about domain & be cohesive & meaningful to non programmers
 - unit tests should verify units of behaviour rather than units of code
 - number of classes (or modules) it takes to implement behaviours is irrelevant
 - it is hard to tell what exactly unit tests verify if they exercise things less than units of behaviour
@@ -167,7 +167,7 @@
 #### What Causes False Positives
 - solution to false positives is to decouple test cases from implementation details
 - test cases shall treat SUT from the POV of its real client
-- thus, verifying only end results (observable behaviours), not steps taken to produce them (implementation or algorithm)
+- verifying only end results (observable behaviours), not steps taken to produce them (implementation or algorithm)
 ### The Intrinsic Connection Between The First Two Attributes
 #### Maximizing Test Accuracy
 |test result|functional validity|inference|solution|
@@ -179,14 +179,15 @@
 ### The Third & Fourth Pillars: Fast Feedback & Maintainability
 - fast feedback
     - cost of fixing bugs is related to the time it took for them to be noticed
-    - slow running test cases avoid bugs to be noticed, thus allow moving forward in wrong direction
+    - slow running test cases avoid bugs to be noticed which allows moving forward in wrong direction
 - maintainability
     - readability & size of test cases
     - ease of execution
 ### Exploring Well Known Test Automation Concepts
 - protection against regression, fast feedback & resistance to refactoring are mutually exclusive
 - one single test case is capable of only emphasize two out of these three attributes
-- resistance to refactoring is usually either true or false, thus reducing the choices into the other two attributes
+- resistance to refactoring is usually either true or false
+- this will make the trade off only exist between fast feedback & resistance to refactoring
 #### Breaking Down The Test Pyramid
 - advocates for certain ratio of unit, integration & end to end tests
 - test types in the pyramid make choices between fast feedback & protection against regression
@@ -285,7 +286,7 @@
     - observable behaviour
     - shall be verified by test cases using mocks
     - communication protocols of this type are contracts (shared interfaces) with external clients
-    - therefore, backward compatibality is important & refactoring shall not change the way or content of these type of communications
+    - backward compatibality is important & refactoring shall not change the way or content of these type of communications
 #### The Classical School vs. London School Of Unit Testing, Revisited
 <!--
     but what if intra system communications happened also upon interfaces which mocks maintained?
@@ -299,7 +300,7 @@
 - shared & not out of process dependencies are easy to avoid being reused by providing new instances of them in each unit test
 - shared out of process dependencies are usually replaced by test doubles, because its not practical to spawn processes per each unit test
 - if such dependency is only accessible by one application, communications with it aren't part of observable behaviours
-- therefore, the need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
+- need to protect backward compatibality & contracts doesn't exist for such dependency because of refactoring possibility
 - using mocks for such dependencies violates resistance to refactoring attribute because of control the application has on such dependency
 #### Using Mocks To Verify Behaviour
 - only communications which can be traced back to client goals shall be verified
@@ -321,7 +322,7 @@
 - extreme cases of communication based style may violate protection against regressions attribute by exercising little amounts of code
 - if no out of process dependencies is used by SUT, all styles score the same for fast feedback attribute
 #### Comparing The Styles Using The Metric Of Resistance To Refactoring
-- test cases of output based style are only coupled to SUT itself & its output, thus, scoring highest
+- test cases of output based style are only coupled to SUT itself & its output, scoring highest
 - state based test cases are more prone to false positives by also being coupled to state of SUT, covering larger API surface, scoring second best
 - communication based test cases score lowest by being coupled to internal communications of SUT
 #### Comparing The Styles Using The Metric Of Maintainability
@@ -360,20 +361,16 @@
         - converts decisions into effects
         - should be as dump as possible (domain wise) (so it also takes minimum amount of test cases to verify its behaviour)
 #### Comparing Functional & Hexagonal Architecture
-- since in functional programming everything is immutable, state modification is impossible
-- therefore, side effects are completely pushed to edge of domain operations
+- in functional programming everything is immutable & state modification is impossible & side effects are completely pushed to edge of domain operations
 - but in hexagonal architecture, domain layer is able to modify states within the same layer
 - functional programming can be considered as subset of hexagonal architecture or its radical successor
 ### Understanding The Drawbacks Of Functional Architecture
 #### Applicability Of Functional Architecture
 - immutable internal states can be considered as constant values in mathematical functions, not hidden inputs
-- collaborators differ from values
+- collaborators differ from values & are considered as hidden inputs, because
     - they allow modification of their state
-    - this changes their behaviour (introducing references to internal or external states)
-    - thus, considered as hidden inputs
-<!--
-    didn't understand performance drawbacks tbh
--->
+    - their behaviour changes by their state
+    - this clearly introduces references to internal or external states
 ## Refactoring Toward Valuable Unit Tests
 ### Identifying The Code To Refactor
 - it usually isn't possible to improve test suite without refactoring underlying production code
@@ -492,13 +489,12 @@
 - genuine abstractions are discovered, not invented
 #### Why Use Interfaces For Out Of Process Dependencies?
 - to enable mocking
-- interfaces shall not be introduced for out of process dependencies unless they need to be mocked out
-- therefore, interfaces shall only be used for unmanaged dependencies
+- interfaces shall only be introduced for unmanaged out of process dependencies which should be mocked out (which usually exist inside SDKs)
 ### Integration Testing Best Practices
 #### Making Domain Model Boundaries Explicit
 - domain model should be within some explicit boundary
 - this will help differentiation between controllers & domain algorithms
-- thus, making it easy to think about & write unit & integration tests
+- making it easy to think about & write unit & integration tests
 #### Reducing The Number Of Layers
 - extra layers make implementation of features be scattered & puts assumptions on different layers
 - also, boundaries between domain algorithms & controllers will be obscured, which will cause overcomplicated code & invaluable test cases
@@ -516,5 +512,28 @@
 - this question can be answered by answering this question: is logging part of observable behaviour of the application?
 #### How Should You Test Logging
 - standard logging capabilities shouldn't be used for support logging
-- introducing interfaces can be useful in order to mock & examing communications between the application & logging dependency
-<!-- page 216 -->
+- support logging is itself considered as domain requirement & should be implemented according
+- introducing interfaces can be useful in order to mock & examin communications between the application & logging dependency
+## Mocking Best Practices
+### Maximizing Mocks' Value
+#### Verifying Interactions At The System Edges
+- mocking intermediate classes between controller code & unmanaged out of process dependencies violates protection against refactoring attribute because
+    - they are related to domain algorithm & may contain code which interprets domain components into terminology of dependencies
+    - this code be changed or refactored
+    - communications with them are implementation details rather than part of observable behaviours
+- only nearest interfaces to out of process dependencies (which directly call or use SDKs) shall be mocked out
+- doing this will
+    - only verify actual & concrete observable behaviour
+    - remove domain related interfaces with one implementation
+    - protect backward compatibality
+#### Replacing Mocks With Spies
+- writing spies only makes sense for adapters of interfaces of unmanaged out of process dependencies which should be mocked out
+### Mocking Best Practices
+#### Verifying Number Of Calls
+- both content & frequency of calls to unmanaged out of process dependencies are considered as observable behaviour
+- meaning that existence, absence & content of calls should be verified by test cases
+#### Only Mock Types That You Own
+- third party libraries should be abstracted by internal adapters because
+    - their complexity should be hidden
+    - their extra features should not leak into the application
+    - this will also protect the application from shotgun surgery when their interface changes
