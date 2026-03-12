@@ -1,10 +1,3 @@
-<!--
-    Dependency Injection: Principles, Practices, Patterns
-    Algebraic Data Types
-    http://mng.bz/KE9O
-    https://martinfowler.com/bliki/TellDontAsk.html
-    https://enterprisecraftsmanship.com/posts/ocp-vs-yagni
--->
 # Unit Testing: Principles, Practices & Patterns
 ## The Goal Of Unit Testing
 the goal of unit testing is to keep a reasonable ratio between debugging (sustainability) & adding or modifying features (scalability). test coverage metrics shouldn't be tusted as measurements because they can't indicate positiveness with these definitions of goals. a successfull test suite is one that is:
@@ -225,3 +218,10 @@ unit of work pattern uses this separation of concerns, wraps the transaction obj
 
 
 managed out of process dependency which is shared between test cases removes the possibility of execution of test cases in parallel; there are solutions to this but better be accepted. also, commonality of the database among the test cases forces a step in test cases in which left over data is removed & the database is brought to an initial phase; this can be done in the arrange section or in teardown methods; reference data should not be removed while cleaning left over data from other test cases.
+
+
+## Extra
+
+- http://mng.bz/KE9O
+- https://martinfowler.com/bliki/TellDontAsk.html
+- https://enterprisecraftsmanship.com/posts/ocp-vs-yagni
