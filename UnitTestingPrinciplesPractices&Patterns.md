@@ -163,7 +163,7 @@ these three attributes must be balanced in these situations:
 2. simplicity of controllers: derived form the amount of its involvement in domain decision making process, ideally non
 3. performance: derived from the number of I/O calls (specifically, calls to out of process dependencies) & amount of data sent & recieved through these calls, ideally as low as possible
 
-can/execute pattern is another solution for these situations. using this pattern, in addition to operations themselves, other procedures are implemented (usually named as `[can | should]_...`) which expect already retrieved data & indicate if additional I/O calls should be done or the operation must stop or etc...; these procedures are then called by controllers in order to do only necessary I/O calls. these procedures should also be used as preconditions in domain algorithms themselves. using this pattern will keep encapsulation while also letting controllers know if I/O calls should be made. branches inside controllers which act upon the output of these procedures aren't considered as domain complexity because they are merely acting on decisions, not making them.
+can/execute pattern is another solution for these situations. using this pattern, in addition to operations themselves, other procedures are implemented (usually named as `[can | should]_...`) which expect already retrieved data & indicate if additional I/O calls should be done or the operation must stop or etc; these procedures are then called by controllers in order to do only necessary I/O calls. these procedures should also be used as preconditions in domain algorithms themselves. using this pattern will keep encapsulation while also letting controllers know if I/O calls should be made. branches inside controllers which act upon the output of these procedures aren't considered as domain complexity because they are merely acting on decisions, not making them.
 
 
 meaningful events for domain experts should be described (or modeled) by domain events; these are usually implemented as immutable components containing necessary data to notify external systems, named using past tense verbs. domain events can be used to prevent fragmentation of domain algorithms with methods indicating to controllers if some collaborators should be called or not.
@@ -209,3 +209,19 @@ doing this will only verify actual & concrete observable behaviour, let domain r
 
 
 both content & number of calls to unmanaged out of process dependencies are considered as observable behaviour & should be verified by test cases.
+## Testing The Database
+the database schema & its upgrade scripts (called migrations) should be stored within a version control system; doing this will maintain a single source of truth about state of the database schema & make it easy to track changes & to setup new instances of it with its components ready, on demand. migrations should not be modified once commited to the VCS unless they appliance would lead to data loss.reference data should also be considered as part of the schema & kept along with migrations.
+> reference data is data that must be perpopulated in order for the application to operate properly & the application usually won't modify it ever
+
+
+data modifications caused by a single operation should be executed in an atomic manner which is done by separating two responsibilities from each other:
+1. what parts of data should be modified: handled by repository classes using (or expecting) transactions
+2. wether the modifications should be commited or not: handled by transactions
+
+controllers will then be orchestrating transactions, repositories & domain algorithms as separate collaborators. commit & abort methods of the transaction object will be called by controllers because calling them requires a decision (implicit decisions in the case of happy paths).
+
+
+unit of work pattern uses this separation of concerns, wraps the transaction object, keeps track of data modifications & avoids unnecessary database calls by the time that it is decided wether the transaction should be commited or not. in contrast, a usual transaction object will maintain state of data within its scope managed by the database itself (which happens outside of the process of the application). wether transaction objects are used or unit of work pattern, each phase in test cases must use their own physical transaction & not share them with each other.
+
+
+managed out of process dependency which is shared between test cases removes the possibility of execution of test cases in parallel; there are solutions to this but better be accepted. also, commonality of the database among the test cases forces a step in test cases in which left over data is removed & the database is brought to an initial phase; this can be done in the arrange section or in teardown methods; reference data should not be removed while cleaning left over data from other test cases.
