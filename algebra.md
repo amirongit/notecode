@@ -1,69 +1,56 @@
 # Algebra
 ## Algebra 1 Full Course
-### Variables & expressions
-#### Variable
-- a symbol, generally a letter used to represent an unknown quantity
-#### Term
-- a single number, variable, or a number times one or many variables
-- maybe anything which evaluates to a value?!
-#### Coefficient
-- a number next to one or more variables
-#### Constant
-- a plain number which is not next to a variable, therefor its value never changes
-#### Algebraic expression
-- one or more terms separated by + or - symbols
-#### Simplification of algebraic expressions
-- distributive property
-    - multiplication of a factor by an algebraic expression & addition of its terms are order-independent; both produce the same result
-- like terms
-    - terms with the same variables raised to the same exponents
-    - when combining, addition & subtraction operations are only applied on the coefficients
-    - if there is not any like terms, the given expression can't be simplified by combining terms
-### Equations
-#### Equation
-- an statement claiming that two algebraic (?) expressions are equal
-- for an equation to be true, the left & the right side must evaluate to the same value
-### Addition property of equality
-- same constant are added to both sides of an equation without changing the final solution
-#### Solution to an equation
-- any value that makes the equation true when it replaces the associated variable
-#### First degree linear equation in single variable 
-- overall form is `ax + b = c`
-    - 'b' & 'c' are constants
-    - 'a' is coefficient & non-zero
-#### Additive inverse property
-- any number plus its opposite is equal to 0
-#### Additive identity property
-- any number in addition to 0 is equal to itself
-### Multiplication property
-- both sides of an equation are multiplied by the same non-zero constant without changing the final solution
-#### Multiplicative inverse property
-- any number times its reciprocal is equal to 1
-#### Multiplicative identity property
-- any number times 1 is unchanged
-### Solving linear equations in one variable
-1. simplify each side as much as possible
-2. isolate the variable
-3. calculate the value of the variable, plug & check the answer for the equation
-### Solving linear equations with fractions or decimals
-- multiply both sides of the equation by the LCD of all fractions to isolate the variable (must be done after simplification) 
-#### Least common multiple 
-- product of the prime factors of the given terms with the most repetition
-- smallest multiple of the given numbers
-#### Least common denominator
-- LCM of denominators of the given fractions
-### Linear equations with no solution or an infinite number of solutions
-#### Conditional equation
-- an equation that is true for some values as the variable & false for other values
-#### Identity equation
-- an equation which is always true, no matter what values are substituted as the variable
-- usually in this type of equations one side is a simplified version of the other side
-#### Contradiction equation
-- an equation which doesn't have solution
-### Proportions
-- claim that two ratios are equal
-#### Cross multiplication property
-- product of the numerator of a fraction on one side of an equation & the denominator of the fraction on the other side should equal the product of the denominator of the same side & the numerator of the other side; for example if `a / b == c / d` then `ad == bc`
+variables are symbols, generally in the form of letters; they are used to represent an unknown quantity.<br>
+terms are numbers, variables, sub expressions or any combinations of them multiplied together; they can be evaluated to values.<br>
+coefficients are numbers which variables are multiplied by within a term.<br>
+constant terms don't have variables, their value is therefore known & never changes, hence the name constant.<br>
+expressions are made of one or more terms joined together by `+` or `-`.<br>
+sub expressions are expressions within terms or expressions; usually grouped by parentheses or brackets.<br>
+like terms are terms within an expression having the same variables being raised to the same exponents.
+
+factors can be multiplied in terms of expressions either before or after their simplification.<br>
+when combining like terms additions & subtractions are only applied on coefficients.
+
+expressions can be simplified by
+- distribution of factors of their sub expressions to each of their own terms
+- combination of their like terms
+
+equations are assertions that two expressions evalute to the same value.<br>
+solutions of equations are values substituting their variables that prove their assertion.
+
+both sides of an equation can be added to the same constant without breaking its equality.<br>
+both sides of an equation can be multiplied by the same non zero constant without breaking its equality.<br>
+any number plus its opposite is equal to `0`.<br>
+any number in addition to 0 is equal to itself.<br>
+any number multiplied by its reciprocal is equal to `1`.<br>
+any number multiplied by 1 is equal to itself.<br>
+least common multiple (LCM) of a set of numbers is the smallest positive integer which is divisible by all of them.<br>
+least common denominator (LCD) of a set of fractions is the LCM of their denominators.
+
+overall form of first degree linear equations in one variable is `ax + b = c` where `b` & `c` are constants & `a` is a non zero coefficient.
+
+in order to solve these type of equations:
+1. both expressions are simplified as much as possible
+    - if the equation contains fractions, both sides are multiplied by the LCD of all fractions
+2. the variable is isolated
+3. its value is achieved by solving the expression
+4. the calculated value is plugged in & checked for correctness
+
+identities are equations which are true for all substituted values; usually their sides are different versions of each other (more or less complex or simple).<br>
+contradictions are equations which are false for any substituted values; they don't have any solution.<br>
+conditional equations are true for some values & false for other values.
+
+ratios are comparisons between two quantities; they can be written in the form of `a:b` (`a` to `b`) or fractions (`a/b`).<br>
+ratios can be reduced to their lowest terms just like fractions, by dividing both terms by thei greatest common factor (GCF).
+
+rates are ratios whose terms are in different units.
+
+given two equal fractions, the results of multiplication of their numerators by the denominator of the other fraction is equal to each other.
+
+proportions are assertions that two ratios are equal.
+
+
+<!-- 03:44
 #### Solving proportion equations
 - since in a equation like `a / b = c / d` the LCD of the fractions is 'bd', the shortcut to isolate the variable is cross multiplication of fractions in both sides
 ### Solving linear algebra inequalities
@@ -699,5 +686,6 @@
     => x.log_c(a) = log_c(b)
     => x = log_c(b) / log_c(a) = log_a(b)
 ```
-- if `f(x) = f(y)` therfore `x = y`
+- if `f(x) = f(y)` therefore `x = y`
     - works with logarithms with common base
+-->
