@@ -38,7 +38,6 @@ the 3A pattern can be used to define a structure of unit tests, using this patte
 
 multiple 3A sections might indicate verification of multiple units, which violates the definition of unit tests. if statements also should be avoided in test cases because they increases complexity & maintenance cost, reduce readability & might indicate either verification of too many things at once or non deterministic behaviour of the SUT.
 
-
 arrange phases can be as large as they have to be, but [object mother](https://martinfowler.com/bliki/ObjectMother.html) & test data builder patterns could be used to shorten them. act phases on the other hand, should be limited to invoking the SUTs by a single call; doing more than that in an act phase indicates lack of encapsulation, which allows invariant violations.
 > invariants are conditions which shall hold true at all times
 
@@ -47,9 +46,7 @@ arrange phases can be as large as they have to be, but [object mother](https://m
 
 test cases having the same 3A phases but with different values can be grouped together & be written as one by using fixtures & parameterized test cases; fixtures are objects in fixed & known states passed as regular arguments to parameterized test cases before their execution & can be used as dependencies of the SUTs or their expected outputs.
 
-
 parameterized test cases are executed once per set of fixtures & can be used to verify different scenarios & branches of the SUT; overusing them may reduce readability.
-
 
 modification of test cases should not affect each other. having a shared arrangement phase (for example, in constructors) will violate this principle. this will couple test cases together by allowing common & hidden assumptions between them & causes them to be less readable by separating their assumptions from themselves. factory methods can be used instead of hidden shared arrangement phases in order to shorten arrangement phases without the mentioned drawbacks & with more flexibality & readability.
 ## The Four Pillars Of A Good Unit Test
@@ -82,15 +79,11 @@ test doubles are objects passed as fake dependencies instead of the real ones to
 
 observable behaviour is the opposit of implementation detail; it is code that exposes operations or states in order to satisfy clients directly. an operations is a method that calculates, incurs side effects or both.
 
-
 public API of components should be limited to their observable behaviour & any individual need of the clients should be achieved through a single operation. otherwise, this indicates leaking of implementation details through APIs (lack of encapsulation) which allows invariant violation.
-
 
 communications with stubs aren't part of observable behaviour because these behaviours can't happen through incoming interactions. therefore, verifying interactions with stubs in test cases violatest the resistance to refactoring attribute by coupling the test case with implementation details of the SUTs. different methods on the same object can be separatedly considered as mocks or stubs though.
 
-
 from the POV of the CQS principle, which states taht a method should either be a command (produce side effects without returning values) or a query (return values without producing side effects), mocks substitute commands & stubs substitute queries.
-
 
 hexagonal architecture emphasizes on three guidelines:
 1. separation of domain & technical concerns, by defining these layers
@@ -101,15 +94,11 @@ hexagonal architecture emphasizes on three guidelines:
 
 in the context of hexagonal architecture, each layer has its own observable behaviours & implementation details. application service layer is client of the domain layer, therefore, test cases working on components of different layers might have overlaps.
 
-
 communications inside applications are either intra system, meaning that they happen between components of the application & aren't directly related or visible to clients, or inter system, meaning that they happen between multiple applications & considered as outcome or side effects, thus, part of the observable behaviour.
-
 
 intra system communications are emulated by stubs but inter system communications should be emulated by mocks. the latter happens through interfaces & is sensetive to refactoring, therefore, should be examined within & protected by test cases.
 
-
 in order for test cases to run in parallel, their side effects (thus, shared dependencies) should be isolated from each other. non out of process dependencies can be instantiated per test case. but it isn't practical to spawn a new process of out of process dependencies for each test case; therefore, these kind of dependencies are replaceable by test doubles.
-
 
 if a shared out of process dependency is only accessible by & visible to only one application, it should be considered as part of the application itself. communications between the application & such dependencies aren't part of its observable behaviour, aren't sensetive to refactoring & aren't categorized as inter system communications; therefore, using mocks for such dependencies violates the resistance to refactoring attribute.
 ## Styles Of Unit Testing
@@ -119,7 +108,6 @@ there are three styles of unit testing:
 3. communication based: this styles is preferred by the london school; it uses test doubles to verify communications between the SUT & its collaborators; its extreme cases may violate protection against regressions attribute by exercising too little amounts of code or behaviour or resistance to refactoring attribute by being highly coupled to implementation details due to verifying internal communications or maintainability attribute by having large & complicated arrange & assert phases which might include mock chains (mocks that return mocks)
 
 in order to apply output based style test cases, the SUT must be written in pure functions. pure functions don't have hidden inputs or outputs suchs as side effects, exceptions & references to mutable internal or external states like date, time or data stores & collaborators. their inputs & outputs are explicitly expressed by their method signatures & if they use immutable internal states in their procedures, they can be considered as constants. they produce the same outputs for the same input regardless of time, states or situations & therefore, are deterministic. they can be replaced by the values they return (this is called referential transparency).
-
 
 functional architecture is the radical successor of hexagonal architecture which pushes side effects to the edge of the domain operations & maximizes purely functional code & minimizes non functional code by defining these boundaries:
 - functional core (aka mutable core): contains domain algorithms, makes decisions, is implemented using pure functions & doesn't depend on the mutable shell
@@ -137,9 +125,7 @@ combination of these dimensions produce four types of code:
 
 the humble object pattern can be used to simplify overcomplicated code. using this pattern, complex & testable parts of the component (domain algorithms) are extracted out into separate procedure & replaced by calls. what remains of the component becomes a humble object which glues together domain algorithms & collaborators, which is similar to what a controller does.
 
-
 orchestration of collaborators (being wide) & making domain related decisions (being deep) are two responsibilities (kinds of being); a single component should do (or be) either but not both.
-
 
 the separation between domain algorithms & controllers works bets when operations have these three distinct stages in order:
 1. retrieving
@@ -158,17 +144,13 @@ these three attributes must be balanced in these situations:
 
 can/execute pattern is another solution for these situations. using this pattern, in addition to operations themselves, other procedures are implemented (usually named as `[can | should]_...`) which expect already retrieved data & indicate if additional I/O calls should be done or the operation must stop or etc; these procedures are then called by controllers in order to do only necessary I/O calls. these procedures should also be used as preconditions in domain algorithms themselves. using this pattern will keep encapsulation while also letting controllers know if I/O calls should be made. branches inside controllers which act upon the output of these procedures aren't considered as domain complexity because they are merely acting on decisions, not making them.
 
-
 meaningful events for domain experts should be described (or modeled) by domain events; these are usually implemented as immutable components containing necessary data to notify external systems, named using past tense verbs. domain events can be used to prevent fragmentation of domain algorithms with methods indicating to controllers if some collaborators should be called or not.
 ## Why Integration Testing?
 integration tests are test cases which don't fit into the definitions of unit tests. these test cases usually verify communications between the application & its collaborators; components verified by them don't contain domain complexity but focused on collaboration (controller code).
 
-
 the requirement to keep the out of process dependencies operationl & big 3A sections increase the maintenance cost of integration tests. on the other hand, integration tests provide better protection against regressions (by exercising more code of more layers) & resistance to refactoring (by verifying whole operations rather than atomic units). these tests should cover all successfull scenarios, edge cases which aren't covered by unit tests & domain edge cases.
 
-
 an alternative to integration tests is the fail fast principle. it stans for stopping the current operation as soon as an unexpected error occurs or a precondition is violated. it makes the application more stable by shortening the feedback loop & protects the persistence state. edge cases leading to application crashes caused by this principle should be ignored in integration tests.
-
 
 there are two types of out of Process dependencies:
 1. managed: these dependencies are fully controlled & only accessible by the application; their state isn't directly visible to & doesn't directly affect other applications; communications with them are considered as implementation details; they shouldn't be mocked in test cases & their state should be verified directly
@@ -178,34 +160,24 @@ there are two types of out of Process dependencies:
 
 having internal interfaces for unmanaged out of process dependencies enables mocking them in test cases. it is better to mock dependencies through known & owned interfaces rather than their provided interfaces (which usually reside in SDKs). internal interfaces hide extra complexities of the services they abstract & protect the application against the possibility of shotgun surgery in case of changes in external interfaces.
 
-
 domain algorithms should be within some explicit & common boundary before writing test cases. this will make it easy to think about & write unit & integration tests.
-
 
 extra layers make implementation of features scattered & enforce assumptions on different places; making it hard to test features & obscuring the boundaries between the domain algorithms & controllers, causing overcomplicated & trivial code which themselves cause invaluable test cases.
 
-
 circular dependencies make flow executions scattered across multiple components which causes maintenance cost of test cases to be increased. introduction of interfaces to resolve these kinds of dependencies doesn't solve the real problem, but moves it from compile time to runtime.
-
 
 having multiple act phases in a single test case is only allowed if the arrange phase is too hard or too expensive.
 
-
 logging is done either for technical diagnosis (meant to be used by developers) or to satisfy domain requirements (meant to be used by domain experts). the latter is called support logging, considered as part of observable behaviour & shouldn't be done using standard facilities. support logging involves I/O & the destination can be viewed as an unmanaged out of process dependency; therefore, interfaces should be introduced in order to implement such requirement according to the requirement & enable mocking to verify & examin logs.
-
-
 ## Mocking Best Practices
 when verifying communications, intermediate classes shouldn't be mocked. doing so violates the protection against refactoring attribute because these classes are part of the application code & may engage with, contain or be domain related components which may be changed or refactored. only the latest interface in the call stack which causes the actual communication should be mocked because that's where observable behaviour happens. if the dependency is abstracted behind an interface whose only job is to abstract that single dependency, the adapter should be mocked.
 
-
 doing this will only verify actual & concrete observable behaviour, let domain related interfaces with only one implementation be removed, protect backward compatibality & keep the resistance against regressions attribute while also not violating the protection against refactoring attribute.
-
 
 both content & number of calls to unmanaged out of process dependencies are considered as observable behaviour & should be verified by test cases.
 ## Testing The Database
 the database schema & its upgrade scripts (called migrations) should be stored within a version control system; doing this will maintain a single source of truth about state of the database schema & make it easy to track changes & to setup new instances of it with its components ready, on demand. migrations should not be modified once commited to the VCS unless they appliance would lead to data loss.reference data should also be considered as part of the schema & kept along with migrations.
 > reference data is data that must be perpopulated in order for the application to operate properly & the application usually won't modify it ever
-
 
 data modifications caused by a single operation should be executed in an atomic manner which is done by separating two responsibilities from each other:
 1. what parts of data should be modified: handled by repository classes using (or expecting) transactions
@@ -213,15 +185,10 @@ data modifications caused by a single operation should be executed in an atomic 
 
 controllers will then be orchestrating transactions, repositories & domain algorithms as separate collaborators. commit & abort methods of the transaction object will be called by controllers because calling them requires a decision (implicit decisions in the case of happy paths).
 
-
 unit of work pattern uses this separation of concerns, wraps the transaction object, keeps track of data modifications & avoids unnecessary database calls by the time that it is decided wether the transaction should be commited or not. in contrast, a usual transaction object will maintain state of data within its scope managed by the database itself (which happens outside of the process of the application). wether transaction objects are used or unit of work pattern, each phase in test cases must use their own physical transaction & not share them with each other.
 
-
 managed out of process dependency which is shared between test cases removes the possibility of execution of test cases in parallel; there are solutions to this but better be accepted. also, commonality of the database among the test cases forces a step in test cases in which left over data is removed & the database is brought to an initial phase; this can be done in the arrange section or in teardown methods; reference data should not be removed while cleaning left over data from other test cases.
-
-
 ## Extra
-
 - http://mng.bz/KE9O
 - https://martinfowler.com/bliki/TellDontAsk.html
 - https://enterprisecraftsmanship.com/posts/ocp-vs-yagni
