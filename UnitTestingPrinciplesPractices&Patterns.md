@@ -131,8 +131,8 @@ it is possible to measure code in two dimensions:
 
 combination of these dimensions produce four types of code:
 1. domain model algorithms: code which deals with zero to few collaborators but contains high amount of domain complexity; test cases verifying this type of code are the most valuable because of low maintenance cost, fast feedback & high protection against regressions & should also verify domain related preconditions
-2. trivial: code which contains near to non complexity & deals with zero to few collaborators; test cases verifying this type of code are worthless
-3. controller: code which contains near to non complexity but deals with high number of collaborators; test cases verifying this type of code should use the communication based style in order to examin orchestrations, because most of their output will be already verified by test cases which verify the first type
+2. trivial: code which contains near to none complexity & deals with zero to few collaborators; test cases verifying this type of code are worthless
+3. controller: code which contains near to none complexity but deals with high number of collaborators; test cases verifying this type of code should use the communication based style in order to examin orchestrations, because most of their output will be already verified by test cases which verify the first type
 4. overcomplicated: code which contains high amount of domain complexity & deals with high number of collaborators; test cases verifying this type of code have high maintenance cost, low resistance to refactoring & low protection against regressions; but it can't be left out because it contains domain complexity; this type of code should be splitted into domain algorithms & controllers in order to achieve test cases with high value
 
 the humble object pattern can be used to simplify overcomplicated code. using this pattern, complex & testable parts of the component (domain algorithms) are extracted out into separate procedure & replaced by calls. what remains of the component becomes a humble object which glues together domain algorithms & collaborators, which is similar to what a controller does.
@@ -153,7 +153,7 @@ but in practical cases, operations may conditionally decide to retrieve or presi
 
 these three attributes must be balanced in these situations:
 1. testability of domain algorithms: derived from the number & type of their collaborators, ideally zero
-2. simplicity of controllers: derived form the amount of its involvement in domain decision making process, ideally non
+2. simplicity of controllers: derived form the amount of its involvement in domain decision making process, ideally none
 3. performance: derived from the number of I/O calls (specifically, calls to out of process dependencies) & amount of data sent & recieved through these calls, ideally as low as possible
 
 can/execute pattern is another solution for these situations. using this pattern, in addition to operations themselves, other procedures are implemented (usually named as `[can | should]_...`) which expect already retrieved data & indicate if additional I/O calls should be done or the operation must stop or etc; these procedures are then called by controllers in order to do only necessary I/O calls. these procedures should also be used as preconditions in domain algorithms themselves. using this pattern will keep encapsulation while also letting controllers know if I/O calls should be made. branches inside controllers which act upon the output of these procedures aren't considered as domain complexity because they are merely acting on decisions, not making them.
