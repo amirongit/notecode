@@ -176,7 +176,7 @@ doing this will only verify actual & concrete observable behaviour, let domain r
 
 both content & number of calls to unmanaged out of process dependencies are considered as observable behaviour & should be verified by test cases.
 ## Testing The Database
-the database schema & its upgrade scripts (called migrations) should be stored within a version control system; doing this will maintain a single source of truth about state of the database schema & make it easy to track changes & to setup new instances of it with its components ready, on demand. migrations should not be modified once commited to the VCS unless they appliance would lead to data loss.reference data should also be considered as part of the schema & kept along with migrations.
+the database schema & its upgrade scripts (called migrations) should be stored within a version control system; doing this will maintain a single source of truth about state of the database schema & makes it easy to track changes & to setup new instances of it with its components ready, on demand. migrations should not be modified once commited to the VCS unless their appliance would lead to data loss. reference data should also be considered as part of the schema & kept along with migrations.
 > reference data is data that must be perpopulated in order for the application to operate properly & the application usually won't modify it ever
 
 data modifications caused by a single operation should be executed in an atomic manner which is done by separating two responsibilities from each other:
