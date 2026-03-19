@@ -222,7 +222,7 @@ radicals having even indices result in two answers, one of which is negative & t
 radicals having even indices with negative operands are undefined & result in imaginary numbers.<br>
 exponents of operands of radicals are divided by the index of radicals; therefore, radicals can be written as rational exponents & vice versa.<br>
 pythagoras' theorm states that right triangles having `a` & `b` as legs of their right angles & `c` as their third line, `a^2 + b^2 = c^2`.<br>
-distance between two points on the cartesian chart can be calculated by manipulation of this theorm in form of `radical((x2 - x1)^2 + (y2 - y1)^2)`.<br>
+distance between two points on the cartesian chart can be calculated by manipulation of this theorm in form of `radical_2((x2 - x1)^2 + (y2 - y1)^2)`.<br>
 roots of products or fractions can be written as products or fractions of roots of their factors & vice versa.<br>
 simple radicals don't have fractions & perfect factors within their operands.<br>
 like radicals share common indices & operands; their combination only affects their coefficients.<br>
