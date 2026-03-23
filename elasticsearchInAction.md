@@ -1142,7 +1142,7 @@ GET <search-criteria>/_search
     ```
 - fields are boosted by being written like `<field>^<boost>`
 ## Compound Queries
-- used to combine multiple compund or [leaf](#leaf-queries-1) queries
+- used to combine multiple compound or [leaf](#leaf-queries-1) queries
 - clauses are usually joined using logical operators & conditions
 - offer complex functionalities suchs as custom scoring, boosting & negating logic
 ### The Boolean Query

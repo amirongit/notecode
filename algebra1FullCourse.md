@@ -23,7 +23,7 @@ equations are either:
 both sides of equations or inequations can be added to or subtracted from the same constant without side effects.<br>
 both sides of equations or inequations can be multiplied or divided by the same non zero constant without side effect.<br>
 there is one exception: inequality of inequations are reversed if multiplications or divisions with negative operands are applied on them.<br>
-any number plus its opposite is equal to `0`.<br>
+any number plus its additive inverse is equal to `0`.<br>
 any number in addition to `0` is equal to itself.<br>
 any number multiplied by its reciprocal is equal to `1`.<br>
 any number multiplied by `1` is equal to itself.<br>
@@ -97,8 +97,8 @@ domain of functions is the set of all `x`s in their relations or all of their po
 range of functions is the set of all `y`s in their relations or all of their possible outputs.<br>
 vertical line test determines if lines are functions by examining if they intersect more than once with any vertical line.<br>
 if they do, they aren't considered as valid functions because they produce more than one `y` for one given `x`.<br>
-systems of linear equations consist of multiple of them with common values.<br>
-solutions of systems of linear equations are ordered pairs or points which satisfy all of them or exist on all of their lines.<br>
+systems of linear equations consist of multiple equations having common values.<br>
+solutions of systems of linear equations in two variables are ordered pairs or points which satisfy all of them or exist on all of their lines.<br>
 systems of linear equations are either:
 - inconsistent: which consist of parallel lines & don't have solutions
 - consistent: which consist of independent equations (having one intersection) & have single solutions
@@ -116,7 +116,7 @@ systems of linear equations in two variables are solved through either of these 
     6. the two values are written in the form of ordered pairs: `(x, y)`
 - elimination
     1. equations are transformed into their standard form
-    2. equations are manipulated such that one pair of variable terms are opposites in among equations
+    2. equations are manipulated such that one pair of variable terms are additive inverses among equations
     3. equations are merged together on both sides
     4. resulting equation is solved for the remaining variable
     5. the variable is replaced by resulting value in either of equations
@@ -130,7 +130,7 @@ raised terms can be written as product of their divisors having all of them rais
 negative signs in terms indicate factors of `-1`; parentheses are used to include these factors when terms are bing raised.<br>
 raised fractions can be written as their numerators divided by their denominators having both of them raised to the same power.<br>
 raising non zero values to `0` will result in `1`.<br>
-raised terms to negative exponents can be written as their own reciprocal having their denominator raised to the opposite power.<br>
+raised terms to negative exponents can be written as their own reciprocal having their denominator raised to the positive power.<br>
 scientific notations are used to write extra large or small quantities conveniently.<br>
 using this notation, numbers are multiplied by negative or positive powers of `10`.<br>
 polynomials are expressions in which there are finite number of terms having real coefficients & raised to integers greater than or equal to `0`.<br>
@@ -172,7 +172,7 @@ when GCF of polynomials is too little & their terms are still big, their simplif
 
 simplifying results of special products can be done through reversing them.<br>
 if the product of two values is equal to `0` one of them is equal to `0`.<br>
-quadratic equations consist of trinomials which in there is one variable raised to `2` as the highest exponent; their overall form is `ax^2 + bx + c = 0` where `a != 0`.<br>
+overall form of quadratic equations or inequations is `ax^2 + bx + c <=> 0` where `a != 0`.<br>
 trinomials in the form of quadratic equations can be manipulated through unfoil method:
 1. common factors are factored out
 2. two integers whos product is equal to `a * c` & their sum is equal to `b` are found
@@ -182,15 +182,14 @@ trinomials in the form of quadratic equations can be manipulated through unfoil 
 
 since there are two square roots for values being raised to `2` (or any even exponent), quadratic equations may have more than one solution.<br>
 quadratic equations are solved through either of these methods:
+- reversing square of binomials special product: works best if the equation is in the form square of binomials special product (aka perfect square trinomial)
 - factoring
     1. the equation is transformed into product of terms being equal to `0`
         - this can be done through factoring, grouping, unfoil, reversing special products or combination of these methods
-        - if this can't be done the equation is prime & can't be solved by this method
+        - if this can't be done the equation is prime & can't be solved through this method
     2. each reuslting term is written as being equal to `0`
     3. resulting equations are solved
     4. answers are resulting answers which satisfy the equation
-- reversing square of binomials special product
-    - works if the equation is in the form of the result of square of binomials special product (aka perfect square trinomial)
 - completing the square
     1. constant term is isolated
     2. the equation is manipulated such that `a = 1`
@@ -216,15 +215,16 @@ overall form of direct variations is `y = kx^n` where `n` & `k` are constants.<b
 in direct variations, `x` & `y` vary directly if `k > 0` else inversely.<br>
 overall form of inverse variations is `y = k/x^n` where `n` & `k` are constants<br>
 in inverse variations, `x` & `y` vary inversely if `k > 0` else directly.<br>
-`n`th root of terms are factors which if raised to `n` produce terms themselves; roots are either rational (aka perfect) or irrational numbers.<br>
+`n`th root of terms are factors which if raised to `n` produce terms themselves.<br>
 radical operation with index `n` (`2` by default) is used to indicate `n`th root of its operand.<br>
-radicals having even indices result in two answers, one of which is negative & the other is positive (called principal).<br>
-radicals having even indices with negative operands are undefined & result in imaginary numbers.<br>
+radicals having even indices result in two roots, one of which is negative & the other is positive (called principal).<br>
+radicals having even indices with negative operands don't evalute to real numbers & result in imaginary numbers.<br>
 exponents of operands of radicals are divided by the index of radicals; therefore, radicals can be written as rational exponents & vice versa.<br>
 pythagoras' theorm states that right triangles having `a` & `b` as legs of their right angles & `c` as their third line, `a^2 + b^2 = c^2`.<br>
 distance between two points on the cartesian chart can be calculated by manipulation of this theorm in form of `radical_2((x2 - x1)^2 + (y2 - y1)^2)`.<br>
 roots of products or fractions can be written as products or fractions of roots of their factors & vice versa.<br>
-simple radicals don't have fractions & perfect factors within their operands.<br>
+perfect roots are factors whose exponents are equal or greater than indices of radicals.<br>
+simplified radicals don't have fractions & perfect factors within their operands.<br>
 like radicals share common indices & operands; their combination only affects their coefficients.<br>
 rational expressions can't have irrational roots as factors of their denominators.<br>
 conjugates of additions are formed by writing them as subtractions & vice versa.<br>
