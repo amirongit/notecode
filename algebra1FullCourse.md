@@ -8,14 +8,14 @@ sub expressions are expressions within expressions; usually grouped by parenthes
 like terms are terms within an expression having the same variables being raised to the same exponents.
 factors can be multiplied in terms of expressions either before or after their simplification.<br>
 when combining like terms additions & subtractions are only applied on coefficients.<br>
-expressions can be simplified by:
+expressions can be simplified by
 - distribution of factors of their sub expressions to each of their own terms
 - combination of their like terms
 
 equations are assertions that two expressions evalute to the same value.<br>
 inequations are assertions that two expressions don't evalute to the same value.<br>
 solutions of equations or inequations are values substituting their variables which proves their assertion.<br>
-equations are either:
+equations are either
 - identities: which are true for all substituted values; usually their sides are different versions of each other (more or less complex or simple)
 - contradictions: which are false for any substituted values; they don't have any solution
 - conditional: which are true for some values & false for other values
@@ -34,7 +34,7 @@ overall form of first degree linear equations or inequations in one variable is 
 first degree linear equations in one variable have single solutions which can be represented as points on the cartesian chart.<br>
 interval notations are used to capture ranges of real numbers written the form of `(x, y]` where parentheses mean exclusion & brackets mean inclusion.<br>
 solutions of inequations are in this form.<br>
-steps to solve first degree linear equations or inequations in one variable:
+steps to solve first degree linear equations or inequations in one variable
 1. both expressions are simplified as much as possible
 2. the variable is isolated
 3. the remaining expression is solved
@@ -59,7 +59,7 @@ first degree linear equations in two variables are plotted on this type of chart
 - two solutions (usually the intercepts)
 - one solution plus their slope
 
-steps to solve or graph first degree linear equations in two variables:
+steps to solve or graph first degree linear equations in two variables
 1. one random value is picked for either of the variables
     - if `c != 0`, `0` is picked because this will be solved faster (this will result in an intercept point)
     - else
@@ -69,20 +69,20 @@ steps to solve or graph first degree linear equations in two variables:
 2. resulting equation is solved for the other variable
 3. the two values are written in the form of ordered pairs: `(x, y)`
 
-in the context of first degree linear equations in two variables:
+in the context of first degree linear equations in two variables
 - if `b = 0`, they will have fixed values as `x` in all of their solutions & their graph will be parallel to y axis
 - if `a = 0`, they will have fixed values as `y` in all of their solutions & their graph will be parallel to x axis
 
 slope of equations (aka line in this context) (usually denoted as `m`) describe their direction on the cartesian chart.<br>
 slope is calculated as the ratio of vertical to horizontal changes between two points in the form of ordered pairs.<br>
-`m = delta(y) / delta(x)` where `delta(x) != 0`; value of `m` indicates that:
+`m = delta(y) / delta(x)` where `delta(x) != 0`; value of `m` indicates that
 - the line will rise moving toward right, if `m > 0`
 - the line will fall moving toward right, if `m < 0`
 - the line will move in parallel to `x` axis, if `m = 0`
 
 if `(delta(x)) = 0` or `a = 0` the line will move in parallel to `y` axis & `m` will be undefined.<br>
 lines which represent solutions of first degree linear equations in two variables are straight because `m` is the same for each pair of their solutions.<br>
-these lines can be represented in other forms of equations, too:
+these lines can be represented in other forms of equations, too
 - the slope, intercept form: `y = mx + b` where `(0, b)` is where y intercept occurs & `m` is slope (derived by isolation of `y`)
 - the point, slope form: `m(x - x_1) = (y - y_1)` where `(x_1, y_1)` is a known point & `m` is slope (derived either from two known points or one known point & slope)
 
@@ -99,12 +99,12 @@ vertical line test determines if lines are functions by examining if they inters
 if they do, they aren't considered as valid functions because they produce more than one `y` for one given `x`.<br>
 systems of linear equations consist of multiple equations having common values.<br>
 solutions of systems of linear equations in two variables are ordered pairs or points which satisfy all of them or exist on all of their lines.<br>
-systems of linear equations are either:
+systems of linear equations are either
 - inconsistent: which consist of parallel lines & don't have solutions
 - consistent: which consist of independent equations (having one intersection) & have single solutions
 - made of depndent equations (having infinite intersections): which have infinite solutions
 
-systems of linear equations in two variables are solved through either of these methods:
+systems of linear equations in two variables are solved through either of these methods
 - substitution
     1. one of the variables is isolated in one of the equations
     2. the variable is replaced by resulting expression in another equation
@@ -143,14 +143,13 @@ polynomials in their standard form have their terms ordered by their degrees whi
 when adding or subtracting polynomials, only their like terms are added or subtracted respectively & the rest of their terms remain in the answer as is.<br>
 when multiplying polynomials, each term of either of them is multiplied by every term of the other one.<br>
 the FOIL method can be used for multiplication two binomials; using this method, first, outer, inner & last terms are multiplied & summed together.<br>
-special products of polynomials have pre defined answers & are recognizable by their pattern:
+special products of polynomials have pre defined answers & are recognizable by their pattern
 - square of binomials: `(a + b)^2 = a^2 + 2ab + b^2` & `(a - b)^2 = a^2 - 2ab + b^2`
 - cube of binomials: `(a + b)^3 = a^3 + 3ba^2 + 3ab^2 + b^3` & `(a - b)^3 = a^3 - 3ba^2 + 3ab^2 - b^3`
 - difference of squares: `(a + b)(a - b) = a^2 - b^2`
 
 when dividing polynomials by monomials, each term of the polynomial is divided by the monomial.<br>
-if dividend polynomials miss 
-steps to divide polynomials (fingers crossed, idk if it works all of the time):
+steps to divide polynomials (fingers crossed, idk if it works all of the time)
 1. each polynomial is transformed into standard form & made sure to have all of their exponents
 2. leading term of dividend is divided by the leading term of divisor (monomial division)
 3. resulting term is added to the quotient & the quotient is transformed into standard form (if required)
@@ -165,7 +164,7 @@ GCF is calculated as the product of all common prime factors with the least repe
 when calculating GCF of terms, variables are treated like prime factors.<br>
 in distribution, factors are multiplied in terms of expressions.<br>
 in factoring out, expressions are divided by common factors of their terms; usually their GCF.<br>
-when GCF of polynomials is too little & their terms are still big, their simplification can be done through grouping:
+when GCF of polynomials is too little & their terms are still big, their simplification can be done through grouping
 1. terms are grouped such that factoring their GCF out results in common expressions
 2. each group is simplified separately by its GCF being factored out
 3. common expressions are factored out from resulting expression
@@ -173,7 +172,7 @@ when GCF of polynomials is too little & their terms are still big, their simplif
 simplifying results of special products can be done through reversing them.<br>
 if the product of two values is equal to `0` one of them is equal to `0`.<br>
 overall form of quadratic equations or inequations is `ax^2 + bx + c <=> 0` where `a != 0`.<br>
-trinomials in the form of quadratic equations can be manipulated through unfoil method:
+trinomials in the form of quadratic equations can be manipulated through unfoil method
 1. common factors are factored out
 2. two integers whos product is equal to `a * c` & their sum is equal to `b` are found
     - if no such integers are found the trinomial is prime
@@ -181,7 +180,7 @@ trinomials in the form of quadratic equations can be manipulated through unfoil 
 4. resulting expression is simplified through grouping
 
 since there are two square roots for values being raised to `2` (or any even exponent), quadratic equations may have more than one solution.<br>
-quadratic equations are solved through either of these methods:
+quadratic equations are solved through either of these methods
 - reversing square of binomials special product: works best if the equation is in the form square of binomials special product (aka perfect square trinomial)
 - factoring
     1. the equation is transformed into product of terms being equal to `0`
@@ -196,7 +195,7 @@ quadratic equations are solved through either of these methods:
     3. `(b / 2)^2` is added to both sides of the equation
     4. resulting equation is solved through reversing squre of binomials special product
 - quadratic formula
-    - discriminant is calculated as `b^2 - 4ac`
+    - `discriminant` is calculated as `b^2 - 4ac`
     - if `discriminant < 0`, the equation doesn't have real solutions
     - if `discriminant = 0`, the equation has one solution
     - if `discriminant > 0`, the equation has two solutions
@@ -228,7 +227,7 @@ simplified radicals don't have fractions & perfect factors within their operands
 like radicals share common indices & operands; their combination only affects their coefficients.<br>
 rational expressions can't have irrational roots as factors of their denominators.<br>
 conjugates of additions are formed by writing them as subtractions & vice versa.<br>
-irrational factors are removed from denominators of rational expressions through either of these methods:
+irrational factors are removed from denominators of rational expressions through either of these methods
 - multiplication of their numerators & denominators by the irrational factor itself
     - should take place `n` times where `n` is the index of the irrational factor
     - should be done after simplification
