@@ -276,7 +276,7 @@ perfect roots: factors which their exponents are equal or greater than indices o
 simplified radicals: radicals which don't have fractions & perfect factors within their operands.<br>
 like radicals: radicals which sharing the same index & operand; their combination only affects their coefficients.<br>
 
-conjugate of `a + b` is equal to `a - b`.
+conjugate: same set of given combination of terms combined using different signs.<br>
 
 methods to remove non real roots from denominators of rational expressions
 - multiplication of their numerators & denominators by the irrational factor itself
