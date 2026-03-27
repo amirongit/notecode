@@ -6,12 +6,12 @@ coefficients: values within terms multiplied by variables.<br>
 constant terms: don't have variables within their factors.<br>
 expressions: combinations of terms.<br>
 sub expressions: expressions within terms grouped by parentheses or brackets as one of their factors.<br>
-like terms: terms sharing the same set of variable factors raised to the same exponents; can be merged together.
+like terms: terms sharing the same set of variable factors raised to the same exponents; they can be merged together.
 
 equations: assertions that two expressions evalute to the same value.<br>
 - identities: true for all substitutions; their sides are different versions of each other
 - contradictions: false for all substitutions; they don't have any solution
-- conditional: true for some & false for other substitutions
+- conditionals: true for some & false for other substitutions
 
 inequations: assertions that two expressions don't evalute to the same value.<br>
 solutions of equations or inequations are substitutes for their variables proving their assertion.<br>
@@ -162,7 +162,7 @@ polynomials: expressions containing finite number of terms with real coefficient
 `a * m^0 = a`<br>
 `a + 0b = a`
 
-degree of term: sum of exponents of their variables.<br>
+degree of terms: sum of exponents of their variables.<br>
 degree of expressions (or polynomials): highest degree among their non-zero terms.<br>
 terms are ordered by their degrees in standard form of polynomials.<br>
 
@@ -220,7 +220,7 @@ steps to simplify trinomials of quadratic equations through unFOIL
 methods to solve quadratic equations
 - reversing square of binomials special product
 - factoring
-    1. the equation is transformed into product of terms being equal to `0`
+    1. equation is transformed into product of terms being equal to `0`
         - this can be done through factoring, grouping, unFOIL, reversing special products or combination of these methods
         - if this can't be done the equation is prime & can't be solved through this method
     2. each reuslting term is written as being equal to `0`
@@ -228,7 +228,7 @@ methods to solve quadratic equations
     4. answers which don't satisfy the original equation are excluded
 - completing the square
     1. constant term is isolated
-    2. the equation is manipulated such that `a = 1`
+    2. equation is manipulated such that `a = 1`
     3. `(b / 2)^2` is added to both sides of the equation
     4. resulting equation is solved through reversing squre of binomials special product
 - quadratic formula
@@ -259,10 +259,12 @@ inverse variations
 - `n` & `k` are constants
 - `x` & `y` vary inversely if `k > 0`, otherwise, directly
 
-`radical_n(m) = x` where `x^n = m` (`n = 2` if not specified).<br>
-given `radical_n(m)` where `n` is even
-- two roots are resulted, one of which is negative & the other one is positive (called principal root)
-- if `m` is negative, resulted roots aren't real numbers (can be presented using imaginary numbers)
+radical operation: used to indicates the factor which if raised to its index will be equal to its operand
+- its overall form is `radical_n(m) = x` where `x^n = m`
+- `n = 2` if not explicitly specified
+- if `n` is even
+    - two roots are resulted, one of which is negative & the other one is positive (called principal root)
+    - if `m` is negative, resulted root isn't real number (can be presented using imaginary numbers)
 
 pythagoras' theorm given right triangles having `a` & `b` as legs of their right angles & `c` as their third leg
 - `a^2 + b^2 = c^2`
@@ -276,7 +278,7 @@ perfect roots: factors which their exponents are equal or greater than indices o
 simplified radicals: radicals which don't have fractions & perfect factors within their operands.<br>
 like radicals: radicals which sharing the same index & operand; their combination only affects their coefficients.<br>
 
-conjugate: same set of given combination of terms combined using different signs.<br>
+conjugates: same sets of given combination of terms combined using different signs.<br>
 
 methods to remove non real roots from denominators of rational expressions
 - multiplication of their numerators & denominators by the irrational factor itself
