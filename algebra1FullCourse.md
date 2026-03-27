@@ -19,16 +19,22 @@ solutions of equations or inequations are substitutes for their variables provin
 least common multiple (LCM): smallest positive integer divisible by given terms (variables are treated as prime factors).<br>
 least common denominator (LCD): LCM of denominators of given fractions.<br>
 
-`a + (-a) = 0`<br>
-`a + 0 = a`<br>
-`(a / b) * (b / a) = 1`<br>
-`a * 1 = a`<br>
+```
+a + (-a) = 0
+a + 0 = a
+(a / b) * (b / a) = 1
+a * 1 = a
+```
 
-given `a <=> b` \* *direction of inequalities are reversed if `n < 0`*
-- `a + n <=> b + n`
-- `a - n <=> b - n`
-- `a / n <=> b / n` *
-- `a * n <=> b * n` *
+
+```
+# given a <=> b
+
+a + n <=> b + n
+a - n <=> b - n
+a / n <=> b / n # direction of inequalities are reversed if `n < 0`
+a * n <=> b * n # direction of inequalities are reversed if `n < 0`
+```
 
 sides of equations or inequations containing fractions can be multiplied by their LCD in order to be simplified.
 
@@ -140,15 +146,17 @@ methods to solve systems of linear equations in two variables
     6. the modified equation is solved for the remaining variable
     7. values are written in the form of ordered pairs as their corresponding components
 
-`a^n * a^m = a^(n + m)`<br>
-`a^n / a^m = a^(n - m)`<br>
-`(a^n)^m = a^(n * m)`<br>
-`a^n = b^n + c^n` where `a = b * c`<br>
-`-a = -1 * a`<br>
-`-a^n = -1 * a^n => (-a)^n != -a^n`<br>
-`(a / b)^n = a^n / b^n`<br>
-`a^0 = 1` where `a != 0`<br>
-`(a / b)^n = b / a^(-n)`
+```
+a^n * a^m = a^(n + m)
+a^n / a^m = a^(n - m)
+(a^n)^m = a^(n * m)
+a^n = b^n + c^n` where `a = b * c
+-a = -1 * a
+-a^n = -1 * a^n => (-a)^n != -a^n
+(a / b)^n = a^n / b^n
+a^0 = 1` where `a != 0
+(a / b)^n = b / a^(-n)
+```
 
 scientific notations
 - used to write extra large or small quantities conveniently
@@ -159,15 +167,20 @@ polynomials: expressions containing finite number of terms with real coefficient
 - binomials: contain two terms
 - trinomials: contain three terms
 
-`a * m^0 = a`<br>
-`a + 0b = a`
+```
+a * m^0 = a
+a + 0b = a
+```
 
 degree of terms: sum of exponents of their variables.<br>
 degree of expressions (or polynomials): highest degree among their non-zero terms.<br>
 terms are ordered by their degrees in standard form of polynomials.<br>
 
-`a(b + c) = a * b + a * c`<br>
-`(a + b)/c = a / c + b / c`<br>
+```
+a(b + c) = a * b + a * c
+(a + b)/c = a / c + b / c
+```
+
 FOIL method for multiplication of binomials given `(a + b)(c + d)`
 1. (f)irst: `a * c`
 2. (o)uter: `a * d`
@@ -270,9 +283,11 @@ pythagoras' theorm given right triangles having `a` & `b` as legs of their right
 - `a^2 + b^2 = c^2`
 - used to calculated distance between two points on the cartesian chart `radical_2((x2 - x1)^2 + (y2 - y1)^2)`
 
-`radical_n(m^x) = m^(x / n)`<br>
-`radical(a / b) = radical(a) / radical(b)`<br>
-`radical(a * b) = radical(a) * radical(b)`<br>
+```
+radical_n(m^x) = m^(x / n)
+radical(a / b) = radical(a) / radical(b)
+radical(a * b) = radical(a) * radical(b)
+```
 
 perfect roots: factors which their exponents are equal or greater than indices of radicals.<br>
 simplified radicals: radicals which don't have fractions & perfect factors within their operands.<br>
