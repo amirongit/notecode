@@ -190,7 +190,7 @@ methods to solve exponential equations
     3. resulting equation is solved
 - logarithm
     1. both sides are put in logarithms with common bases
-        - natural logarithm is if `e` is in factors
+        - natural logarithm is used if `e` is among factors
         - is done after isolation as much as possible
     2. variable is isolated
     3. resulting equation is solved
