@@ -38,9 +38,10 @@ a * n <=> b * n # direction of inequalities are reversed if `n < 0`
 
 sides of equations or inequations containing fractions can be multiplied by their LCD in order to be simplified.
 
-interval notations are used to capture ranges of real numbers
+interval notations are used to capture ranges between two real numbers
 - `[` & `]` mean inclusion
 - `(` & `)` mean exclusion
+- smaller & bigger numbers are written in left & right respectively
 
 solutions of inequations are usually written using interval notations.
 
@@ -53,10 +54,7 @@ steps to solve first degree linear equations or inequations in one variable (`x`
 1. sides are simplified as much as possible
 2. `x` is isolated
 
-ratios
-- they are comparisons between two quantities (`a` & `b`)
-- they can be written as fractions (`a / b`) or `a : b`
-
+ratios: comparisons between two quantities (`a` & `b`) which can be written as fractions (`a / b`) or `a : b`.<br>
 rates: ratios which their terms are in different units.<br>
 proportions: assertions that two ratios are equal.
 
@@ -64,10 +62,10 @@ proportions: assertions that two ratios are equal.
 
 ordered pairs: pair of terms (components) within parentheses in the form of `(x, y)`.<br>
 cartesian coordinate systems (the cartesian chart)
-- they are combinations of two perpendicular line numbers
-- their horizontal line number is called x-axis
-- their vertical line number is called y-axis
-- intersection of their axes is called origin point
+- combinations of two perpendicular line numbers
+- horizontal line number is called x-axis
+- vertical line number is called y-axis
+- intersection of axes is called origin point
 
 ordered pairs can be represented on cartesian charts with their corresponding components.
 
@@ -162,7 +160,7 @@ scientific notations
 - used to write extra large or small quantities conveniently
 - in this convention, numbers are multiplied by negative or positive powers of `10`
 
-polynomials: expressions containing finite number of terms with real coefficients & integers exponents greater than or equal to `0`
+polynomials: expressions containing finite number of terms with real coefficients, whole exponents & constant denominators
 - monomials: contain one term
 - binomials: contain two terms
 - trinomials: contain three terms
@@ -195,7 +193,7 @@ special products of polynomials with pre-defined answers, recognizable patterns 
 - cube of binomials
     - `(a + b)^3 = a^3 + 3ba^2 + 3ab^2 + b^3`
     - `(a - b)^3 = a^3 - 3ba^2 + 3ab^2 - b^3`
-- difference of squares: `(a + b)(a - b) = a^2 - b^2`
+- product of conjugates: `(a + b)(a - b) = a^2 - b^2`
 
 steps to divide polynomials (fingers crossed, idk if it works all of the time)
 1. each polynomial is transformed into standard form & made sure to have all of its degrees (or exponents)
