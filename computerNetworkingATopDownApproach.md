@@ -26,3 +26,9 @@ the internet acts as an infrastructure for distributed applications (application
 communications within networks are governed by protocols which should be conformed by engaged components.
 
 protocols define order & format of messages exchanged between communicating components & actions taken upon data transmission or other events.
+
+### The Network Edge
+
+end systems sit at the edge of the internet. end systems migh also be called hosts because of hosting applications, which are either clients or servers.
+
+<!--12, access network-->
