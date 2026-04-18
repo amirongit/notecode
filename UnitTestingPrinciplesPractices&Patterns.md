@@ -146,7 +146,7 @@ can/execute pattern is another solution for these situations. using this pattern
 
 meaningful events for domain experts should be described (or modeled) by domain events; these are usually implemented as immutable components containing necessary data to notify external systems, named using past tense verbs. domain events can be used to prevent fragmentation of domain algorithms with methods indicating to controllers if some collaborators should be called or not.
 ## Why Integration Testing?
-integration tests are test cases which don't fit into the definitions of unit tests. these test cases usually verify communications between the application & its collaborators; components verified by them don't contain domain complexity but focused on collaboration (controller code).
+integration tests are test cases which don't fit into the definitions of unit tests. these test cases usually verify communications between the application & its collaborators; components verified by them don't contain domain complexity but are focused on collaboration (controller code).
 
 the requirement to keep the out of process dependencies operationl & big 3A sections increase the maintenance cost of integration tests. on the other hand, integration tests provide better protection against regressions (by exercising more code of more layers) & resistance to refactoring (by verifying whole operations rather than atomic units). these tests should cover all successfull scenarios, edge cases which aren't covered by unit tests & domain edge cases.
 
