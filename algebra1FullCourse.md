@@ -283,6 +283,7 @@ pythagoras' theorm given right triangles having `a` & `b` as legs of their right
 
 ```
 radical_n(m^x) = m^(x / n)
+radical_n(radical_m(x)) = radical_nm(x)
 radical(a / b) = radical(a) / radical(b)
 radical(a * b) = radical(a) * radical(b)
 ```

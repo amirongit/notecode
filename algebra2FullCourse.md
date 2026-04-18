@@ -96,7 +96,7 @@ methods to solve systems of linear equations in three variables
 functions which are used as operands are replaced by their rational expressions.<br>
 degree of terms & rational expressions can be reduced by introduction of new variables which are equal to high degree factors.<br>
 high degree polynomials can be reduced using this property; substituted variables are replaced with their original form after operations.<br>
-in case of dropped out indices & exponents in radical expressions, if they are odd or even, result is either the base itself or its absolute value respectively.
+in case of dropped out indices & exponents in radical expressions, result is the base itself if they are odd, otherwise, its absolute value.
 
 imaginary unit
 - refered to as `i`
