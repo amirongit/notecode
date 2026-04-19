@@ -1,34 +1,37 @@
 # Computer Networking, A Top Down Approach
 ## Computer Networks & The Internet
-### What Is The Internet?
-#### A Nuts & Bolts Description
 
-the internet is a computer networks which connects billions of devices throughout the world. considering the fact that a good percentage of these devices aren't traditional computers, the term "computer network" is somewhat inaccurate.
+the internet: global set of interconnected computer networks allowing devices to connect across the globe.<br>
+communication link: made of physical media, used for data transmission & its transmission rate is measured in bits per second.<br>
+packet: piece of data paired with header bytes.
 
-communication links within computer networks are made of physical media & their transmission rate is measured in bits per second.
+steps to transmit data between two end systems
+1. sender segments it into packets
+2. packets are sent through communication links
+3. reciever reassmbles packets back into original data
 
-upon sending data, end systems segment it & add header bytes to each segment. segments & their header byte together are called packets. packets are used to reassmble the original data in the destination.
+packet switch: device with incoming & outgoing communication links which is used to forward packets toward their destination (namely routers & link layer switches).<br>
+route (aka path): sequence of communication links & packet switches traversed by packets between two end systems.<br>
+internet service provider (ISP): network of communication links & switches which allows end systems to access the internet; must be interconnected to other ISPs.
 
-packet switches take packets from their incoming communication links & forward them to outgoing ones. routers & link layer switches are two kinds of packets switches which forward incoming packets toward their destination.
+lower tier ISPs interconnect through higher tier ISPs which themselves interconnect directly.
 
-the sequence of communication links & packet switches traversed by packets between two end systems is called path or route.
+protocol: defines order & format of messages exchanged between communicating components & actions taken upon data transmission or other events.<br>
+host: end system which hosts applications which is either client or server.
 
-internet service providers (ISP) allow end systems to access the internet & are networks of packet switches & communication links in themselves. they provide internet access to end users & content providers (servers) & must also be interconnected. lower tier ISPs interconnect through higher tier ISPs which themselves interconnect directly.
+software & hardware centered standards are developed & maintained by the internet engineering task force (IETF) & institute of electrical & electronics engineers (IEEE) respectively.<br>
+the internet can be thought of as an infrastructure for applications which is exposed through socket interfaces by operating systems; this interface allows applications to send & recieve data to & from different applications & instances.
 
-components of computer networks run standard protocols in order to manage their communications. software & hardware centered standards are developed & maintained by the internet engineering task force (IETF) & institute of electrical & electronics engineers (IEEE) respectively.
+access network: network which physically connects end systems to the first router on their desired paths (aka edge router) toward another end system.<br>
+digital subscriber line (DSL): method to provide internet access on telephone lines.<br>
+DSL modem: device used to convert digital to analog data & encode it in different frequencies.<br>
+DSL access multiplexer (DSLAM): device used to separate network from traditional telephone data & convert it back to digital data (used by ISPs).<br>
+splitter: device used to separate network from traditional telephone data & forward it to DSL modems (used by customers).
 
-#### A Service Description
+telephone companies can act as ISPs which are access networks for residential houses having telephone lines.<br>
+using DSL, telephone lines are splitted into three channels
+1. highe speed downstream channel
+2. medium speed upstream channel
+3. traditional two way telephone channel
 
-the internet acts as an infrastructure for distributed applications (applications which involve multiple end systems). this infrastructure is exposed to applications through socket interface by operating systems which allows applications to send & recieve data to & from different destinations.
-
-#### What Is A Protocol?
-
-communications within networks are governed by protocols which should be conformed by engaged components.
-
-protocols define order & format of messages exchanged between communicating components & actions taken upon data transmission or other events.
-
-### The Network Edge
-
-end systems sit at the edge of the internet. end systems migh also be called hosts because of hosting applications, which are either clients or servers.
-
-<!--12, access network-->
+this allows using the same telephone line to transmit analog & digital data at the same time.
