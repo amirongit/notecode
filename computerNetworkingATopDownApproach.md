@@ -35,3 +35,10 @@ using DSL, telephone lines are splitted into three channels
 3. traditional two way telephone channel
 
 this allows using the same telephone line to transmit analog & digital data at the same time.
+
+bits are usually passed around by several pairs of senders & recievers through one route.<br>
+each pair shares a physical medium which is either
+- guided: forwards data to one specific destination
+- unguided: broadcasts data in all directions
+
+<!-- page 19 -->
