@@ -30,15 +30,15 @@ splitter: device used to separate network from traditional telephone data & forw
 
 telephone companies can act as ISPs which are access networks for residential houses having telephone lines.<br>
 using DSL, telephone lines are splitted into three channels
-1. highe speed downstream channel
-2. medium speed upstream channel
-3. traditional two way telephone channel
+1. highe speed downstream
+2. medium speed upstream
+3. traditional two way for telephone usage
 
 this allows using the same telephone line to transmit analog & digital data at the same time.
 
-bits are usually passed around by several pairs of senders & recievers through one route.<br>
-each pair shares a physical medium which is either
-- guided: forwards data to one specific destination
+bits are usually passed around by several pairs of physical senders & recievers through one route.<br>
+each pair shares a common physical medium which is either
+- guided: transmits data to one specific destination, usually solid
 - unguided: broadcasts data in all directions
 
-<!-- page 19 -->
+<!-- page 22 the network core -->
