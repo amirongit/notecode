@@ -59,9 +59,9 @@ valuable test cases have four attributes:
 |test result|functional validity|inference|solution|
 |-|-|-|-|
 |pass|correct|true positive|-|
-|pass|incorrect|false negative|protection against regressions|
+|pass|incorrect|false positive|protection against regressions|
 |fail|incorrect|true negative|-|
-|fail|correct|false positive|resistance to refactoring|
+|fail|correct|false negative|resistance to refactoring|
 
 protection against regression, fast feedback & resistance to refactoring are mutually exclusive & test cases are capable of only emphasizing two of them. since resistance to refactoring is either conformed or not, the trade off is reduced to the other two attributes. the test pyramid advocates for certain ratio of unit, integration & e2e tests, moving toward each of these two on each layer:
 - e2e tests (the top layer): favor protection against regressions & black box testing (based on external specifications)
