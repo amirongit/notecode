@@ -32,7 +32,7 @@ it is hard to tell what exactly a test case verifies if it exercises something l
 
 ## The Anatomy Of A Unit Test
 the 3A pattern can be used to define a structure of unit tests, using this pattern, test cases are splitted into three phases:
-1. arrange (aka given), in which the SUT is brought to the desired state
+1. arrange (given), in which the SUT is brought to the desired state
 2. act (when), in which the SUT is invoked with dependencies & values prepared in arrange phase & its output is captured
 3. assert (then), in which the end result of the invokation in act phase is verified, which might include values, states & communications
 
@@ -58,9 +58,9 @@ valuable test cases have four attributes:
 
 |test result|functional validity|inference|solution|
 |-|-|-|-|
-|pass|correct|true negative|-|
+|pass|correct|true positive|-|
 |pass|incorrect|false negative|protection against regressions|
-|fail|incorrect|true positive|-|
+|fail|incorrect|true negative|-|
 |fail|correct|false positive|resistance to refactoring|
 
 protection against regression, fast feedback & resistance to refactoring are mutually exclusive & test cases are capable of only emphasizing two of them. since resistance to refactoring is either conformed or not, the trade off is reduced to the other two attributes. the test pyramid advocates for certain ratio of unit, integration & e2e tests, moving toward each of these two on each layer:
