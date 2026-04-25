@@ -41,4 +41,24 @@ each pair shares a common physical medium which is either
 - guided: transmits data to one specific destination, usually solid
 - unguided: broadcasts data in all directions
 
-<!-- page 22 the network core -->
+store & forward: transmission method used by packet switches in which the entire packet is buffered before its transmission begins.<br>
+output buffer: queue within packet switches which exist per outgoing communication link & used to put packets in order of arrival.<br>
+queuing delay: time taken by packets to wait in output buffers within packet switches.
+
+packet losses may happen when new packets arrive & their destined output buffer is full.
+
+forwarding table: map within routers which associates addresses (or parts of them) to outgoing communication links.<br>
+circuit switched network: network in which resources are reserved per communication session.
+
+in packet switched networks, resources are used on demand in contrast to circuit switched networks.<br>
+chunks of data may have to wait in queues within packet switched networks but this is not the case in circuit switched networks.
+
+frequency: amount of repetition of waves within physical medium.<br>
+frequency spectrum: possible frequencies of physical medium.<br>
+bandwidth: quantified value of frequency spectrum.
+
+two major methods to establish circuits are
+1. frequency division multiplexing (FDM): frequency spectrum of links are divided by established connections
+2. time division multiplexing (FDM): time is splitted into frames of duration which themselves are splitted into slots per established connections
+
+<!-- 31, a network of networks -->
