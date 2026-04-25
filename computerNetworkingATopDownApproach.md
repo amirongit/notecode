@@ -59,6 +59,6 @@ bandwidth: quantified value of frequency spectrum.
 
 two major methods to establish circuits are
 1. frequency division multiplexing (FDM): frequency spectrum of links are divided by established connections
-2. time division multiplexing (FDM): time is splitted into frames of duration which themselves are splitted into slots per established connections
+2. time division multiplexing (TDM): time is splitted into frames of duration which themselves are splitted into slots per established connections
 
 <!-- 31, a network of networks -->
