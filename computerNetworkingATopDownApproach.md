@@ -1,7 +1,6 @@
 # Computer Networking, A Top Down Approach
 ## Computer Networks & The Internet
 
-the internet: global set of interconnected computer networks allowing devices to connect across the globe.<br>
 communication link: made of physical media, used for data transmission & its transmission rate is measured in bits per second.<br>
 packet: piece of data paired with header bytes.
 
@@ -14,7 +13,7 @@ packet switch: device with incoming & outgoing communication links which is used
 route (aka path): sequence of communication links & packet switches traversed by packets between two end systems.<br>
 internet service provider (ISP): network of communication links & switches which allows end systems to access the internet; must be interconnected to other ISPs.
 
-lower tier ISPs interconnect through higher tier ISPs which themselves interconnect directly.
+lower tier ISPs interconnect through higher tier ones which themselves interconnect directly.
 
 protocol: defines order & format of messages exchanged between communicating components & actions taken upon data transmission or other events.<br>
 host: end system which hosts applications which is either client or server.
@@ -61,4 +60,17 @@ two major methods to establish circuits are
 1. frequency division multiplexing (FDM): frequency spectrum of links are divided by established connections
 2. time division multiplexing (TDM): time is splitted into frames of duration which themselves are splitted into slots per established connections
 
-<!-- 31, a network of networks -->
+point of presence (PoP): set of routers within provider ISPs which allow communication to high tier ISPs.<br>
+internet exchange point (IXP): meeting point where multiple ISPs peer (connection without payment) together.
+
+internet can be considered a network of networks which allows end systems communicate with each other.<br>
+access ISPs use regional ISPs which themselves use tier-1 ISPs to interconnect & gain coverage.<br>
+ISPs may also multi home, which means connecting to multiple high tier ISPs in order to guard themselves from failures.
+
+throughput: amount of transferable data within given periods.<br>
+prcessing delay: time it takes packet switches to examin & process arriving packets.<br>
+transmission delay: time it takes to push all bits of given packets into the physical medium.
+
+transmission delay is calculated as `L/R` where `L` is length of packets & `R` is transmission rate of the communication link.
+
+<!-- 37, propagation delay -->
