@@ -1,7 +1,7 @@
 # Computer Networking, A Top Down Approach
 ## Computer Networks & The Internet
 
-communication link: made of physical media, used for data transmission & its transmission rate is measured in bits per second.<br>
+communication link: made of physical media, used for data transmission.<br>
 packet: piece of data paired with header bytes.
 
 steps to transmit data between two end systems
@@ -42,7 +42,6 @@ each pair shares a common physical medium which is either
 
 store & forward: transmission method used by packet switches in which the entire packet is buffered before its transmission begins.<br>
 output buffer: queue within packet switches which exist per outgoing communication link & used to put packets in order of arrival.<br>
-queuing delay: time taken by packets to wait in output buffers within packet switches.
 
 packet losses may happen when new packets arrive & their destined output buffer is full.
 
@@ -64,13 +63,30 @@ point of presence (PoP): set of routers within provider ISPs which allow communi
 internet exchange point (IXP): meeting point where multiple ISPs peer (connection without payment) together.
 
 internet can be considered a network of networks which allows end systems communicate with each other.<br>
-access ISPs use regional ISPs which themselves use tier-1 ISPs to interconnect & gain coverage.<br>
-ISPs may also multi home, which means connecting to multiple high tier ISPs in order to guard themselves from failures.
+access ISPs use regional ISPs which themselves use tier-1 ISPs to interconnect & gain coverage.
+
+multi homing: when ISPs use multiple higher tier ISPs in order to guard themselves from failures.
 
 throughput: amount of transferable data within given periods.<br>
 prcessing delay: time it takes packet switches to examin & process arriving packets.<br>
-transmission delay: time it takes to push all bits of given packets into the physical medium.
+transmission rate
+- amount transmitted data per given unit of time between two nodes
+- usually calculated as `d/t` where `d` & `t` are amount of data & time respectively
 
-transmission delay is calculated as `L/R` where `L` is length of packets & `R` is transmission rate of the communication link.
+transmission delay
+- time it takes to push all bits of given packets into the physical medium
+- calculated as `L/R` where `L` & `R` are length of packets & transmission rate of the communication link respectively
 
-<!-- 37, propagation delay -->
+propagation delay
+- time it takes for one bit to travel the distance of given communication links
+- calculated as `d/s` where `d` & `s` are distance & propagation speed of given physical media respectively
+
+queuing delay: time it takes for packets to wait in output buffers within packet switches.<br>
+throughput
+- amount of transmitted data within given amount of time between two end systems
+- usually limited by the least transmission rate (because of either high traffic or capacity of physical media) within give paths
+
+layered architecture allows changing implementations without side effects by enforcing service specifications.<br>
+within computer networks, layers provide services to their upper layers & only depends on services provided by the layer below themselves.
+
+<!-- 49, protocol layering -->
