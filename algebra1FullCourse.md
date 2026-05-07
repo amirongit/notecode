@@ -254,7 +254,7 @@ restricted values of rational expressions
 - substitutions resulting in their denominators being equal to `0` or being non-rational (or non real)
 - calculated by solving their denominators for `0`
 
-rational expressions are simplified by simplification of their numerators & denominators & dropping out common factors between them.<br>
+rational expressions are simplified by simplification of their numerators, denominators & radicals & elimination of irrational roots in their denominators.<br>
 solutions of equations or inequations containing rational expressions within their restricted values are rejected.<br>
 
 variations: used to model changes of related variables.<br>
@@ -289,12 +289,12 @@ radical(a * b) = radical(a) * radical(b)
 ```
 
 perfect roots: factors which their exponents are equal or greater than indices of radicals.<br>
-simplified radicals: radicals which don't have fractions & perfect factors within their operands.<br>
+simplified radicals: radicals which don't have factors raised to powers greater than or equal to their index & fractions within their operands.<br>
 like radicals: radicals which sharing the same index & operand; their combination only affects their coefficients.<br>
 
 conjugates: same sets of given combination of terms combined using different signs.<br>
 
-methods to remove non real roots from denominators of rational expressions
+methods to remove irrational roots from denominators of rational expressions
 - multiplication of their numerators & denominators by the irrational factor itself
     - takes place `n` times where `n` is the index of the irrational radical
     - is done after simplification
