@@ -87,6 +87,7 @@ throughput
 - usually limited by the least transmission rate (because of either high traffic or capacity of physical media) within give paths
 
 layered architecture allows changing implementations without side effects by enforcing service specifications.<br>
-within computer networks, layers provide services to their upper layers & only depends on services provided by the layer below themselves.
+within computer networks, layers provide services to their upper layers & only depend on services provided by the layer below themselves.<br>
+computer networking protocols belong to specific architectural layers, are implemented as software, hardware or combination of the two & distributed among end systems.<br>
 
-<!-- 49, protocol layering -->
+<!-- 50, application layer -->
