@@ -34,7 +34,7 @@ steps to solve equations or inequations which contain absolute values
 1. absolute values are isolated
     - in case of inequations, if expression is less than `0`, there aren't any solutions
     - in case of equations, if expression is equal to `0`, there is one solution
-2. compound equations or inequations are written using bare values (& their additive inverses) instead absolute values
+2. compound equations or inequations are written as bare values (& their additive inverses) instead of absolute values
     - in case of inequations, if absolute value side is less than the other side, relationship is `and` & `or` is used in any other situation
 3. resulting compound equation or inequation is solved
 
