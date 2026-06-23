@@ -12,7 +12,7 @@ subsets: sets which their elements are present in given sets
 number of possible subsets is calculated as `2^n` where `n` is equal to number of elements of given set.<br>
 complements: sets which contain elements present in `U` & absent in given sets.<br>
 unions: sets which contain all elements of given sets.<br>
-intersections: sets which contain common elements among given sets.<br>
+intersections: sets which contain common elements among given sets.
 
 repeating decimals: decimals which repeat the same pattern of digits forever; patterns are usually annotated with bars on them.<br>
 steps to transform repeating decimals into fractions
@@ -77,7 +77,7 @@ steps to draw augmented matrices
 5. a vertical line is drawn between coefficients & constants
 
 row echelon form of matrices: non zero rows are above all zero rows & each leading non zero elements is one column right to the non zero elements above it.<br>
-reduced row echelon form of matrices: rows & columns conform to row echelon form & there is only one non zero element in each row which is equal to `1`.<br>
+reduced row echelon form of matrices: rows & columns conform to row echelon form & there is only one non zero element in each row which is equal to `1`.
 
 methods to solve systems of linear equations in three variables
 - substitution

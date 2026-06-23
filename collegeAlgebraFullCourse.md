@@ -5,9 +5,9 @@ whole numbers (`W`): non fractional numbers greater than or equal to `0`.<br>
 integers (`Z`): non fractional numbers.<br>
 rational numbers (`Q`): quotients of integers which evalute to limited or repeating decimals.<br>
 irratienal numbers (`P`): real & not rational numbers.<br>
-real numbers (`R`): rational & irrational numbers.<br>
+real numbers (`R`): rational & irrational numbers.
 
-distance between two points on number line is calculated as absolute value of their subtraction.<br>
+distance between two points on number line is calculated as absolute value of their subtraction.
 
 steps to calculate LCM of rational expressions
 1. expressions are written as product of their most prime factors

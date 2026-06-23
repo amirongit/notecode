@@ -14,10 +14,10 @@ equations: assertions that two expressions evalute to the same value.<br>
 - conditionals: true for some & false for other substitutions
 
 inequations: assertions that two expressions don't evalute to the same value.<br>
-solutions of equations or inequations are substitutes for their variables proving their assertion.<br>
+solutions of equations or inequations are substitutes for their variables proving their assertion.
 
 least common multiple (LCM): smallest positive integer divisible by given terms (variables are treated as prime factors).<br>
-least common denominator (LCD): LCM of denominators of given fractions.<br>
+least common denominator (LCD): LCM of denominators of given fractions.
 
 ```
 a + (-a) = 0
@@ -58,7 +58,7 @@ ratios: comparisons between two quantities (`a` & `b`) which can be written as f
 rates: ratios which their terms are in different units.<br>
 proportions: assertions that two ratios are equal.
 
-`a * d = b * c` where `(a / b) = (c / d)`.<br>
+`a * d = b * c` where `(a / b) = (c / d)`.
 
 ordered pairs: pair of terms (components) within parentheses in the form of `(x, y)`.<br>
 cartesian coordinate systems (the cartesian chart)
@@ -80,9 +80,9 @@ set of all solutions of first degree linear equations or inequations can be repr
 - if `a = 0`, the equation will have fixed values as `y` & its graph move in parallel to x-axis
 
 x-intercept: intersection of graphs with x-axis.<br>
-y-intercept: intersection of graphs with y-axis.<br>
+y-intercept: intersection of graphs with y-axis.
 
-slope: ratio of vertical to horizontal changes of graphs on the cartesian chart.<br>
+slope: ratio of vertical to horizontal changes of graphs on the cartesian chart.
 
 given two ordered pairs of solutions of first degree linear equations in two variables
 - `m = delta(y) / delta(x)` where `m` is slope of the equation
@@ -172,7 +172,7 @@ a + 0b = a
 
 degree of terms: sum of exponents of their variables.<br>
 degree of expressions (or polynomials): highest degree among their non-zero terms.<br>
-terms are ordered by their degrees in standard form of polynomials.<br>
+terms are ordered by their degrees in standard form of polynomials.
 
 ```
 a(b + c) = a * b + a * c
@@ -255,7 +255,7 @@ restricted values of rational expressions
 - calculated by solving their denominators for `0`
 
 rational expressions are simplified by simplification of their numerators, denominators & radicals & elimination of irrational roots in their denominators.<br>
-solutions of equations or inequations containing rational expressions within their restricted values are rejected.<br>
+solutions of equations or inequations containing rational expressions within their restricted values are rejected.
 
 variations: used to model changes of related variables.<br>
 constant of variations: defines amount of change of depended variables as their dependents change; they act as slope but are usually annotated as `k`.
@@ -290,9 +290,9 @@ radical(a * b) = radical(a) * radical(b)
 
 perfect roots: factors which their exponents are equal or greater than indices of radicals.<br>
 simplified radicals: radicals which don't have factors raised to powers greater than or equal to their index & fractions within their operands.<br>
-like radicals: radicals which sharing the same index & operand; their combination only affects their coefficients.<br>
+like radicals: radicals which sharing the same index & operand; their combination only affects their coefficients.
 
-conjugates: same sets of given combination of terms combined using different signs.<br>
+conjugates: same sets of given combination of terms combined using different signs.
 
 methods to remove irrational roots from denominators of rational expressions
 - multiplication of their numerators & denominators by the irrational factor itself
