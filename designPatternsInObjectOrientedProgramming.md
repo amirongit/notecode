@@ -1,4 +1,7 @@
 # Design Patterns In Object Oriented Programming
+
+- [source](https://youtube.com/playlist?list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc)
+
 ## Strategy
 strategy pattern can be used to make interchangeable & unify similar algorithms which differ internally.<br>
 each algorithm is implemented behind a shared interface exposing the desired behaviour.<br>
@@ -38,3 +41,5 @@ factory method is used when creating a dependency is complex, for example
 abstract factory pattern defines an interface with multiple factory methods for creating families of dependent or related objects, letting its implementations
 - decide which subtype of each object is created
 - encapsulate each family of objects
+## Singleton
+singleton pattern ensures that a class has only one instance & provides a global point of access to it.
