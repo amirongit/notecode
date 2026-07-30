@@ -43,3 +43,14 @@ abstract factory pattern defines an interface with multiple factory methods for 
 - encapsulate each family of objects
 ## Singleton
 singleton pattern ensures that a class has only one instance & provides a global point of access to it.
+## Command
+command pattern encapsulates requests (& optionally their inverse logic) into units of behaviour.<br>
+units are called commands & can be used to parameterize other objects; objects which trigger commands are usually called invokers.<br>
+commands hold references to their dependencies internally & implement an interface exposing their execution & optionally its inverse.<br>
+objects which commands operate on are called receivers; command pattern is agnostic about receivers & invokers.<br>
+it is also possible to implement macros using this pattern, merging multiple commands into a single one.
+## Adapter
+adapter pattern converts the interface of an object into another interface by wrapping it.<br>
+adapters are used to let clients depend on stable internal (or predefined) interfaces, avoiding modifications & allowing interactions between incompatible objects.<br>
+## Facade
+facade pattern provides a high level unified interface to a set of interfaces in a subsystem in order to make it easier to use.
