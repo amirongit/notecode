@@ -71,9 +71,9 @@
 - representation of a document can be anything in json format since elasticsearch is schema less
 ### Retrieving Data
 #### Number Of Documents
-- all documents<br/>
+- all documents<br>
     `GET _count`
-- documents of specific indices<br/>
+- documents of specific indices<br>
     `GET <indices>/_count`
 #### Documents Themselves
 - [single document](#using-the-single-document-api)
@@ -163,7 +163,7 @@
         - employs document length normalization to counter the bias towards longer documents
     - ...
 ### Routing Algorithm
-- determines exactly one primary shard for a document as its location (in the context of indices)<br/>
+- determines exactly one primary shard for a document as its location (in the context of indices)<br>
     `hash(document.id) % <number-of-primary-shards>`
 - changing number of shards would break this for existing documents, reindexing is done in this situation
 ### Scaling
@@ -234,7 +234,7 @@
     - used for specialized cases such as geolocation & IP addresses
     - like geo_shape, geo_point, ip & range types like date_range & ip_range
 <!---->
-- schema definition is retrieved using "mapping" API<br/>
+- schema definition is retrieved using "mapping" API<br>
     `GET <indices>/_mapping`
 ### Core Data Types
 #### The Text Data Type
@@ -317,9 +317,9 @@
 - document identifiers
     - unique identifier associated to documents for their lifetime
     - documents are updated or overwritten in case of existence
-    - "PUT" method is used when identifier is provided by user<br/>
+    - "PUT" method is used when identifier is provided by user<br>
         `PUT <index>/_doc/<identifier>`
-    - "POST" method is used when identifier is expected to be generated ("identifier" is optional)<br/>
+    - "POST" method is used when identifier is expected to be generated ("identifier" is optional)<br>
         `POST <index>/_doc/<identifier>`
 <!---->
 - avoiding overwrites
@@ -362,9 +362,9 @@
 - there is an indirect (negative) correlation between refresh rate & the possibality of data loss
 ### Retrieving Documents
 #### Using The Single Document API
-- data & metadata retrieve<br/>
+- data & metadata retrieve<br>
     `GET <index>/_doc/<identifier>`
-- existence check<br/>
+- existence check<br>
     `HEAD <index>/_doc/<patterns>`
 #### Retrieving Multiple Documents
 - [from single index](#the-ids-query)
@@ -481,7 +481,7 @@ POST <index>/_update/<identifier>
     {<operation>: <metadata>}
     <document>
     ```
-- metadata<br/>
+- metadata<br>
     `{"_index": <index>, "_id": <identifier>}`
 - operation
     - "index"
@@ -533,7 +533,7 @@ POST <index>/_update/<identifier>
         }
     }
     ```
-- getting settings of indices ("setting" is optional)<br/>
+- getting settings of indices ("setting" is optional)<br>
     `GET <patterns>/_settings/<setting>`
 #### Index With Aliases
 - "is_write_index" configuration is used to mark indices as writable through aliases (should be set to true on at least one index when creating aliases for multiple indices)
@@ -550,7 +550,7 @@ POST <index>/_update/<identifier>
             }
         }
         ```
-    - using "alias" API<br/>
+    - using "alias" API<br>
         `PUT <patterns>/_alias/<alias>`
 - multiple aliasing operations
     - actions
@@ -580,19 +580,19 @@ POST <index>/_update/<identifier>
     - "_settings"
     - "_mapping"
     - "_alias"
-- fetching details of indices, including settings, schema mappings & aliases ("field" is optional; should be specific field of mentioned component)<br/>
+- fetching details of indices, including settings, schema mappings & aliases ("field" is optional; should be specific field of mentioned component)<br>
     `GET <patterns>/<component>/<field>`
 #### Reading Hidden Indices
 - indices with "." as the first character of their name
 - will be reserved for system related stuff in future versions
 ### Deleting Indices
-- deleting indices<br/>
+- deleting indices<br>
     `DELETE <patterns>`
-- deleting aliases<br/>
+- deleting aliases<br>
     `DELETE <patterns>/_alias/<alias>`
 ### Closing & Opening Indices
 #### Closing Indices
-- indices are put on hold for any operation (including read & write)<br/>
+- indices are put on hold for any operation (including read & write)<br>
     `POST <index>/_close`
 #### Opening Indices
 `POST <index>/_open`
@@ -686,7 +686,7 @@ POST _component_template/<component-template>
         - value of "is_write_index" is set to true for at least one index
         - index names confirm to pattern "<prefix>-<digits>"
     2. rollover is invoked (can be configured to be automatic)
-        - using "rollover" API ("index" is optional)<br/>
+        - using "rollover" API ("index" is optional)<br>
             `POST <alias>/_rollover/<index>`
     3. new writable index is created with digits incremented by one
     4. old index is put in read only mode
@@ -939,7 +939,7 @@ GET <search-criteria>/_search
         }
     }
     ```
-    - values array "field values"<br/>
+    - values array "field values"<br>
         `<values>`
     - term lookup "field values"
         ```
@@ -1064,10 +1064,10 @@ GET <search-criteria>/_search
 |false positive|incorrectly included|
 |false negative|incorrectly excluded |
 #### Precision
-- portion of retrieved data relevant to search query (quality of results)<br/>
+- portion of retrieved data relevant to search query (quality of results)<br>
     `true postivies / (true positives + false positives)`
 #### Recall
-- portion of relevant data retrieved (quantity of results)<br/>
+- portion of relevant data retrieved (quantity of results)<br>
     `true positives / (true positives + false negatives)`
 ### The "match_all" Query (default)
 - fetches all available documents (100% recall)

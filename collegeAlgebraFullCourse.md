@@ -15,7 +15,8 @@ steps to calculate LCM of rational expressions
 
 multi part inequations can be split into compound inequations.
 
-steps to solve equations or inequations of absolute values only
-- isolation can't be done
+steps to solve equations or inequations having absolute values in both sides
 1. both sides are written as bare values twice
 2. one of the four expressions is inverted
+
+`b` in complex numbers can be equal to `0`, therefore, real numbers are considered a subset of complex numbers.

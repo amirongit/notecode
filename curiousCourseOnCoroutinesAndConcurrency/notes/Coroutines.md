@@ -20,7 +20,7 @@ methods. This is the same for asynchronous iterables & iterators.
 
 ## Curious course on coroutines and concurrency
 
-- [source](https://youtu.be/Z_OAlIhXziw?si=Q5__IHpvkUMJYInt)
+- [source](https://youtu.be/Z_OAlIhXziw)
 
 ### Introduction to coroutines, pipelines & data flow
 
