@@ -152,7 +152,7 @@ the requirement to keep the out of process dependencies operationl & big 3A sect
 
 an alternative to integration tests is the fail fast principle. it stans for stopping the current operation as soon as an unexpected error occurs or a precondition is violated. it makes the application more stable by shortening the feedback loop & protects the persistence state. edge cases leading to application crashes caused by this principle should be ignored in integration tests.
 
-there are two types of out of Process dependencies:
+there are two types of out of process dependencies:
 1. managed: these dependencies are fully controlled & only accessible by the application; their state isn't directly visible to & doesn't directly affect other applications; communications with them are considered as implementation details; they shouldn't be mocked in test cases & their state should be verified directly
 2. unmanaged: these dependencies aren't fully controlled by the application; they are accessed directly by other applications; communications with them are considered as observable behaviour & should be verified & examined using mocks
 
