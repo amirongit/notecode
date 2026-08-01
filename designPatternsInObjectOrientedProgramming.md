@@ -13,7 +13,7 @@ the strategy pattern is used to share behavior horizontally.
 the observer pattern defines a one to many dependency between the observable and observer objects.<br>
 the observable implements a mechanism for observers to register callbacks and calls them upon certain events.
 
-delegating the responsibility for querying the observable's state to the observer objects isn't preferred because of its pull based structure; this could lead to:
+delegating the responsibility for querying the observable's state to the observer objects isn't preferred because of its pull based structure; this could lead to
 - complicated decision making logic about when to query
 - the possibility of undesired delays
 - a large number of pointless function calls
@@ -24,7 +24,7 @@ they delegate calls to the wrapped object and have the ability to modify inputs 
 wrappers and the objects they wrap can be considered the same and be decorated again.
 
 implementation of all possible variations in the original object isn't preferred because it would lead to fragile code.<br>
-inheritance is also not preferred because it would lead to:
+inheritance is also not preferred because it would lead to
 - subclass explosion, since every modification can be combined with every other one
 - difficulty dynamically modifying the behavior of the original object at runtime
 ## Factory Method
@@ -32,11 +32,11 @@ the factory method pattern defines an interface for creating single objects, let
 - which subtype of the object is created
 - how and what arguments are computed and passed to the object's constructor
 
-it is used when creating a dependency is complex, for example:
+it is used when creating a dependency is complex, for example
 - its specific type is determined at runtime
 - there is more than one way to wire up and instantiate it
 ## Abstract Factory
-the abstract factory pattern defines an interface with multiple factory methods for creating families of dependent or related objects, letting its implementations:
+the abstract factory pattern defines an interface with multiple factory methods for creating families of dependent or related objects, letting its implementations
 - decide which subtype of each object is created
 - encapsulate each family of objects
 ## Singleton
@@ -55,7 +55,7 @@ the facade pattern provides a high level unified interface to a set of interface
 ## Proxy
 the proxy pattern provides a place holder for another object in order to control access to it.<br>
 place holders expose the same interface that the object they are wrapping does; they just intercept.<br>
-there are three types of proxies:
+there are three types of proxies
 1. remote: used to communicate with out of process dependencies
 2. virtual: used to implement caching mechanisms, lazy computations, etc. on expensive dependencies
 3. protection: used to enforce access rights on sensitive dependencies
