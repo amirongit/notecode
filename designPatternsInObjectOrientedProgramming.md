@@ -28,7 +28,7 @@ inheritance is also not preferred because it would lead to:
 - subclass explosion, since every modification can be combined with every other one
 - difficulty dynamically modifying the behavior of the original object at runtime
 ## Factory Method
-the factory method pattern defines an interface for creating single objects, letting its implementations decide:
+the factory method pattern defines an interface for creating single objects, letting its implementations decide
 - which subtype of the object is created
 - how and what arguments are computed and passed to the object's constructor
 
