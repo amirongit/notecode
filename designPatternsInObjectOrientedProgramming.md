@@ -1,17 +1,17 @@
 # Design Patterns in Object Oriented Programming
 - [source](https://youtube.com/playlist?list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc)
 ## Strategy
-the strategy pattern can be used to make interchangeable and unify similar algorithms that differ internally.<br>
+the strategy pattern can be used to make interchangeable & unify similar algorithms that differ internally.<br>
 each algorithm is implemented behind a shared interface exposing the desired behavior.<br>
 implementations of this interface are called strategies.<br>
-clients will have attributes holding an implementation of this interface, and their requests will be delegated to the associated strategy.
+clients will have attributes holding an implementation of this interface, & their requests will be delegated to the associated strategy.
 
 it is useful when there is more than one way to do something.<br>
 inheritance isn't preferred because it can lead to duplication on child classes sharing the same algorithm.<br>
 the strategy pattern is used to share behavior horizontally.
 ## Observer
-the observer pattern defines a one to many dependency between the observable and observer objects.<br>
-the observable implements a mechanism for observers to register callbacks and calls them upon certain events.
+the observer pattern defines a one to many dependency between the observable & observer objects.<br>
+the observable implements a mechanism for observers to register callbacks & calls them upon certain events.
 
 delegating the responsibility for querying the observable's state to the observer objects isn't preferred because of its pull based structure; this could lead to
 - complicated decision making logic about when to query
@@ -20,8 +20,8 @@ delegating the responsibility for querying the observable's state to the observe
 ## Decorator
 the decorator pattern is a solution to dynamically attach additional responsibilities to objects at runtime.<br>
 wrappers with the same interface as the decorated objects are created, holding a reference to an instance.<br>
-they delegate calls to the wrapped object and have the ability to modify inputs or outputs, thus changing their behavior.<br>
-wrappers and the objects they wrap can be considered the same and be decorated again.
+they delegate calls to the wrapped object & have the ability to modify inputs or outputs, thus changing their behavior.<br>
+wrappers & the objects they wrap can be considered the same & be decorated again.
 
 implementation of all possible variations in the original object isn't preferred because it would lead to fragile code.<br>
 inheritance is also not preferred because it would lead to
@@ -30,26 +30,26 @@ inheritance is also not preferred because it would lead to
 ## Factory Method
 the factory method pattern defines an interface for creating single objects, letting its implementations decide
 - which subtype of the object is created
-- how and what arguments are computed and passed to the object's constructor
+- how & what arguments are computed & passed to the object's constructor
 
 it is used when creating a dependency is complex, for example
 - its specific type is determined at runtime
-- there is more than one way to wire up and instantiate it
+- there is more than one way to wire up & instantiate it
 ## Abstract Factory
 the abstract factory pattern defines an interface with multiple factory methods for creating families of dependent or related objects, letting its implementations
 - decide which subtype of each object is created
 - encapsulate each family of objects
 ## Singleton
-the singleton pattern ensures that a class has only one instance and provides a global point of access to it.
+the singleton pattern ensures that a class has only one instance & provides a global point of access to it.
 ## Command
-the command pattern encapsulates requests, and optionally their inverse logic, into units of behavior.<br>
-units are called commands and can be used to parameterize other objects; objects which trigger commands are usually called invokers.<br>
-commands hold references to their dependencies internally and implement an interface exposing their execution and, optionally, its inverse.<br>
-objects which commands operate on are called receivers; the command pattern is agnostic about receivers and invokers.<br>
+the command pattern encapsulates requests, & optionally their inverse logic, into units of behavior.<br>
+units are called commands & can be used to parameterize other objects; objects which trigger commands are usually called invokers.<br>
+commands hold references to their dependencies internally & implement an interface exposing their execution and, optionally, its inverse.<br>
+objects which commands operate on are called receivers; the command pattern is agnostic about receivers & invokers.<br>
 it is also possible to implement macros using this pattern, merging multiple commands into a single one.
 ## Adapter
 the adapter pattern converts the interface of an object into another interface by wrapping it.<br>
-it is used to let clients depend on stable internal or predefined interfaces, avoiding modifications and allowing interactions between incompatible objects.
+it is used to let clients depend on stable internal or predefined interfaces, avoiding modifications & allowing interactions between incompatible objects.
 ## Facade
 the facade pattern provides a high level unified interface to a set of interfaces in a subsystem in order to make it easier to use.
 ## Proxy
@@ -66,7 +66,7 @@ the bridge pattern decouples abstractions from implementors so that they can var
 - implementor (aka implementation): low level interface defining operations relied on by abstractions
 - implementation (aka concrete implementation): implements operations defined by its implementor
 
-it introduces composition over inheritance to avoid class explosions from combining every abstraction and implementation.
+it introduces composition over inheritance to avoid class explosions from combining every abstraction & implementation.
 ## Template Method
 template method pattern defines the skeleton of an algorithm, deferring specific steps to its subclasses.<br>
 it lets subclasses redefine certain steps of the algorithm without changing its structure.
