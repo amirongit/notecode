@@ -1,3 +1,0 @@
-# Serializer Fields
-
-- core arguments
