@@ -1,11 +1,11 @@
 # Django
 ## Django Documentation
-- [source](https://docs.djangoproject.com/en/6.0)
+- [source](https://docs.djangoproject.com/en/6.1/)
 ### The Model Layer
 #### Models
 definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
 usually, each model represents a table & its attributes correspond to database columns.<br>
-the parent class provides an automatically generated database access API.<br>
+`django.db.models.Model` class provides an automatically generated database access API.<br>
 the concrete name of the associated table for each model is derived from its metadata.
 
 django generates the required SQL expressions based on project settings in order to keep models database agnostic.<br>
@@ -48,16 +48,35 @@ there will be a number of predefined instance methods on each model, all of whic
 - `save`
 - `delete`
 
-model inheritance can be used to share common attributes among subclasses, which is done through abstract models.<br>
+model inheritance can be used to share common attributes among subclasses, which is done specifically through abstract models.<br>
 abstract models have the `abstract` attribute in their metadata set to `True`, are not associated with any tables & do not have managers or instances of their own.<br>
 inherited fields from abstract models can be overridden or removed by being assigned `None`.
+when `related_name` is not specified for relationship fields on abstract models, the reverse name would be `<subclass>_set`.
 
 subclasses of models inherit metadata from their parent if they do not declare their own.<br>
 metadata of a model is available as one of its attributes & can be extended.<br>
 the `abstract` attribute of metadata of abstract models is automatically set to `False` when inherited; it can be explicitly set to `True` to form a hierarchy of abstract models.<br>
 due to the MRO, in case of multiple model inheritance, only the first parent's metadata is inherited; it can be explicitly declared to inherit from multiple `Meta` classes.<br>
-some metadata attributes such as `db_table` would cause inconsistencies if inherited.
-<!-- https://docs.djangoproject.com/en/6.0/topics/db/models/#be-careful-with-related-name-and-related-query-name -->
+some metadata attributes such as `db_table` would cause inconsistencies if inherited & are therefore removed by default when in subclasses.<br>
+
+concrete model inheritance can be used to define weak entities.<br>
+upon inheriting a concrete model
+- a field of type `django.db.models.OneToOneField` is automatically set on the subclass (can be defined explicitly by passing `True` to the `parent_link` argument)
+- fields of the parent model will be accessible through the subclass (while data resides in the parent's table)
+
+most attributes of concrete model metadata will not be inherited by subclasses except for a few exceptions, such as `ordering` & `get_latest_by`.<br>
+subclasses with more than one parental relationship must explicitly set the `related_name` argument for relationship fields.<br>
+
+proxy models can be used to encapsulate, extend, manipulate or modify code-level behaviour of concrete models, such as
+- metadata attributes
+- managers
+- methods
+
+they have the `proxy` attribute of their metadata set to `True` & can be created by inheriting one non-abstract model or multiple other proxy models sharing the same parent.<br>
+proxy models can inherit abstract models if they do not define fields.
+
+inheriting multiple concrete models having the same `id` field will fail; `django.db.models.AutoField` can be used to explicitly define the primary key field.<br>
+overriding reverse relationship attributes or those of type `django.db.models.Field` on concrete models is not permitted by django.
 #### QuerySets
 #### Migrations
 #### Advanced
