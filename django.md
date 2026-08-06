@@ -3,7 +3,7 @@
 - [source](https://docs.djangoproject.com/en/6.1/)
 ### The Model Layer
 #### Models
-definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
+models are definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
 usually, each model represents a table & its attributes correspond to database columns.<br>
 `django.db.models.Model` class provides an automatically generated database access API.<br>
 the concrete name of the associated table for each model is derived from its metadata.
@@ -76,7 +76,17 @@ they have the `proxy` attribute of their metadata set to `True` & can be created
 proxy models can inherit abstract models if they do not define fields.
 
 inheriting multiple concrete models having the same `id` field will fail; `django.db.models.AutoField` can be used to explicitly define the primary key field.<br>
-overriding reverse relationship attributes or those of type `django.db.models.Field` on concrete models is not permitted by django.
+overriding reverse relationship attributes or those of type `django.db.models.Field` on concrete models is not allowed by django.
+
+[**fields**](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
+
+setting `primary_key` argument to `True` on more than one field is not allowed.<br>
+composite primary keys can be defined using `django.db.models.CompositePrimaryKey`.
+
+arithmetic operations on `django.db.models.DateField` using `datetime.timedelta` return `datetime.datetime` instances instead of `date` on some RDBMSs.<br>
+`django.db.models.GeneratedField` can be used to define database-level computed fields on models.<br>
+the `decoder` argument of `django.db.models.JSONField` can be used to customize the deserialization of values retrieved from the database.<br>
+<!-- https://docs.djangoproject.com/en/6.1/ref/models/fields/#module-django.db.models.fields.related -->
 #### QuerySets
 #### Migrations
 #### Advanced
