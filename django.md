@@ -94,7 +94,7 @@ the `decoder` argument of `django.db.models.JSONField` can customize the deseria
 
 [**meta options**](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
 
-metadata's `get_latest_by` attribute is used by managers to implement the `latest` & `earliest` methods.<br>
+metadata's `get_latest_by` attribute is to implement `Manager.latest` & `Manager.earliest`.<br>
 metadata's `managed` attribute determines whether the model's lifecycle is managed by Django migrations.<br>
 metadata's `indexes` attribute can be used to define database indexes.<br>
 metadata's `constraints` attribute can be used to define database constraints.
@@ -108,6 +108,25 @@ it is raised when multiple objects are found for the given lookups.
 a subclass of `django.core.exceptions.NotUpdated` is provided for each model as its `NotUpdated` attribute.<br>
 it is raised when forcing a model update does not affect any rows.
 #### QuerySets
+a model class & an instance of it represent a database table & a row within it, respectively.<br>
+`<model-instance>.save` is used to save or update model instances.
+
+fields of type `django.db.models.ForeignKey` can be updated using either an instance of the related model or the related object's primary key via `<field>_id`.<br>
+fields of type `django.db.models.ManyToManyField` can be updated using `django.db.models.ManyToManyField.[add, remove]`.
+
+model classes have at least one instance of `Manager` on their `objects` attribute by default.<br>
+`Manager`s are only accessible through model classes & can be used to construct `QuerySet`s.<br>
+`QuerySet`s may have any number of filters, representing a collection of rows in the database.<br>
+`Manager.all` can be used to construct a `QuerySet` for all rows in the database.<br>
+`QuerySet.[filter, exclude]` can be used to refine a `QuerySet` in a functional manner.<br>
+python-like slice operations (except negative indexes) can be applied to `QuerySet`s to add offset & limit.<br>
+slicing `QuerySet`s will not cause them to be evaluated by itself unless the step parameter is used.<br>
+returned `QuerySet` by slicing operations cannot be refined further.<br>
+python-like indexes can be used to retrieve single objects of `QuerySet`s.<br>
+`Manager.get` can be used to retrieve a single object directly.
+
+constructing `QuerySet`s does not cause database I/O until they are evaluated.
+<!-- https://docs.djangoproject.com/en/6.1/topics/db/queries/#field-lookups -->
 #### Migrations
 #### Advanced
 #### Other
