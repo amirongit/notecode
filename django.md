@@ -31,7 +31,7 @@ the `through` argument can specify a custom intermediary model.
 
 one-to-one relationships can be defined using `django.db.models.OneToOneField`.
 
-lazy relationships can reference models by name in string format. they can be:
+lazy relationships can reference models by name in string format. they can be
 - recursive: references the containing model using `"self"`
 - relative: references a model within the same application by name
 - absolute: references a model in another application using the `"<app>.<model>"` format
@@ -47,14 +47,14 @@ a default instance is assigned to each model's `objects` attribute unless a cust
 it is accessible only through model classes, not their instances.
 
 row-level behaviour can be defined through instance methods & properties on models.<br>
-each model also has predefined instance methods that can be customized by overriding them, including:
+each model also has predefined instance methods that can be customized by overriding them, including
 - `__str__`
 - `save`
 - `delete`
 
 model inheritance can share common attributes among subclasses, specifically through abstract models.<br>
 abstract models have their metadata's `abstract` attribute set to `True`, are not associated with tables & do not have instances of their own.<br>
-inherited fields from abstract models can be overridden or removed by assigning `None` to them.
+inherited fields from abstract models can be overridden or removed by assigning `None` to them.<br>
 when `related_name` is not specified for relationship fields on abstract models, the reverse name becomes `<subclass>_set` when inherited.
 
 subclasses inherit metadata from their parent if they do not declare their own.<br>
@@ -64,13 +64,13 @@ due to the MRO, only the first parent's metadata is inherited in multiple model 
 some metadata attributes, such as `db_table`, would cause inconsistencies if inherited & are therefore removed by default from subclasses.
 
 concrete model inheritance can define weak entities.<br>
-when inheriting a concrete model:
+when inheriting a concrete model
 - a field of type `django.db.models.OneToOneField` is automatically set on the subclass; it can be defined explicitly by passing `True` to the `parent_link` argument
 - the parent model's fields are accessible through the subclass, while their data remains in the parent's table
 
 most concrete model metadata attributes are not inherited by subclasses, except for a few, such as `ordering` & `get_latest_by`.
 
-proxy models can encapsulate, extend, manipulate, or modify the code-level behaviour of concrete models, including:
+proxy models can encapsulate, extend, manipulate, or modify the code-level behaviour of concrete models, including
 - metadata attributes
 - managers
 - methods
@@ -81,7 +81,7 @@ proxy models can inherit abstract models as long as they do not define fields.
 inheriting multiple concrete models with the same `id` field will fail; `django.db.models.AutoField` can be used to explicitly define the primary key field.<br>
 overriding reverse relationship attributes or attributes of type `django.db.models.Field` on concrete models is not allowed by django.
 
-[**fields**](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
+[**field types**](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
 
 setting the `primary_key` argument to `True` on more than one field is not allowed.<br>
 composite primary keys can be defined using `django.db.models.CompositePrimaryKey`.
@@ -90,9 +90,23 @@ arithmetic operations on `django.db.models.DateField` using `datetime.timedelta`
 `django.db.models.GeneratedField` can define database-level computed fields on models.<br>
 the `decoder` argument of `django.db.models.JSONField` can customize the deserialization of values retrieved from the database.
 
-<!-- https://docs.djangoproject.com/en/6.1/ref/models/indexes/ -->
-<!-- https://docs.djangoproject.com/en/6.1/ref/models/options/ -->
-<!-- https://docs.djangoproject.com/en/6.1/ref/models/class/ -->
+[**indexes**](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
+
+[**meta options**](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
+
+metadata's `get_latest_by` attribute is used by managers to implement the `latest` & `earliest` methods.<br>
+metadata's `managed` attribute determines whether the model's lifecycle is managed by Django migrations.<br>
+metadata's `indexes` attribute can be used to define database indexes.<br>
+metadata's `constraints` attribute can be used to define database constraints.
+
+a subclass of `django.core.exceptions.ObjectDoesNotExist` is provided for each model as its `DoesNotExist` attribute.<br>
+it is raised when an expected object is not found.
+
+a subclass of `django.core.exceptions.MultipleObjectsReturned` is provided for each model as its `MultipleObjectsReturned` attribute.<br>
+it is raised when multiple objects are found for the given lookups.
+
+a subclass of `django.core.exceptions.NotUpdated` is provided for each model as its `NotUpdated` attribute.<br>
+it is raised when forcing a model update does not affect any rows.
 #### QuerySets
 #### Migrations
 #### Advanced
