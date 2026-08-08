@@ -114,19 +114,28 @@ a model class & an instance of it represent a database table & a row within it, 
 fields of type `django.db.models.ForeignKey` can be updated using either an instance of the related model or the related object's primary key via `<field>_id`.<br>
 fields of type `django.db.models.ManyToManyField` can be updated using `django.db.models.ManyToManyField.[add, remove]`.
 
-model classes have at least one instance of `Manager` on their `objects` attribute by default.<br>
-`Manager`s are only accessible through model classes & can be used to construct `QuerySet`s.<br>
-`QuerySet`s may have any number of filters, representing a collection of rows in the database.<br>
-`Manager.all` can be used to construct a `QuerySet` for all rows in the database.<br>
-`QuerySet.[filter, exclude]` can be used to refine a `QuerySet` in a functional manner.<br>
-python-like slice operations (except negative indexes) can be applied to `QuerySet`s to add offset & limit.<br>
-slicing `QuerySet`s will not cause them to be evaluated by itself unless the step parameter is used.<br>
-returned `QuerySet` by slicing operations cannot be refined further.<br>
-python-like indexes can be used to retrieve single objects of `QuerySet`s.<br>
-`Manager.get` can be used to retrieve a single object directly.
+model classes have at least one `Manager` instance on their `objects` attribute by default.<br>
+`Manager`s are only accessible via model classes & are used to construct `QuerySet`s.<br>
+`[Manager, QuerySet].all` returns a `QuerySet` for all rows in the database.<br>
+`[Manager, QuerySet].[filter, exclude]` refine a `QuerySet` in a functional manner.<br>
+`[Manager, QuerySet].get` retrieves a single object directly.
 
-constructing `QuerySet`s does not cause database I/O until they are evaluated.
-<!-- https://docs.djangoproject.com/en/6.1/topics/db/queries/#field-lookups -->
+`QuerySet`s represent a collection of rows & may have any number of filters.<br>
+constructing `QuerySet`s does not trigger database I/O until they are evaluated.<br>
+python-like slice operations (except negative indexes) add offset & limit to `QuerySet`s.<br>
+slicing `QuerySet`s does not evaluate them unless the step parameter is used.<br>
+sliced `QuerySet`s cannot be further refined.<br>
+python-like indexing retrieves single objects from `QuerySet`s.
+
+field lookups build SQL where clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
+field lookups are in the format of `<model-attribute>__lookuptype=<value>`.<br>
+lookups can span related objects using `<related-object>__<model-attribute>__lookuptype=<value>` format.
+
+for multi-valued relationships, `[Manager, QuerySet].filter` require all conditions on the same related row.<br>
+its chained calls allow different related rows to satisfy each condition.<br>
+`[Manager, QuerySet].exclude` on the other hand, does not require all conditions on the same row.
+
+<!-- https://docs.djangoproject.com/en/6.0/topics/db/queries/#filters-can-reference-fields-on-the-model -->
 #### Migrations
 #### Advanced
 #### Other
