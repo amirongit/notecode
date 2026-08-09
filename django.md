@@ -135,9 +135,12 @@ for multi-valued relationships, `[Manager, QuerySet].filter` require all conditi
 its chained calls allow different related rows to satisfy each condition.<br>
 `[Manager, QuerySet].exclude` on the other hand, does not require all conditions on the same row.
 
-`F` expressions can be used to reference value of model fields (or their components) in queries.<br>
+`F` expressions can be used to reference value of model fields, their components or operations in queries.<br>
 
-<!-- https://docs.djangoproject.com/en/6.0/topics/db/queries/#filters-can-reference-fields-on-the-model -->
+`QuerySet`s are cached upon evaluation, avoiding database I/O when they are re-evaluated.<br>
+partial evaluation of `QuerySet`s (e.g slicing & random access) will not populate their cache.<br>
+
+`Q` objects can be used to construct complex conditions using `&`, `|` & `^` operators.<br>
 #### Migrations
 #### Advanced
 #### Other
