@@ -140,7 +140,12 @@ its chained calls allow different related rows to satisfy each condition.<br>
 `QuerySet`s are cached upon evaluation, avoiding database I/O when they are re-evaluated.<br>
 partial evaluation of `QuerySet`s (e.g slicing & random access) will not populate their cache.<br>
 
-`Q` objects can be used to construct complex conditions using `&`, `|` & `^` operators.<br>
+`KT` expressions can be used to reference the text values of keys, indexes, or paths within JSONFields.
+
+`Q` objects can be used to construct complex conditions using `&`, `|` & `^` operators, which themselves return `Q` objects.
+
+<!-- https://docs.djangoproject.com/en/6.1/topics/db/queries/#related-objects -->
+
 #### Migrations
 #### Advanced
 #### Other
