@@ -78,7 +78,7 @@ proxy models can encapsulate, extend, manipulate, or modify the code-level behav
 they have their metadata's `proxy` attribute set to `True` & can be created by inheriting one non-abstract model or multiple proxy models sharing the same parent.<br>
 proxy models can inherit abstract models as long as they do not define fields.
 
-inheriting multiple concrete models with the same `id` field will fail; `django.db.models.AutoField` can be used to explicitly define the primary key field.<br>
+inheriting multiple concrete models with the same `id` field will fail; `django.db.models.AutoField` explicitly defines the primary key field.<br>
 overriding reverse relationship attributes or attributes of type `django.db.models.Field` on concrete models is not allowed by django.
 
 [**field types**](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
@@ -96,8 +96,8 @@ the `decoder` argument of `django.db.models.JSONField` can customize the deseria
 
 metadata's `get_latest_by` attribute is to implement `Manager.latest` & `Manager.earliest`.<br>
 metadata's `managed` attribute determines whether the model's lifecycle is managed by Django migrations.<br>
-metadata's `indexes` attribute can be used to define database indexes.<br>
-metadata's `constraints` attribute can be used to define database constraints.
+metadata's `indexes` attribute defines database indexes.<br>
+metadata's `constraints` attribute defines database constraints.
 
 a subclass of `django.core.exceptions.ObjectDoesNotExist` is provided for each model as its `DoesNotExist` attribute.<br>
 it is raised when an expected object is not found.
@@ -109,43 +109,50 @@ a subclass of `django.core.exceptions.NotUpdated` is provided for each model as 
 it is raised when forcing a model update does not affect any rows.
 #### QuerySets
 a model class & an instance of it represent a database table & a row within it, respectively.<br>
-`<model-instance>.save` is used to save or update model instances.
+`<model-instance>.save` saves or updates model instances.
 
 fields of type `django.db.models.ForeignKey` can be updated using either an instance of the related model or the related object's primary key via `<field>_id`.<br>
 fields of type `django.db.models.ManyToManyField` can be updated using `django.db.models.ManyToManyField.[add, remove]`.
 
 model classes have at least one `Manager` instance on their `objects` attribute by default.<br>
-`Manager`s are only accessible via model classes & are used to construct `QuerySet`s.<br>
-`[Manager, QuerySet].all` returns a `QuerySet` for all rows in the database.<br>
-`[Manager, QuerySet].[filter, exclude]` refine a `QuerySet` in a functional manner.<br>
+`Manager`s are accessible only through model classes & are used to construct `QuerySet`s.<br>
+`[Manager, QuerySet].all` returns a `QuerySet` containing all rows in the database.<br>
+`[Manager, QuerySet].[filter, exclude]` refine a `QuerySet` functionally.<br>
 `[Manager, QuerySet].get` retrieves a single object directly.
 
-`QuerySet`s represent a collection of rows & may have any number of filters.<br>
+`QuerySet`s represent collections of rows & may have any number of filters.<br>
 constructing `QuerySet`s does not trigger database I/O until they are evaluated.<br>
-python-like slice operations (except negative indexes) add offset & limit to `QuerySet`s.<br>
+Python-like slice operations, except negative indexes, add offsets & limits to `QuerySet`s.<br>
 slicing `QuerySet`s does not evaluate them unless the step parameter is used.<br>
 sliced `QuerySet`s cannot be further refined.<br>
-python-like indexing retrieves single objects from `QuerySet`s.
+Python-like indexing retrieves individual objects from `QuerySet`s.
 
-field lookups build SQL where clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
-field lookups are in the format of `<model-attribute>__lookuptype=<value>`.<br>
-lookups can span related objects using `<related-object>__<model-attribute>__lookuptype=<value>` format.
+field lookups build SQL `WHERE` clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
+field lookups use the format `<model-attribute>__lookuptype=<value>`.<br>
+lookups can span related objects using the format `<related-object>__<model-attribute>__lookuptype=<value>`.
 
-for multi-valued relationships, `[Manager, QuerySet].filter` require all conditions on the same related row.<br>
-its chained calls allow different related rows to satisfy each condition.<br>
-`[Manager, QuerySet].exclude` on the other hand, does not require all conditions on the same row.
+for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related row.<br>
+on the other hand, chained calls allow different related rows to satisfy each condition.<br>
+`[Manager, QuerySet].exclude` does not require all conditions to match the same row.
 
-`F` expressions can be used to reference value of model fields, their components or operations in queries.<br>
+`F` expressions can reference model-field values, their components, or operations in queries.
 
 `QuerySet`s are cached upon evaluation, avoiding database I/O when they are re-evaluated.<br>
-partial evaluation of `QuerySet`s (e.g slicing & random access) will not populate their cache.<br>
+partial evaluation of `QuerySet`s, such as slicing & random access, does not populate their cache.
 
-`KT` expressions can be used to reference the text values of keys, indexes, or paths within JSONFields.
+`KT` expressions can reference the text values of keys, indexes, or paths within `JSONField`s.
 
-`Q` objects can be used to construct complex conditions using `&`, `|` & `^` operators, which themselves return `Q` objects.
+`Q` objects can construct complex query conditions using the `&`, `|`, & `^` operators.
 
-<!-- https://docs.djangoproject.com/en/6.1/topics/db/queries/#related-objects -->
+`[QuerySet, <model-instance>].delete` deletes instances.
 
+`[QuerySet, Manager].update` updates instances.
+
+instances of models with defined relationships are given access to related instances.<br>
+related objects are also given access to the model instances that have relationships with them.<br>
+`QuerySet.[select_related, prefetch_related]` prefetch related instances upon evaluation.<br>
+`QuerySet.fetch_mode` sets the behavior for fetching related objects.
+<!-- https://docs.djangoproject.com/en/6.1/ref/models/querysets/ -->
 #### Migrations
 #### Advanced
 #### Other
