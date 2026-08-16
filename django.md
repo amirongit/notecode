@@ -1,6 +1,6 @@
 # Django
 ## Django Documentation
-- [source](https://docs.djangoproject.com/en/6.1/)
+[*source*](https://docs.djangoproject.com/en/6.1/)
 ### The Model Layer
 #### Models
 models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
@@ -81,7 +81,7 @@ proxy models can inherit abstract models as long as they do not define fields.
 inheriting multiple concrete models with the same `id` field will fail; `django.db.models.AutoField` explicitly defines the primary key field.<br>
 overriding reverse relationship attributes or attributes of type `django.db.models.Field` on concrete models is not allowed by django.
 
-[**field types**](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
+[*Field types*](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
 
 setting the `primary_key` argument to `True` on more than one field is not allowed.<br>
 composite primary keys can be defined using `django.db.models.CompositePrimaryKey`.
@@ -90,9 +90,9 @@ arithmetic operations on `django.db.models.DateField` using `datetime.timedelta`
 `django.db.models.GeneratedField` can define database-level computed fields on models.<br>
 the `decoder` argument of `django.db.models.JSONField` can customize the deserialization of values retrieved from the database.
 
-[**indexes**](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
+[*Indexes*](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
 
-[**meta options**](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
+[*Meta options*](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
 
 metadata's `get_latest_by` attribute is to implement `Manager.latest` & `Manager.earliest`.<br>
 metadata's `managed` attribute determines whether the model's lifecycle is managed by Django migrations.<br>
@@ -100,13 +100,13 @@ metadata's `indexes` attribute defines database indexes.<br>
 metadata's `constraints` attribute defines database constraints.
 
 a subclass of `django.core.exceptions.ObjectDoesNotExist` is provided for each model as its `DoesNotExist` attribute.<br>
-it is raised when an expected object is not found.
+it is raised when an expected result is not found.
 
 a subclass of `django.core.exceptions.MultipleObjectsReturned` is provided for each model as its `MultipleObjectsReturned` attribute.<br>
-it is raised when multiple objects are found for the given lookups.
+it is raised when multiple results are found for the given lookups.
 
 a subclass of `django.core.exceptions.NotUpdated` is provided for each model as its `NotUpdated` attribute.<br>
-it is raised when forcing a model update does not affect any rows.
+it is raised when forcing a model instance update does not affect any rows.
 #### QuerySets
 a model class & an instance of it represent a database table & a row within it, respectively.<br>
 `<model-instance>.save` saves or updates model instances.
@@ -122,20 +122,19 @@ model classes have at least one `Manager` instance on their `objects` attribute 
 
 `QuerySet`s represent collections of rows & may have any number of filters.<br>
 constructing `QuerySet`s does not trigger database I/O until they are evaluated.<br>
-Python-like slice operations, except negative indexes, add offsets & limits to `QuerySet`s.<br>
-slicing `QuerySet`s does not evaluate them unless the step parameter is used.<br>
+python-like slice operations, except negative indexes, add offsets & limits to `QuerySet`s.<br>
 sliced `QuerySet`s cannot be further refined.<br>
-Python-like indexing retrieves individual objects from `QuerySet`s.
+python-like indexing retrieves individual results from `QuerySet`s.
 
 field lookups build SQL `WHERE` clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
 field lookups use the format `<model-attribute>__lookuptype=<value>`.<br>
-lookups can span related objects using the format `<related-object>__<model-attribute>__lookuptype=<value>`.
+lookups can span related model instances using the format `<related-object>__<model-attribute>__lookuptype=<value>`.
 
-for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related row.<br>
-on the other hand, chained calls allow different related rows to satisfy each condition.<br>
-`[Manager, QuerySet].exclude` does not require all conditions to match the same row.
+for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related model instance.<br>
+chained calls allow different related model instances to satisfy each condition.<br>
+`[Manager, QuerySet].exclude`, on the other hand, does not require all conditions to match the same related model instance.
 
-`F` expressions can reference model-field values, their components, or operations in queries.
+`F` expressions can reference aliases, model-field values, their components, or operations in queries.
 
 `QuerySet`s are cached upon evaluation, avoiding database I/O when they are re-evaluated.<br>
 partial evaluation of `QuerySet`s, such as slicing & random access, does not populate their cache.
@@ -148,11 +147,24 @@ partial evaluation of `QuerySet`s, such as slicing & random access, does not pop
 
 `[QuerySet, Manager].update` updates instances.
 
-instances of models with defined relationships are given access to related instances.<br>
-related objects are also given access to the model instances that have relationships with them.<br>
+instances of models with defined relationships have access to related instances.<br>
+related model instances also have access to model instances that have relationships with them.<br>
 `QuerySet.[select_related, prefetch_related]` prefetch related instances upon evaluation.<br>
-`QuerySet.fetch_mode` sets the behavior for fetching related objects.
-<!-- https://docs.djangoproject.com/en/6.1/ref/models/querysets/ -->
+`QuerySet.fetch_mode` sets the behavior for fetching related model instances.
+
+[*QuerySet method reference*](https://docs.djangoproject.com/en/6.1/ref/models/querysets/)
+
+`QuerySet`s are evaluated by iteration, slicing with a step parameter, pickling, caching, or calling `[repr, len, list, bool]` on them.
+
+`[QuerySet, Manager].annotate` is used to annotate model instances with
+- values
+- `F` expressions
+- `Q` objects (boolean)
+- aggregates
+
+`[QuerySet, Manager].alias` is similar to `annotate`, but is used only for query refinement & its computed attribute is not accessible through the results.
+
+`[QuerySet, Manager].values` specifies the returned model-field values by returning a `QuerySet` of dictionaries.
 #### Migrations
 #### Advanced
 #### Other
