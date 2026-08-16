@@ -164,7 +164,8 @@ related model instances also have access to model instances that have relationsh
 
 `[QuerySet, Manager].alias` is similar to `annotate`, but is used only for query refinement & its computed attribute is not accessible through the results.
 
-`[QuerySet, Manager].values` specifies the returned model-field values by returning a `QuerySet` of dictionaries.
+`[QuerySet, Manager].[values, values_list]` specify the returned model-field values or expressions.
+
 #### Migrations
 #### Advanced
 #### Other
