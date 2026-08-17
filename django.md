@@ -177,7 +177,9 @@ common aggregation function parameters
 - `output_field`: `django.db.models.Field` instance specifying the return type
 - `filter`: `Q` object to filter rows
 - `default`: value used when there are no rows
-- `**extra`: extra context
+- `extra`: extra context
+
+[*Lookup expressions*](https://docs.djangoproject.com/en/6.1/ref/models/lookups/)
 #### Migrations
 #### Advanced
 #### Other
