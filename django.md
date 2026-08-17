@@ -198,7 +198,7 @@ commands to interact with migrations
 migrations are deterministic.<br>
 migrations are subclasses of `django.db.migrations.Migration` named `Migration`.<br>
 `<migration>.dependencies` specifies dependees.<br>
-`<migration>.operations` contains declarative schema-change instructions.
+`<migration>.operations` contains declarative schema-change instructions as subclasses of `django.db.migrations.operations.base.Operation`.
 
 `<migration>.initial` determines if a migration is initial.<br>
 initial migrations define the whole DB schema at creation time.<br>
@@ -212,6 +212,8 @@ data migrations alter data.<br>
 squashing is the act of reducing multiple migrations into one.
 
 [*Operations reference*](https://docs.djangoproject.com/en/6.1/ref/migration-operations/)
+
+[*SchemaEditor*](https://docs.djangoproject.com/en/6.1/ref/schema-editor/)
 #### Advanced
 #### Other
 ### The Development Process
