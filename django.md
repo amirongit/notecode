@@ -5,167 +5,179 @@
 #### Models
 models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
 usually, each model represents a table, & its attributes correspond to database columns.<br>
-the `django.db.models.Model` class provides an automatically generated database access API.<br>
-the concrete name of each model's table is derived from its metadata.
+`django.db.models.Model` provides an automatically generated database access API.<br>
+each model's table name is derived from its metadata.
 
-django generates the required SQL expressions based on project settings, keeping models database agnostic.<br>
-to register models for use & migration, their django app must be added to the `INSTALLED_APPS` setting.<br>
-> django looks for models in the `models` module of each app, so they should be defined or imported there
+django generates SQL based on project settings, keeping models database-agnostic.<br>
+to register models for use & migration, their app must be in `INSTALLED_APPS`.<br>
+> django looks for models in each app's `models` module, so define or import them there
 
-model fields must be subclasses of `django.db.models.Field`.<br>
-each field object accepts a specific set of arguments, along with optional common arguments shared by all field types.<br>
-primary key values are read-only; modifying them causes new rows to be created.
+model fields must subclass `django.db.models.Field`.<br>
+each field accepts a specific set of arguments, plus optional common arguments shared by all types.<br>
+primary key values are read-only; modifying them creates new rows.
 
 each model requires a primary key field.<br>
-if a model definition lacks one, django adds an auto-incrementing primary key named `id`, with the type `django.db.models.IntegerField`, by default.<br>
-this behaviour can be configured globally through the `DEFAULT_AUTO_FIELD` setting or per application through `AppConfig.default_auto_field`.
+if none is defined, django adds an auto-incrementing `id` field (`django.db.models.IntegerField`) by default.<br>
+this can be configured globally via `DEFAULT_AUTO_FIELD` or per-app via `AppConfig.default_auto_field`.
 
-many-to-one relationships can be defined using `django.db.models.ForeignKey`.<br>
-this creates a column named `<field>_id` on the associated table as its database representation.
+many-to-one relationships use `django.db.models.ForeignKey`.<br>
+this creates a `<field>_id` column on the associated table.
 
-many-to-many relationships can be defined using `django.db.models.ManyToManyField`.<br>
-this creates an intermediary table as its database representation.<br>
-the relationship should be defined in one of the participating models, not both.<br>
-the `symmetrical` argument determines whether each row in the intermediary table for a recursive relationship has a corresponding reverse relationship.<br>
-the `through` argument can specify a custom intermediary model.
+many-to-many relationships use `django.db.models.ManyToManyField`.<br>
+this creates an intermediary table.<br>
+define the relationship in only one participating model.<br>
+`symmetrical` determines whether recursive relationships have a reverse entry.<br>
+`through` specifies a custom intermediary model.
 
-one-to-one relationships can be defined using `django.db.models.OneToOneField`.
+one-to-one relationships use `django.db.models.OneToOneField`.
 
-lazy relationships can reference models by name in string format. they can be
-- recursive: references the containing model using `"self"`
-- relative: references a model within the same application by name
-- absolute: references a model in another application using the `"<app>.<model>"` format
+lazy relationships reference models by name as strings. they can be
+- recursive: `"self"`
+- relative: by name within the same app
+- absolute: `"<app>.<model>"` for another app
 
-all relational fields expect the concrete referred model or a lazy reference to it as their first positional argument.
+all relational fields expect the concrete model or a lazy reference as their first positional argument.
 
-field names must not conflict with the database access API. they must not conflict with Python keywords, contain consecutive underscores, or end with an underscore.
+field names must not conflict with the database access API, Python keywords, contain consecutive underscores, or end with an underscore.
 
-a nested class named `Meta` can be defined within a model's body to provide metadata, including anything that is not a field.
+a nested `Meta` class within a model provides metadata (anything that is not a field).
 
-`Manager` is the interface through which database query operations are provided to models.<br>
-a default instance is assigned to each model's `objects` attribute unless a custom manager is defined.<br>
-it is accessible only through model classes, not their instances.
+`Manager` provides database query operations to models.<br>
+a default instance is assigned to `objects` unless a custom manager is defined.<br>
+it is accessible only through model classes, not instances.
 
-row-level behaviour can be defined through instance methods & properties on models.<br>
-each model also has predefined instance methods that can be customized by overriding them, including
+row-level behaviour is defined via instance methods & properties.<br>
+predefined instance methods can be overridden, including
 - `__str__`
 - `save`
 - `delete`
 
-model inheritance can share common attributes among subclasses, specifically through abstract models.<br>
-abstract models have their metadata's `abstract` attribute set to `True`, are not associated with tables & do not have instances of their own.<br>
-inherited fields from abstract models can be overridden or removed by assigning `None` to them.<br>
-when `related_name` is not specified for relationship fields on abstract models, the reverse name becomes `<subclass>_set` when inherited.
+model inheritance shares common attributes via abstract models.<br>
+abstract models set `Meta.abstract = True`, have no table & no instances.<br>
+inherited fields from abstract models can be overridden or removed by assigning `None`.<br>
+if `related_name` is not specified on abstract relationship fields, the reverse name becomes `<subclass>_set`.
 
 subclasses inherit metadata from their parent if they do not declare their own.<br>
-a model's metadata is available as one of its attributes & can be extended.<br>
-the `abstract` attribute of an abstract model's metadata is automatically set to `False` when inherited; it can be explicitly set to `True` to form a hierarchy of abstract models.<br>
-due to the MRO, only the first parent's metadata is inherited in multiple model inheritance; a model can explicitly inherit from multiple `Meta` classes.<br>
-some metadata attributes, such as `db_table`, would cause inconsistencies if inherited & are therefore removed by default from subclasses.
+metadata is available as an attribute & can be extended.<br>
+inherited `Meta.abstract` is automatically set to `False`; explicitly set it to `True` to form an abstract hierarchy.<br>
+due to MRO, only the first parent's metadata is inherited in multiple inheritance; a model can explicitly inherit from multiple `Meta` classes.<br>
+some metadata attributes (e.g. `db_table`) are removed by default from subclasses to avoid inconsistencies.
 
-concrete model inheritance can define weak entities.<br>
+concrete model inheritance defines weak entities.<br>
 when inheriting a concrete model
-- a field of type `django.db.models.OneToOneField` is automatically set on the subclass; it can be defined explicitly by passing `True` to the `parent_link` argument
-- the parent model's fields are accessible through the subclass, while their data remains in the parent's table
+- a `django.db.models.OneToOneField` is automatically added to the subclass; define it explicitly with `parent_link=True`
+- parent fields are accessible through the subclass, but data remains in the parent's table
 
-most concrete model metadata attributes are not inherited by subclasses, except for a few, such as `ordering` & `get_latest_by`.
+most concrete model metadata attributes are not inherited, except a few like `ordering` & `get_latest_by`.
 
-proxy models can encapsulate, extend, manipulate, or modify the code-level behaviour of concrete models, including
+proxy models encapsulate, extend, manipulate, or modify code-level behaviour of concrete models, including
 - metadata attributes
 - managers
 - methods
 
-they have their metadata's `proxy` attribute set to `True` & can be created by inheriting one non-abstract model or multiple proxy models sharing the same parent.<br>
-proxy models can inherit abstract models as long as they do not define fields.
+they set `Meta.proxy = True` & inherit one non-abstract model or multiple proxy models sharing the same parent.<br>
+proxy models can inherit abstract models as long as they define no fields.
 
-inheriting multiple concrete models with the same `id` field will fail; `django.db.models.AutoField` explicitly defines the primary key field.<br>
-overriding reverse relationship attributes or attributes of type `django.db.models.Field` on concrete models is not allowed by django.
+inheriting multiple concrete models with the same `id` field fails; `django.db.models.AutoField` explicitly defines the primary key.<br>
+overriding reverse relationship attributes or `django.db.models.Field` attributes on concrete models is not allowed.
 
 [*Field types*](https://docs.djangoproject.com/en/6.1/ref/models/fields/)
 
-setting the `primary_key` argument to `True` on more than one field is not allowed.<br>
-composite primary keys can be defined using `django.db.models.CompositePrimaryKey`.
+setting `primary_key=True` on more than one field is not allowed.<br>
+composite primary keys use `django.db.models.CompositePrimaryKey`.
 
-arithmetic operations on `django.db.models.DateField` using `datetime.timedelta` might return `datetime.datetime` instances instead of `date` on some RDBMSs.<br>
-`django.db.models.GeneratedField` can define database-level computed fields on models.<br>
-the `decoder` argument of `django.db.models.JSONField` can customize the deserialization of values retrieved from the database.
+arithmetic on `django.db.models.DateField` with `datetime.timedelta` may return `datetime.datetime` instead of `date` on some RDBMSs.<br>
+`django.db.models.GeneratedField` defines database-level computed fields.<br>
+`JSONField.decoder` customizes deserialization of values from the database.
 
 [*Indexes*](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
 
 [*Meta options*](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
 
-metadata's `get_latest_by` attribute is to implement `Manager.latest` & `Manager.earliest`.<br>
-metadata's `managed` attribute determines whether the model's lifecycle is managed by Django migrations.<br>
-metadata's `indexes` attribute defines database indexes.<br>
-metadata's `constraints` attribute defines database constraints.
+`Meta.get_latest_by` implements `Manager.latest` & `Manager.earliest`.<br>
+`Meta.managed` determines whether Django migrations manage the model's lifecycle.<br>
+`Meta.indexes` defines database indexes.<br>
+`Meta.constraints` defines database constraints.
 
-a subclass of `django.core.exceptions.ObjectDoesNotExist` is provided for each model as its `DoesNotExist` attribute.<br>
+each model has a `DoesNotExist` exception (subclass of `django.core.exceptions.ObjectDoesNotExist`).<br>
 it is raised when an expected result is not found.
 
-a subclass of `django.core.exceptions.MultipleObjectsReturned` is provided for each model as its `MultipleObjectsReturned` attribute.<br>
-it is raised when multiple results are found for the given lookups.
+each model has a `MultipleObjectsReturned` exception (subclass of `django.core.exceptions.MultipleObjectsReturned`).<br>
+it is raised when multiple results match the lookups.
 
-a subclass of `django.core.exceptions.NotUpdated` is provided for each model as its `NotUpdated` attribute.<br>
-it is raised when forcing a model instance update does not affect any rows.
+each model has a `NotUpdated` exception (subclass of `django.core.exceptions.NotUpdated`).<br>
+it is raised when forcing an update affects no rows.
+
 #### QuerySets
-a model class & an instance of it represent a database table & a row within it, respectively.<br>
-`<model-instance>.save` saves or updates model instances.
+a model class & instance represent a table & a row, respectively.<br>
+`<model-instance>.save` saves or updates instances.
 
-fields of type `django.db.models.ForeignKey` can be updated using either an instance of the related model or the related object's primary key via `<field>_id`.<br>
-fields of type `django.db.models.ManyToManyField` can be updated using `django.db.models.ManyToManyField.[add, remove]`.
+`ForeignKey` fields can be updated with a related instance or its primary key via `<field>_id`.<br>
+`ManyToManyField` fields are updated via `ManyToManyField.[add, remove]`.
 
-model classes have at least one `Manager` instance on their `objects` attribute by default.<br>
-`Manager`s are accessible only through model classes & are used to construct `QuerySet`s.<br>
-`[Manager, QuerySet].all` returns a `QuerySet` containing all rows in the database.<br>
-`[Manager, QuerySet].[filter, exclude]` refine a `QuerySet` functionally.<br>
-`[Manager, QuerySet].get` retrieves a single object directly.
+model classes have at least one `Manager` on `objects` by default.<br>
+`Manager`s are accessible only through model classes & construct `QuerySet`s.<br>
+`[Manager, QuerySet].all` returns all rows.<br>
+`[Manager, QuerySet].[filter, exclude]` refine a `QuerySet`.<br>
+`[Manager, QuerySet].get` retrieves a single object.
 
-`QuerySet`s represent collections of rows & may have any number of filters.<br>
-constructing `QuerySet`s does not trigger database I/O until they are evaluated.<br>
-python-like slice operations, except negative indexes, add offsets & limits to `QuerySet`s.<br>
+`QuerySet`s represent row collections & may have any number of filters.<br>
+construction does not trigger DB I/O until evaluation.<br>
+python-like slicing (except negative indexes) adds offsets & limits.<br>
 sliced `QuerySet`s cannot be further refined.<br>
-python-like indexing retrieves individual results from `QuerySet`s.
+python-like indexing retrieves individual results.
 
 field lookups build SQL `WHERE` clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
-field lookups use the format `<model-attribute>__lookuptype=<value>`.<br>
-lookups can span related model instances using the format `<related-object>__<model-attribute>__lookuptype=<value>`.
+format: `<model-attribute>__lookuptype=<value>`.<br>
+lookups can span related models: `<related-object>__<model-attribute>__lookuptype=<value>`.
 
-for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related model instance.<br>
-chained calls allow different related model instances to satisfy each condition.<br>
-`[Manager, QuerySet].exclude`, on the other hand, does not require all conditions to match the same related model instance.
+for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related instance.<br>
+chained calls allow different related instances to satisfy each condition.<br>
+`[Manager, QuerySet].exclude` does not require all conditions to match the same related instance.
 
-`F` expressions can reference aliases, model-field values, their components, or operations in queries.
+`F` expressions reference aliases, model field values, their components, or operations in queries.
 
-`QuerySet`s are cached upon evaluation, avoiding database I/O when they are re-evaluated.<br>
-partial evaluation of `QuerySet`s, such as slicing & random access, does not populate their cache.
+`QuerySet`s are cached upon evaluation, avoiding DB I/O on re-evaluation.<br>
+partial evaluation (slicing, random access) does not populate the cache.
 
-`KT` expressions can reference the text values of keys, indexes, or paths within `JSONField`s.
+`KT` expressions reference text values of keys, indexes, or paths within `JSONField`s.
 
-`Q` objects can construct complex query conditions using the `&`, `|`, & `^` operators.
+`Q` objects construct complex conditions using `&`, `|`, & `^`.
 
 `[QuerySet, <model-instance>].delete` deletes instances.
 
 `[QuerySet, Manager].update` updates instances.
 
-instances of models with defined relationships have access to related instances.<br>
-related model instances also have access to model instances that have relationships with them.<br>
-`QuerySet.[select_related, prefetch_related]` prefetch related instances upon evaluation.<br>
-`QuerySet.fetch_mode` sets the behavior for fetching related model instances.
+instances with defined relationships can access related instances.<br>
+related instances can access instances that relate to them.<br>
+`QuerySet.[select_related, prefetch_related]` prefetch related instances on evaluation.<br>
+`QuerySet.fetch_mode` sets behaviour for loading related instances.
 
 [*QuerySet method reference*](https://docs.djangoproject.com/en/6.1/ref/models/querysets/)
 
-`QuerySet`s are evaluated by iteration, slicing with a step parameter, pickling, caching, or calling `[repr, len, list, bool]` on them.
+`QuerySet`s are evaluated by iteration, slicing with a step, pickling, caching, or calling `[repr, len, list, bool]`.
 
-`[QuerySet, Manager].annotate` is used to annotate model instances with
+`[QuerySet, Manager].annotate` annotates instances with
 - values
 - `F` expressions
 - `Q` objects (boolean)
 - aggregates
 
-`[QuerySet, Manager].alias` is similar to `annotate`, but is used only for query refinement & its computed attribute is not accessible through the results.
+`[QuerySet, Manager].alias` is like `annotate`, but used only for query refinement; its computed attribute is not accessible in results.
 
-`[QuerySet, Manager].[values, values_list]` specify the returned model-field values or expressions.
+`[QuerySet, Manager].[values, values_list]` specify returned field values or expressions.
 
+`QuerySet.all` re-evaluates `QuerySet`s.
+
+`[QuerySet, Manager].defer` avoids loading certain fields; accessing them triggers DB I/O.<br>
+`[QuerySet, Manager].only` specifies which fields to load; accessing unloaded fields triggers DB I/O.
+
+common aggregation function parameters
+- `expressions`: model fields on which the aggregation is applied
+- `output_field`: `django.db.models.Field` instance specifying the return type
+- `filter`: `Q` object to filter rows
+- `default`: value used when there are no rows
+- `**extra`: extra context
 #### Migrations
 #### Advanced
 #### Other
