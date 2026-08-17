@@ -4,11 +4,11 @@
 ### The Model Layer
 #### Models
 models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
-usually, each model represents a table, & its attributes correspond to database columns.<br>
-`django.db.models.Model` provides an automatically generated database access API.<br>
+usually, each model represents a table, & its attributes correspond to DB columns.<br>
+`django.db.models.Model` provides an automatically generated DB access API.<br>
 each model's table name is derived from its metadata.
 
-django generates SQL based on project settings, keeping models database-agnostic.<br>
+django generates SQL based on project settings, keeping models DB-agnostic.<br>
 to register models for use & migration, their app must be in `INSTALLED_APPS`.<br>
 > django looks for models in each app's `models` module, so define or import them there
 
@@ -38,11 +38,11 @@ lazy relationships reference models by name as strings. they can be
 
 all relational fields expect the concrete model or a lazy reference as their first positional argument.
 
-field names must not conflict with the database access API, Python keywords, contain consecutive underscores, or end with an underscore.
+field names must not conflict with the DB access API, Python keywords, contain consecutive underscores, or end with an underscore.
 
 a nested `Meta` class within a model provides metadata (anything that is not a field).
 
-`Manager` provides database query operations to models.<br>
+`Manager` provides DB query operations to models.<br>
 a default instance is assigned to `objects` unless a custom manager is defined.<br>
 it is accessible only through model classes, not instances.
 
@@ -87,8 +87,8 @@ setting `primary_key=True` on more than one field is not allowed.<br>
 composite primary keys use `django.db.models.CompositePrimaryKey`.
 
 arithmetic on `django.db.models.DateField` with `datetime.timedelta` may return `datetime.datetime` instead of `date` on some RDBMSs.<br>
-`django.db.models.GeneratedField` defines database-level computed fields.<br>
-`JSONField.decoder` customizes deserialization of values from the database.
+`django.db.models.GeneratedField` defines DB-level computed fields.<br>
+`JSONField.decoder` customizes deserialization of values from the DB.
 
 [*Indexes*](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
 
@@ -96,8 +96,8 @@ arithmetic on `django.db.models.DateField` with `datetime.timedelta` may return 
 
 `Meta.get_latest_by` implements `Manager.latest` & `Manager.earliest`.<br>
 `Meta.managed` determines whether Django migrations manage the model's lifecycle.<br>
-`Meta.indexes` defines database indexes.<br>
-`Meta.constraints` defines database constraints.
+`Meta.indexes` defines DB indexes.<br>
+`Meta.constraints` defines DB constraints.
 
 each model has a `DoesNotExist` exception (subclass of `django.core.exceptions.ObjectDoesNotExist`).<br>
 it is raised when an expected result is not found.
@@ -128,8 +128,7 @@ sliced `QuerySet`s cannot be further refined.<br>
 python-like indexing retrieves individual results.
 
 field lookups build SQL `WHERE` clauses via `[Manager, QuerySet].[filter, exclude, get]`.<br>
-format: `<model-attribute>__lookuptype=<value>`.<br>
-lookups can span related models: `<related-object>__<model-attribute>__lookuptype=<value>`.
+lookups can span related models: `<related-object>__<model-attribute>__...=<value>`.
 
 for multi-valued relationships, `[Manager, QuerySet].filter` requires all conditions to match the same related instance.<br>
 chained calls allow different related instances to satisfy each condition.<br>
@@ -172,7 +171,7 @@ related instances can access instances that relate to them.<br>
 `[QuerySet, Manager].defer` avoids loading certain fields; accessing them triggers DB I/O.<br>
 `[QuerySet, Manager].only` specifies which fields to load; accessing unloaded fields triggers DB I/O.
 
-common aggregation function parameters
+common aggregation function arguments
 - `expressions`: model fields on which the aggregation is applied
 - `output_field`: `django.db.models.Field` instance specifying the return type
 - `filter`: `Q` object to filter rows
@@ -180,7 +179,39 @@ common aggregation function parameters
 - `extra`: extra context
 
 [*Lookup expressions*](https://docs.djangoproject.com/en/6.1/ref/models/lookups/)
+#### Model Instances
+`<model-instance>.refresh_from_db` reloads model fields from DB.
+
+`[force_insert, force_update]` arguments of `<model-instance>.save` enforce inserts or updates only.<br>
+`update_fields` argument of `<model-instance>.save` enforces an update & specifies which fields to save.
+
+[*Accessing related objects*](https://docs.djangoproject.com/en/6.1/ref/models/relations/)
 #### Migrations
+migrations propagate model modifications into the DB.<br>
+commands to interact with migrations
+- `migrate`: applies migrations
+- `makemigrations`: creates new migrations based on modifications
+- `sqlmigrate`: displays SQL statements for a migration
+- `showmigrations`: lists migrations & their status
+- `squashmigrations`: squashes migrations
+
+migrations are deterministic.<br>
+migrations are subclasses of `django.db.migrations.Migration` named `Migration`.<br>
+`<migration>.dependencies` specifies dependees.<br>
+`<migration>.operations` contains declarative schema-change instructions.
+
+`<migration>.initial` determines if a migration is initial.<br>
+initial migrations define the whole DB schema at creation time.<br>
+`--fake-initial` option of `migrate` command avoids creating tables that already exist but are defined in initial migrations.<br>
+this is used when introducing django to existing projects.
+
+data migrations alter data.<br>
+`RunPython` operation runs python code in migrations.<br>
+`django.apps.registry.Apps` returns a historical model version that remains relevant to the migration.
+
+squashing is the act of reducing multiple migrations into one.
+
+[*Operations reference*](https://docs.djangoproject.com/en/6.1/ref/migration-operations/)
 #### Advanced
 #### Other
 ### The Development Process
