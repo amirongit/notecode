@@ -4,7 +4,7 @@
 ### The Model Layer
 #### Models
 models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
-usually, each model represents a table, & its attributes correspond to DB columns.<br>
+usually, each model represents a table & its attributes correspond to DB columns.<br>
 `django.db.models.Model` provides an automatically generated DB access API.<br>
 each model's table name is derived from its metadata.
 
@@ -38,7 +38,7 @@ lazy relationships reference models by name as strings; they can be
 
 all relational fields expect the concrete model or a lazy reference as their first positional argument.
 
-field names must not conflict with the DB access API, Python keywords, contain consecutive underscores, or end with an underscore.
+field names must not conflict with the DB access API, Python keywords, contain consecutive underscores or end with an underscore.
 
 a nested `Meta` class within a model provides metadata (anything that is not a field).
 
@@ -71,7 +71,7 @@ when inheriting a concrete model
 
 most concrete model metadata attributes are not inherited, except a few like `ordering` & `get_latest_by`.
 
-proxy models encapsulate, extend, manipulate, or modify code-level behaviour of concrete models, including
+proxy models encapsulate, extend, manipulate or modify code-level behaviour of concrete models, including
 - metadata attributes
 - managers
 - methods
@@ -135,18 +135,18 @@ for multi-valued relationships, `[Manager, QuerySet].filter` requires all condit
 chained calls allow different related instances to satisfy each condition.<br>
 `[Manager, QuerySet].exclude` does not require all conditions to match the same related instance.
 
-`F` expressions reference aliases, model field values, their components, or operations in queries.
+`F` expressions describe values or computations usable to update, create, filter, order by, annotate or aggregate.
 
 `QuerySet`s are cached upon evaluation, avoiding DB I/O on re-evaluation.<br>
 partial evaluation (slicing, random access) does not populate the cache.
 
-`KT` expressions reference text values of keys, indexes, or paths within `JSONField`s.
+`KT` expressions reference text values of keys, indexes or paths within `JSONField`s.
 
-`Q` objects construct complex conditions using `&`, `|`, & `^`.
+`Q` objects construct complex conditions using `&`, `|` & `^`.
 
 `[QuerySet, <model-instance>].delete` deletes instances.
 
-`[QuerySet, Manager].update` updates instances.
+`[Manager, QuerySet].update` updates instances.
 
 instances with defined relationships can access related instances.<br>
 related instances can access instances that relate to them.<br>
@@ -155,22 +155,22 @@ related instances can access instances that relate to them.<br>
 
 [*QuerySet method reference*](https://docs.djangoproject.com/en/6.1/ref/models/querysets/)
 
-`QuerySet`s are evaluated by iteration, slicing with a step, pickling, caching, or calling `[repr, len, list, bool]`.
+`QuerySet`s are evaluated by iteration, slicing with a step, pickling, caching or calling `[repr, len, list, bool]`.
 
-`[QuerySet, Manager].annotate` annotates instances with
+`[Manager, QuerySet].annotate` annotates results with
 - values
 - `F` expressions
 - `Q` objects (boolean)
-- aggregates
+- aggregations
 
-`[QuerySet, Manager].alias` is like `annotate`, but used only for query refinement; its computed attribute is not accessible in results.
+`[Manager, QuerySet].alias` is like `annotate`, but used only for query refinement; its computed attribute will not accessible in results.
 
-`[QuerySet, Manager].[values, values_list]` specify returned field values or expressions.
+`[Manager, QuerySet].[values, values_list]` specify returned field values or expressions.
 
 `QuerySet.all` re-evaluates `QuerySet`s.
 
-`[QuerySet, Manager].defer` avoids loading certain fields; accessing them triggers DB I/O.<br>
-`[QuerySet, Manager].only` specifies which fields to load; accessing unloaded fields triggers DB I/O.
+`[Manager, QuerySet].defer` avoids loading certain fields; accessing them triggers DB I/O.<br>
+`[Manager, QuerySet].only` specifies which fields to load; accessing unloaded fields triggers DB I/O.
 
 common aggregation function arguments
 - `expressions`: model fields on which the aggregation is applied
@@ -245,7 +245,22 @@ nested atomic blocks are possible & will become implicit save points.<br>
 transactions are committed upon completion & rolled back on raised exceptions.
 
 [*Aggregation*](https://docs.djangoproject.com/en/6.1/topics/db/aggregation/)
-#### Other
+
+`[Manager, QuerySet].aggregate` applies aggregations over all contained items.
+
+[*Search*](https://docs.djangoproject.com/en/6.1/topics/db/search/)
+
+[*Custom fields*](https://docs.djangoproject.com/en/6.1/howto/custom-model-fields/)
+
+[*Multiple databases*](https://docs.djangoproject.com/en/6.1/topics/db/multi-db/)
+
+[*Custom lookups*](https://docs.djangoproject.com/en/6.1/howto/custom-lookups/)
+
+[*Query Expressions*](https://docs.djangoproject.com/en/6.1/ref/models/expressions/)
+
+[*Conditional Expressions*](https://docs.djangoproject.com/en/6.1/ref/models/conditional-expressions/)
+
+[*Database Functions*](https://docs.djangoproject.com/en/6.1/ref/models/database-functions/)
 ### The Development Process
 #### Settings
 #### Applications
