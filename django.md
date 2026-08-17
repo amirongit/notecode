@@ -1,7 +1,7 @@
 # Django
-## Django Documentation
+## Django documentation
 [*source*](https://docs.djangoproject.com/en/6.1/)
-### The Model Layer
+### The model layer
 #### Models
 models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
 usually, each model represents a table & its attributes correspond to DB columns.<br>
@@ -261,7 +261,7 @@ transactions are committed upon completion & rolled back on raised exceptions.
 [*Conditional Expressions*](https://docs.djangoproject.com/en/6.1/ref/models/conditional-expressions/)
 
 [*Database Functions*](https://docs.djangoproject.com/en/6.1/ref/models/database-functions/)
-### The Development Process
+### The development process
 [*Full list of settings*](https://docs.djangoproject.com/en/6.1/ref/settings/)
 
 [*Applications*](https://docs.djangoproject.com/en/6.1/ref/applications/)
@@ -272,3 +272,4 @@ transactions are committed upon completion & rolled back on raised exceptions.
 
 [*Adding custom commands*](https://docs.djangoproject.com/en/6.1/howto/custom-management-commands/)
 ## Django Rest Framework Documentation
+[*source*](https://www.django-rest-framework.org/api-guide/requests/)
