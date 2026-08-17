@@ -25,13 +25,13 @@ this creates a `<field>_id` column on the associated table.
 
 many-to-many relationships use `django.db.models.ManyToManyField`.<br>
 this creates an intermediary table.<br>
-define the relationship in only one participating model.<br>
+the relationship should be defined on just one of the participating models.<br>
 `symmetrical` determines whether recursive relationships have a reverse entry.<br>
 `through` specifies a custom intermediary model.
 
 one-to-one relationships use `django.db.models.OneToOneField`.
 
-lazy relationships reference models by name as strings. they can be
+lazy relationships reference models by name as strings; they can be
 - recursive: `"self"`
 - relative: by name within the same app
 - absolute: `"<app>.<model>"` for another app
@@ -42,8 +42,9 @@ field names must not conflict with the DB access API, Python keywords, contain c
 
 a nested `Meta` class within a model provides metadata (anything that is not a field).
 
-`Manager` provides DB query operations to models.<br>
-a default instance is assigned to `objects` unless a custom manager is defined.<br>
+`Manager`s are interfaces through which database query operations are provided on models.<br>
+a default instance is assigned to `objects` attribute of models unless custom ones are defined.<br>
+if custom managers are defined on models, the first one is picked as the default manager.<br>
 it is accessible only through model classes, not instances.
 
 row-level behaviour is defined via instance methods & properties.<br>
@@ -214,7 +215,36 @@ squashing is the act of reducing multiple migrations into one.
 [*Operations reference*](https://docs.djangoproject.com/en/6.1/ref/migration-operations/)
 
 [*SchemaEditor*](https://docs.djangoproject.com/en/6.1/ref/schema-editor/)
+
+[*Writing migrations*](https://docs.djangoproject.com/en/6.1/howto/writing-migrations/)
 #### Advanced
+[*Managers*](https://docs.djangoproject.com/en/6.1/topics/db/managers/)
+
+associated models are accessible via the `model` attribute of `Manager`s.<br>
+`Manager.get_queryset` returns the base `QuerySet` on which further refinements are applied.
+
+`Meta.default_manager_name` specifies the default manager.
+
+base `Manager`s access related fields.<br>
+`Meta.base_manager_name` specifies the base manager.<br>
+they usually bypass default manager limitations & filters.
+
+`QuerySet.as_manager` returns a `Manager` with the same base `QuerySet`.<br>
+`Manager.from_queryset` returns a `Manager` with the given `QuerySet` as its base.<br>
+custom `Manager`s should be shallow-copyable.
+
+[*Raw SQL*](https://docs.djangoproject.com/en/6.1/topics/db/sql/)
+
+[*Transactions*](https://docs.djangoproject.com/en/6.1/topics/db/transactions/)
+
+by default, each statement is immediately committed unless a transaction is active.
+
+`django.db.transaction.atomic` makes DB operations atomic by decorating callables or as a context manager.<br>
+save points are markers within transactions which allow rolling back partially.<br>
+nested atomic blocks are possible & will become implicit save points.<br>
+transactions are committed upon completion & rolled back on raised exceptions.
+
+[*Aggregation*](https://docs.djangoproject.com/en/6.1/topics/db/aggregation/)
 #### Other
 ### The Development Process
 #### Settings
