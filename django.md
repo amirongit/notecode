@@ -262,12 +262,13 @@ transactions are committed upon completion & rolled back on raised exceptions.
 
 [*Database Functions*](https://docs.djangoproject.com/en/6.1/ref/models/database-functions/)
 ### The Development Process
-#### Settings
-#### Applications
-#### Exceptions
-#### `manage.py`
-### Security
-### Performance & Optimization
-### Common Web Application Tools
-### Other Core Functionalities
+[*Full list of settings*](https://docs.djangoproject.com/en/6.1/ref/settings/)
+
+[*Applications*](https://docs.djangoproject.com/en/6.1/ref/applications/)
+
+[*Exceptions*](https://docs.djangoproject.com/en/6.1/ref/exceptions/)
+
+[*Django admin*](https://docs.djangoproject.com/en/6.1/ref/django-admin/)
+
+[*Adding custom commands*](https://docs.djangoproject.com/en/6.1/howto/custom-management-commands/)
 ## Django Rest Framework Documentation
