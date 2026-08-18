@@ -38,7 +38,7 @@ lazy relationships reference models by name as strings; they can be
 
 all relational fields expect the concrete model or a lazy reference as their first positional argument.
 
-field names must not conflict with the DB access API, Python keywords, contain consecutive underscores or end with an underscore.
+field names must not conflict with the DB access API, python keywords, contain consecutive underscores or end with an underscore.
 
 a nested `Meta` class within a model provides metadata (anything that is not a field).
 
@@ -273,3 +273,60 @@ transactions are committed upon completion & rolled back on raised exceptions.
 [*Adding custom commands*](https://docs.djangoproject.com/en/6.1/howto/custom-management-commands/)
 ## Django Rest Framework Documentation
 [*source*](https://www.django-rest-framework.org/api-guide/requests/)
+[*classy DRF*](https://www.cdrf.co/)
+### Requests
+DRF's `Request` class extends `django.http.request.HttpRequest`, providing support for data parsing & flexible per request authentication.
+#### Request Parsing
+`Request.data` returns the parsed request body, including file & non-file inputs.<br>
+it supports JSON, form data & other media types.<br>
+`Request.query_params` returns query parameters from the URL's query string.<br>
+`Request.accepted_media_type` returns the media type that was accepted in the content negotiation stage.
+#### Authentication
+multiple different authentication policies can be used for different views.<br>
+user & token information for the incoming request are provided.<br>
+`Request.user` usually returns an instance of `django.contrib.auth.models.User` or `django.contrib.auth.models.AnonymousUser`.<br>
+`Request.auth` returns additional authentication-related context, such as the token.<br>
+its specific content depends on the authentication policy in use.
+#### Browser enhancements
+`Request.method` returns the uppercase string representation of the HTTP method of the request.
+### Responses
+DRF's `Response` class extends `django.template.response.SimpleTemplateResponse`.<br>
+it accepts native python objects that can be rendered into multiple content types, depending on the request.<br>
+it is not required to return a `Response` from views, but doing so enables content negotiation.
+#### Creating Responses
+`Response` should be initialized with native python objects rather than rendered data.<br>
+complex objects cannot be rendered by default & should be serialized into primitive data types.<br>
+`Serializer`s can be used for this purpose.
+arguments of `Response`
+- `data`
+- `status`
+- `template_name` (used by `HTMLRenderer` if selected)
+- `headers`
+- `content_type` (usually set by the selected renderer)
+
+#### Attributes
+`Response.data` contains unrendered but serialized data of the response.<br>
+`Response.content` contains rendered content of the response; `Response.render` must be called before this is accessed.<br>
+### Views
+#### Class-based views
+DRF's `APIView` class extends `django.views.View`.<br>
+it ensures that requests passed to handlers are DRF requests.<br>
+if a `Response` is returned by a handler, it performs content negotiation.<br>
+it catches `APIException`s & returns appropriate responses.<br>
+it enforces authentication & authorization before dispatching the request.<br>
+the `authentication_classes` class attribute specifies authentication policies.<br>
+the `permission_classes` class attribute specifies authorization policies.<br>
+attributes that control different aspects of class-based API views
+- `<view>.renderer_classes`
+- `<view>.parser_classes`
+- `<view>.authentication_classes`
+- `<view>.throttle_classes`
+- `<view>.permission_classes`
+- `<view>.content_negotiation_class`
+
+`<view>.initial` is called before request dispatch to enforce permissions & throttling & perform content negotiation.<br>
+`<view>.handle_exception` is called to handle exceptions thrown by handlers.
+#### Function-based views
+DRF provides decorators that enable function-based views.<br>
+they ensure that decorated functions receive `Request`s & can return `Response`s.<br>
+they provide ways to configure how requests are processed.
