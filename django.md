@@ -272,7 +272,7 @@ transactions are committed upon completion & rolled back on raised exceptions.
 
 [*Adding custom commands*](https://docs.djangoproject.com/en/6.1/howto/custom-management-commands/)
 ## Django Rest Framework Documentation
-[*source*](https://www.django-rest-framework.org/api-guide/requests/)
+[*source*](https://www.django-rest-framework.org/api-guide/requests/)<br>
 [*classy DRF*](https://www.cdrf.co/)
 ### Requests
 DRF's `Request` class extends `django.http.request.HttpRequest`, providing support for data parsing & flexible per request authentication.
