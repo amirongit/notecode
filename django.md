@@ -18,7 +18,7 @@ primary key values are read-only; modifying them creates new rows.
 
 each model requires a primary key field.<br>
 if none is defined, django adds an auto-incrementing `id` field (`django.db.models.IntegerField`) by default.<br>
-this can be configured globally via `DEFAULT_AUTO_FIELD` or per-app via `AppConfig.default_auto_field`.
+this can be configured globally via `DEFAULT_AUTO_FIELD` setting or per-app via `AppConfig.default_auto_field`.
 
 many-to-one relationships use `django.db.models.ForeignKey`.<br>
 this creates a `<field>_id` column on the associated table.
@@ -276,7 +276,7 @@ transactions are committed upon completion & rolled back on raised exceptions.
 [*classy DRF*](https://www.cdrf.co/)
 ### Requests
 DRF's `Request` class extends `django.http.request.HttpRequest`, providing support for data parsing & flexible per request authentication.
-#### Request Parsing
+#### Request parsing
 `Request.data` returns the parsed request body, including file & non-file inputs.<br>
 it supports JSON, form data & other media types.<br>
 `Request.query_params` returns query parameters from the URL's query string.<br>
@@ -293,7 +293,7 @@ its specific content depends on the authentication policy in use.
 DRF's `Response` class extends `django.template.response.SimpleTemplateResponse`.<br>
 it accepts native python objects that can be rendered into multiple content types, depending on the request.<br>
 it is not required to return a `Response` from views, but doing so enables content negotiation.
-#### Creating Responses
+#### Creating responses
 `Response` should be initialized with native python objects rather than rendered data.<br>
 complex objects cannot be rendered by default & should be serialized into primitive data types.<br>
 `Serializer`s can be used for this purpose.
@@ -310,7 +310,7 @@ arguments of `Response`
 ### Views
 #### Class-based views
 DRF's `APIView` class extends `django.views.View`.<br>
-it ensures that requests passed to handlers are DRF requests.<br>
+it is explicitly bound to a URL & dispatches requests to the appropriate HTTP method handlers while ensuring that they receive `Request`s.<br>
 if a `Response` is returned by a handler, it performs content negotiation.<br>
 it catches `APIException`s & returns appropriate responses.<br>
 it enforces authentication & authorization before dispatching the request.<br>
@@ -327,6 +327,34 @@ attributes that control different aspects of class-based API views
 `<view>.initial` is called before request dispatch to enforce permissions & throttling & perform content negotiation.<br>
 `<view>.handle_exception` is called to handle exceptions thrown by handlers.
 #### Function-based views
-DRF provides decorators that enable function-based views.<br>
-they ensure that decorated functions receive `Request`s & can return `Response`s.<br>
-they provide ways to configure how requests are processed.
+`api_view` converts functions into views.<br>
+it accepts a list of HTTP methods to which the function should respond.<br>
+it ensures the decorated function receives `Request`s & can return `Response`s.<br>
+the view uses the default renderers, parsers, authentication classes, etc. specified in settings.<br>
+settings can be overridden with additional decorators, such as
+- `renderer_classes`
+- `parser_classes`
+- `authentication_classes`
+- `throttle_classes`
+- `permission_classes`
+- `content_negotiation_class`
+- `metadata_class`
+- `versioning_class`
+
+`schema` overrides the default schema generation.<br>
+it accepts a nullable `AutoSchema` instance.
+### ViewSets
+`ViewSet`s inherit `APIView` providing action methods instead of HTTP method handlers.<br>
+they group resource-specific actions into one class & commonly pair with routers to generate URLs.<br>
+HTTP method handlers are bound to `ViewSet` action methods during finalization.<br>
+they provide consistency across URLs.
+
+DRF's `Router`s provide routes for a standard set of action methods, such as
+- `list`
+- `create`
+- `retrieve`
+- `update`
+- `partial_update`
+- `destroy`
+
+`action` can be used to decorate extra methods as action methods.
