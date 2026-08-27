@@ -3,7 +3,7 @@
 [*source*](https://docs.djangoproject.com/en/6.1/)
 ### The model layer
 #### Models
-models are the definitive source of information about relational data, inheriting `django.db.models.Model`.<br>
+models are the definitive source of information about relational data & inherit from `django.db.models.Model`.<br>
 usually, each model represents a table & its attributes correspond to DB columns.<br>
 `django.db.models.Model` provides an automatically generated DB access API.<br>
 each model's table name is derived from its metadata.
@@ -13,48 +13,48 @@ to register models for use & migration, their app must be in `INSTALLED_APPS`.<b
 > django looks for models in each app's `models` module, so define or import them there
 
 model fields must subclass `django.db.models.Field`.<br>
-each field accepts a specific set of arguments, plus optional common arguments shared by all types.<br>
+each field accepts a specific set of arguments, plus optional common arguments shared by all field types.<br>
 primary key values are read-only; modifying them creates new rows.
 
 each model requires a primary key field.<br>
 if none is defined, django adds an auto-incrementing `id` field (`django.db.models.IntegerField`) by default.<br>
-this can be configured globally via `DEFAULT_AUTO_FIELD` setting or per-app via `AppConfig.default_auto_field`.
+this can be configured globally via the `DEFAULT_AUTO_FIELD` setting or per app via `AppConfig.default_auto_field`.
 
 many-to-one relationships use `django.db.models.ForeignKey`.<br>
 this creates a `<field>_id` column on the associated table.
 
 many-to-many relationships use `django.db.models.ManyToManyField`.<br>
 this creates an intermediary table.<br>
-the relationship should be defined on just one of the participating models.<br>
+the relationship should be defined on only one participating model.<br>
 `symmetrical` determines whether recursive relationships have a reverse entry.<br>
 `through` specifies a custom intermediary model.
 
 one-to-one relationships use `django.db.models.OneToOneField`.
 
-lazy relationships reference models by name as strings; they can be
+lazy relationships reference models by name as strings
 - recursive: `"self"`
 - relative: by name within the same app
 - absolute: `"<app>.<model>"` for another app
 
-all relational fields expect the concrete model or a lazy reference as their first positional argument.
+all relational fields expect a concrete model or lazy reference as their first positional argument.
 
-field names must not conflict with the DB access API, python keywords, contain consecutive underscores or end with an underscore.
+field names must not conflict with the DB access API or python keywords, contain consecutive underscores, or end with an underscore.
 
 a nested `Meta` class within a model provides metadata (anything that is not a field).
 
 `Manager`s are interfaces through which database query operations are provided on models.<br>
-a default instance is assigned to `objects` attribute of models unless custom ones are defined.<br>
-if custom managers are defined on models, the first one is picked as the default manager.<br>
-it is accessible only through model classes, not instances.
+a default instance is assigned to the `objects` attribute unless custom managers are defined.<br>
+if custom managers are defined, the first is selected as the default manager.<br>
+they are accessible only through model classes, not instances.
 
-row-level behaviour is defined via instance methods & properties.<br>
+row-level behaviour is defined through instance methods & properties.<br>
 predefined instance methods can be overridden, including
 - `__str__`
 - `save`
 - `delete`
 
-model inheritance shares common attributes via abstract models.<br>
-abstract models set `Meta.abstract = True`, have no table & no instances.<br>
+model inheritance shares common attributes through abstract models.<br>
+abstract models set `Meta.abstract = True`, have no table & have no instances.<br>
 inherited fields from abstract models can be overridden or removed by assigning `None`.<br>
 if `related_name` is not specified on abstract relationship fields, the reverse name becomes `<subclass>_set`.
 
@@ -62,21 +62,21 @@ subclasses inherit metadata from their parent if they do not declare their own.<
 metadata is available as an attribute & can be extended.<br>
 inherited `Meta.abstract` is automatically set to `False`; explicitly set it to `True` to form an abstract hierarchy.<br>
 due to MRO, only the first parent's metadata is inherited in multiple inheritance; a model can explicitly inherit from multiple `Meta` classes.<br>
-some metadata attributes (e.g. `db_table`) are removed by default from subclasses to avoid inconsistencies.
+some metadata attributes (e.g. `db_table`) are removed from subclasses by default to avoid inconsistencies.
 
 concrete model inheritance defines weak entities.<br>
 when inheriting a concrete model
 - a `django.db.models.OneToOneField` is automatically added to the subclass; define it explicitly with `parent_link=True`
 - parent fields are accessible through the subclass, but data remains in the parent's table
 
-most concrete model metadata attributes are not inherited, except a few like `ordering` & `get_latest_by`.
+most concrete model metadata attributes are not inherited, except a few, such as `ordering` & `get_latest_by`.
 
-proxy models encapsulate, extend, manipulate or modify code-level behaviour of concrete models, including
+proxy models encapsulate, extend, manipulate, or modify code-level behaviour of concrete models, including
 - metadata attributes
 - managers
 - methods
 
-they set `Meta.proxy = True` & inherit one non-abstract model or multiple proxy models sharing the same parent.<br>
+they set `Meta.proxy = True` & inherit from one non-abstract model or multiple proxy models sharing the same parent.<br>
 proxy models can inherit abstract models as long as they define no fields.
 
 inheriting multiple concrete models with the same `id` field fails; `django.db.models.AutoField` explicitly defines the primary key.<br>
@@ -91,23 +91,23 @@ arithmetic on `django.db.models.DateField` with `datetime.timedelta` may return 
 `django.db.models.GeneratedField` defines DB-level computed fields.<br>
 `JSONField.decoder` customizes deserialization of values from the DB.
 
-[*Indexes*](https://docs.djangoproject.com/en/6.1/ref/models/indexes/ )
+[*Indexes*](https://docs.djangoproject.com/en/6.1/ref/models/indexes/)
 
-[*Meta options*](https://docs.djangoproject.com/en/6.1/ref/models/options/ )
+[*Meta options*](https://docs.djangoproject.com/en/6.1/ref/models/options/)
 
 `Meta.get_latest_by` implements `Manager.latest` & `Manager.earliest`.<br>
-`Meta.managed` determines whether Django migrations manage the model's lifecycle.<br>
+`Meta.managed` determines whether Django migrations manage a model's lifecycle.<br>
 `Meta.indexes` defines DB indexes.<br>
 `Meta.constraints` defines DB constraints.
 
-each model has a `DoesNotExist` exception (subclass of `django.core.exceptions.ObjectDoesNotExist`).<br>
+each model has a `DoesNotExist` exception, a subclass of `django.core.exceptions.ObjectDoesNotExist`.<br>
 it is raised when an expected result is not found.
 
-each model has a `MultipleObjectsReturned` exception (subclass of `django.core.exceptions.MultipleObjectsReturned`).<br>
+each model has a `MultipleObjectsReturned` exception, a subclass of `django.core.exceptions.MultipleObjectsReturned`.<br>
 it is raised when multiple results match the lookups.
 
-each model has a `NotUpdated` exception (subclass of `django.core.exceptions.NotUpdated`).<br>
-it is raised when forcing an update affects no rows.
+each model has a `NotUpdated` exception, a subclass of `django.core.exceptions.NotUpdated`.<br>
+it is raised when a forced update affects no rows.
 
 #### QuerySets
 a model class & instance represent a table & a row, respectively.<br>
@@ -124,7 +124,7 @@ model classes have at least one `Manager` on `objects` by default.<br>
 
 `QuerySet`s represent row collections & may have any number of filters.<br>
 construction does not trigger DB I/O until evaluation.<br>
-python-like slicing (except negative indexes) adds offsets & limits.<br>
+python-like slicing, except with negative indexes, adds offsets & limits.<br>
 sliced `QuerySet`s cannot be further refined.<br>
 python-like indexing retrieves individual results.
 
@@ -135,12 +135,12 @@ for multi-valued relationships, `[Manager, QuerySet].filter` requires all condit
 chained calls allow different related instances to satisfy each condition.<br>
 `[Manager, QuerySet].exclude` does not require all conditions to match the same related instance.
 
-`F` expressions describe values or computations usable to update, create, filter, order by, annotate or aggregate.
+`F` expressions describe values or computations usable for updating, creating, filtering, ordering, annotating, or aggregating.
 
 `QuerySet`s are cached upon evaluation, avoiding DB I/O on re-evaluation.<br>
-partial evaluation (slicing, random access) does not populate the cache.
+partial evaluation, such as slicing or random access, does not populate the cache.
 
-`KT` expressions reference text values of keys, indexes or paths within `JSONField`s.
+`KT` expressions reference text values of keys, indexes, or paths within `JSONField`s.
 
 `Q` objects construct complex conditions using `&`, `|` & `^`.
 
@@ -155,7 +155,7 @@ related instances can access instances that relate to them.<br>
 
 [*QuerySet method reference*](https://docs.djangoproject.com/en/6.1/ref/models/querysets/)
 
-`QuerySet`s are evaluated by iteration, slicing with a step, pickling, caching or calling `[repr, len, list, bool]`.
+`QuerySet`s are evaluated by iteration, slicing with a step, pickling, caching, or calling `[repr, len, list, bool]`.
 
 `[Manager, QuerySet].annotate` annotates results with
 - values
@@ -163,17 +163,17 @@ related instances can access instances that relate to them.<br>
 - `Q` objects (boolean)
 - aggregations
 
-`[Manager, QuerySet].alias` is like `annotate`, but used only for query refinement; its computed attribute will not accessible in results.
+`[Manager, QuerySet].alias` is like `annotate`, but is used only for query refinement; its computed attribute is not available in results.
 
 `[Manager, QuerySet].[values, values_list]` specify returned field values or expressions.
 
 `QuerySet.all` re-evaluates `QuerySet`s.
 
 `[Manager, QuerySet].defer` avoids loading certain fields; accessing them triggers DB I/O.<br>
-`[Manager, QuerySet].only` specifies which fields to load; accessing unloaded fields triggers DB I/O.
+`[Manager, QuerySet].only` specifies fields to load; accessing unloaded fields triggers DB I/O.
 
 common aggregation function arguments
-- `expressions`: model fields on which the aggregation is applied
+- `expressions`: model fields to which the aggregation is applied
 - `output_field`: `django.db.models.Field` instance specifying the return type
 - `filter`: `Q` object to filter rows
 - `default`: value used when there are no rows
@@ -181,14 +181,14 @@ common aggregation function arguments
 
 [*Lookup expressions*](https://docs.djangoproject.com/en/6.1/ref/models/lookups/)
 #### Model Instances
-`<model-instance>.refresh_from_db` reloads model fields from DB.
+`<model-instance>.refresh_from_db` reloads model fields from the DB.
 
 `[force_insert, force_update]` arguments of `<model-instance>.save` enforce inserts or updates only.<br>
-the `update_fields` argument of `<model-instance>.save` enforces an update & specifies which fields to save.
+the `update_fields` argument of `<model-instance>.save` enforces an update & specifies fields to save.
 
 [*Accessing related objects*](https://docs.djangoproject.com/en/6.1/ref/models/relations/)
 #### Migrations
-migrations propagate model modifications into the DB.<br>
+migrations propagate model modifications to the DB.<br>
 commands to interact with migrations
 - `migrate`: applies migrations
 - `makemigrations`: creates new migrations based on modifications
@@ -198,19 +198,19 @@ commands to interact with migrations
 
 migrations are deterministic.<br>
 migrations are subclasses of `django.db.migrations.Migration` named `Migration`.<br>
-`<migration>.dependencies` specifies dependees.<br>
+`<migration>.dependencies` specifies dependencies.<br>
 `<migration>.operations` contains declarative schema-change instructions as subclasses of `django.db.migrations.operations.base.Operation`.
 
-`<migration>.initial` determines if a migration is initial.<br>
-initial migrations define the whole DB schema at creation time.<br>
-`--fake-initial` option of `migrate` command avoids creating tables that already exist but are defined in initial migrations.<br>
+`<migration>.initial` determines whether a migration is initial.<br>
+initial migrations define the complete DB schema at creation time.<br>
+the `--fake-initial` option of the `migrate` command avoids creating tables that already exist but are defined in initial migrations.<br>
 this is used when introducing django to existing projects.
 
 data migrations alter data.<br>
-`RunPython` operation runs python code in migrations.<br>
+the `RunPython` operation runs python code in migrations.<br>
 `django.apps.registry.Apps` returns a historical model version that remains relevant to the migration.
 
-squashing is the act of reducing multiple migrations into one.
+squashing reduces multiple migrations into one.
 
 [*Operations reference*](https://docs.djangoproject.com/en/6.1/ref/migration-operations/)
 
@@ -220,8 +220,8 @@ squashing is the act of reducing multiple migrations into one.
 #### Advanced
 [*Managers*](https://docs.djangoproject.com/en/6.1/topics/db/managers/)
 
-associated models are accessible via the `model` attribute of `Manager`s.<br>
-`Manager.get_queryset` returns the base `QuerySet` on which further refinements are applied.
+associated models are accessible through the `model` attribute of `Manager`s.<br>
+`Manager.get_queryset` returns the base `QuerySet` to which further refinements are applied.
 
 `Meta.default_manager_name` specifies the default manager.
 
@@ -239,10 +239,10 @@ custom `Manager`s should be shallow-copyable.
 
 by default, each statement is immediately committed unless a transaction is active.
 
-`django.db.transaction.atomic` makes DB operations atomic by decorating callables or as a context manager.<br>
-save points are markers within transactions which allow rolling back partially.<br>
-nested atomic blocks are possible & will become implicit save points.<br>
-transactions are committed upon completion & rolled back on raised exceptions.
+`django.db.transaction.atomic` makes DB operations atomic when used as a callable decorator or context manager.<br>
+save points are markers within transactions that allow partial rollbacks.<br>
+nested atomic blocks are possible & become implicit save points.<br>
+transactions are committed on completion & rolled back when exceptions are raised.
 
 [*Aggregation*](https://docs.djangoproject.com/en/6.1/topics/db/aggregation/)
 
@@ -274,29 +274,42 @@ transactions are committed upon completion & rolled back on raised exceptions.
 ## Django Rest Framework Documentation
 [*source*](https://www.django-rest-framework.org/api-guide/requests/)<br>
 [*classy DRF*](https://www.cdrf.co/)
+
+[*parsers*](https://www.django-rest-framework.org/api-guide/parsers/)<br>
+[*renderers*](https://www.django-rest-framework.org/api-guide/renderers/)<br>
+[*serializer fields*](https://www.django-rest-framework.org/api-guide/fields)<br>
+[*validators*](https://www.django-rest-framework.org/api-guide/validators)<br>
+[*caching*](https://www.django-rest-framework.org/api-guide/caching/)<br>
+[*throttling*](https://www.django-rest-framework.org/api-guide/throttling/)<br>
+[*content negotiation*](https://www.django-rest-framework.org/api-guide/content-negotiation/)<br>
+[*metadata*](https://www.django-rest-framework.org/api-guide/metadata/)<br>
+[*status codes*](https://www.django-rest-framework.org/api-guide/status-codes/)<br>
+[*testing*](https://www.django-rest-framework.org/api-guide/testing/)<br>
+[*settings*](https://www.django-rest-framework.org/api-guide/settings)
 ### Requests
-DRF's `Request` class extends `django.http.request.HttpRequest`, providing support for data parsing & flexible per request authentication.
+DRF's `Request` class extends `django.http.request.HttpRequest`, providing support for data parsing & flexible per-request authentication.
 #### Request parsing
 `Request.data` returns the parsed request body, including file & non-file inputs.<br>
 it supports JSON, form data & other media types.<br>
 `Request.query_params` returns query parameters from the URL's query string.<br>
-`Request.accepted_media_type` returns the media type that was accepted in the content negotiation stage.
+`Request.accepted_media_type` returns the media type accepted during content negotiation.
 #### Authentication
-multiple different authentication policies can be used for different views.<br>
-user & token information for the incoming request are provided.<br>
+multiple authentication policies can be used for different views.<br>
+user & token information for incoming requests are provided.<br>
 `Request.user` usually returns an instance of `django.contrib.auth.models.User` or `django.contrib.auth.models.AnonymousUser`.<br>
 `Request.auth` returns additional authentication-related context, such as the token.<br>
 its specific content depends on the authentication policy in use.
 #### Browser enhancements
-`Request.method` returns the uppercase string representation of the HTTP method of the request.
+`Request.method` returns the uppercase string representation of the request's HTTP method.
 ### Responses
 DRF's `Response` class extends `django.template.response.SimpleTemplateResponse`.<br>
 it accepts native python objects that can be rendered into multiple content types, depending on the request.<br>
-it is not required to return a `Response` from views, but doing so enables content negotiation.
+returning a `Response` from views is not required, but doing so enables content negotiation.
 #### Creating responses
 `Response` should be initialized with native python objects rather than rendered data.<br>
 complex objects cannot be rendered by default & should be serialized into native data types.<br>
 `Serializer`s can be used for this purpose.
+
 arguments of `Response`
 - `data`
 - `status`
@@ -305,13 +318,13 @@ arguments of `Response`
 - `content_type` (usually set by the selected renderer)
 
 #### Attributes
-`Response.data` contains unrendered but serialized data of the response.<br>
-`Response.content` contains rendered content of the response; `Response.render` must be called before this is accessed.<br>
+`Response.data` contains unrendered but serialized response data.<br>
+`Response.content` contains rendered response content; `Response.render` must be called before accessing it.
 ### Views
 #### Class-based views
 DRF's `APIView` class extends `django.views.View`.<br>
-it is explicitly bound to a URL & dispatches requests to the appropriate HTTP method handlers while ensuring that they receive `Request`s.<br>
-if a `Response` is returned by a handler, it performs content negotiation.<br>
+it is explicitly bound to a URL & dispatches requests to the appropriate HTTP method handlers while ensuring they receive `Request`s.<br>
+if a handler returns a `Response`, it performs content negotiation.<br>
 it catches `APIException`s & returns appropriate responses.<br>
 it enforces authentication & authorization before dispatching the request.<br>
 the `authentication_classes` class attribute specifies authentication policies.<br>
@@ -325,12 +338,12 @@ attributes that control different aspects of class-based API views
 - `<view>.content_negotiation_class`
 
 `<view>.initial` is called before request dispatch to enforce permissions & throttling & perform content negotiation.<br>
-`<view>.handle_exception` is called to handle exceptions thrown by handlers.
+`<view>.handle_exception` handles exceptions raised by handlers.
 #### Function-based views
 `api_view` converts functions into views.<br>
 it accepts a list of HTTP methods to which the function should respond.<br>
 it ensures the decorated function receives `Request`s & can return `Response`s.<br>
-the view uses the default renderers, parsers, authentication classes, etc. specified in settings.<br>
+the view uses default renderers, parsers, authentication classes, etc. specified in settings.<br>
 settings can be overridden with additional decorators, such as
 - `renderer_classes`
 - `parser_classes`
@@ -341,10 +354,10 @@ settings can be overridden with additional decorators, such as
 - `metadata_class`
 - `versioning_class`
 
-`schema` overrides the default schema generation.<br>
+`schema` overrides default schema generation.<br>
 it accepts a nullable `AutoSchema` instance.
 ### Viewsets
-`ViewSet`s inherit `APIView` providing action methods instead of HTTP method handlers.<br>
+`ViewSet`s inherit from `APIView`, providing action methods instead of HTTP method handlers.<br>
 they group resource-specific actions into one class.<br>
 HTTP method handlers are bound to `ViewSet` action methods during finalization
 - `list`
@@ -361,10 +374,8 @@ by default, extra action URLs are based on the associated prefix & method names.
 `SimpleRouter.register` maps `ViewSet`s to URLs using a prefix.<br>
 `SimpleRouter.urls` contains django URL patterns that can be passed to `django.urls.include`.<br>
 `DefaultRouter` extends `SimpleRouter` to provide documentation-related functionality.
-### [*Parsers*](https://www.django-rest-framework.org/api-guide/parsers/)
-### [*Renderers*](https://www.django-rest-framework.org/api-guide/renderers/)
 ### Serializers
-`Serializer`s convert complex objects (instances of themselves) to native data types & vice versa
+`Serializer`s convert complex objects, such as instances, to native data types & vice versa
 - `Serializer.data`: returns outgoing data (result of `baseSerializer.to_representation`)
 - `Serializer.is_valid`: deserializes & validates incoming data
 - `Serializer.validated_data`: returns validated incoming data (result of `baseSerializer.to_internal_value`)
@@ -372,8 +383,8 @@ by default, extra action URLs are based on the associated prefix & method names.
 - `Serializer.to_representation`: converts complex to native data (serialization)
 - `Serializer.to_internal_value`: converts native to complex data (deserialization)
 
-they define view input & output through `Field` or `Serializer` (for nested objects) instances declared as class attributes.<br>
-a nested `Meta` class within a serializer provides metadata (anything that is not a field).<br>
+they define view input & output through `Field` or `Serializer` instances, for nested objects, declared as class attributes.<br>
+a nested `Meta` class within a serializer provides metadata (anything that is not a field).
 #### Validation
 field-level validation uses methods named `validate_<field>`.<br>
 object-level validation uses a method named `validate`.<br>
@@ -381,24 +392,30 @@ the `validators` argument of `Field` accepts a list of callable validators.<br>
 `Meta.validators` defines validators applied to the complete set of field data.<br>
 `ValidationError` should be raised on validation failures.
 #### Dealing with multiple objects
-the `many` argument of `Serializer` is used to serialize a collection of objects.
-### [*Serializer fields*](https://www.django-rest-framework.org/api-guide/fields)
-### [*Validators*](https://www.django-rest-framework.org/api-guide/validators)
+the `many` argument of `Serializer` serializes collections of objects.
 ### Authentication
 authentication runs at the start of the view, before permission & throttling checks.<br>
-it is a mechanism for associating a request with a set of identifying credentials.<br>
-it will not allow or disallow requests.<br>
-a request is considered authenticated if it passes one of the authentication schemes.
+it is a mechanism for associating a request with identifying credentials.<br>
+it does not allow or disallow requests.<br>
+a request is considered authenticated if it passes one authentication scheme.
 
 by default, `Request.user` returns an instance of either `settings.AUTH_USER_MODEL` or `AnonymousUser`.<br>
 by default, `Request.auth` returns additional authentication-related context.<br>
-`REST_FRAMEWORK.[UNAUTHENTICATED_TOKEN, UNAUTHENTICATED_USER]` settings are used to configure these attributes.
+`REST_FRAMEWORK.[UNAUTHENTICATED_TOKEN, UNAUTHENTICATED_USER]` settings configure these attributes.
 
-`ViewSet.get_authenticators` is used to specify authentication schemes per action method.
+`ViewSet.get_authenticators` specifies authentication schemes per action method.
 ### Permissions
-permissions determine whether a request should be granted or denied access, typically by relying on `Request.[auth, user]`.<br>
-a request is considered authorized if it passes all of the authorization schemes.
+permissions determine whether a request should be granted or denied access, typically relying on `Request.[auth, user]`.<br>
+a request is considered authorized if it passes all authorization schemes.
 
-`ViewSet.get_permissions` is used to specify authorization schemes per action method.
-### [*Caching*](https://www.django-rest-framework.org/api-guide/caching/)
-### [*Throttling*](https://www.django-rest-framework.org/api-guide/throttling/)
+`ViewSet.get_permissions` specifies authorization schemes per action method.
+### Versioning
+versioning is based on either request URLs or headers.<br>
+`Request.version` returns either `None` or a string corresponding to the requested version.<br>
+the `REST_FRAMEWORK.DEFAULT_VERSIONING_CLASS` setting enables & configures versioning globally.
+### Exceptions
+DRF handles `[APIException, Http404, PermissionDenied]` & validation-related exceptions by default.
+
+the exception handler converts exceptions into responses.<br>
+it expects the exception & a context dictionary as its first & second parameters, respectively.<br>
+it can be customized with the `REST_FRAMEWORK.EXCEPTION_HANDLER` setting.
