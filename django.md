@@ -379,8 +379,26 @@ field-level validation uses methods named `validate_<field>`.<br>
 object-level validation uses a method named `validate`.<br>
 the `validators` argument of `Field` accepts a list of callable validators.<br>
 `Meta.validators` defines validators applied to the complete set of field data.<br>
-`ValidationError` should be raised on validation failures. <!-- -->
+`ValidationError` should be raised on validation failures.
 #### Dealing with multiple objects
 the `many` argument of `Serializer` is used to serialize a collection of objects.
 ### [*Serializer fields*](https://www.django-rest-framework.org/api-guide/fields)
 ### [*Validators*](https://www.django-rest-framework.org/api-guide/validators)
+### Authentication
+authentication runs at the start of the view, before permission & throttling checks.<br>
+it is a mechanism for associating a request with a set of identifying credentials.<br>
+it will not allow or disallow requests.<br>
+a request is considered authenticated if it passes one of the authentication schemes.
+
+by default, `Request.user` returns an instance of either `settings.AUTH_USER_MODEL` or `AnonymousUser`.<br>
+by default, `Request.auth` returns additional authentication-related context.<br>
+`REST_FRAMEWORK.[UNAUTHENTICATED_TOKEN, UNAUTHENTICATED_USER]` settings are used to configure these attributes.
+
+`ViewSet.get_authenticators` is used to specify authentication schemes per action method.
+### Permissions
+permissions determine whether a request should be granted or denied access, typically by relying on `Request.[auth, user]`.<br>
+a request is considered authorized if it passes all of the authorization schemes.
+
+`ViewSet.get_permissions` is used to specify authorization schemes per action method.
+### [*Caching*](https://www.django-rest-framework.org/api-guide/caching/)
+### [*Throttling*](https://www.django-rest-framework.org/api-guide/throttling/)
