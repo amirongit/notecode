@@ -184,7 +184,7 @@ common aggregation function arguments
 `<model-instance>.refresh_from_db` reloads model fields from DB.
 
 `[force_insert, force_update]` arguments of `<model-instance>.save` enforce inserts or updates only.<br>
-`update_fields` argument of `<model-instance>.save` enforces an update & specifies which fields to save.
+the `update_fields` argument of `<model-instance>.save` enforces an update & specifies which fields to save.
 
 [*Accessing related objects*](https://docs.djangoproject.com/en/6.1/ref/models/relations/)
 #### Migrations
@@ -295,7 +295,7 @@ it accepts native python objects that can be rendered into multiple content type
 it is not required to return a `Response` from views, but doing so enables content negotiation.
 #### Creating responses
 `Response` should be initialized with native python objects rather than rendered data.<br>
-complex objects cannot be rendered by default & should be serialized into primitive data types.<br>
+complex objects cannot be rendered by default & should be serialized into native data types.<br>
 `Serializer`s can be used for this purpose.
 arguments of `Response`
 - `data`
@@ -343,13 +343,10 @@ settings can be overridden with additional decorators, such as
 
 `schema` overrides the default schema generation.<br>
 it accepts a nullable `AutoSchema` instance.
-### ViewSets
+### Viewsets
 `ViewSet`s inherit `APIView` providing action methods instead of HTTP method handlers.<br>
-they group resource-specific actions into one class & commonly pair with routers to generate URLs.<br>
-HTTP method handlers are bound to `ViewSet` action methods during finalization.<br>
-they provide consistency across URLs.
-
-DRF's `Router`s provide routes for a standard set of action methods, such as
+they group resource-specific actions into one class.<br>
+HTTP method handlers are bound to `ViewSet` action methods during finalization
 - `list`
 - `create`
 - `retrieve`
@@ -357,4 +354,36 @@ DRF's `Router`s provide routes for a standard set of action methods, such as
 - `partial_update`
 - `destroy`
 
-`action` can be used to decorate extra methods as action methods.
+`action` decorates extra methods as action methods.<br>
+by default, extra action URLs are based on the associated prefix & method names.
+### routers
+`SimpleRouter`s pair with `ViewSet`s to route action methods.<br>
+`SimpleRouter.register` maps `ViewSet`s to URLs using a prefix.<br>
+`SimpleRouter.urls` contains django URL patterns that can be passed to `django.urls.include`.<br>
+`DefaultRouter` extends `SimpleRouter` to provide documentation-related functionality.
+### [*Parsers*](https://www.django-rest-framework.org/api-guide/parsers/)
+### [*Renderers*](https://www.django-rest-framework.org/api-guide/renderers/)
+### Serializers
+`Serializer`s convert complex objects (instances of themselves) to native data types & vice versa
+- `Serializer.data`: returns outgoing data (result of `baseSerializer.to_representation`)
+- `Serializer.is_valid`: deserializes & validates incoming data
+- `Serializer.validated_data`: returns validated incoming data (result of `baseSerializer.to_internal_value`)
+- `Serializer.errors`
+- `Serializer.to_representation`: converts complex to native data (serialization)
+- `Serializer.to_internal_value`: converts native to complex data (deserialization)
+
+they define view input & output through `Field` or `Serializer` (for nested objects) instances declared as class attributes.<br>
+a nested `Meta` class within a serializer provides metadata (anything that is not a field).<br>
+#### Validation
+call `Serializer.is_valid` to validate data, optionally with `raise_exception`.<br>
+`Serializer.errors` contains error messages.
+
+field-level validation uses methods named `validate_<field>`.<br>
+object-level validation uses a method named `validate`.<br>
+the `validators` argument of `Field` accepts a list of callable validators.<br>
+`Meta.validators` defines validators applied to the complete set of field data.<br>
+`ValidationError` should be raised on validation failures. <!-- -->
+#### Dealing with multiple objects
+the `many` argument of `Serializer` is used to serialize a collection of objects.
+### [*Serializer fields*](https://www.django-rest-framework.org/api-guide/fields)
+### [*Validators*](https://www.django-rest-framework.org/api-guide/validators)
