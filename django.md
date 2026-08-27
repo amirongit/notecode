@@ -375,9 +375,6 @@ by default, extra action URLs are based on the associated prefix & method names.
 they define view input & output through `Field` or `Serializer` (for nested objects) instances declared as class attributes.<br>
 a nested `Meta` class within a serializer provides metadata (anything that is not a field).<br>
 #### Validation
-call `Serializer.is_valid` to validate data, optionally with `raise_exception`.<br>
-`Serializer.errors` contains error messages.
-
 field-level validation uses methods named `validate_<field>`.<br>
 object-level validation uses a method named `validate`.<br>
 the `validators` argument of `Field` accepts a list of callable validators.<br>
