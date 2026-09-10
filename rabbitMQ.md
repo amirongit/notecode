@@ -1,5 +1,5 @@
 # RabbitMQ
-## [*getting started*](https://www.rabbitmq.com/tutorials/tutorial-one-python)
+## Getting started
 a message broker accepts & forwards messages.<br>
 messages are in the form of binary blobs.<br>
 queues are large hardware-bounded buffers in which messages are stored.<br>
@@ -37,5 +37,24 @@ it is possible to specify multiple routing keys for a message.
 RPC calls are implemented using the `[reply_to, correlation_id]` properties defined in AMQP.<br>
 in the context of RPC, clients declare temporary callback queues & use them as the `reply_to` property to receive responses.<br>
 the `correlation_id` property is set to a unique value for each request message & used to find its response within the callback queue.
-## [*stream*](https://www.rabbitmq.com/tutorials/tutorial-one-python-stream)
+
 [`rstream`](https://github.com/rabbitmq-community/rstream) is recommended for python applications to work with RabbitMQ streams.
+## How to use RabbitMQ
+RabbitMQ is a messaging broker, which accepts, routes, stores (& removes), & delivers messages.<br>
+senders usually have long life spans because of the cost of opening connections & sessions.
+
+[*protocol differences*](https://www.rabbitmq.com/docs/publishers#protocols)<br>
+all the protocols support messages, payloads, headers & acknowledgement mechanisms.
+
+exchanges are named routing tables having bindings as their entries.<br>
+built-in exchange types are
+- topic
+- fanout
+- direct
+- headers
+
+<!--
+publisher confirm is a server-side acknowledgement mechanisms to ensure data-safety.<br>
+https://www.rabbitmq.com/docs/publishers#data-safety
+-->
+
