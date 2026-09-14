@@ -75,4 +75,22 @@ strategies to use publisher confirm are
 
 [*concurrency considerations*](https://www.rabbitmq.com/docs/publishers#concurrency)
 
-<!-- https://www.rabbitmq.com/docs/consumers -->
+receivers usually have long life spans because of the cost of opening connections & sessions.<br>
+[*connection recovery*](https://www.rabbitmq.com/docs/consumers#connection-recovery)<br>
+they are registered by applications on queues & identified by consumer tags.<br>
+acknowledgement method of receivers may be automatic or manual, which is specified upon instantiation.<br>
+receivers are cancelled using their consumer tags to stop receiving messages.<br>
+receivers may be used to implement pull or push based messaging.<br>
+exclusive receivers are the only receivers of their associated queues.
+
+single-active-consumer is used to enforce one active consumer at a time for a given queue.<br>
+this enables processing messages while preserving their order.<br>
+this attribute may be set on queues upon declaration.<br>
+SAC & exclusive receivers are mutually exclusive.
+
+receiver priority is used to ensure that high priority receivers are delivered messages when it is possible to.<br>
+low priority receivers will receive messages when high priority ones are busy or not active.
+
+[*concurrency considerations*](https://www.rabbitmq.com/docs/consumers#concurrency)
+
+<!-- https://www.rabbitmq.com/docs/consumer-cancel -->
