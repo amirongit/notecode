@@ -46,15 +46,33 @@ senders usually have long life spans because of the cost of opening connections 
 [*protocol differences*](https://www.rabbitmq.com/docs/publishers#protocols)<br>
 all the protocols support messages, payloads, headers & acknowledgement mechanisms.
 
-exchanges are named routing tables having bindings as their entries.<br>
+exchanges are named routing tables declared by applications.<br>
+bindings associate streams, queues or other exchanges to these routing tables.<br>
+exchanges may be durable or transient.<br>
 built-in exchange types are
-- topic
-- fanout
-- direct
+- default: routes based on queue names & message routing keys
+- topic: routes based on binding patterns & message routing keys
+- fanout: does broadcasting
+- direct: routes based on exact binding & message keys
+- local random
+- modulus hash
+- JMS topic
+- consistent hash
+- random
+- recent history
 - headers
 
-<!--
-publisher confirm is a server-side acknowledgement mechanisms to ensure data-safety.<br>
-https://www.rabbitmq.com/docs/publishers#data-safety
--->
+one exchange per type is pre-declared using the name of its type.<br>
+alternate exchanges allow delegation of routing to other exchanges.
 
+publisher confirm is an acknowledgement mechanism between senders & nodes to ensure data-safety.<br>
+strategies to use publisher confirm are
+- streaming confirms: messages are managed asynchronously
+- batch publishing: messages are managed in batches
+- publish & wait: messages are managed individually
+
+[*recovery from connection failures*](https://www.rabbitmq.com/docs/publishers#connection-recovery)
+
+[*concurrency considerations*](https://www.rabbitmq.com/docs/publishers#concurrency)
+
+<!-- https://www.rabbitmq.com/docs/consumers -->
