@@ -7,9 +7,9 @@ senders & recievers may use queues.<br>
 these components do not have to reside on the same host.
 
 RabbitMQ supports multiple messaging protocols, i.e. AMQP.<br>
-[`pika`](https://github.com/pika/pika) is recommended for python applications to work with RabbitMQ over AMQP.<br>
+[pika](https://github.com/pika/pika) is recommended for python applications to work with RabbitMQ over AMQP.<br>
 it has an extremely trouble & non-pythonic interface, like a total piece of shit which should be wrapped with maximum care.<br>
-[`kombu`](https://github.com/celery/kombu) is a way better option.
+[kombu](https://github.com/celery/kombu) is a way better option.
 
 messages are distributed among recievers in a round-robin manner.<br>
 acknowledgements are sent by recievers to mark messages as processed & deletable.<br>
@@ -39,7 +39,7 @@ RPC calls are implemented using the `[reply_to, correlation_id]` properties defi
 in the context of RPC, clients declare temporary callback queues & use them as the `reply_to` property to receive responses.<br>
 the `correlation_id` property is set to a unique value for each request message & used to find its response within the callback queue.
 
-[`rstream`](https://github.com/rabbitmq-community/rstream) is recommended for python applications to work with RabbitMQ streams.
+[rstream](https://github.com/rabbitmq-community/rstream) is recommended for python applications to work with RabbitMQ streams.
 ## How to use RabbitMQ
 RabbitMQ is a messaging broker, which accepts, routes, stores (& removes), & delivers messages.<br>
 senders usually have long life spans because of the cost of opening connections & sessions.
@@ -95,3 +95,22 @@ low priority receivers will receive messages when high priority ones are busy or
 [*concurrency considerations*](https://www.rabbitmq.com/docs/consumers#concurrency)
 
 recievers may issue negative acknowledgements in order to discard or re-queue messages.
+
+queues are ordered collections of messages.<br>
+queue declarations may specify length limit & TTL.<br>
+queue properties are
+- name
+- durable
+- exclusive
+- auto-delete
+- [arguments](https://www.rabbitmq.com/docs/queues#optional-arguments)
+
+message priority or re-delivery may affect message delivery order.
+
+exclusive queues may only be used by the connections which declared them.
+
+[*replicated & distributed queues*](https://www.rabbitmq.com/docs/queues#distributed)
+
+[*CPU utilisation & parallelism considerations*](https://www.rabbitmq.com/docs/queues#runtime-characteristics)
+
+<!-- https://www.rabbitmq.com/docs/quorum-queues -->
