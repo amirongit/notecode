@@ -20,7 +20,8 @@ durable messages can be sent to durable queues in order to be persisted & surviv
 durable messages do not guarantee persistence by themselves, since the node could crash after accepting the message & before persisting it.
 
 it is possible to specify the number of pre-fetched messages for recievers.<br>
-this is used distribute messages based on how busy recievers are.
+this will limit the number of unacknowledged messages for recievers.<br>
+this is used to distribute messages based on how busy recievers are.
 
 publisher-subscriber, in contrast to the producer-consumer pattern, is used to deliver a single message to multiple receivers.<br>
 receivers are able to declare temporary & fresh queues & bind them to exchanges, which are deleted upon disconnection using the `exclusive` flag.<br>
@@ -88,9 +89,9 @@ this enables processing messages while preserving their order.<br>
 this attribute may be set on queues upon declaration.<br>
 SAC & exclusive receivers are mutually exclusive.
 
-receiver priority is used to ensure that high priority receivers are delivered messages when it is possible to.<br>
+receiver priority is used to ensure that high priority receivers get messages when it is possible to.<br>
 low priority receivers will receive messages when high priority ones are busy or not active.
 
 [*concurrency considerations*](https://www.rabbitmq.com/docs/consumers#concurrency)
 
-<!-- https://www.rabbitmq.com/docs/consumer-cancel -->
+recievers may issue negative acknowledgements in order to discard or re-queue messages.
