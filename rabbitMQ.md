@@ -16,7 +16,7 @@ acknowledgements are sent by receivers to mark messages as processed & deletable
 unacknowledged messages are redelivered to receivers upon delivery acknowledgement timeouts.
 
 durable queues survive node restarts & crashes.<br>
-durable messages can be sent to durable queues in order to be persisted & survive node restarts & crashes.<br>
+durable messages may be sent to durable queues in order to be persisted & survive node restarts & crashes.<br>
 durable messages do not guarantee persistence by themselves, since the node could crash after accepting the message & before persisting it.
 
 it is possible to specify the number of prefetched messages for receivers.<br>
@@ -94,7 +94,9 @@ low-priority receivers will receive messages when high-priority ones are busy or
 
 [*concurrency considerations*](https://www.rabbitmq.com/docs/consumers#concurrency)
 
-receivers may issue negative acknowledgements in order to discard or requeue messages.
+receivers may issue negative acknowledgements in order to discard or requeue messages by
+- `reject`: signals failure & causes `delivery-count` header to be incremented
+- `nack`: signals that the process didn't happen & doesn't cause `delivery-count` header to be incremented
 
 queues are ordered collections of messages.<br>
 queue declarations may specify length limits & TTLs.<br>
@@ -114,14 +116,75 @@ exclusive queues may only be used by the connections that declared them.
 
 [*CPU utilisation & parallelism considerations*](https://www.rabbitmq.com/docs/queues#runtime-characteristics)
 
-<!-- -->
 [quorum](https://www.rabbitmq.com/docs/quorum-queues#what-is-quorum) queue is a modern [raft](https://raft.github.io)-based & data-safety-oriented implementation of queues.<br>
 it should be used when durability, replication & high availability are required & preferred over low latency.
-
 [*comparison with classic queues*](https://www.rabbitmq.com/docs/quorum-queues#feature-comparison)
-
 [*limitations*](https://www.rabbitmq.com/docs/quorum-queues#limitations)
 
 [*delayed retry*](https://www.rabbitmq.com/docs/quorum-queues#delayed-retry)
 
+[*poison message handling*](https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling)
+
 [*features that are not supported*](https://www.rabbitmq.com/docs/quorum-queues#features-that-are-not-supported)
+
+in the context of quorum queues, members are replicas of the underlying queue.<br>
+at any given point in time, one of the members is elected as the leader.<br>
+quorum queues require a leader & the majority of the members to be available to function.
+
+[*repeatedly requested deliveries*](https://www.rabbitmq.com/docs/quorum-queues#repeated-requeues)
+
+[*performance tuning*](https://www.rabbitmq.com/docs/quorum-queues#performance-tuning)
+
+classic queues are not replicated, thus, not suitable when data-safety is a concern.
+
+both queues & messages may declare TTLs.<br>
+message TTLs may be applied to queues & messages.<br>
+only queues whose TTL is reached based on their last usage are dropped; usage will reset the TTL.<br>
+messages whose expiration time is passed are dropped (or dead-lettered) upon reaching the end of the queue.
+[*per-message TTL applied retroactively (to an existing queue)*](https://www.rabbitmq.com/docs/ttl#message-ttl-applied-retroactively)
+
+queue length limit may be based on both the number of messages & the total number of bytes.<br>
+`overflow` argument is used upon queue declaration to specify the behaviour upon reaching length limits; possible values are
+- drop-head (default)
+- reject-publish
+- reject-publish-dlx (not supported for quorum queues)
+
+[*inspecting queue length limits*](https://www.rabbitmq.com/docs/maxlength#inspecting)
+
+message dead-lettering means re-publishing a message to an exchange upon one of these events
+- negative acknowledgement by receivers with `requeue=False`
+- expiration
+- discards caused by queue length limits
+- exceeding queue `delivery-limit`
+
+queue expiration will not cause its messages to be dead-lettered.<br>
+[*how dead-lettering is configured*](https://www.rabbitmq.com/docs/dlx#how-dead-lettering-is-configured)<br>
+`[dead-letter-exchange, dead-letter-exchange-key]` arguments are used upon queue declaration to specify dead-lettering exchanges.<br>
+message routing keys are used if `dead-letter-exchange-key` is not specified.
+
+[*dead-letter cycle*](https://www.rabbitmq.com/docs/dlx#dead-letter-cycle)
+
+[*safety*](https://www.rabbitmq.com/docs/dlx#safety)
+
+[*dead-lettered effects on messages*](https://www.rabbitmq.com/docs/dlx#effects)
+
+priority queues deliver messages in the order of their priorities, which are positive integers set by senders.<br>
+priorities are used to solve the [head-of-line blocking problem](https://en.wikipedia.org/wiki/Head-of-line_blocking).<br>
+alternatives to priority queues are
+- multiple queues
+- streams
+- consumer priorities
+
+quorum queues support message priorities by default.<br>
+`max-priority` argument is used upon classic queue declaration to enable & specify maximum message priority.<br>
+internally, each priority is a sub-queue for RabbitMQ.
+
+[*priority queue behaviour*](https://www.rabbitmq.com/docs/priority#behaviour)
+
+[*quorum queue specifics*](https://www.rabbitmq.com/docs/priority#quorum-queue-specifics)<br>
+classic queues cycle through sub-queues in the order of their priority & drain them one by one.<br>
+this means that if a high priority message is enqueued while lower priority ones are being delivered, it won't be touched until the next cycle.<br>
+quorum queues implement strict priorities, meaning that high priority messages are guaranteed to be delivered before low priority ones.
+
+a high priority message may stay in its queue if low priority ones fill the consumer prefetched slots before it is queued.<br>
+a high priority message may be dropped to enforce length limits hit by low priority ones.
