@@ -48,7 +48,7 @@ senders usually have long lifespans because of the cost of opening connections &
 all the protocols support messages, payloads, headers & acknowledgement mechanisms.
 
 exchanges are named routing tables declared by applications.<br>
-bindings are used to associate streams, queues or other exchanges to them.<br>
+bindings are used to associate streams, queues or other exchanges to exchanges.<br>
 exchanges may be durable or transient.<br>
 built-in exchange types are
 - default: routes based on queue names & message routing keys
@@ -129,7 +129,8 @@ it should be used when durability, replication & high availability are required 
 
 in the context of quorum queues, members are replicas of the underlying queue.<br>
 at any given point in time, one of the members is elected as the leader.<br>
-quorum queues require a leader & the majority of the members to be available to function.
+quorum queues require a leader & the majority of the members to be available to function.<br>
+[*fault tolerance & minimum number of members online*](https://www.rabbitmq.com/docs/quorum-queues#quorum-requirements)
 
 [*repeatedly requested deliveries*](https://www.rabbitmq.com/docs/quorum-queues#repeated-requeues)
 
@@ -188,3 +189,47 @@ quorum queues implement strict priorities, meaning that high priority messages a
 
 a high priority message may stay in its queue if low priority ones fill the consumer prefetched slots before it is queued.<br>
 a high priority message may be dropped to enforce length limits hit by low priority ones.
+
+streams are persistent & replicated buffers in which messages are stored.<br>
+they maintain an immutable append-only disk log of messages, enabling repeatable & non-destructive reads.<br>
+use cases for streams are
+- stream replay: receivers are able to read messages from whichever point of the log
+- large fanouts: the need to bind a queue per receiver is removed
+- high performance
+- large backlogs
+
+[*declaring a RabbitMQ stream*](https://www.rabbitmq.com/docs/streams#declaring)
+
+`stream-offset` argument may be used by receivers to specify a point of the log; possible values are
+- first
+- last
+- next (default): based on when the receiver is registered
+- offset
+- timestamp
+- interval
+
+stream receivers must set the number of allowed prefetched messages & use acknowledgements.<br>
+SAC may be used with streams to preserve message reading order & continuity in case of crashes.<br>
+
+super streams are partitioned streams in the form of a single logical stream on top of multiple physical ones.
+
+[*feature comparison: regular queues versus streams*](https://www.rabbitmq.com/docs/streams#feature-comparison)
+
+`[max-age, max-length-bytes]` arguments are used to set data retention configuration.<br>
+the data retention configuration will discard the oldest data based on specified factors.
+
+[*performance characteristics*](https://www.rabbitmq.com/docs/streams#performance)
+
+[*stream behaviour*](https://www.rabbitmq.com/docs/streams#behaviour)<br>
+at any given point in time, one of the stream replicas is elected as the leader.<br>
+streams require a leader & the majority of the replicas to be available to function.<br>
+[*fault tolerance & minimum number of replicas online*](https://www.rabbitmq.com/docs/streams#quorum-requirements)
+
+[*data safety when using streams*](https://www.rabbitmq.com/docs/streams#data-safety)
+
+[*offset tracking when using streams*](https://www.rabbitmq.com/docs/streams#offset-tracking)
+
+[*deduplication of published messages*](https://www.rabbitmq.com/docs/streams#deduplication-published-messages)<br>
+producer name & publishing id properties can be used by senders to avoid duplications.
+
+<!-- https://www.rabbitmq.com/docs/stream -->
