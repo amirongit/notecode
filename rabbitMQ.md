@@ -246,11 +246,11 @@ streams are made of segment files, paired with index files.<br>
 index files map timestamps & offsets to positions in their associated segment file.<br>
 segment files are made of chunks, which contain messages & whose number depends on the ingress rate.
 
-[*stage 1: bloom filter*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
-[*stage 2: AMQP filter expressions*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
-[*stage 3: client side filtering*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
+[*stage 1: bloom filter*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)<br>
+[*stage 2: AMQP filter expressions*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)<br>
+[*stage 3: client side filtering*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)<br>
 
-[*effectively-one stream processing*](https://www.rabbitmq.com/docs/stream-effectively-once-processing)
+[*effectively-one stream processing*](https://www.rabbitmq.com/docs/stream-effectively-once-processing)<br>
 in the context of "read, process, write" loops, offset of the latest processed message must be stored.<br>
 if storing the offset & publishing the result happen non-atomically, an application crash may cause inconsistency.<br>
 using the offset as the publishing id of the processed result message solves this issue.
