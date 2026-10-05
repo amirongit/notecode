@@ -200,7 +200,7 @@ use cases for streams are
 
 [*declaring a RabbitMQ stream*](https://www.rabbitmq.com/docs/streams#declaring)
 
-`stream-offset` argument may be used by receivers to specify a point of the log; possible values are
+`stream-offset` argument may be used by receivers to specify a point in the log; possible values are
 - first
 - last
 - next (default): based on when the receiver is registered
@@ -232,4 +232,25 @@ streams require a leader & the majority of the replicas to be available to funct
 [*deduplication of published messages*](https://www.rabbitmq.com/docs/streams#deduplication-published-messages)<br>
 producer name & publishing id properties can be used by senders to avoid duplications.
 
-<!-- https://www.rabbitmq.com/docs/stream -->
+[*stream plugin*](https://www.rabbitmq.com/docs/stream)
+
+write operations are handled by the leader replica & routed to them automatically.<br>
+applications using write operations may connect to a node hosting the leader replica for traffic efficiency.<br>
+applications using read operations must connect to a node hosting a replica.<br>
+[*best practices for senders & receivers*](https://www.rabbitmq.com/docs/stream-connections#best-practices)<br>
+[*connecting to nodes behind a load balancer*](https://www.rabbitmq.com/docs/stream-connections#load-balancer)
+
+[*best practices, summarized*](https://www.rabbitmq.com/docs/stream-connections#summary)
+
+streams are made of segment files, paired with index files.<br>
+index files map timestamps & offsets to positions in their associated segment file.<br>
+segment files are made of chunks, which contain messages & whose number depends on the ingress rate.
+
+[*stage 1: bloom filter*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
+[*stage 2: AMQP filter expressions*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
+[*stage 3: client side filtering*](https://www.rabbitmq.com/docs/stream-filtering#stage-1-bloom-filter)
+
+[*effectively-one stream processing*](https://www.rabbitmq.com/docs/stream-effectively-once-processing)
+in the context of "read, process, write" loops, offset of the latest processed message must be stored.<br>
+if storing the offset & publishing the result happen non-atomically, an application crash may cause inconsistency.<br>
+using the offset as the publishing id of the processed result message solves this issue.
