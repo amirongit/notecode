@@ -254,3 +254,12 @@ segment files are made of chunks, which contain messages & whose number depends 
 in the context of "read, process, write" loops, offset of the latest processed message must be stored.<br>
 if storing the offset & publishing the result happen non-atomically, an application crash may cause inconsistency.<br>
 using the offset as the publishing id of the processed result message solves this issue.
+
+channels are lightweight logical connections built on TCP connections which could be shared.<br>
+all application operations happen on channels & carry a channel id.<br>
+carrying a channel id makes it possible for channels to maintain an isolated state while sharing TCP connections.<br>
+[*channel lifecycle*](https://www.rabbitmq.com/docs/channels#lifecycle)
+
+[*resource usage*](https://www.rabbitmq.com/docs/channels#resource-usage)
+
+[*network distribution*](https://www.rabbitmq.com/docs/distributed)
