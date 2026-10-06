@@ -112,3 +112,31 @@ workers set the status of expired tasks as `REVOKED`.
 `[ignore_result, result_extended]` arguments of `celery.Task.apply_async` are used to enable or disable result & metadata respectively.
 
 [*advanced options*](https://docs.celeryq.dev/en/stable/userguide/calling.html#advanced-options)
+### Canvas: designing workflows
+signatures are instances of `celery.canvas.Signature` which wrap task invocations without executing them.<br>
+`celery.signature` & `celery.Task.[s, signature]` are used to create signatures.<br>
+they implement the same calling API as tasks (`Signature.[apply_async, delay, __call__]`) for execution.
+
+signatures may wrap task invocations incompletely, similar to `functools.partial`.<br>
+additional arguments passed to `Signature.[apply_async, delay, __call__]` are prepended to the partial arguments.<br>
+additional keyword arguments & execution options passed to `celery.canvas.Signature.[apply_async, delay, __call__]` are merged with the partial keyword arguments & execution options.
+
+`celery.canvas.Signature.clone` is used to create derivatives of signatures.
+
+`immutable` argument of `celery.signature` or `celery.Task.si` may be used to create immutable signatures.<br>
+execution options of immutable signatures may still be modified.
+
+`link` argument of `[celery.canvas.Signature, celery.Task].apply_async` is used to specify successful execution callbacks in the form of signatures.
+
+[*the primitives*](https://docs.celeryq.dev/en/stable/userguide/canvas.html#the-primitives)<br>
+primitives are signature components which may be mixed to create workflows.
+
+`celery.group` is used to create group primitives, executing signatures in parallel.<br>
+`celery.chain` or `|` are used to create chain primitives, executing signatures sequentially.<br>
+`celery.chord` is used to create chord primitives, which are group primitives with a successful execution callback.<br>
+`celery.Task.map` is used to create map primitives, executing signatures sequentially for each item.<br>
+`celery.Task.starmap` is used to create map primitives with star-unpacked arguments, executing signatures sequentially for each tuple.<br>
+`celery.Task.chunk` is used to create chunk primitives, which split items into batches & execute signatures for each batch.
+
+[*stamping*](https://docs.celeryq.dev/en/stable/userguide/canvas.html#stamping)<br>
+stamping is used for debugging purposes by naming components.
