@@ -139,4 +139,16 @@ primitives are signature components which may be mixed to create workflows.
 `celery.Task.chunk` is used to create chunk primitives, which split items into batches & execute signatures for each batch.
 
 [*stamping*](https://docs.celeryq.dev/en/stable/userguide/canvas.html#stamping)<br>
-stamping is used for debugging purposes by naming components.
+[*workers guide*](https://docs.celeryq.dev/en/stable/userguide/workers.html)<br>
+[*daemonization*](https://docs.celeryq.dev/en/stable/userguide/daemonizing.html)<br>
+[*routing tasks*](https://docs.celeryq.dev/en/stable/userguide/routing.html)<br>
+[*periodic tasks*](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html)<br>
+[*monitoring & management guide*](https://docs.celeryq.dev/en/stable/userguide/monitoring.html)<br>
+[*security*](https://docs.celeryq.dev/en/stable/userguide/security.html)<br>
+[*optimizing*](https://docs.celeryq.dev/en/stable/userguide/optimizing.html)<br>
+[*debugging*](https://docs.celeryq.dev/en/stable/userguide/debugging.html)<br>
+[*concurrency*](https://docs.celeryq.dev/en/stable/userguide/concurrency/index.html)<br>
+[*signals*](https://docs.celeryq.dev/en/stable/userguide/signals.html)<br>
+[*testing with celery*](https://docs.celeryq.dev/en/stable/userguide/testing.html)<br>
+[*extensions & bootsteps*](https://docs.celeryq.dev/en/stable/userguide/extending.html)<br>
+[*configuration & defaults*](https://docs.celeryq.dev/en/stable/userguide/configuration.html)
